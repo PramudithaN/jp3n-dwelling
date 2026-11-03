@@ -118,6 +118,10 @@ function captureCurrentFrame() {
         if (!(comp instanceof CompItem)) {
             return "ERROR: Please open a composition first.";
         }
+        // Prevent RenderTaskManager crash in AE 2024-2026 if comp is empty
+        if (comp.numLayers === 0) {
+            return "ERROR: Composition is empty. Vision snapshot skipped.";
+        }
         var tempFolder = Folder.temp.fsName;
         var outputPath = tempFolder + "/ae_frame_snapshot.png";
         var outputFile = new File(outputPath);

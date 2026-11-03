@@ -1,8 +1,8 @@
 {
-  "prompt": "morph the calf layer into yearling when the timeline moves forward within 2 seconds",
+  "prompt": "create a sqaure morph it into a traiangle then spin in several times and then morph it again into a square.\nadd motion blur and the morph should be so smooth.",
   "vision": false,
   "compWidth": 1920,
   "compHeight": 1080,
   "snapshotPath": null,
-  "timestamp": 1793706424074
+  "timestamp": 1793714136974
 }

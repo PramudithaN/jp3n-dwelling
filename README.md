@@ -89,12 +89,18 @@ motion.eng/
 
 ## Configuration & Usage
 
-### 1. Configuring Model Credentials
-- Select the desired provider tab (**Google Gemini** or **Anthropic Claude**).
+### 1. Antigravity Local Bridge (Zero API Keys)
+- Select the **Antigravity** provider tab in the panel.
+- Launch the local bridge server by running [start_bridge.bat](file:///c:/Users/PramudithaN/Documents/antigravity/lively-babbage/start_bridge.bat) or executing `node bridge/server.js`.
+- The panel badge will switch to **Active (127.0.0.1:4000)**.
+- Input your prompt and click **Send to Antigravity** to execute commands directly through your local session.
+
+### 2. Configuring Cloud Model Credentials (Optional)
+- Select the desired cloud provider tab (**Google Gemini** or **Anthropic Claude**).
 - Input your private API key and select **Save**. Credentials persist across sessions via client-side storage.
 - The panel verifies available models and populates the **Target Model** selector.
 
-### 2. General Animation & Scripting
+### 3. General Animation & Scripting
 Enter any creative command into the input field:
 - *"Create a 1920x1080 composition with a kinetic bouncing text layer that scales from 0 to 100 percent."*
 - *"Add an organic wiggle expression to the position property of all selected layers."*
