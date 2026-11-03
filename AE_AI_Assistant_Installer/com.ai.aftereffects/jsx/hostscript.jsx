@@ -179,6 +179,9 @@ function evalCustomScript(code) {
         app.beginUndoGroup("AI Custom Command");
         var res = eval(code);
         app.endUndoGroup();
+        if (res && String(res).indexOf("ERROR:") === 0) {
+            return String(res);
+        }
         return "SUCCESS: " + (res !== undefined ? String(res) : "Executed successfully");
     } catch (e) {
         return "ERROR: " + e.toString();
