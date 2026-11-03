@@ -112,6 +112,64 @@ function addFadeToSelected() {
     }
 }
 
+function captureCurrentFrame() {
+    try {
+        var comp = app.project.activeItem;
+        if (!(comp instanceof CompItem)) {
+            return "ERROR: Please open a composition first.";
+        }
+        var tempFolder = Folder.temp.fsName;
+        var outputPath = tempFolder + "/ae_frame_snapshot.png";
+        var outputFile = new File(outputPath);
+        if (outputFile.exists) {
+            outputFile.remove();
+        }
+        comp.saveFrameToPng(comp.time, outputFile);
+        if (outputFile.exists) {
+            return JSON.stringify({
+                path: outputPath,
+                width: comp.width,
+                height: comp.height
+            });
+        } else {
+            return "ERROR: Could not save snapshot of current frame.";
+        }
+    } catch (e) {
+        return "ERROR: " + e.toString();
+    }
+}
+
+function addMaskToSelected(left, top, right, bottom, maskName) {
+    try {
+        var comp = app.project.activeItem;
+        if (!(comp instanceof CompItem)) return "ERROR: No active composition.";
+        var layers = comp.selectedLayers;
+        if (layers.length === 0) return "ERROR: Please select the layer first.";
+
+        app.beginUndoGroup("AI Vision Mask");
+        for (var i = 0; i < layers.length; i++) {
+            var layer = layers[i];
+            var mask = layer.Masks.addProperty("Mask");
+            mask.name = maskName || "AI Vision Mask";
+            mask.maskMode = MaskMode.SUBTRACT;
+
+            var myShape = mask.property("maskShape").value;
+            myShape.vertices = [
+                [left, top],
+                [right, top],
+                [right, bottom],
+                [left, bottom]
+            ];
+            myShape.closed = true;
+            mask.property("maskShape").setValue(myShape);
+        }
+        app.endUndoGroup();
+        return "SUCCESS: Applied subtractive mask around target [" + Math.round(left) + "," + Math.round(top) + "] to [" + Math.round(right) + "," + Math.round(bottom) + "]!";
+    } catch (e) {
+        return "ERROR: " + e.toString();
+    }
+}
+
 function evalCustomScript(code) {
     try {
         app.beginUndoGroup("AI Custom Command");

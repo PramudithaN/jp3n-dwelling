@@ -314,8 +314,12 @@
     <div class="section">
         <div class="section-label">
             <span>Edit / Animation Command</span>
+            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; text-transform: none; font-size: 10px; color: #49c279;">
+                <input type="checkbox" id="visionMode" checked style="cursor: pointer; width: auto;">
+                <span>Vision Mode (Frame Analysis)</span>
+            </label>
         </div>
-        <textarea id="aiPrompt" rows="3" placeholder="Describe modification or animation..."></textarea>
+        <textarea id="aiPrompt" rows="3" placeholder="e.g. Detect text in this gif and add a subtract mask around it to remove it..."></textarea>
         <button class="btn btn-primary" id="sendBtn" onclick="askAI()">Execute Command</button>
     </div>
 
@@ -474,15 +478,59 @@ Rules:
             logEl.className = 'log-box ' + (type || '');
         }
 
+        function captureSnapshotData() {
+            return new Promise((resolve) => {
+                cs.evalScript('captureCurrentFrame()', function(res) {
+                    if (!res || res.indexOf('ERROR') === 0) {
+                        resolve(null);
+                        return;
+                    }
+                    try {
+                        const info = JSON.parse(res);
+                        let base64 = null;
+                        if (window.cep && window.cep.fs) {
+                            const result = window.cep.fs.readFile(info.path, window.cep.encoding.Base64);
+                            if (result.err === 0 && result.data) {
+                                base64 = result.data;
+                            }
+                        }
+                        if (!base64 && typeof require !== 'undefined') {
+                            try {
+                                const fs = require('fs');
+                                base64 = fs.readFileSync(info.path, 'base64');
+                            } catch (e) {}
+                        }
+                        if (base64) {
+                            resolve({ base64: base64, width: info.width, height: info.height });
+                        } else {
+                            resolve(null);
+                        }
+                    } catch (e) {
+                        resolve(null);
+                    }
+                });
+            });
+        }
+
         async function askAI() {
+            const isVision = document.getElementById('visionMode').checked;
+            let snapshot = null;
+            if (isVision) {
+                log('Analyzing current composition frame with Vision...');
+                snapshot = await captureSnapshotData();
+                if (snapshot) {
+                    log(`Frame captured (${snapshot.width}x${snapshot.height}). Vision analyzing pixels...`);
+                }
+            }
+
             if (currentProvider === 'claude') {
-                await callClaude();
+                await callClaude(snapshot);
             } else {
-                await callGemini();
+                await callGemini(snapshot);
             }
         }
 
-        async function callClaude() {
+        async function callClaude(snapshot) {
             const key = localStorage.getItem('claude_ae_key') || apiKeyInput.value.trim();
             if (!key) {
                 log('Please enter and save your Claude API key.', 'error');
@@ -507,6 +555,21 @@ Rules:
             }, 1000);
 
             try {
+                let userContent = [];
+                let contextNote = '';
+                if (snapshot) {
+                    contextNote = `\n[Vision Context: Active Comp Resolution is ${snapshot.width}x${snapshot.height}. You can use addMaskToSelected(left, top, right, bottom, name) to apply subtract/add masks on the selected layer.]\n`;
+                    userContent.push({
+                        type: 'image',
+                        source: {
+                            type: 'base64',
+                            media_type: 'image/png',
+                            data: snapshot.base64
+                        }
+                    });
+                }
+                userContent.push({ type: 'text', text: prompt + contextNote });
+
                 const response = await fetch('https://api.anthropic.com/v1/messages', {
                     method: 'POST',
                     headers: {
@@ -519,7 +582,7 @@ Rules:
                         model: model,
                         max_tokens: 2048,
                         system: SYSTEM_INSTRUCTION,
-                        messages: [{ role: 'user', content: prompt }]
+                        messages: [{ role: 'user', content: userContent }]
                     })
                 });
 
@@ -557,7 +620,7 @@ Rules:
             }
         }
 
-        async function callGemini() {
+        async function callGemini(snapshot) {
             const key = localStorage.getItem('gemini_ae_key') || apiKeyInput.value.trim();
             if (!key) {
                 log('Please enter and save your Gemini API key.', 'error');
@@ -582,9 +645,22 @@ Rules:
             }, 1000);
 
             try {
+                let contextNote = '';
+                let parts = [];
+                if (snapshot) {
+                    contextNote = `\n[Vision Context: Active Comp Resolution is ${snapshot.width}x${snapshot.height}. Visually locate the requested target/text and generate ExtendScript using addMaskToSelected(left, top, right, bottom, name) or custom masks.]\n`;
+                    parts.push({
+                        inline_data: {
+                            mime_type: 'image/png',
+                            data: snapshot.base64
+                        }
+                    });
+                }
+                parts.push({ text: SYSTEM_INSTRUCTION + contextNote + "\n\nUser Request: " + prompt });
+
                 const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=` + encodeURIComponent(key);
                 const payload = {
-                    contents: [{ role: 'user', parts: [{ text: SYSTEM_INSTRUCTION + "\n\nUser Request: " + prompt }] }]
+                    contents: [{ role: 'user', parts: parts }]
                 };
 
                 if (model.includes('3.') || model.includes('2.5')) {
@@ -594,6 +670,10 @@ Rules:
                 const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                clearInterval(timer);
                     body: JSON.stringify(payload)
                 });
 
