@@ -383,7 +383,8 @@ Rules:
 4. If working with active composition, check: var comp = app.project.activeItem; if (!(comp instanceof CompItem)) { return "ERROR: No active composition found."; }
 5. If creating a new composition or layers, ensure app.project exists (if (!app.project) app.newProject()).
 6. Always return a string message at the end stating what was completed (e.g., return "SUCCESS: Created animation!").
-7. Wrap in try { ... } catch(e) { return "ERROR: " + e.toString(); }`;
+7. Wrap in try { ... } catch(e) { return "ERROR: " + e.toString(); }
+8. addSolid signature: comp.layers.addSolid(color, name, width, height, pixelAspect, duration) where width and height are separate numbers (e.g. 500, 500), NEVER an array [500, 500].`;
 
         window.addEventListener('DOMContentLoaded', () => {
             switchProvider(currentProvider, false);

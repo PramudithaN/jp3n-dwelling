@@ -177,6 +177,14 @@ function addMaskToSelected(left, top, right, bottom, maskName) {
 function evalCustomScript(code) {
     try {
         app.beginUndoGroup("AI Custom Command");
+
+        // Auto-fix common LLM parameter slips (e.g. addSolid with [w, h] array for param 3)
+        // e.g. .addSolid(col, name, [w, h], ...) -> .addSolid(col, name, w, h, ...)
+        if (code && typeof code === "string") {
+            code = code.replace(/\.addSolid\s*\(\s*(\[[^\]]+\])\s*,\s*([^,]+)\s*,\s*\[\s*([^,\]]+)\s*,\s*([^,\]]+)\s*\]/g, 
+                ".addSolid($1, $2, $3, $4");
+        }
+
         var res = eval(code);
         app.endUndoGroup();
         if (res && String(res).indexOf("ERROR:") === 0) {
