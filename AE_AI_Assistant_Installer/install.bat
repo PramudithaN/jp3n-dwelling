@@ -1,9 +1,9 @@
 @echo off
-title Installing AE Gemini AI Assistant...
+title Installing AE AI Assistant...
 color 0b
 
 echo ========================================================
-echo        AE Gemini AI Assistant - 1-Click Installer
+echo        AE AI Assistant - 1-Click Installer
 echo ========================================================
 echo.
 
@@ -43,13 +43,14 @@ if exist "%TARGET_USER%" (
     rmdir /s /q "%TARGET_USER%" >nul 2>&1
 )
 xcopy /E /I /Y "%~dp0com.ai.aftereffects" "%TARGET_USER%" >nul
+set "COPY_STATUS=%ERRORLEVEL%"
 
 :: Also copy to Common Files if directory or permissions exist
 if exist "%CommonProgramFiles(x86)%\Adobe\CEP\extensions" (
     xcopy /E /I /Y "%~dp0com.ai.aftereffects" "%TARGET_COMMON%" >nul 2>&1
 )
 
-if %ERRORLEVEL% EQU 0 (
+if %COPY_STATUS% EQU 0 (
     color 0a
     echo.
     echo ========================================================
@@ -57,9 +58,9 @@ if %ERRORLEVEL% EQU 0 (
     echo ========================================================
     echo.
     echo Next Steps:
-    echo  1. Open Adobe After Effects.
-    echo  2. Click: Window ^> Extensions ^> AI Assistant
-    echo  3. If Extensions is still grey, restart your computer once.
+    echo  1. Double-click "start_offline_engine.bat" to boot the AI.
+    echo  2. Open Adobe After Effects.
+    echo  3. In top menu: Window ^> Extensions ^> AI Assistant.
     echo.
 ) else (
     color 0c
