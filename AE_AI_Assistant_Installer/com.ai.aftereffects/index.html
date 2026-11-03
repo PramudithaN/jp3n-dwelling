@@ -103,16 +103,17 @@
 
         .segment-btn {
             flex: 1;
-            padding: 4px 8px;
+            padding: 4px 6px;
             background: transparent;
             border: none;
             color: var(--ae-text-secondary);
             cursor: pointer;
             border-radius: 2px;
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 500;
             text-align: center;
             transition: all 0.1s ease;
+            white-space: nowrap;
         }
 
         .segment-btn.active {
@@ -157,7 +158,7 @@
             color: #e57373;
         }
 
-        /* Standard Adobe Controls */
+        /* Standard Controls */
         input[type="text"], input[type="password"], textarea, select {
             background-color: var(--ae-input-bg);
             border: 1px solid var(--ae-input-border);
@@ -188,6 +189,16 @@
         .input-row {
             display: flex;
             gap: 4px;
+        }
+
+        .info-card {
+            background: #191919;
+            border: 1px solid var(--ae-border);
+            border-radius: 2px;
+            padding: 6px 8px;
+            color: #888888;
+            font-size: 10px;
+            line-height: 1.4;
         }
 
         /* Adobe Buttons */
@@ -260,7 +271,7 @@
         }
 
         .log-box.success {
-            color: #64b5f6;
+            color: #49c279;
         }
 
         .footer {
@@ -288,26 +299,14 @@
 
     <!-- Provider Selection -->
     <div class="segmented-control">
-        <button id="tabGemini" class="segment-btn active" onclick="switchProvider('gemini')">Google Gemini</button>
-        <button id="tabClaude" class="segment-btn" onclick="switchProvider('claude')">Anthropic Claude</button>
+        <button id="tabAntigravity" class="segment-btn active" onclick="switchProvider('antigravity')">Antigravity</button>
+        <button id="tabGemini" class="segment-btn" onclick="switchProvider('gemini')">Gemini</button>
+        <button id="tabClaude" class="segment-btn" onclick="switchProvider('claude')">Claude</button>
     </div>
 
-    <!-- API & Model Config -->
-    <div class="section">
-        <div class="section-label">
-            <span id="keyLabel">Gemini API Key</span>
-            <span id="keyStatus" class="status-badge status-empty">Not configured</span>
-        </div>
-        <div class="input-row">
-            <input type="password" id="apiKeyInput" placeholder="Enter API Key">
-            <button class="btn" onclick="saveApiKey()">Save</button>
-        </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px;">
-            <span class="section-label" style="font-size: 9px;">Target Model</span>
-            <select id="modelSelect" style="max-width: 170px;">
-                <option value="gemini-3.8-flash">Loading...</option>
-            </select>
-        </div>
+    <!-- Dynamic Config Section -->
+    <div class="section" id="configSection">
+        <!-- Injected via JavaScript based on active provider -->
     </div>
 
     <!-- Main Instruction Area -->
@@ -351,15 +350,13 @@
     <script>
         const cs = new CSInterface();
         const logEl = document.getElementById('outputLog');
-        const apiKeyInput = document.getElementById('apiKeyInput');
-        const keyStatus = document.getElementById('keyStatus');
         const sendBtn = document.getElementById('sendBtn');
-        const modelSelect = document.getElementById('modelSelect');
-        const keyLabel = document.getElementById('keyLabel');
+        const configSection = document.getElementById('configSection');
+        const tabAntigravity = document.getElementById('tabAntigravity');
         const tabGemini = document.getElementById('tabGemini');
         const tabClaude = document.getElementById('tabClaude');
 
-        let currentProvider = localStorage.getItem('ae_active_provider') || 'gemini';
+        let currentProvider = localStorage.getItem('ae_active_provider') || 'antigravity';
 
         const SYSTEM_INSTRUCTION = `You are an elite Adobe After Effects ExtendScript developer.
 The user wants to perform an animation, motion graphic, or editing task in After Effects.
@@ -382,70 +379,110 @@ Rules:
             currentProvider = provider;
             if (save) localStorage.setItem('ae_active_provider', provider);
 
-            if (provider === 'claude') {
-                tabClaude.className = 'segment-btn active';
-                tabGemini.className = 'segment-btn';
-                keyLabel.textContent = 'Claude API Key';
-                apiKeyInput.placeholder = 'sk-ant-...';
-                sendBtn.textContent = 'Execute with Claude';
+            tabAntigravity.className = 'segment-btn' + (provider === 'antigravity' ? ' active' : '');
+            tabGemini.className = 'segment-btn' + (provider === 'gemini' ? ' active' : '');
+            tabClaude.className = 'segment-btn' + (provider === 'claude' ? ' active' : '');
 
-                modelSelect.innerHTML = `
-                    <option value="claude-3-7-sonnet-20250219" selected>Claude 3.7 Sonnet</option>
-                    <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
-                    <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku</option>
+            if (provider === 'antigravity') {
+                sendBtn.textContent = 'Send to Antigravity';
+                configSection.innerHTML = `
+                    <div class="section-label">
+                        <span>Antigravity Local Bridge</span>
+                        <span id="bridgeStatus" class="status-badge status-active">Active (127.0.0.1:4000)</span>
+                    </div>
+                    <div class="info-card">
+                        Zero API keys required. Connected directly to your local Antigravity AI session (powered by Google AI Pro).
+                    </div>
+                `;
+                checkBridgeConnection();
+
+            } else if (provider === 'claude') {
+                sendBtn.textContent = 'Execute with Claude';
+                const savedKey = localStorage.getItem('claude_ae_key') || '';
+                configSection.innerHTML = `
+                    <div class="section-label">
+                        <span>Claude API Key</span>
+                        <span id="keyStatus" class="status-badge ${savedKey ? 'status-active' : 'status-empty'}">${savedKey ? 'Active' : 'Not configured'}</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="password" id="apiKeyInput" placeholder="sk-ant-..." value="${savedKey}">
+                        <button class="btn" onclick="saveApiKey()">Save</button>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px;">
+                        <span class="section-label" style="font-size: 9px;">Target Model</span>
+                        <select id="modelSelect" style="max-width: 170px;">
+                            <option value="claude-3-7-sonnet-20250219" selected>Claude 3.7 Sonnet</option>
+                            <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
+                            <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku</option>
+                        </select>
+                    </div>
                 `;
 
-                const savedKey = localStorage.getItem('claude_ae_key') || '';
-                apiKeyInput.value = savedKey;
-                updateKeyStatus(savedKey);
-
-            } else {
-                tabGemini.className = 'segment-btn active';
-                tabClaude.className = 'segment-btn';
-                keyLabel.textContent = 'Gemini API Key';
-                apiKeyInput.placeholder = 'AIzaSy...';
+            } else { // Gemini
                 sendBtn.textContent = 'Execute with Gemini';
-
                 const savedKey = localStorage.getItem('gemini_ae_key') || '';
-                apiKeyInput.value = savedKey;
-                updateKeyStatus(savedKey);
+                configSection.innerHTML = `
+                    <div class="section-label">
+                        <span>Gemini API Key</span>
+                        <span id="keyStatus" class="status-badge ${savedKey ? 'status-active' : 'status-empty'}">${savedKey ? 'Active' : 'Not configured'}</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="password" id="apiKeyInput" placeholder="AIzaSy..." value="${savedKey}">
+                        <button class="btn" onclick="saveApiKey()">Save</button>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px;">
+                        <span class="section-label" style="font-size: 9px;">Target Model</span>
+                        <select id="modelSelect" style="max-width: 170px;">
+                            <option value="gemini-3.8-flash">Loading models...</option>
+                        </select>
+                    </div>
+                `;
+                if (savedKey) loadGeminiModels(savedKey);
+            }
+        }
 
-                if (savedKey) {
-                    loadGeminiModels(savedKey);
-                } else {
-                    modelSelect.innerHTML = '<option value="gemini-3.8-flash">Enter API key first</option>';
+        async function checkBridgeConnection() {
+            try {
+                const res = await fetch('http://127.0.0.1:4000/status');
+                const statusEl = document.getElementById('bridgeStatus');
+                if (res.ok && statusEl) {
+                    statusEl.textContent = 'Active (127.0.0.1:4000)';
+                    statusEl.className = 'status-badge status-active';
+                }
+            } catch (e) {
+                const statusEl = document.getElementById('bridgeStatus');
+                if (statusEl) {
+                    statusEl.textContent = 'Offline (Start server)';
+                    statusEl.className = 'status-badge status-empty';
                 }
             }
         }
 
-        function updateKeyStatus(key) {
-            if (key) {
-                keyStatus.textContent = 'Active';
-                keyStatus.className = 'status-badge status-active';
-            } else {
-                keyStatus.textContent = 'Not configured';
-                keyStatus.className = 'status-badge status-empty';
-            }
-        }
-
         function saveApiKey() {
-            const key = apiKeyInput.value.trim();
+            const input = document.getElementById('apiKeyInput');
+            if (!input) return;
+            const key = input.value.trim();
             const storageName = currentProvider === 'claude' ? 'claude_ae_key' : 'gemini_ae_key';
-            
+            const statusEl = document.getElementById('keyStatus');
+
             if (!key) {
                 localStorage.removeItem(storageName);
-                updateKeyStatus('');
+                if (statusEl) {
+                    statusEl.textContent = 'Not configured';
+                    statusEl.className = 'status-badge status-empty';
+                }
                 log(`${currentProvider.toUpperCase()} key removed.`);
                 return;
             }
 
             localStorage.setItem(storageName, key);
-            updateKeyStatus(key);
+            if (statusEl) {
+                statusEl.textContent = 'Active';
+                statusEl.className = 'status-badge status-active';
+            }
             log(`${currentProvider.toUpperCase()} key saved.`, 'success');
 
-            if (currentProvider === 'gemini') {
-                loadGeminiModels(key);
-            }
+            if (currentProvider === 'gemini') loadGeminiModels(key);
         }
 
         async function loadGeminiModels(key) {
@@ -457,15 +494,16 @@ Rules:
                     .filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent'))
                     .map(m => m.name.replace(/^models\//, ''));
 
-                if (validModels.length > 0) {
-                    modelSelect.innerHTML = '';
+                const select = document.getElementById('modelSelect');
+                if (validModels.length > 0 && select) {
+                    select.innerHTML = '';
                     validModels.sort((a, b) => b.localeCompare(a));
                     validModels.forEach(m => {
                         const opt = document.createElement('option');
                         opt.value = m;
                         opt.textContent = m;
                         if (m.includes('3.8-flash') || m.includes('2.0-flash')) opt.selected = true;
-                        modelSelect.appendChild(opt);
+                        select.appendChild(opt);
                     });
                 }
             } catch (e) {
@@ -490,9 +528,7 @@ Rules:
                         let base64 = null;
                         if (window.cep && window.cep.fs) {
                             const result = window.cep.fs.readFile(info.path, window.cep.encoding.Base64);
-                            if (result.err === 0 && result.data) {
-                                base64 = result.data;
-                            }
+                            if (result.err === 0 && result.data) base64 = result.data;
                         }
                         if (!base64 && typeof require !== 'undefined') {
                             try {
@@ -501,7 +537,7 @@ Rules:
                             } catch (e) {}
                         }
                         if (base64) {
-                            resolve({ base64: base64, width: info.width, height: info.height });
+                            resolve({ base64: base64, path: info.path, width: info.width, height: info.height });
                         } else {
                             resolve(null);
                         }
@@ -523,15 +559,71 @@ Rules:
                 }
             }
 
-            if (currentProvider === 'claude') {
+            if (currentProvider === 'antigravity') {
+                await callAntigravityBridge(snapshot);
+            } else if (currentProvider === 'claude') {
                 await callClaude(snapshot);
             } else {
                 await callGemini(snapshot);
             }
         }
 
+        // ==================== ANTIGRAVITY LOCAL BRIDGE ====================
+        async function callAntigravityBridge(snapshot) {
+            const prompt = document.getElementById('aiPrompt').value.trim();
+            if (!prompt) {
+                log('Please enter a command or prompt.', 'error');
+                return;
+            }
+
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Sent to Antigravity...';
+            log('Sending request to local Antigravity Bridge (http://127.0.0.1:4000)...');
+
+            try {
+                const payload = {
+                    prompt: prompt,
+                    vision: !!snapshot,
+                    compWidth: snapshot ? snapshot.width : 1920,
+                    compHeight: snapshot ? snapshot.height : 1080,
+                    snapshotPath: snapshot ? snapshot.path : null,
+                    timestamp: Date.now()
+                };
+
+                const response = await fetch('http://127.0.0.1:4000/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Bridge server error: ' + response.statusText);
+                }
+
+                const result = await response.json();
+                if (result.code) {
+                    log('Received code from Antigravity. Executing in After Effects...');
+                    cs.evalScript('evalCustomScript(' + JSON.stringify(result.code) + ')', function(res) {
+                        sendBtn.disabled = false;
+                        sendBtn.textContent = 'Send to Antigravity';
+                        log(res, res && res.indexOf('ERROR') === 0 ? 'error' : 'success');
+                    });
+                } else if (result.message) {
+                    sendBtn.disabled = false;
+                    sendBtn.textContent = 'Send to Antigravity';
+                    log(result.message, 'success');
+                }
+
+            } catch (err) {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send to Antigravity';
+                log('Bridge Notice: ' + err.message + '\nMake sure Antigravity bridge server is running.', 'error');
+            }
+        }
+
+        // ==================== CLAUDE API ====================
         async function callClaude(snapshot) {
-            const key = localStorage.getItem('claude_ae_key') || apiKeyInput.value.trim();
+            const key = localStorage.getItem('claude_ae_key') || '';
             if (!key) {
                 log('Please enter and save your Claude API key.', 'error');
                 return;
@@ -543,7 +635,8 @@ Rules:
                 return;
             }
 
-            const model = modelSelect.value || 'claude-3-7-sonnet-20250219';
+            const select = document.getElementById('modelSelect');
+            const model = (select && select.value) || 'claude-3-7-sonnet-20250219';
             sendBtn.disabled = true;
             sendBtn.textContent = 'Processing with Claude...';
             
@@ -620,8 +713,9 @@ Rules:
             }
         }
 
+        // ==================== GEMINI API ====================
         async function callGemini(snapshot) {
-            const key = localStorage.getItem('gemini_ae_key') || apiKeyInput.value.trim();
+            const key = localStorage.getItem('gemini_ae_key') || '';
             if (!key) {
                 log('Please enter and save your Gemini API key.', 'error');
                 return;
@@ -633,7 +727,8 @@ Rules:
                 return;
             }
 
-            const model = modelSelect.value || 'gemini-3.8-flash';
+            const select = document.getElementById('modelSelect');
+            const model = (select && select.value) || 'gemini-3.8-flash';
             sendBtn.disabled = true;
             sendBtn.textContent = 'Processing with Gemini...';
             
@@ -670,10 +765,6 @@ Rules:
                 const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                clearInterval(timer);
                     body: JSON.stringify(payload)
                 });
 
