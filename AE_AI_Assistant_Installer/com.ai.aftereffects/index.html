@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <style>
+        :root {
+            --ae-bg: #222222;
+            --ae-panel: #262626;
+            --ae-panel-elevated: #2d2d2d;
+            --ae-input-bg: #181818;
+            --ae-input-border: #3b3b3b;
+            --ae-input-focus: #1473e6;
+            --ae-text-primary: #d5d5d5;
+            --ae-text-secondary: #909090;
+            --ae-text-disabled: #555555;
+            --ae-border: #333333;
+            --ae-button-bg: #323232;
+            --ae-button-hover: #3e3e3e;
+            --ae-button-active: #1f1f1f;
+            --ae-blue: #1473e6;
+            --ae-blue-hover: #0d66d0;
+            --ae-blue-active: #0952a8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Adobe Clean", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.1px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: var(--ae-bg);
+            color: var(--ae-text-primary);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--ae-border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brand-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #eeeeee;
+        }
+
+        .author-tag {
+            font-size: 9px;
+            color: var(--ae-text-secondary);
+            font-weight: 400;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--ae-text-secondary);
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .icon-btn:hover {
+            color: #ffffff;
+            background: var(--ae-button-hover);
+        }
+
+        /* Segmented Provider Switcher */
+        .segmented-control {
+            display: flex;
+            background: #191919;
+            border: 1px solid var(--ae-border);
+            border-radius: 3px;
+            padding: 2px;
+            gap: 2px;
+        }
+
+        .segment-btn {
+            flex: 1;
+            padding: 4px 8px;
+            background: transparent;
+            border: none;
+            color: var(--ae-text-secondary);
+            cursor: pointer;
+            border-radius: 2px;
+            font-size: 10.5px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.1s ease;
+        }
+
+        .segment-btn.active {
+            background: #383838;
+            color: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .segment-btn:hover:not(.active) {
+            color: var(--ae-text-primary);
+        }
+
+        /* Section Layout */
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .section-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--ae-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .status-badge {
+            font-size: 9.5px;
+            font-weight: 500;
+            text-transform: none;
+        }
+
+        .status-active {
+            color: #49c279;
+        }
+
+        .status-empty {
+            color: #e57373;
+        }
+
+        /* Standard Adobe Controls */
+        input[type="text"], input[type="password"], textarea, select {
+            background-color: var(--ae-input-bg);
+            border: 1px solid var(--ae-input-border);
+            color: var(--ae-text-primary);
+            padding: 5px 7px;
+            border-radius: 2px;
+            outline: none;
+            width: 100%;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+            border-color: var(--ae-input-focus);
+        }
+
+        select {
+            cursor: pointer;
+            padding: 4px 6px;
+        }
+
+        textarea {
+            resize: vertical;
+            line-height: 1.4;
+            min-height: 60px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Adobe Buttons */
+        .btn {
+            background: var(--ae-button-bg);
+            border: 1px solid #3c3c3c;
+            color: var(--ae-text-primary);
+            padding: 5px 10px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 11px;
+            text-align: center;
+            white-space: nowrap;
+            transition: background 0.1s ease;
+        }
+
+        .btn:hover {
+            background: var(--ae-button-hover);
+            color: #ffffff;
+        }
+
+        .btn:active {
+            background: var(--ae-button-active);
+        }
+
+        .btn-primary {
+            background: var(--ae-blue);
+            border-color: #1260c2;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 7px 10px;
+        }
+
+        .btn-primary:hover {
+            background: var(--ae-blue-hover);
+        }
+
+        .btn-primary:active {
+            background: var(--ae-blue-active);
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+        }
+
+        /* Log / Script Output Box */
+        .log-box {
+            background: #161616;
+            border: 1px solid var(--ae-border);
+            border-radius: 2px;
+            padding: 6px 8px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 10.5px;
+            line-height: 1.35;
+            color: #a0a0a0;
+            min-height: 65px;
+            max-height: 120px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        .log-box.error {
+            color: #e57373;
+        }
+
+        .log-box.success {
+            color: #64b5f6;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding-top: 6px;
+            border-top: 1px solid #2b2b2b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header bar -->
+    <div class="top-bar">
+        <div class="brand">
+            <span class="brand-title">Motion Engine</span>
+            <span class="author-tag">by Pramuditha</span>
+        </div>
+        <button class="icon-btn" onclick="location.reload()" title="Reload Panel">↻</button>
+    </div>
+
+    <!-- Provider Selection -->
+    <div class="segmented-control">
+        <button id="tabGemini" class="segment-btn active" onclick="switchProvider('gemini')">Google Gemini</button>
+        <button id="tabClaude" class="segment-btn" onclick="switchProvider('claude')">Anthropic Claude</button>
+    </div>
+
+    <!-- API & Model Config -->
+    <div class="section">
+        <div class="section-label">
+            <span id="keyLabel">Gemini API Key</span>
+            <span id="keyStatus" class="status-badge status-empty">Not configured</span>
+        </div>
+        <div class="input-row">
+            <input type="password" id="apiKeyInput" placeholder="Enter API Key">
+            <button class="btn" onclick="saveApiKey()">Save</button>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px;">
+            <span class="section-label" style="font-size: 9px;">Target Model</span>
+            <select id="modelSelect" style="max-width: 170px;">
+                <option value="gemini-3.8-flash">Loading...</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Main Instruction Area -->
+    <div class="section">
+        <div class="section-label">
+            <span>Edit / Animation Command</span>
+        </div>
+        <textarea id="aiPrompt" rows="3" placeholder="Describe modification or animation..."></textarea>
+        <button class="btn btn-primary" id="sendBtn" onclick="askAI()">Execute Command</button>
+    </div>
+
+    <!-- Quick Utilities -->
+    <div class="section">
+        <div class="section-label">
+            <span>Preset Actions</span>
+        </div>
+        <div class="btn-grid">
+            <button class="btn" onclick="createTitle()">New Title Comp</button>
+            <button class="btn" onclick="addWiggle()">Add Wiggle (3, 30)</button>
+        </div>
+    </div>
+
+    <!-- Output / Status -->
+    <div class="section">
+        <div class="section-label">
+            <span>Script Engine Log</span>
+        </div>
+        <div id="outputLog" class="log-box">Ready.</div>
+    </div>
+
+    <div class="footer">
+        <span>ExtendScript Engine 2026</span>
+        <span>Pramuditha Motion Tools</span>
+    </div>
+
+    <script src="js/CSInterface.js"></script>
+    <script>
+        const cs = new CSInterface();
+        const logEl = document.getElementById('outputLog');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const keyStatus = document.getElementById('keyStatus');
+        const sendBtn = document.getElementById('sendBtn');
+        const modelSelect = document.getElementById('modelSelect');
+        const keyLabel = document.getElementById('keyLabel');
+        const tabGemini = document.getElementById('tabGemini');
+        const tabClaude = document.getElementById('tabClaude');
+
+        let currentProvider = localStorage.getItem('ae_active_provider') || 'gemini';
+
+        const SYSTEM_INSTRUCTION = `You are an elite Adobe After Effects ExtendScript developer.
+The user wants to perform an animation, motion graphic, or editing task in After Effects.
+Generate executable ExtendScript (ECMAScript 3 compliant) code that runs directly inside After Effects.
+
+Rules:
+1. Output ONLY executable JavaScript/ExtendScript code inside a self-invoking function (function() { ... })();
+2. Do NOT include markdown formatting or prose - output RAW code only.
+3. Always wrap your work in app.beginUndoGroup("AI Action") and app.endUndoGroup().
+4. If working with active composition, check: var comp = app.project.activeItem; if (!(comp instanceof CompItem)) { return "ERROR: No active composition found."; }
+5. If creating a new composition or layers, ensure app.project exists (if (!app.project) app.newProject()).
+6. Always return a string message at the end stating what was completed (e.g., return "SUCCESS: Created animation!").
+7. Wrap in try { ... } catch(e) { return "ERROR: " + e.toString(); }`;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            switchProvider(currentProvider, false);
+        });
+
+        function switchProvider(provider, save = true) {
+            currentProvider = provider;
+            if (save) localStorage.setItem('ae_active_provider', provider);
+
+            if (provider === 'claude') {
+                tabClaude.className = 'segment-btn active';
+                tabGemini.className = 'segment-btn';
+                keyLabel.textContent = 'Claude API Key';
+                apiKeyInput.placeholder = 'sk-ant-...';
+                sendBtn.textContent = 'Execute with Claude';
+
+                modelSelect.innerHTML = `
+                    <option value="claude-3-7-sonnet-20250219" selected>Claude 3.7 Sonnet</option>
+                    <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
+                    <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku</option>
+                `;
+
+                const savedKey = localStorage.getItem('claude_ae_key') || '';
+                apiKeyInput.value = savedKey;
+                updateKeyStatus(savedKey);
+
+            } else {
+                tabGemini.className = 'segment-btn active';
+                tabClaude.className = 'segment-btn';
+                keyLabel.textContent = 'Gemini API Key';
+                apiKeyInput.placeholder = 'AIzaSy...';
+                sendBtn.textContent = 'Execute with Gemini';
+
+                const savedKey = localStorage.getItem('gemini_ae_key') || '';
+                apiKeyInput.value = savedKey;
+                updateKeyStatus(savedKey);
+
+                if (savedKey) {
+                    loadGeminiModels(savedKey);
+                } else {
+                    modelSelect.innerHTML = '<option value="gemini-3.8-flash">Enter API key first</option>';
+                }
+            }
+        }
+
+        function updateKeyStatus(key) {
+            if (key) {
+                keyStatus.textContent = 'Active';
+                keyStatus.className = 'status-badge status-active';
+            } else {
+                keyStatus.textContent = 'Not configured';
+                keyStatus.className = 'status-badge status-empty';
+            }
+        }
+
+        function saveApiKey() {
+            const key = apiKeyInput.value.trim();
+            const storageName = currentProvider === 'claude' ? 'claude_ae_key' : 'gemini_ae_key';
+            
+            if (!key) {
+                localStorage.removeItem(storageName);
+                updateKeyStatus('');
+                log(`${currentProvider.toUpperCase()} key removed.`);
+                return;
+            }
+
+            localStorage.setItem(storageName, key);
+            updateKeyStatus(key);
+            log(`${currentProvider.toUpperCase()} key saved.`, 'success');
+
+            if (currentProvider === 'gemini') {
+                loadGeminiModels(key);
+            }
+        }
+
+        async function loadGeminiModels(key) {
+            try {
+                const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + encodeURIComponent(key));
+                if (!res.ok) return;
+                const data = await res.json();
+                const validModels = (data.models || [])
+                    .filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent'))
+                    .map(m => m.name.replace(/^models\//, ''));
+
+                if (validModels.length > 0) {
+                    modelSelect.innerHTML = '';
+                    validModels.sort((a, b) => b.localeCompare(a));
+                    validModels.forEach(m => {
+                        const opt = document.createElement('option');
+                        opt.value = m;
+                        opt.textContent = m;
+                        if (m.includes('3.8-flash') || m.includes('2.0-flash')) opt.selected = true;
+                        modelSelect.appendChild(opt);
+                    });
+                }
+            } catch (e) {
+                console.warn(e);
+            }
+        }
+
+        function log(msg, type) {
+            logEl.textContent = msg;
+            logEl.className = 'log-box ' + (type || '');
+        }
+
+        async function askAI() {
+            if (currentProvider === 'claude') {
+                await callClaude();
+            } else {
+                await callGemini();
+            }
+        }
+
+        async function callClaude() {
+            const key = localStorage.getItem('claude_ae_key') || apiKeyInput.value.trim();
+            if (!key) {
+                log('Please enter and save your Claude API key.', 'error');
+                return;
+            }
+
+            const prompt = document.getElementById('aiPrompt').value.trim();
+            if (!prompt) {
+                log('Please enter a command or prompt.', 'error');
+                return;
+            }
+
+            const model = modelSelect.value || 'claude-3-7-sonnet-20250219';
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Processing with Claude...';
+            
+            let seconds = 0;
+            log(`Connecting to Anthropic Claude (${model})...`);
+            const timer = setInterval(() => {
+                seconds++;
+                log(`Processing request (${seconds}s)...`);
+            }, 1000);
+
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': key,
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        max_tokens: 2048,
+                        system: SYSTEM_INSTRUCTION,
+                        messages: [{ role: 'user', content: prompt }]
+                    })
+                });
+
+                clearInterval(timer);
+
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error ? errData.error.message : 'HTTP status ' + response.status);
+                }
+
+                const data = await response.json();
+                let rawText = data.content?.[0]?.text || '';
+                
+                let generatedCode = rawText;
+                const match = rawText.match(/```(?:javascript|jsx|extendscript)?\s*([\s\S]*?)```/i);
+                if (match && match[1]) {
+                    generatedCode = match[1].trim();
+                } else {
+                    generatedCode = rawText.replace(/```[a-z]*/gi, '').replace(/```/g, '').trim();
+                }
+
+                log(`Code generated (${seconds}s). Executing in After Effects...`);
+
+                cs.evalScript('evalCustomScript(' + JSON.stringify(generatedCode) + ')', function(res) {
+                    sendBtn.disabled = false;
+                    sendBtn.textContent = 'Execute with Claude';
+                    log(res, res && res.indexOf('ERROR') === 0 ? 'error' : 'success');
+                });
+
+            } catch (err) {
+                clearInterval(timer);
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Execute with Claude';
+                log('Claude Error: ' + err.message, 'error');
+            }
+        }
+
+        async function callGemini() {
+            const key = localStorage.getItem('gemini_ae_key') || apiKeyInput.value.trim();
+            if (!key) {
+                log('Please enter and save your Gemini API key.', 'error');
+                return;
+            }
+
+            const prompt = document.getElementById('aiPrompt').value.trim();
+            if (!prompt) {
+                log('Please enter a command or prompt.', 'error');
+                return;
+            }
+
+            const model = modelSelect.value || 'gemini-3.8-flash';
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Processing with Gemini...';
+            
+            let seconds = 0;
+            log(`Connecting to Gemini (${model})...`);
+            const timer = setInterval(() => {
+                seconds++;
+                log(`Processing request (${seconds}s)...`);
+            }, 1000);
+
+            try {
+                const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=` + encodeURIComponent(key);
+                const payload = {
+                    contents: [{ role: 'user', parts: [{ text: SYSTEM_INSTRUCTION + "\n\nUser Request: " + prompt }] }]
+                };
+
+                if (model.includes('3.') || model.includes('2.5')) {
+                    payload.generationConfig = { thinkingConfig: { thinkingBudget: 0 } };
+                }
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                clearInterval(timer);
+
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error ? errData.error.message : 'HTTP status ' + response.status);
+                }
+
+                const data = await response.json();
+                let rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                
+                let generatedCode = rawText;
+                const match = rawText.match(/```(?:javascript|jsx|extendscript)?\s*([\s\S]*?)```/i);
+                if (match && match[1]) {
+                    generatedCode = match[1].trim();
+                } else {
+                    generatedCode = rawText.replace(/```[a-z]*/gi, '').replace(/```/g, '').trim();
+                }
+
+                log(`Code generated (${seconds}s). Executing in After Effects...`);
+
+                cs.evalScript('evalCustomScript(' + JSON.stringify(generatedCode) + ')', function(res) {
+                    sendBtn.disabled = false;
+                    sendBtn.textContent = 'Execute with Gemini';
+                    log(res, res && res.indexOf('ERROR') === 0 ? 'error' : 'success');
+                });
+
+            } catch (err) {
+                clearInterval(timer);
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Execute with Gemini';
+                log('Gemini Error: ' + err.message, 'error');
+            }
+        }
+
+        function createTitle() {
+            log('Creating sample title comp...');
+            cs.evalScript('createDemoComp("AI MOTION TITLE")', function(res) {
+                log(res, res && res.indexOf('ERROR') === 0 ? 'error' : 'success');
+            });
+        }
+
+        function addWiggle() {
+            log('Applying wiggle to selected layer...');
+            cs.evalScript('addWiggleToSelected()', function(res) {
+                log(res, res && res.indexOf('ERROR') === 0 ? 'error' : 'success');
+            });
+        }
+    </script>
+</body>
+</html>
