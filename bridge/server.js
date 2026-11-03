@@ -1,4 +1,4 @@
-// bridge/server.js - Lightweight local HTTP bridge for Antigravity & After Effects
+// bridge/server.js - Non-blocking local bridge for Antigravity & After Effects
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -9,7 +9,6 @@ const REQUEST_FILE = path.join(BRIDGE_DIR, 'request.json');
 const RESPONSE_FILE = path.join(BRIDGE_DIR, 'response.json');
 
 const server = http.createServer((req, res) => {
-    // CORS headers for After Effects CEP panel
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -22,10 +21,11 @@ const server = http.createServer((req, res) => {
 
     if (req.url === '/status' && req.method === 'GET') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ status: 'connected', version: '1.0' }));
+        res.end(JSON.stringify({ status: 'connected', version: '2.0' }));
         return;
     }
 
+    // Submit new prompt from After Effects
     if (req.url === '/execute' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => { body += chunk; });
@@ -33,28 +33,24 @@ const server = http.createServer((req, res) => {
             try {
                 const data = JSON.parse(body);
                 fs.writeFileSync(REQUEST_FILE, JSON.stringify(data, null, 2));
-                console.log(`[Bridge] Received prompt from After Effects: "${data.prompt}"`);
+                console.log(`[Bridge] Prompt received: "${data.prompt}"`);
 
-                // Wait up to 60s for response.json
-                const startTime = Date.now();
-                const pollInterval = setInterval(() => {
-                    if (fs.existsSync(RESPONSE_FILE)) {
-                        try {
-                            const responseContent = fs.readFileSync(RESPONSE_FILE, 'utf8');
-                            const resp = JSON.parse(responseContent);
-                            fs.unlinkSync(RESPONSE_FILE); // Clean up
-                            clearInterval(pollInterval);
-                            res.writeHead(200, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify(resp));
-                            return;
-                        } catch (err) {}
-                    }
-                    if (Date.now() - startTime > 60000) {
-                        clearInterval(pollInterval);
-                        res.writeHead(504, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Timeout waiting for Antigravity response.' }));
-                    }
-                }, 500);
+                // Check if response already exists
+                if (fs.existsSync(RESPONSE_FILE)) {
+                    const responseContent = fs.readFileSync(RESPONSE_FILE, 'utf8');
+                    const resp = JSON.parse(responseContent);
+                    fs.unlinkSync(RESPONSE_FILE);
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify(resp));
+                    return;
+                }
+
+                // Non-blocking acknowledgement
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({
+                    status: 'queued',
+                    message: 'Prompt queued in Antigravity workspace.'
+                }));
 
             } catch (e) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -64,10 +60,27 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Poll for ready response
+    if (req.url === '/poll' && req.method === 'GET') {
+        if (fs.existsSync(RESPONSE_FILE)) {
+            try {
+                const responseContent = fs.readFileSync(RESPONSE_FILE, 'utf8');
+                const resp = JSON.parse(responseContent);
+                fs.unlinkSync(RESPONSE_FILE);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ ready: true, ...resp }));
+                return;
+            } catch (err) {}
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ready: false }));
+        return;
+    }
+
     res.writeHead(404);
     res.end();
 });
 
 server.listen(PORT, '127.0.0.1', () => {
-    console.log(`[Bridge Server] Listening on http://127.0.0.1:${PORT}`);
+    console.log(`[Bridge Server v2] Listening on http://127.0.0.1:${PORT}`);
 });

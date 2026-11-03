@@ -578,7 +578,7 @@ Rules:
 
             sendBtn.disabled = true;
             sendBtn.textContent = 'Sent to Antigravity...';
-            log('Sending request to local Antigravity Bridge (http://127.0.0.1:4000)...');
+            log('Sending request to local Antigravity Bridge (127.0.0.1:4000)...');
 
             try {
                 const payload = {
@@ -601,24 +601,53 @@ Rules:
                 }
 
                 const result = await response.json();
+                
+                // If code was already waiting, execute immediately
                 if (result.code) {
-                    log('Received code from Antigravity. Executing in After Effects...');
-                    cs.evalScript('evalCustomScript(' + JSON.stringify(result.code) + ')', function(res) {
+                    executeBridgeCode(result.code);
+                    return;
+                }
+
+                // If queued, poll /poll endpoint until Antigravity writes the response
+                log('Prompt queued in Antigravity workspace.\nWaiting for Antigravity response...');
+                let pollSeconds = 0;
+                const pollInterval = setInterval(async () => {
+                    pollSeconds += 2;
+                    log(`Prompt queued in Antigravity. Waiting for response (${pollSeconds}s)...`);
+
+                    try {
+                        const pollRes = await fetch('http://127.0.0.1:4000/poll');
+                        if (pollRes.ok) {
+                            const pollData = await pollRes.json();
+                            if (pollData.ready && pollData.code) {
+                                clearInterval(pollInterval);
+                                executeBridgeCode(pollData.code);
+                            }
+                        }
+                    } catch (e) {}
+
+                    if (pollSeconds >= 90) {
+                        clearInterval(pollInterval);
                         sendBtn.disabled = false;
                         sendBtn.textContent = 'Send to Antigravity';
-                        log(res, res && res.indexOf('ERROR') === 0 ? 'error' : 'success');
-                    });
-                } else if (result.message) {
-                    sendBtn.disabled = false;
-                    sendBtn.textContent = 'Send to Antigravity';
-                    log(result.message, 'success');
-                }
+                        log('Antigravity request timed out after 90s.', 'error');
+                    }
+                }, 2000);
 
             } catch (err) {
                 sendBtn.disabled = false;
                 sendBtn.textContent = 'Send to Antigravity';
                 log('Bridge Notice: ' + err.message + '\nMake sure Antigravity bridge server is running.', 'error');
             }
+        }
+
+        function executeBridgeCode(code) {
+            log('Executing Antigravity script in After Effects...');
+            cs.evalScript('evalCustomScript(' + JSON.stringify(code) + ')', function(res) {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send to Antigravity';
+                log(res, res && res.indexOf('ERROR') === 0 ? 'error' : 'success');
+            });
         }
 
         // ==================== CLAUDE API ====================
