@@ -9,6 +9,11 @@ $RECYCLE.BIN/
 *.tmp
 *.log
 
+# Large ML model weights and zip archives
+*.gguf
+*.bin
+*.zip
+
 # AI Agent rule & template files (per-repo local generated)
 AGENTS.md
 GEMINI.md

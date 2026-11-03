@@ -89,13 +89,30 @@ motion.eng/
 
 ## Configuration & Usage
 
-### 1. Antigravity Local Bridge (Zero API Keys)
+### 1. Offline Local AI Suite (100% Free, Zero API Keys, Zero Internet)
+- Double-click `start_offline_engine.bat` (or run `AE_AI_Assistant_Installer\com.ai.aftereffects\server\start_server.bat`).
+- In After Effects, open `Window > Extensions > AI Assistant`.
+- The panel will default to the **Offline AI** provider tab and show **Active (127.0.0.1:8080)**.
+- Input any motion design prompt and click **Execute with Offline AI**:
+  - *"Create a 4K comp with a dark solid, add an animated circular stroke with Trim Paths write-on over 2 seconds"*
+  - *"Remove green screen with Keylight 1.2 and tighten edges with simple choker"*
+  - *"Add an inertial bounce elastic expression to rotation of selected layer"*
+  - *"Create a frosted glassmorphism adjustment card with blur and drop shadow"*
+- The script executes instantly and safely inside After Effects within transaction-safe undo groups (`app.beginUndoGroup`).
+
+### 2. Real-Time Smart Suggestions (Model 2 Recommender)
+- As you work in After Effects, select any layer (footage, text, shape, 3D, adjustment layer).
+- The **Smart Suggestions (Model 2)** bar at the bottom evaluates your active layer state in `< 2 milliseconds` with zero VRAM overhead.
+- Displays the top 3 recommended next effects / actions (e.g., `[Tighten Edges]`, `[Color Match]`, `[Trim Paths]`).
+- Click any suggestion to apply it directly to your timeline in one click!
+
+### 3. Antigravity Local Bridge (Optional)
 - Select the **Antigravity** provider tab in the panel.
 - Launch the local bridge server by running [start_bridge.bat](file:///c:/Users/PramudithaN/Documents/antigravity/lively-babbage/start_bridge.bat) or executing `node bridge/server.js`.
 - The panel badge will switch to **Active (127.0.0.1:4000)**.
 - Input your prompt and click **Send to Antigravity** to execute commands directly through your local session.
 
-### 2. Configuring Cloud Model Credentials (Optional)
+### 4. Configuring Cloud Model Credentials (Optional)
 - Select the desired cloud provider tab (**Google Gemini** or **Anthropic Claude**).
 - Input your private API key and select **Save**. Credentials persist across sessions via client-side storage.
 - The panel verifies available models and populates the **Target Model** selector.

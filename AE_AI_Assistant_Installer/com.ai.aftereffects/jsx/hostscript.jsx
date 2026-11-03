@@ -187,3 +187,57 @@ function evalCustomScript(code) {
         return "ERROR: " + e.toString();
     }
 }
+
+
+// -------------------------------------------------------------
+// Workflow Recommender Helper: Queries active layer state
+// -------------------------------------------------------------
+function getSelectedLayerInfo() {
+    try {
+        var comp = app.project.activeItem;
+        if (!(comp instanceof CompItem)) {
+            return '{"hasComp":false,"hasSelection":false}';
+        }
+        var selected = comp.selectedLayers;
+        if (selected.length === 0) {
+            return '{"hasComp":true,"hasSelection":false,"compName":"' + comp.name.replace(/"/g, "'") + '"}';
+        }
+
+        var layer = selected[0];
+        var layerType = "AVLayer";
+        if (layer instanceof TextLayer) {
+            layerType = "TextLayer";
+        } else if (layer instanceof ShapeLayer) {
+            layerType = "ShapeLayer";
+        } else if (layer instanceof CameraLayer) {
+            layerType = "CameraLayer";
+        } else if (layer instanceof LightLayer) {
+            layerType = "LightLayer";
+        } else if (layer.adjustmentLayer) {
+            layerType = "AdjustmentLayer";
+        } else if (layer.nullLayer) {
+            layerType = "NullLayer";
+        }
+
+        var is3D = layer.threeDLayer ? true : false;
+        var effectsList = [];
+        var effectParade = layer.property("ADBE Effect Parade");
+        if (effectParade) {
+            for (var i = 1; i <= effectParade.numProperties; i++) {
+                var eff = effectParade.property(i);
+                if (eff) {
+                    effectsList.push(eff.matchName || eff.name);
+                }
+            }
+        }
+
+        var effectsJson = [];
+        for (var k = 0; k < effectsList.length; k++) {
+            effectsJson.push('"' + effectsList[k].replace(/"/g, "'") + '"');
+        }
+
+        return '{"hasComp":true,"hasSelection":true,"layerName":"' + layer.name.replace(/"/g, "'") + '","layerType":"' + layerType + '","threeDLayer":' + (is3D ? 'true' : 'false') + ',"effects":[' + effectsJson.join(',') + ']}';
+    } catch (e) {
+        return '{"error":"' + e.toString().replace(/"/g, "'") + '"}';
+    }
+}

@@ -299,7 +299,8 @@
 
     <!-- Provider Selection -->
     <div class="segmented-control">
-        <button id="tabAntigravity" class="segment-btn active" onclick="switchProvider('antigravity')">Antigravity</button>
+        <button id="tabOffline" class="segment-btn active" onclick="switchProvider('offline')">Offline AI</button>
+        <button id="tabAntigravity" class="segment-btn" onclick="switchProvider('antigravity')">Antigravity</button>
         <button id="tabGemini" class="segment-btn" onclick="switchProvider('gemini')">Gemini</button>
         <button id="tabClaude" class="segment-btn" onclick="switchProvider('claude')">Claude</button>
     </div>
@@ -313,8 +314,8 @@
     <div class="section">
         <div class="section-label">
             <span>Edit / Animation Command</span>
-            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; text-transform: none; font-size: 10px; color: #49c279;">
-                <input type="checkbox" id="visionMode" checked style="cursor: pointer; width: auto;">
+            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; text-transform: none; font-size: 10px; color: #888888;">
+                <input type="checkbox" id="visionMode" style="cursor: pointer; width: auto;">
                 <span>Vision Mode (Frame Analysis)</span>
             </label>
         </div>
@@ -333,6 +334,17 @@
         </div>
     </div>
 
+    <!-- Smart Suggestions (Model 2) -->
+    <div class="section">
+        <div class="section-label">
+            <span>Smart Suggestions (Model 2)</span>
+            <span id="recommenderBadge" class="status-badge status-active">Realtime</span>
+        </div>
+        <div id="recommendationPills" class="btn-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <button class="btn" style="opacity: 0.6;" disabled>Inspecting AE Layer...</button>
+        </div>
+    </div>
+
     <!-- Output / Status -->
     <div class="section">
         <div class="section-label">
@@ -347,16 +359,18 @@
     </div>
 
     <script src="js/CSInterface.js"></script>
+    <script src="js/recommender.js"></script>
     <script>
         const cs = new CSInterface();
         const logEl = document.getElementById('outputLog');
         const sendBtn = document.getElementById('sendBtn');
         const configSection = document.getElementById('configSection');
+        const tabOffline = document.getElementById('tabOffline');
         const tabAntigravity = document.getElementById('tabAntigravity');
         const tabGemini = document.getElementById('tabGemini');
         const tabClaude = document.getElementById('tabClaude');
 
-        let currentProvider = localStorage.getItem('ae_active_provider') || 'antigravity';
+        let currentProvider = localStorage.getItem('ae_active_provider') || 'offline';
 
         const SYSTEM_INSTRUCTION = `You are an elite Adobe After Effects ExtendScript developer.
 The user wants to perform an animation, motion graphic, or editing task in After Effects.
@@ -373,17 +387,37 @@ Rules:
 
         window.addEventListener('DOMContentLoaded', () => {
             switchProvider(currentProvider, false);
+            if (window.workflowRecommender) {
+                window.workflowRecommender.init().then(() => {
+                    updateRecommendations();
+                    setInterval(updateRecommendations, 2000);
+                });
+            }
         });
 
         function switchProvider(provider, save = true) {
             currentProvider = provider;
             if (save) localStorage.setItem('ae_active_provider', provider);
 
-            tabAntigravity.className = 'segment-btn' + (provider === 'antigravity' ? ' active' : '');
-            tabGemini.className = 'segment-btn' + (provider === 'gemini' ? ' active' : '');
-            tabClaude.className = 'segment-btn' + (provider === 'claude' ? ' active' : '');
+            if (tabOffline) tabOffline.className = 'segment-btn' + (provider === 'offline' ? ' active' : '');
+            if (tabAntigravity) tabAntigravity.className = 'segment-btn' + (provider === 'antigravity' ? ' active' : '');
+            if (tabGemini) tabGemini.className = 'segment-btn' + (provider === 'gemini' ? ' active' : '');
+            if (tabClaude) tabClaude.className = 'segment-btn' + (provider === 'claude' ? ' active' : '');
 
-            if (provider === 'antigravity') {
+            if (provider === 'offline') {
+                sendBtn.textContent = 'Execute with Offline AI';
+                configSection.innerHTML = `
+                    <div class="section-label">
+                        <span>Offline Local Engine</span>
+                        <span id="offlineStatus" class="status-badge status-active">Checking...</span>
+                    </div>
+                    <div class="info-card">
+                        Zero internet, zero API keys. Running locally on your machine via fine-tuned 1.5B GGUF model (127.0.0.1:8080).
+                    </div>
+                `;
+                checkOfflineStatus();
+
+            } else if (provider === 'antigravity') {
                 sendBtn.textContent = 'Send to Antigravity';
                 configSection.innerHTML = `
                     <div class="section-label">
@@ -438,6 +472,22 @@ Rules:
                     </div>
                 `;
                 if (savedKey) loadGeminiModels(savedKey);
+            }
+        }
+
+        async function checkOfflineStatus() {
+            const statusEl = document.getElementById('offlineStatus');
+            try {
+                const res = await fetch('http://127.0.0.1:8080/health');
+                if (res.ok && statusEl) {
+                    statusEl.textContent = 'Active (127.0.0.1:8080)';
+                    statusEl.className = 'status-badge status-active';
+                }
+            } catch (e) {
+                if (statusEl) {
+                    statusEl.textContent = 'Engine Offline (Run start_server.bat)';
+                    statusEl.className = 'status-badge status-empty';
+                }
             }
         }
 
@@ -559,13 +609,142 @@ Rules:
                 }
             }
 
-            if (currentProvider === 'antigravity') {
+            if (currentProvider === 'offline') {
+                await callOfflineAI(snapshot);
+            } else if (currentProvider === 'antigravity') {
                 await callAntigravityBridge(snapshot);
             } else if (currentProvider === 'claude') {
                 await callClaude(snapshot);
             } else {
                 await callGemini(snapshot);
             }
+        }
+
+        // ==================== OFFLINE LOCAL AI (MODEL 1) ====================
+        async function callOfflineAI(snapshot) {
+            const prompt = document.getElementById('aiPrompt').value.trim();
+            if (!prompt) {
+                log('Please enter a command or prompt.', 'error');
+                return;
+            }
+
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Generating Offline...';
+            log('Sending prompt to local offline AI (127.0.0.1:8080)...');
+
+            try {
+                const payload = {
+                    messages: [
+                        { role: "system", content: SYSTEM_INSTRUCTION },
+                        { role: "user", content: prompt }
+                    ],
+                    temperature: 0.15,
+                    max_tokens: 768
+                };
+
+                const res = await fetch('http://127.0.0.1:8080/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    throw new Error('Local engine returned HTTP ' + res.status + '. Is start_server.bat running?');
+                }
+
+                const data = await res.json();
+                const rawContent = data.choices[0].message.content;
+                let cleanCode = rawContent;
+                if (cleanCode.includes('```')) {
+                    cleanCode = cleanCode.replace(/```(?:javascript|js|jsx)?/gi, '').replace(/```/g, '').trim();
+                }
+
+                log('Executing generated ExtendScript in After Effects...');
+                cs.evalScript(`evalCustomScript(${JSON.stringify(cleanCode)})`, function(aeResult) {
+                    sendBtn.disabled = false;
+                    sendBtn.textContent = 'Execute with Offline AI';
+                    if (aeResult && aeResult.indexOf('ERROR') === 0) {
+                        log(aeResult, 'error');
+                    } else {
+                        log(aeResult || 'Script executed successfully!', 'success');
+                        setTimeout(updateRecommendations, 600);
+                    }
+                });
+
+            } catch (err) {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Execute with Offline AI';
+                log('Offline Error: ' + err.message + ' (Make sure start_server.bat is running)', 'error');
+            }
+        }
+
+        // ==================== SMART RECOMMENDATIONS (MODEL 2) ====================
+        let lastLayerSignature = '';
+
+        function updateRecommendations() {
+            if (!window.workflowRecommender || !window.workflowRecommender.isLoaded) return;
+
+            cs.evalScript('getSelectedLayerInfo()', function(result) {
+                if (!result) return;
+                try {
+                    const info = JSON.parse(result);
+                    const signature = JSON.stringify(info);
+                    if (signature === lastLayerSignature) return;
+                    lastLayerSignature = signature;
+
+                    const container = document.getElementById('recommendationPills');
+                    if (!container) return;
+
+                    if (!info.hasComp) {
+                        container.innerHTML = '<span style="grid-column: span 3; color: var(--ae-text-secondary); text-align: center; padding: 4px; font-size: 9.5px;">Open a composition to see suggestions</span>';
+                        return;
+                    }
+                    if (!info.hasSelection) {
+                        container.innerHTML = '<span style="grid-column: span 3; color: var(--ae-text-secondary); text-align: center; padding: 4px; font-size: 9.5px;">Select a layer in AE for smart suggestions</span>';
+                        return;
+                    }
+
+                    const recs = window.workflowRecommender.predict(info);
+                    if (!recs || recs.length === 0) {
+                        container.innerHTML = '<span style="grid-column: span 3; color: var(--ae-text-secondary); text-align: center; padding: 4px; font-size: 9.5px;">Ready for actions</span>';
+                        return;
+                    }
+
+                    container.innerHTML = '';
+                    recs.forEach(rec => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn';
+                        btn.style.display = 'flex';
+                        btn.style.flexDirection = 'column';
+                        btn.style.alignItems = 'center';
+                        btn.style.padding = '5px 3px';
+                        btn.style.gap = '2px';
+                        btn.title = rec.reason;
+
+                        btn.innerHTML = `
+                            <span style="font-weight: 600; color: #49c279; font-size: 10px;">${rec.label}</span>
+                            <span style="font-size: 8px; color: var(--ae-text-secondary); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 90px;">${rec.reason}</span>
+                        `;
+
+                        btn.onclick = () => {
+                            log(`Applying: ${rec.label}...`);
+                            cs.evalScript(`evalCustomScript(${JSON.stringify(rec.code)})`, function(res) {
+                                if (res && res.indexOf('ERROR') === 0) {
+                                    log(res, 'error');
+                                } else {
+                                    log(res || `Applied ${rec.label}!`, 'success');
+                                    setTimeout(updateRecommendations, 500);
+                                }
+                            });
+                        };
+
+                        container.appendChild(btn);
+                    });
+
+                } catch (e) {
+                    // Handled
+                }
+            });
         }
 
         // ==================== ANTIGRAVITY LOCAL BRIDGE ====================

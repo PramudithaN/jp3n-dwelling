@@ -1,17 +1,24 @@
 ========================================================
-       AE Gemini AI Assistant for Adobe After Effects
+     Offline AI Suite for Adobe After Effects
 ========================================================
 
 QUICK START INSTRUCTIONS:
 -------------------------
-1. Extract all files from this ZIP.
-2. Double-click "install.bat" (it will automatically configure Adobe to allow the plugin and copy files to the right location).
+1. Double-click "install.bat" (configures Adobe developer mode and installs the extension).
+2. Double-click "start_offline_engine.bat" to start your local, offline AI model.
+   - 100% Free, zero internet, zero API keys required.
+   - Runs locally on your machine via fine-tuned 1.5B GGUF model.
 3. Open or Restart Adobe After Effects.
 4. In the top menu, go to:
    Window > Extensions > AI Assistant
 5. In the panel:
-   - Paste your Google Gemini API key (get one free at https://aistudio.google.com/) and click "Save".
-   - Type any animation or editing prompt and click "Ask Gemini to Edit".
+   - "Offline AI" mode is active by default.
+   - Type any motion design or editing command and click "Execute with Offline AI".
+   - Watch the "Smart Suggestions" bar at the bottom: select any layer in AE to see 1-click recommended next tools!
+
+OPTIONAL (Cloud Providers):
+---------------------------
+- You can switch to Gemini or Claude tabs if you want to use cloud models with your own API keys.
 
 TO UNINSTALL:
 -------------
