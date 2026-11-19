@@ -23,8 +23,13 @@ HTML_CONTENT = r'''<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>merci — Earthy Elegance & Timeless Silhouettes | Sri Lanka</title>
-  <meta name="description" content="merci (merci.clothing_) — Understated sophistication through timeless silhouettes and effortless craftsmanship. Pure linen basics, Terra Muse collection, and natural fiber essentials.">
+  <title>merci | Earthy Elegance & Timeless Silhouettes | Sri Lanka</title>
+  <meta name="description" content="merci (merci.clothing_) : Understated sophistication through timeless silhouettes and effortless craftsmanship. Pure linen basics, Terra Muse collection, and natural fiber essentials.">
+
+  <!-- merci Favicon (SVG and Apple Touch Icon) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231E1A18'/%3E%3Ctext x='50' y='63' font-family='Bodoni Moda, Playfair Display, Didot, Georgia, serif' font-size='33' font-weight='600' fill='%23FAF7F2' text-anchor='middle' letter-spacing='0.5'%3Emerci%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231E1A18'/%3E%3Ctext x='50' y='63' font-family='Bodoni Moda, Playfair Display, Didot, Georgia, serif' font-size='33' font-weight='600' fill='%23FAF7F2' text-anchor='middle' letter-spacing='0.5'%3Emerci%3C/text%3E%3C/svg%3E">
+
 
   <!-- Editorial Typography: Bodoni Moda (Logo & Display Didone), Playfair Display, Pinyon Script (Handwriting), Satoshi (Clean Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2203,7 +2208,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
           <!-- Right Column: Visual Drop Card -->
           <div class="hero-visual-col reveal-item">
             <div class="hero-visual-card" onclick="window.quickPreviewItem('merci-02')">
-              <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1200&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="merci — Olive Green Balloon Sleeve Top">
+              <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1200&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="merci : Olive Green Balloon Sleeve Top">
               <div class="hero-floating-drop">
                 <div class="floating-drop-meta">
                   <h4>The Olive Green Balloon Sleeve Top</h4>
@@ -2319,7 +2324,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     </section>
 
     <!-- ========================================================================
-         SECTION 4: "LET'S PACK ORDERS" — PACKAGING & DELIVERY STORY
+         SECTION 4: "LET'S PACK ORDERS" : PACKAGING & DELIVERY STORY
          ======================================================================== -->
     <section id="packaging" class="packaging-section">
       <div class="container">
@@ -2343,7 +2348,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
             <div class="packaging-features-list">
               <div class="packaging-feature-item">
                 <h4>Islandwide Delivery</h4>
-                <p>Reliable door-to-door courier service across Sri Lanka within 2–4 business days.</p>
+                <p>Reliable door-to-door courier service across Sri Lanka within 2 to 4 business days.</p>
               </div>
               <div class="packaging-feature-item">
                 <h4>Worldwide Express</h4>
@@ -2434,13 +2439,13 @@ HTML_CONTENT = r'''<!DOCTYPE html>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-03')">
             <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Signature Linen Pant Sage">
             <div class="ig-card-overlay">
-              <span class="ig-card-tag">Signature Linen — Soft Sage</span>
+              <span class="ig-card-tag">Signature Linen: Soft Sage</span>
             </div>
           </div>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-04')">
             <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Signature Linen Pant Charcoal Blue">
             <div class="ig-card-overlay">
-              <span class="ig-card-tag">Pure Linen — Charcoal Blue</span>
+              <span class="ig-card-tag">Pure Linen: Charcoal Blue</span>
             </div>
           </div>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-05')">
@@ -2499,7 +2504,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Colombo deliveries typically arrive within 1–2 business days. Outstation islandwide deliveries take 2–4 business days via our partner express couriers.
+                Colombo deliveries typically arrive within 1 to 2 business days. Outstation islandwide deliveries take 2 to 4 business days via our partner express couriers.
               </div>
             </div>
           </div>
@@ -2872,7 +2877,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       },
       {
         id: "merci-03",
-        title: "Signature Linen Wide-Leg Pant — Soft Sage",
+        title: "Signature Linen Wide-Leg Pant: Soft Sage",
         category: "Pants",
         priceLkr: 9200,
         priceUsd: 31,
@@ -2885,7 +2890,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       },
       {
         id: "merci-04",
-        title: "Signature Linen Wide-Leg Pant — Charcoal Blue",
+        title: "Signature Linen Wide-Leg Pant: Charcoal Blue",
         category: "Pants",
         priceLkr: 9200,
         priceUsd: 31,
@@ -2898,7 +2903,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       },
       {
         id: "merci-05",
-        title: "Terra Muse Halter Neck Top — Pure Chalk",
+        title: "Terra Muse Halter Neck Top: Pure Chalk",
         category: "Tops",
         priceLkr: 6900,
         priceUsd: 23,
@@ -2911,7 +2916,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       },
       {
         id: "merci-06",
-        title: "High-Waisted Flared Linen Skirt — Earth Clay",
+        title: "High-Waisted Flared Linen Skirt: Earth Clay",
         category: "Skirts",
         priceLkr: 8900,
         priceUsd: 30,
@@ -2924,7 +2929,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       },
       {
         id: "merci-07",
-        title: "Textured Strapless Bandeau Top — Raw Sand",
+        title: "Textured Strapless Bandeau Top: Raw Sand",
         category: "Tops",
         priceLkr: 6500,
         priceUsd: 22,
@@ -2950,7 +2955,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       },
       {
         id: "merci-09",
-        title: "Pure Linen Relaxed Trouser — Warm Oat",
+        title: "Pure Linen Relaxed Trouser: Warm Oat",
         category: "Basics",
         priceLkr: 8900,
         priceUsd: 30,
