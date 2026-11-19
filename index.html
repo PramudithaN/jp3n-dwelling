@@ -1,0 +1,4326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>meri.clothing — Form, Woven in Silence | FW26 Capsule & Atelier</title>
+  <meta name="description" content="meri.clothing is an architectural luxury clothing atelier. Minimalist tailoring, raw natural fibers, and numbered limited editions. Kyoto · Milan · Paris.">
+
+  <!-- Fonts: Playfair Display (Serif), Satoshi (Sans), Onest (Sans fallback) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <!-- ES Modules Importmap for Lenis Smooth Scroll -->
+  <script type="importmap">
+  {
+    "imports": {
+      "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm"
+    }
+  }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       ADAPTIVE REM GRID & ROOT SCALE (Baseline + Kai Nomura Spec)
+       ========================================================================== */
+    html {
+      font-size: 16px;
+      scroll-behavior: auto; /* Handled by Lenis */
+      box-sizing: border-box;
+    }
+    @media (max-width: 1920px) { html { font-size: 0.833333vw; } } /* 16*100/1920 */
+    @media (max-width: 1440px) { html { font-size: 1.111111vw; } } /* 16*100/1440 */
+    @media (max-width: 1024px) { html { font-size: 1.5625vw;   } } /* 16*100/1024 */
+    @media (max-width: 640px)  { html { font-size: 4.444444vw; } } /* 16*100/360  */
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ==========================================================================
+       COLOR TOKENS & DYNAMIC THEMES
+       ========================================================================== */
+    :root {
+      --canvas: #ffffff;
+      --surface-grey: #f7f6f4;
+      --surface-dark: #141413;
+      --surface-dark-card: #1d1d1a;
+      --ink: #141413;
+      --ink-muted: rgba(20, 20, 19, 0.65);
+      --ink-faint: rgba(20, 20, 19, 0.32);
+      --on-dark: #ffffff;
+      --on-dark-muted: rgba(255, 255, 255, 0.68);
+      --on-dark-faint: rgba(255, 255, 255, 0.32);
+      --line: rgba(20, 20, 19, 0.16);
+      --line-strong: rgba(20, 20, 19, 0.38);
+      --line-on-dark: rgba(255, 255, 255, 0.18);
+      --brand-accent: #8c6239; /* Natural Umber / Raw Silk accent */
+      --accent-tint: rgba(140, 98, 57, 0.12);
+
+      /* Typography Tokens */
+      --font-display: "Playfair Display", Georgia, serif;
+      --font-sans: "Satoshi", "Onest", system-ui, -apple-system, sans-serif;
+
+      /* Radii */
+      --radius-sm: 0.25rem;
+      --radius-card: 0.75rem;
+      --radius-card-lg: 1.5rem;
+      --radius-pill: 9999px;
+    }
+
+    /* Preset Palette Variables applied dynamically via JS */
+    body[data-palette="raw-linen"] {
+      --canvas: #fbf9f5;
+      --surface-grey: #f2eee6;
+      --surface-dark: #1e1d1b;
+      --ink: #1e1d1b;
+      --brand-accent: #9d784f;
+    }
+    body[data-palette="slate-noir"] {
+      --canvas: #f6f7f8;
+      --surface-grey: #ebeef2;
+      --surface-dark: #121417;
+      --ink: #121417;
+      --brand-accent: #485c70;
+    }
+    body[data-palette="botanical-sage"] {
+      --canvas: #f8faf8;
+      --surface-grey: #eff3ee;
+      --surface-dark: #161b17;
+      --ink: #161b17;
+      --brand-accent: #5e7960;
+    }
+
+    body {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.5;
+      transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    ::selection {
+      background: var(--ink);
+      color: var(--canvas);
+    }
+
+    img, video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       TYPOGRAPHY SPEC
+       ========================================================================== */
+    h1, h2, h3, h4, .font-serif {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.1;
+    }
+
+    .accent {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Dashed Hairlines */
+    .rule-dashed {
+      border-top: 1px dashed var(--line);
+    }
+    .rule-dashed-dark {
+      border-top: 1px dashed var(--line-on-dark);
+    }
+
+    /* Eyebrow Component */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--ink-muted);
+      font-weight: 500;
+    }
+    .eyebrow::before {
+      content: "";
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--ink-muted);
+    }
+    .eyebrow.on-dark {
+      color: var(--on-dark-muted);
+    }
+    .eyebrow.on-dark::before {
+      background: var(--on-dark-muted);
+    }
+
+    /* Container */
+    .container {
+      max-width: 120rem;
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .container {
+        padding-inline: 3rem;
+      }
+    }
+
+    /* Layout Sections rhythm */
+    section {
+      position: relative;
+      width: 100%;
+    }
+    .section-pad {
+      padding-block: 6rem;
+    }
+    @media (min-width: 1024px) {
+      .section-pad {
+        padding-block: 8rem;
+      }
+    }
+
+    /* ==========================================================================
+       BUTTONS & CTAS
+       ========================================================================== */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 500;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .btn-cta .arrow {
+      display: inline-block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-cta:hover .arrow {
+      transform: translateX(0.45rem);
+    }
+
+    /* Solid light / dark */
+    .btn-solid-light {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+    }
+    .btn-solid-light:hover {
+      background: #2b2b28;
+    }
+
+    .btn-ghost-light {
+      border: 1px dashed var(--line-strong);
+      color: var(--ink);
+    }
+    .btn-ghost-light:hover {
+      background: var(--ink);
+      color: var(--canvas);
+      border-style: solid;
+    }
+
+    .btn-solid-dark {
+      background: #ffffff;
+      color: var(--surface-dark);
+    }
+    .btn-solid-dark:hover {
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .btn-ghost-dark {
+      border: 1px dashed var(--line-on-dark);
+      color: #ffffff;
+    }
+    .btn-ghost-dark:hover {
+      background: #ffffff;
+      color: var(--surface-dark);
+      border-style: solid;
+    }
+
+    .btn-pill-small {
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 1.25rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+    }
+    .btn-pill-small:hover {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+    .btn-pill-small.active {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+
+    /* ==========================================================================
+       IMAGE RATIO-LOCKED PLate
+       ========================================================================== */
+    .plate-box {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--surface-grey);
+    }
+    .plate-box img, .plate-box video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+    }
+    .ratio-3-4 { aspect-ratio: 3 / 4; }
+    .ratio-3-2 { aspect-ratio: 3 / 2; }
+    .ratio-1-1 { aspect-ratio: 1 / 1; }
+    .ratio-16-9 { aspect-ratio: 16 / 9; }
+
+    /* ==========================================================================
+       INTRO CURTAIN LOADER (Baseline Spec)
+       ========================================================================== */
+    #intro-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--surface-dark);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+      pointer-events: all;
+    }
+    #intro-loader.slide-up {
+      transform: translateY(-102%);
+      pointer-events: none;
+    }
+    .loader-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .loader-diamond {
+      width: 0.875rem;
+      height: 0.875rem;
+      border: 1px solid #ffffff;
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+    .loader-progress-track {
+      width: 14rem;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-progress-fill {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1.25s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    .loader-subtext {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ==========================================================================
+       FIXED HEADER (Kai Nomura Spec - mix-blend-mode & scroll contrast)
+       ========================================================================== */
+    #site-header {
+      position: fixed;
+      inset-inline: 0;
+      top: 0;
+      z-index: 500;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      padding: 1rem 1.25rem;
+      pointer-events: none; /* children enable pointer events */
+      transition: background 0.3s ease;
+    }
+    @media (min-width: 1024px) {
+      #site-header {
+        padding: 1.25rem 3rem;
+      }
+    }
+    .header-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .header-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1.2fr;
+      }
+    }
+    .header-left {
+      display: none;
+      pointer-events: auto;
+    }
+    @media (min-width: 1024px) {
+      .header-left {
+        display: block;
+      }
+    }
+    .header-left p:first-child {
+      font-size: 0.875rem;
+      letter-spacing: -0.01em;
+      font-weight: 500;
+    }
+    .header-left p:last-child {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: auto;
+      flex-shrink: 0;
+    }
+    @media (min-width: 1024px) {
+      .header-center {
+        justify-self: center;
+        gap: 0.75rem;
+      }
+    }
+    .logo-diamond {
+      width: 0.55rem;
+      height: 0.55rem;
+      border: 1px solid currentColor;
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+    .header-logo-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      font-weight: 400;
+    }
+    @media (min-width: 640px) {
+      .header-logo-text {
+        font-size: 1.25rem;
+      }
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      justify-self: end;
+      pointer-events: auto;
+      flex-shrink: 0;
+    }
+    @media (min-width: 640px) {
+      .header-right {
+        gap: 1.25rem;
+      }
+    }
+    .header-nav {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+    }
+    @media (min-width: 1024px) {
+      .header-nav {
+        display: flex;
+      }
+    }
+    .header-nav-link {
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+    }
+    .header-nav-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .header-nav-link:hover .header-nav-dot {
+      opacity: 1;
+    }
+
+    .btn-admin-pill {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid currentColor;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    @media (min-width: 640px) {
+      .btn-admin-pill {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.85rem;
+        letter-spacing: 0.16em;
+      }
+    }
+    .btn-admin-pill:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
+
+    .cart-trigger-btn {
+      position: relative;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    @media (min-width: 640px) {
+      .cart-trigger-btn {
+        font-size: 0.8125rem;
+        letter-spacing: 0.14em;
+        gap: 0.4rem;
+      }
+    }
+    .cart-badge {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid currentColor;
+      min-width: 1.1rem;
+      text-align: center;
+    }
+
+    .menu-burger-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+    @media (min-width: 640px) {
+      .menu-burger-btn {
+        font-size: 0.8125rem;
+        letter-spacing: 0.16em;
+        gap: 0.65rem;
+      }
+    }
+    .burger-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .burger-bars {
+        gap: 4px;
+        width: 1.5rem;
+      }
+    }
+    .burger-bar {
+      height: 1px;
+      width: 100%;
+      background: currentColor;
+    }
+
+    /* ==========================================================================
+       HERO SECTION (Kai Nomura + Baseline Synthesis)
+       ========================================================================== */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+      overflow: hidden;
+    }
+    @media (min-width: 1024px) {
+      #hero {
+        padding-top: 9rem;
+        padding-bottom: 5rem;
+      }
+    }
+
+    /* Hero Ambient Motion Video / Canvas */
+    .hero-media-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: -10;
+      overflow: hidden;
+      background: var(--canvas);
+    }
+    .hero-video-element {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 100vh;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%) scale(1.05);
+      object-fit: cover;
+      opacity: 0.45;
+      filter: grayscale(100%) contrast(110%);
+      transition: opacity 0.8s ease, filter 0.8s ease;
+    }
+    .hero-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 75% 40%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.92) 75%, var(--canvas) 100%);
+      pointer-events: none;
+    }
+    body[data-palette="slate-noir"] .hero-overlay-gradient {
+      background: radial-gradient(circle at 75% 40%, rgba(246,247,248,0.2) 0%, rgba(246,247,248,0.92) 75%, var(--canvas) 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2.5rem;
+      }
+    }
+
+    .hero-content-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .hero-content-col {
+        grid-column: span 7;
+      }
+    }
+
+    .hero-visual-col {
+      grid-column: span 1;
+      position: relative;
+    }
+    @media (min-width: 1024px) {
+      .hero-visual-col {
+        grid-column: span 5;
+      }
+    }
+
+    /* Headings & Text Engine Reveal */
+    .hero-title {
+      font-size: 3.25rem;
+      line-height: 1.02;
+      max-width: 13ch;
+      margin-top: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    @media (min-width: 640px) {
+      .hero-title {
+        font-size: 4.5rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 5.75rem;
+      }
+    }
+
+    .hero-lead-text {
+      max-width: 44ch;
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--ink-muted);
+      margin-top: 2rem;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    /* Interactive Color Palette Showcase Bar */
+    .palette-switcher-bar {
+      margin-top: 2.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px dashed var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .palette-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+    }
+    .palette-swatches {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .palette-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .palette-btn:hover, .palette-btn.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--canvas);
+    }
+    .color-chip {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+
+    /* Video controls chip */
+    .video-ctrl-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.35rem 0.75rem;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-pill);
+      color: var(--ink-muted);
+      cursor: pointer;
+      margin-top: 0.75rem;
+      width: fit-content;
+      transition: all 0.25s ease;
+    }
+    .video-ctrl-chip:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+    .play-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      animation: pulseGreen 2s infinite;
+    }
+    @keyframes pulseGreen {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.4; }
+    }
+
+    /* Facts Row */
+    .hero-facts-row {
+      margin-top: 3rem;
+      border-top: 1px solid var(--line);
+      padding-top: 2rem;
+      display: none;
+    }
+    @media (min-width: 1024px) {
+      .hero-facts-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+    .hero-facts-row dt {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+    }
+    .hero-facts-row dd {
+      font-size: 0.875rem;
+      color: var(--ink);
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
+    /* Hero Portrait + Floating Collection Glass Card (Baseline synthesis) */
+    .hero-portrait-card {
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+    .floating-collection-card {
+      position: absolute;
+      bottom: -1.5rem;
+      left: -1.5rem;
+      width: 18rem;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      border-radius: var(--radius-card);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 10;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .floating-collection-card:hover {
+      transform: translateY(-4px);
+    }
+    .mini-thumb {
+      width: 4rem;
+      height: 4.75rem;
+      object-fit: cover;
+      border-radius: 0.35rem;
+    }
+    .collection-mini-meta h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .collection-mini-meta p {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-top: 0.15rem;
+    }
+    .collection-mini-meta span {
+      display: inline-block;
+      margin-top: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--brand-accent);
+    }
+
+    /* ==========================================================================
+       STATEMENT SECTION
+       ========================================================================== */
+    #statement {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      padding-block: 7rem;
+    }
+    @media (min-width: 1024px) {
+      #statement {
+        padding-block: 9.5rem;
+      }
+    }
+    .statement-inner {
+      max-width: 78rem;
+      margin-inline: auto;
+    }
+    .statement-quote {
+      font-family: var(--font-display);
+      font-size: 1.875rem;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-top: 2.5rem;
+    }
+    @media (min-width: 640px) {
+      .statement-quote {
+        font-size: 2.5rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .statement-quote {
+        font-size: 3.15rem;
+        line-height: 1.25;
+      }
+    }
+    .statement-signature {
+      margin-top: 3rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--ink-muted);
+    }
+
+    /* ==========================================================================
+       FEATURED WORKS (ZIG-ZAG EDITORIAL GALLERY - Kai Nomura Spec)
+       ========================================================================== */
+    #works {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .section-header-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .section-title {
+      font-size: 2.25rem;
+      max-width: 20ch;
+      line-height: 1.1;
+    }
+    @media (min-width: 640px) {
+      .section-title {
+        font-size: 3rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .section-title {
+        font-size: 4rem;
+      }
+    }
+
+    /* Asymmetric Zig-Zag Gallery Grid */
+    .zigzag-gallery-grid {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+    @media (min-width: 1024px) {
+      .zigzag-gallery-grid {
+        margin-top: 6rem;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    .zigzag-item {
+      grid-column: span 1;
+      position: relative;
+      cursor: pointer;
+    }
+    @media (min-width: 1024px) {
+      .zigzag-item {
+        grid-column: span 7;
+      }
+      /* Even items start at col 1 */
+      .zigzag-item:nth-child(even) {
+        grid-column-start: 6;
+        margin-top: 6rem;
+      }
+      .zigzag-item:nth-child(odd) {
+        grid-column-start: 1;
+      }
+    }
+
+    .work-figure {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+    }
+    .work-plate {
+      position: relative;
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .work-figure:hover .work-plate img {
+      transform: scale(1.05);
+    }
+    .work-plate img {
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-quick-action {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      z-index: 5;
+      background: rgba(20, 20, 19, 0.75);
+      color: #ffffff;
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all 0.3s ease;
+    }
+    .zigzag-item:hover .work-quick-action {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .work-caption {
+      border-top: 1px dashed var(--line);
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+    .work-caption-left h3 {
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .work-caption-left p {
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+      margin-top: 0.25rem;
+    }
+    .work-caption-right {
+      text-align: right;
+    }
+    .work-price {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .work-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      margin-top: 0.2rem;
+    }
+
+    /* ==========================================================================
+       PINNED CTA #1 (Dark - Kai Nomura Spec)
+       ========================================================================== */
+    .pinned-cta-dark {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      border-top: 1px dashed var(--line-on-dark);
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-block: 6rem;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-dark {
+        padding-block: 8rem;
+      }
+    }
+    .pinned-cta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .pinned-cta-content {
+      grid-column: span 1;
+      max-width: 36rem;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-content {
+        grid-column: span 6;
+      }
+    }
+    .pinned-cta-title {
+      font-size: 2.25rem;
+      color: var(--on-dark);
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .pinned-cta-title {
+        font-size: 3rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-title {
+        font-size: 3.75rem;
+      }
+    }
+    .pinned-cta-body {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--on-dark-muted);
+      margin-top: 2rem;
+    }
+    .pinned-cta-media {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-media {
+        grid-column: span 5;
+        grid-column-start: 8;
+      }
+    }
+
+    /* ==========================================================================
+       STUDIO PRINCIPLES (Grey Section - Kai Nomura Spec)
+       ========================================================================== */
+    #principles {
+      background: var(--surface-grey);
+      border-top: 1px dashed var(--line);
+    }
+    .principles-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem 2.5rem;
+      margin-top: 4rem;
+    }
+    @media (min-width: 640px) {
+      .principles-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .principle-card {
+      border-top: 1px dashed var(--line);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .principle-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ink);
+    }
+    .principle-card h3 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-top: 1.5rem;
+      line-height: 1.2;
+    }
+    .principle-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--ink-muted);
+      margin-top: 0.75rem;
+    }
+
+    /* ==========================================================================
+       LIVE CATALOG STORE SECTION WITH ADMIN HOOKS
+       ========================================================================== */
+    #catalog {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .catalog-controls-bar {
+      margin-top: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px dashed var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .catalog-controls-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .filter-tabs-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .catalog-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface-grey);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      max-width: 22rem;
+      width: 100%;
+    }
+    .catalog-search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 0.875rem;
+      font-family: inherit;
+      color: var(--ink);
+      width: 100%;
+    }
+    .catalog-search-input::placeholder {
+      color: var(--ink-faint);
+    }
+
+    /* Catalog Cards Grid */
+    .catalog-grid {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    @media (min-width: 640px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .catalog-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-0.5rem);
+    }
+    .product-thumb-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: var(--surface-grey);
+      aspect-ratio: 3 / 4;
+    }
+    .product-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .product-thumb-wrap img {
+      transform: scale(1.06);
+    }
+    .product-badge-overlay {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      background: rgba(20, 20, 19, 0.85);
+      color: #ffffff;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(4px);
+    }
+    .product-quick-add {
+      position: absolute;
+      bottom: 0.75rem;
+      right: 0.75rem;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--ink);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: all 0.3s ease;
+    }
+    .product-card:hover .product-quick-add {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .product-info-row {
+      margin-top: 1rem;
+      border-top: 1px dashed var(--line);
+      padding-top: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .product-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .product-category {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-top: 0.2rem;
+    }
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+    .product-meta-chips {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+    .meta-chip {
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      border: 1px solid var(--line);
+      padding: 0.1rem 0.4rem;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ==========================================================================
+       ABOUT ATELIER (Kai Nomura Spec)
+       ========================================================================== */
+    #about {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .about-top-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 1024px) {
+      .about-top-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .about-left-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .about-left-col {
+        grid-column: span 7;
+      }
+    }
+    .about-lead-title {
+      font-size: 2.25rem;
+      line-height: 1.1;
+      max-width: 20ch;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .about-lead-title {
+        font-size: 3rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .about-lead-title {
+        font-size: 3.75rem;
+      }
+    }
+
+    .about-right-col {
+      grid-column: span 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    @media (min-width: 1024px) {
+      .about-right-col {
+        grid-column: span 5;
+      }
+    }
+    .about-right-col p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      max-width: 50ch;
+    }
+
+    /* Photo 3-grid */
+    .about-photo-grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .about-photo-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .about-photo-item {
+      overflow: hidden;
+      aspect-ratio: 3 / 2;
+      position: relative;
+    }
+    .about-photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .about-photo-item:hover img {
+      transform: scale(1.06);
+    }
+
+    /* Facts Ledger */
+    .facts-ledger {
+      margin-top: 4rem;
+      border-top: 1px dashed var(--line);
+      padding-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .facts-ledger {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .facts-ledger dt {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+    }
+    .facts-ledger dd {
+      font-size: 1rem;
+      color: var(--ink);
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       PROCESS SECTION (Sticky Heading + Steps - Kai Nomura Spec)
+       ========================================================================== */
+    #process {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 1024px) {
+      .process-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .process-sticky-left {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .process-sticky-left {
+        grid-column: span 5;
+        position: sticky;
+        top: 8rem;
+        height: fit-content;
+      }
+    }
+    .process-steps-list {
+      grid-column: span 1;
+      list-style: none;
+    }
+    @media (min-width: 1024px) {
+      .process-steps-list {
+        grid-column: span 7;
+      }
+    }
+    .process-step-item {
+      border-top: 1px dashed var(--line);
+      padding-block: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .process-step-item {
+        flex-direction: row;
+        gap: 3rem;
+        padding-block: 3.25rem;
+      }
+    }
+    .process-step-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--ink-faint);
+      min-width: 6rem;
+    }
+    .process-step-body h3 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .process-step-body p {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--ink-muted);
+      margin-top: 1rem;
+      max-width: 48ch;
+    }
+
+    /* ==========================================================================
+       PINNED CTA #2 (Centered Dark - Kai Nomura Spec)
+       ========================================================================== */
+    #contact-section {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      border-top: 1px dashed var(--line-on-dark);
+      min-height: 90svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-block: 6rem;
+      scroll-margin-top: 5rem;
+    }
+    .pinned-cta-centered {
+      max-width: 42rem;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pinned-cta-centered h2 {
+      font-size: 2.5rem;
+      line-height: 1.1;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .pinned-cta-centered h2 {
+        font-size: 3.5rem;
+      }
+    }
+    .pinned-cta-centered p {
+      font-size: 1.125rem;
+      color: var(--on-dark-muted);
+      line-height: 1.65;
+      margin-top: 2rem;
+    }
+
+    /* ==========================================================================
+       TESTIMONIALS & CRITICAL ACCLAIM
+       ========================================================================== */
+    #testimonials {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-top: 4rem;
+    }
+    @media (min-width: 768px) {
+      .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .testimonial-card {
+      border-top: 1px dashed var(--line);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    @media (min-width: 1024px) {
+      .testimonial-quote {
+        font-size: 1.45rem;
+      }
+    }
+    .testimonial-author {
+      margin-top: 2.5rem;
+    }
+    .testimonial-author p:first-child {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .testimonial-author p:last-child {
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+
+    /* ==========================================================================
+       STOCKISTS & SHOWROOMS (Grey Section)
+       ========================================================================== */
+    #stockists {
+      background: var(--surface-grey);
+      border-top: 1px dashed var(--line);
+    }
+    .stockists-list {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      list-style: none;
+    }
+    @media (min-width: 640px) {
+      .stockists-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .stockists-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .stockist-row {
+      border-top: 1px dashed var(--line);
+      padding-block: 1.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+    }
+    .stockist-index {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+    }
+    .stockist-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--ink);
+    }
+    .stockist-city {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-left: auto;
+    }
+
+    /* ==========================================================================
+       FAQ ACCORDION (Kai Nomura Spec)
+       ========================================================================== */
+    #faq {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 1024px) {
+      .faq-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .faq-left {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .faq-left {
+        grid-column: span 4;
+      }
+    }
+    .faq-right {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .faq-right {
+        grid-column: span 8;
+      }
+    }
+    .faq-row {
+      border-top: 1px dashed var(--line);
+    }
+    .faq-trigger {
+      width: 100%;
+      padding-block: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      text-align: left;
+      cursor: pointer;
+    }
+    .faq-question {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    @media (min-width: 1024px) {
+      .faq-question {
+        font-size: 1.45rem;
+      }
+    }
+    .faq-icon-plus {
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--ink);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+    }
+    .faq-row.active .faq-icon-plus {
+      transform: rotate(45deg);
+    }
+    .faq-panel {
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    }
+    .faq-panel-content {
+      padding-bottom: 2.5rem;
+    }
+    .faq-panel-content p {
+      max-width: 60ch;
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--ink-muted);
+    }
+
+    /* ==========================================================================
+       FOOTER (Dark with Giant Wordmark - Kai Nomura Spec)
+       ========================================================================== */
+    #site-footer {
+      background: var(--surface-dark);
+      color: #ffffff;
+      padding-top: 6rem;
+      padding-bottom: 3rem;
+      overflow: hidden;
+    }
+    .footer-top-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+    @media (min-width: 1024px) {
+      .footer-top-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 3rem;
+      }
+    }
+    .footer-brand-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .footer-brand-col {
+        grid-column: span 5;
+      }
+    }
+    .footer-tagline {
+      margin-top: 1.5rem;
+      max-width: 30ch;
+      font-size: 1.5rem;
+      color: var(--on-dark-muted);
+    }
+    .footer-email-link {
+      display: inline-block;
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #ffffff;
+      transition: color 0.2s ease;
+    }
+    .footer-email-link:hover {
+      color: var(--on-dark-muted);
+    }
+
+    .footer-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .footer-col-2 { grid-column: span 2; }
+      .footer-col-3 { grid-column: span 3; }
+    }
+    .footer-col-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--on-dark-faint);
+    }
+    .footer-links-list {
+      margin-top: 1.5rem;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .footer-links-list a {
+      font-size: 1rem;
+      color: var(--on-dark-muted);
+      transition: color 0.2s ease;
+    }
+    .footer-links-list a:hover {
+      color: #ffffff;
+    }
+
+    .giant-wordmark-wrap {
+      margin-top: 6rem;
+      overflow: hidden;
+      user-select: none;
+      pointer-events: none;
+      text-align: center;
+    }
+    .giant-wordmark {
+      font-size: 18vw;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.82;
+      letter-spacing: -0.04em;
+      color: rgba(255, 255, 255, 0.08);
+      font-family: var(--font-sans);
+    }
+
+    .footer-legal-bar {
+      margin-top: 3rem;
+      border-top: 1px dashed var(--line-on-dark);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--on-dark-faint);
+    }
+    @media (min-width: 640px) {
+      .footer-legal-bar {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+    .legal-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .legal-links a:hover {
+      color: var(--on-dark-muted);
+    }
+
+    /* ==========================================================================
+       MODAL 1: FULLSCREEN OVERLAY MENU (Kai Nomura Spec)
+       ========================================================================== */
+    #menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 600;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+    #menu-overlay.open {
+      pointer-events: auto;
+    }
+    .menu-panel-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--surface-dark);
+      transform-origin: top;
+      transform: scaleY(0);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #menu-overlay.open .menu-panel-bg {
+      transform: scaleY(1);
+    }
+    .menu-content {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.2s;
+    }
+    @media (min-width: 1024px) {
+      .menu-content {
+        padding: 2.5rem 3rem;
+      }
+    }
+    #menu-overlay.open .menu-content {
+      opacity: 1;
+    }
+    .menu-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-top-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--on-dark-faint);
+    }
+    .menu-close-btn {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #ffffff;
+      cursor: pointer;
+    }
+    .menu-close-btn:hover {
+      color: var(--on-dark-muted);
+    }
+
+    .menu-nav-links {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .menu-link-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      cursor: pointer;
+      width: fit-content;
+    }
+    .menu-link-index {
+      width: 2rem;
+      font-size: 0.875rem;
+      color: var(--on-dark-muted);
+      font-family: var(--font-display);
+    }
+    .menu-link-label {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      line-height: 1.1;
+      transition: font-style 0.2s ease, transform 0.2s ease;
+    }
+    @media (min-width: 640px) {
+      .menu-link-label {
+        font-size: 4rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .menu-link-label {
+        font-size: 5rem;
+      }
+    }
+    .menu-link-row:hover .menu-link-label {
+      font-style: italic;
+      transform: translateX(0.5rem);
+    }
+
+    .menu-bottom-bar {
+      border-top: 1px dashed var(--line-on-dark);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      justify-content: space-between;
+    }
+    @media (min-width: 640px) {
+      .menu-bottom-bar {
+        flex-direction: row;
+        align-items: flex-end;
+      }
+    }
+
+    /* ==========================================================================
+       MODAL 2: HIGH-RES GARMENT PREVIEW / LIGHTBOX MODAL
+       ========================================================================== */
+    #preview-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    #preview-modal.open {
+      pointer-events: auto;
+      opacity: 1;
+    }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 20, 19, 0.7);
+      backdrop-filter: blur(12px);
+    }
+    .modal-dialog-panel {
+      position: relative;
+      background: var(--canvas);
+      color: var(--ink);
+      max-width: 64rem;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: var(--radius-card);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr;
+      z-index: 10;
+      transform: scale(0.96) translateY(1.5rem);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 768px) {
+      .modal-dialog-panel {
+        grid-template-columns: 1.1fr 1fr;
+      }
+    }
+    #preview-modal.open .modal-dialog-panel {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close-icon {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      z-index: 20;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+    .modal-close-icon:hover {
+      transform: rotate(90deg);
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .modal-image-col {
+      background: var(--surface-grey);
+      position: relative;
+      min-height: 24rem;
+    }
+    .modal-image-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .modal-details-col {
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .modal-edition-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+    }
+    .modal-title {
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+    .modal-price {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin-top: 0.25rem;
+    }
+    .modal-description {
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      border-top: 1px dashed var(--line);
+      border-bottom: 1px dashed var(--line);
+      padding-block: 1rem;
+    }
+    .modal-swatches-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+      font-weight: 500;
+    }
+    .modal-sizes-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .size-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .size-btn:hover, .size-btn.active {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+    .modal-actions-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ==========================================================================
+       MODAL 3: ADMIN / SHOP OWNER MANAGER DASHBOARD (User core requirement)
+       ========================================================================== */
+    #admin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    #admin-modal.open {
+      pointer-events: auto;
+      opacity: 1;
+    }
+    .admin-panel-container {
+      position: relative;
+      background: var(--canvas);
+      color: var(--ink);
+      max-width: 72rem;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--line);
+      box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      transform: translateY(1.5rem);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #admin-modal.open .admin-panel-container {
+      transform: translateY(0);
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 1.25rem;
+    }
+    .admin-stats-bar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .admin-stats-bar {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .stat-chip {
+      background: var(--surface-grey);
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+    }
+    .stat-chip-val {
+      font-size: 1.5rem;
+      font-weight: 600;
+      font-family: var(--font-display);
+    }
+    .stat-chip-lbl {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Admin Form */
+    .admin-form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      background: var(--surface-grey);
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+    }
+    @media (min-width: 640px) {
+      .admin-form-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .admin-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .admin-input-group.col-span-2 {
+      grid-column: span 1;
+    }
+    @media (min-width: 640px) {
+      .admin-input-group.col-span-2 {
+        grid-column: span 2;
+      }
+      .admin-input-group.col-span-3 {
+        grid-column: span 3;
+      }
+    }
+    .admin-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 500;
+      color: var(--ink-muted);
+    }
+    .admin-input, .admin-select, .admin-textarea {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.875rem;
+      font-family: inherit;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+      border-color: var(--ink);
+    }
+
+    /* Admin Items Table / Cards */
+    .admin-table-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+    .admin-table th {
+      background: var(--surface-grey);
+      padding: 0.75rem 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-faint);
+      border-bottom: 1px solid var(--line);
+    }
+    .admin-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px dashed var(--line);
+      vertical-align: middle;
+    }
+    .admin-table tr:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .admin-item-thumb {
+      width: 2.75rem;
+      height: 3.5rem;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+    .btn-table-action {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      margin-right: 0.35rem;
+      cursor: pointer;
+    }
+    .btn-table-action:hover {
+      background: var(--ink);
+      color: #fff;
+    }
+    .btn-table-danger {
+      color: #dc2626;
+      border-color: rgba(220, 38, 38, 0.3);
+    }
+    .btn-table-danger:hover {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       MODAL 4: CART / BAG SLIDE-OVER DRAWER
+       ========================================================================== */
+    #cart-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 750;
+      display: flex;
+      justify-content: flex-end;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #cart-drawer.open {
+      pointer-events: auto;
+      opacity: 1;
+    }
+    .cart-drawer-panel {
+      position: relative;
+      width: 100%;
+      max-width: 28rem;
+      height: 100%;
+      background: var(--canvas);
+      color: var(--ink);
+      border-left: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -15px 0 35px rgba(0,0,0,0.15);
+    }
+    #cart-drawer.open .cart-drawer-panel {
+      transform: translateX(0);
+    }
+    .cart-drawer-header {
+      padding: 1.5rem;
+      border-bottom: 1px dashed var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-items-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .cart-item-row {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 1.25rem;
+    }
+    .cart-item-img {
+      width: 4.5rem;
+      height: 5.5rem;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+    .cart-item-meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cart-footer-block {
+      padding: 1.5rem;
+      border-top: 1px dashed var(--line);
+      background: var(--surface-grey);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.15rem;
+      font-weight: 500;
+    }
+
+    /* Notification Toast */
+    #notification-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9990;
+      background: var(--surface-dark);
+      color: #ffffff;
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transform: translateY(3rem);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #notification-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Motion reveals utility */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-item.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body data-palette="classic-noir">
+
+  <!-- ==========================================================================
+       1. INTRO LOADER CURTAIN (Baseline spec)
+       ========================================================================== -->
+  <aside id="intro-loader" aria-label="Loading atelier assets">
+    <div class="loader-brand">
+      <span class="loader-diamond"></span>
+      <span>meri.clothing</span>
+    </div>
+    <div class="loader-progress-track">
+      <div class="loader-progress-fill" id="loader-progress"></div>
+    </div>
+    <p class="loader-subtext">FW26 Capsule · Form Woven in Silence</p>
+  </aside>
+
+  <!-- ==========================================================================
+       2. FIXED HEADER (Kai Nomura spec: mix-blend-mode: difference)
+       ========================================================================== -->
+  <header id="site-header" role="banner">
+    <div class="header-grid">
+      <!-- Left (desktop) -->
+      <div class="header-left">
+        <p>Architectural Atelier</p>
+        <p>Kyoto · Milan · Paris</p>
+      </div>
+
+      <!-- Center Brand Logo -->
+      <a href="#hero" class="header-center" aria-label="meri.clothing home">
+        <span class="logo-diamond"></span>
+        <span class="header-logo-text">meri.clothing</span>
+      </a>
+
+      <!-- Right Nav & Actions -->
+      <div class="header-right">
+        <nav class="header-nav" aria-label="Primary Navigation">
+          <a href="#works" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Editions</span>
+          </a>
+          <a href="#catalog" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Archive</span>
+          </a>
+          <a href="#about" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Atelier</span>
+          </a>
+          <a href="#process" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Process</span>
+          </a>
+        </nav>
+
+        <!-- Admin Manager Button -->
+        <button id="open-admin-btn" class="btn-admin-pill" aria-label="Open Shop Manager">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          <span>Manager</span>
+        </button>
+
+        <!-- Cart Trigger -->
+        <button id="open-cart-btn" class="cart-trigger-btn" aria-label="Shopping Bag">
+          <span>Bag</span>
+          <span class="cart-badge" id="cart-counter">0</span>
+        </button>
+
+        <!-- Menu Hamburger -->
+        <button id="open-menu-btn" class="menu-burger-btn" aria-label="Toggle Fullscreen Menu">
+          <span>Menu</span>
+          <div class="burger-bars">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== -->
+  <main id="main-content">
+
+    <!-- ========================================================================
+         HERO SECTION (Video Loop + Live Palette Bar + Collection Slider)
+         ======================================================================== -->
+    <section id="hero">
+      <!-- Background Ambient Motion Fabric Backdrop & Video Canvas -->
+      <div class="hero-media-backdrop">
+        <canvas id="ambient-fabric-canvas" style="position:absolute; inset:0; width:100%; height:100%; opacity:0.35; pointer-events:none;"></canvas>
+        <video class="hero-video-element" id="hero-bg-video" autoplay loop muted playsinline poster="https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-p1.webp">
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay-gradient"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Column -->
+          <div class="hero-content-col">
+            <div class="eyebrow reveal-item">Haute Silhouettes · FW26</div>
+
+            <h1 class="hero-title reveal-item">
+              Form, <span class="accent">woven</span> in silence.
+            </h1>
+
+            <p class="hero-lead-text reveal-item">
+              meri.clothing crafts sculptural everyday garments where Japanese architectural precision meets raw Italian wools and untreated silks. Limited numbered runs, tailored to outlive seasonal noise.
+            </p>
+
+            <div class="hero-cta-row reveal-item">
+              <a href="#catalog" class="btn-cta btn-solid-light">
+                <span>Explore Catalog</span>
+                <span class="arrow">→</span>
+              </a>
+              <a href="#works" class="btn-cta btn-ghost-light">
+                <span>View Editions</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+
+            <!-- Video Controls Toggle -->
+            <button class="video-ctrl-chip reveal-item" id="video-toggle-btn">
+              <span class="play-pulse" id="video-indicator"></span>
+              <span id="video-toggle-text">Ambient Video: Active</span>
+            </button>
+
+            <!-- Dynamic Palette Switcher Bar (User requirement: color palettes) -->
+            <div class="palette-switcher-bar reveal-item">
+              <div class="palette-label-row">
+                <span>Curated Mineral Palettes</span>
+                <span>Select to restyle atelier</span>
+              </div>
+              <div class="palette-swatches">
+                <button class="palette-btn active" data-palette="classic-noir">
+                  <span class="color-chip" style="background:#141413;"></span>
+                  <span>Obsidian & Chalk</span>
+                </button>
+                <button class="palette-btn" data-palette="raw-linen">
+                  <span class="color-chip" style="background:#9d784f;"></span>
+                  <span>Raw Linen & Clay</span>
+                </button>
+                <button class="palette-btn" data-palette="slate-noir">
+                  <span class="color-chip" style="background:#485c70;"></span>
+                  <span>Slate & Charcoal</span>
+                </button>
+                <button class="palette-btn" data-palette="botanical-sage">
+                  <span class="color-chip" style="background:#5e7960;"></span>
+                  <span>Kyoto Sage Dust</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Facts Ledger Row (Desktop) -->
+            <dl class="hero-facts-row reveal-item">
+              <div>
+                <dt>Mills Origin</dt>
+                <dd>Biella & Kyoto</dd>
+              </div>
+              <div>
+                <dt>Philosophy</dt>
+                <dd>Mono-material 100%</dd>
+              </div>
+              <div>
+                <dt>Production Run</dt>
+                <dd>Strictly 50 Per Piece</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Right Visual Column (Portrait Plate + Floating Mini Slider) -->
+          <div class="hero-visual-col reveal-item">
+            <div class="hero-portrait-card plate-box ratio-3-4">
+              <img id="hero-hero-image" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-p1.webp" alt="meri.clothing - Tailored Double-Breasted Silhouette">
+            </div>
+
+            <!-- Floating Collection Glass Card (Baseline Carousel component) -->
+            <div class="floating-collection-card" id="floating-card-trigger">
+              <img class="mini-thumb" id="mini-slider-thumb" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/baseline-88535e4000/2.webp" alt="Drop Highlight">
+              <div class="collection-mini-meta">
+                <h4 id="mini-slider-title">The Cocoon Overcoat</h4>
+                <p id="mini-slider-fabric">Uncut Heavy Wool Blend</p>
+                <span id="mini-slider-price">€1,280 · Reserve</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         STATEMENT SECTION (Kai Nomura spec: Large editorial passage)
+         ======================================================================== -->
+    <section id="statement">
+      <div class="container">
+        <div class="statement-inner">
+          <div class="eyebrow reveal-item">The Atelier Manifesto</div>
+          <p class="statement-quote reveal-item">
+            "Clothing should not shout for attention; it should provide quiet architectural sanctuary. We treat raw fiber like masonry — cutting away excess until nothing remains except pure weight, fluid drape, and uncompromised comfort."
+          </p>
+          <div class="statement-signature reveal-item">
+            — meri.clothing atelier, Kyoto & Milan
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         FEATURED WORKS (ZIG-ZAG ASYMMETRIC GALLERY - Kai Nomura spec)
+         ======================================================================== -->
+    <section id="works" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Selected Editions</div>
+          <h2 class="section-title reveal-item">
+            A field of <span class="accent">form</span>, never mass produced.
+          </h2>
+        </div>
+
+        <!-- Dynamic Zig-Zag Gallery Grid populated by JS -->
+        <div class="zigzag-gallery-grid" id="zigzag-gallery-container">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         PINNED CTA #1 (Dark - Kai Nomura spec)
+         ======================================================================== -->
+    <section class="pinned-cta-dark">
+      <div class="container">
+        <div class="pinned-cta-grid">
+          <div class="pinned-cta-content reveal-item">
+            <div class="eyebrow on-dark">Numbered Drops</div>
+            <h2 class="pinned-cta-title">Some silhouettes only exist once.</h2>
+            <p class="pinned-cta-body">
+              Each garment in our capsule is cut by a single artisan, numbered on an embroidered silk label, and archived. When the bolt of textile is depleted, the pattern is permanently sealed.
+            </p>
+            <div style="margin-top:2.5rem;">
+              <a href="#catalog" class="btn-cta btn-solid-dark">
+                <span>View Current Archive</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="pinned-cta-media reveal-item">
+            <div class="plate-box ratio-3-4" style="border-radius: var(--radius-sm);">
+              <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-p2.webp" alt="Limited Edition Atelier Trench">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         LIVE CATALOG & ATELIER STORE (User requirement + Admin connection)
+         ======================================================================== -->
+    <section id="catalog" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Complete Wardrobe Archive</div>
+          <h2 class="section-title reveal-item">
+            Permanent pieces & seasonal cuts.
+          </h2>
+        </div>
+
+        <!-- Category Filter & Search Bar -->
+        <div class="catalog-controls-bar reveal-item">
+          <div class="filter-tabs-cluster" id="catalog-category-tabs">
+            <button class="btn-pill-small active" data-category="all">All Garments</button>
+            <button class="btn-pill-small" data-category="Outerwear">Outerwear</button>
+            <button class="btn-pill-small" data-category="Tailoring">Tailoring</button>
+            <button class="btn-pill-small" data-category="Knitwear">Knitwear</button>
+            <button class="btn-pill-small" data-category="Essentials">Essentials</button>
+          </div>
+
+          <div class="catalog-search-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="catalog-search-input" class="catalog-search-input" placeholder="Search by cut, fabric, or color…">
+          </div>
+        </div>
+
+        <!-- Catalog Items Grid -->
+        <div class="catalog-grid" id="catalog-grid-container">
+          <!-- Rendered dynamically from live data / localStorage -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         STUDIO PRINCIPLES (Kai Nomura spec: 3-column grey cards)
+         ======================================================================== -->
+    <section id="principles" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Atelier Principles</div>
+          <h2 class="section-title reveal-item">Three tenets meri.clothing lives by.</h2>
+        </div>
+
+        <div class="principles-grid">
+          <article class="principle-card reveal-item">
+            <span class="principle-num">01</span>
+            <h3>The textile dictates the cut.</h3>
+            <p>We do not force rigid trends onto delicate cloth. The natural drape, grain, and breathability of raw wool and washed linen guide every seam.</p>
+          </article>
+          <article class="principle-card reveal-item">
+            <span class="principle-num">02</span>
+            <h3>Impermanence of trend, permanence of structure.</h3>
+            <p>Garments built to last thirty years outlive momentary micro-trends. Double-faced construction and hand-bound interior hems ensure enduring dignity.</p>
+          </article>
+          <article class="principle-card reveal-item">
+            <span class="principle-num">03</span>
+            <h3>Garments as personal architecture.</h3>
+            <p>A coat is portable shelter. It provides warmth, tactile calm, and effortless poise the moment you step into the world.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ABOUT SECTION (Kai Nomura spec: 12-col + photo grid + facts ledger)
+         ======================================================================== -->
+    <section id="about" class="section-pad">
+      <div class="container">
+        <div class="about-top-grid">
+          <div class="about-left-col reveal-item">
+            <div class="eyebrow">Atelier Origins</div>
+            <h2 class="about-lead-title">
+              We design garments that reveal their luxury through touch, not logos.
+            </h2>
+          </div>
+
+          <div class="about-right-col reveal-item">
+            <p>
+              Founded between Kyoto's historic textile quarters and Milan's sartorial workshops, meri.clothing was born from a desire for tactile honesty. In a world saturated with synthetic disposables, we slow down.
+            </p>
+            <p>
+              Every pattern is hand-drafted on kraft paper. We collaborate with sixth-generation family mills that spin raw organic wool, unbleached hemp, and wild mulberry silk.
+            </p>
+            <p>
+              When you wear a piece from meri.clothing, you feel the weight of intention. It moves with your body, softens with every wash, and becomes a permanent companion.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3-Photo Grid -->
+        <div class="about-photo-grid">
+          <div class="about-photo-item plate-box reveal-item">
+            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l1.webp" alt="Atelier Pattern Cutting">
+          </div>
+          <div class="about-photo-item plate-box reveal-item">
+            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l2.webp" alt="Loom and Weft Study">
+          </div>
+          <div class="about-photo-item plate-box reveal-item">
+            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l3.webp" alt="Hand-Finishing Seams">
+          </div>
+        </div>
+
+        <!-- Facts Ledger -->
+        <dl class="facts-ledger reveal-item">
+          <div>
+            <dt>Main Atelier</dt>
+            <dd>Kyoto · Milan</dd>
+          </div>
+          <div>
+            <dt>Textile Partners</dt>
+            <dd>14 Artisan Mills</dd>
+          </div>
+          <div>
+            <dt>Zero Synthetics</dt>
+            <dd>100% Natural Yarns</dd>
+          </div>
+          <div>
+            <dt>Bespoke Tailoring</dt>
+            <dd>Available by Request</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         PROCESS SECTION (Sticky Heading + 4-Step Ordered List)
+         ======================================================================== -->
+    <section id="process" class="section-pad">
+      <div class="container">
+        <div class="process-grid">
+          <div class="process-sticky-left reveal-item">
+            <div class="eyebrow">The Craft Cycle</div>
+            <h2 class="section-title" style="margin-top:1.5rem;">From raw fiber to your silhouette.</h2>
+          </div>
+
+          <ol class="process-steps-list">
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">01</span>
+              <div class="process-step-body">
+                <h3>Fiber Selection & Sourcing</h3>
+                <p>We source long-staple virgin merino wool, Belgian flax, and raw mulberry silk directly from certified ethical farms with unblemished provenance.</p>
+              </div>
+            </li>
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">02</span>
+              <div class="process-step-body">
+                <h3>Drafting & Three-Dimensional Drape</h3>
+                <p>Patterns are draped in unbleached calico muslin on dress forms, tested on varied body shapes, and refined for dynamic ease of movement.</p>
+              </div>
+            </li>
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">03</span>
+              <div class="process-step-body">
+                <h3>Precision Cutting & Hand Tailoring</h3>
+                <p>Garments are individually bench-cut. Master tailors construct inner canvas chest pieces, horn buttonholes, and hand-bound french seams.</p>
+              </div>
+            </li>
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">04</span>
+              <div class="process-step-body">
+                <h3>Numbered Labeling & Archiving</h3>
+                <p>Every edition is hand-stamped with its unique batch number, certified for lifetime repair, and dispatched in recyclable linen garment bags.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         PINNED CTA #2 (Centered Dark - Kai Nomura spec)
+         ======================================================================== -->
+    <section id="contact-section">
+      <div class="container">
+        <div class="pinned-cta-centered reveal-item">
+          <div class="eyebrow on-dark">Private Fittings</div>
+          <h2>Experience the garments in person.</h2>
+          <p>
+            Whether commissioning a bespoke tailored overcoat or scheduling a private fitting session at our Kyoto or Milan showrooms, our head tailor is at your disposal.
+          </p>
+          <div style="margin-top:2.5rem;">
+            <button id="book-fitting-btn" class="btn-cta btn-solid-dark">
+              <span>Request Private Appointment</span>
+              <span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         TESTIMONIALS (Curators & Fashion Editors)
+         ======================================================================== -->
+    <section id="testimonials" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Critical Notes</div>
+          <h2 class="section-title reveal-item">What curators and collectors say.</h2>
+        </div>
+
+        <div class="testimonials-grid">
+          <figure class="testimonial-card reveal-item">
+            <blockquote class="testimonial-quote">
+              “meri.clothing strips away all the pretension of luxury fashion and leaves you with the purest, most comfortable coat you will ever own.”
+            </blockquote>
+            <figcaption class="testimonial-author">
+              <p>Camille Laurent</p>
+              <p>Fashion Editor, L'Officiel Paris</p>
+            </figcaption>
+          </figure>
+          <figure class="testimonial-card reveal-item">
+            <blockquote class="testimonial-quote">
+              “The Japanese wool drape combined with Milanese structure creates an architectural presence that turns heads without saying a single loud word.”
+            </blockquote>
+            <figcaption class="testimonial-author">
+              <p>Kenzo Takahashi</p>
+              <p>Architect & Collector, Tokyo</p>
+            </figcaption>
+          </figure>
+          <figure class="testimonial-card reveal-item">
+            <blockquote class="testimonial-quote">
+              “The tailoring precision and transparent provenance make meri.clothing a model for what modern luxury clothing must become.”
+            </blockquote>
+            <figcaption class="testimonial-author">
+              <p>Hannah Sterling</p>
+              <p>Design Director, Wallpaper*</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         STOCKISTS & SHOWROOMS
+         ======================================================================== -->
+    <section id="stockists" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Showrooms & Stockists</div>
+          <h2 class="section-title reveal-item">Where to experience meri.clothing.</h2>
+        </div>
+
+        <ul class="stockists-list">
+          <li class="stockist-row reveal-item">
+            <span class="stockist-index">01</span>
+            <span class="stockist-name">Atelier Gion</span>
+            <span class="stockist-city">Kyoto</span>
+          </li>
+          <li class="stockist-row reveal-item">
+            <span class="stockist-index">02</span>
+            <span class="stockist-name">Spazio Brera</span>
+            <span class="stockist-city">Milan</span>
+          </li>
+          <li class="stockist-row reveal-item">
+            <span class="stockist-index">03</span>
+            <span class="stockist-name">Galerie Marais</span>
+            <span class="stockist-city">Paris</span>
+          </li>
+          <li class="stockist-row reveal-item">
+            <span class="stockist-index">04</span>
+            <span class="stockist-name">Aoyama Pavilion</span>
+            <span class="stockist-city">Tokyo</span>
+          </li>
+          <li class="stockist-row reveal-item">
+            <span class="stockist-index">05</span>
+            <span class="stockist-name">SoHo Studio</span>
+            <span class="stockist-city">New York</span>
+          </li>
+          <li class="stockist-row reveal-item">
+            <span class="stockist-index">06</span>
+            <span class="stockist-name">Mitte Salon</span>
+            <span class="stockist-city">Berlin</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         FAQ ACCORDION (Kai Nomura spec: interactive rotating +)
+         ======================================================================== -->
+    <section id="faq" class="section-pad">
+      <div class="container">
+        <div class="faq-grid">
+          <div class="faq-left reveal-item">
+            <div class="eyebrow">Inquiries</div>
+            <h2 class="section-title" style="margin-top:1.5rem;">Before you acquire.</h2>
+          </div>
+
+          <div class="faq-right reveal-item">
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">How does sizing and fit run?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>Our silhouettes are tailored with relaxed architectural ease. If you prefer a crisp closer fit, choose your usual standard size; if you love layered volume, size up one notch. We provide custom sleeve and hem adjustments upon request.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">How do I care for untreated natural textiles?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>Pure wools and silks have natural antimicrobial and self-cleaning attributes. Airing your garments outdoors after wearing is usually sufficient. When necessary, we recommend gentle green eco dry-cleaning or cold hand wash with cedar soap.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">Can I commission a bespoke or custom fit garment?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>Yes. Our master atelier accepts a limited allotment of bespoke appointments each quarter. We will craft an individual pattern based on your measurements and chosen archive cloth.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">What is your shipping and lifetime repair policy?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>All garments are shipped complimentary worldwide via carbon-neutral express courier. We provide a lifetime repair guarantee: if a seam tears or a button loosens at any point in the garment's life, return it to our atelier for restorative hand-repair.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER (Kai Nomura spec: 18vw giant wordmark)
+       ========================================================================== -->
+  <footer id="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <div class="loader-brand" style="color:#ffffff;">
+            <span class="loader-diamond"></span>
+            <span>meri.clothing</span>
+          </div>
+          <p class="footer-tagline accent">
+            Form, woven in silence.
+          </p>
+          <a href="mailto:atelier@meri.clothing" class="footer-email-link">
+            atelier@meri.clothing
+          </a>
+        </div>
+
+        <div class="footer-col footer-col-2">
+          <p class="footer-col-title">Archive</p>
+          <ul class="footer-links-list">
+            <li><a href="#works">Editions</a></li>
+            <li><a href="#catalog">Outerwear</a></li>
+            <li><a href="#catalog">Tailoring</a></li>
+            <li><a href="#catalog">Knitwear</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col-2">
+          <p class="footer-col-title">Atelier</p>
+          <ul class="footer-links-list">
+            <li><a href="#about">Philosophy</a></li>
+            <li><a href="#process">Craftsmanship</a></li>
+            <li><a href="#stockists">Showrooms</a></li>
+            <li><a href="#faq">Care & Repairs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col-3">
+          <p class="footer-col-title">Private Gazette</p>
+          <p style="font-size:0.875rem; color:var(--on-dark-muted); margin-top:1rem; line-height:1.5;">
+            Receive quiet announcements when new fabric bolts arrive and capsule drops open.
+          </p>
+          <form id="newsletter-form" style="margin-top:1.25rem; display:flex; gap:0.5rem;">
+            <input type="email" placeholder="Your email address" required style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:0.6rem 0.85rem; font-size:0.8125rem; border-radius:var(--radius-pill); flex:1; outline:none;">
+            <button type="submit" class="btn-pill-small" style="background:#ffffff; color:#141413; border:none; padding:0.6rem 1rem;">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Giant 18vw Brand Wordmark -->
+      <div class="giant-wordmark-wrap" aria-hidden="true">
+        <span class="giant-wordmark">MERI</span>
+      </div>
+
+      <!-- Legal bar -->
+      <div class="footer-legal-bar">
+        <p>© 2026 meri.clothing Atelier. All architectural rights reserved.</p>
+        <div class="legal-links">
+          <a href="#">Privacy Charter</a>
+          <a href="#">Provenance Terms</a>
+          <a href="#open-admin-btn">Owner Portal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL 1: FULLSCREEN OVERLAY MENU (Kai Nomura spec)
+       ========================================================================== -->
+  <div id="menu-overlay" role="dialog" aria-modal="true" aria-label="Atelier Menu">
+    <div class="menu-panel-bg"></div>
+    <div class="menu-content">
+      <div class="menu-top-bar">
+        <span class="menu-top-label">Capsule Navigation</span>
+        <button id="menu-close-btn" class="menu-close-btn">Close ✕</button>
+      </div>
+
+      <nav class="menu-nav-links">
+        <div class="menu-link-row" data-href="#hero">
+          <span class="menu-link-index">01</span>
+          <span class="menu-link-label">Entrance</span>
+        </div>
+        <div class="menu-link-row" data-href="#works">
+          <span class="menu-link-index">02</span>
+          <span class="menu-link-label">Editions</span>
+        </div>
+        <div class="menu-link-row" data-href="#catalog">
+          <span class="menu-link-index">03</span>
+          <span class="menu-link-label">Garments</span>
+        </div>
+        <div class="menu-link-row" data-href="#about">
+          <span class="menu-link-index">04</span>
+          <span class="menu-link-label">Atelier</span>
+        </div>
+        <div class="menu-link-row" data-href="#process">
+          <span class="menu-link-index">05</span>
+          <span class="menu-link-label">Process</span>
+        </div>
+      </nav>
+
+      <div class="menu-bottom-bar">
+        <div>
+          <a href="mailto:atelier@meri.clothing" style="font-size:1.15rem; color:#fff;">atelier@meri.clothing</a>
+          <p style="font-size:0.875rem; color:var(--on-dark-muted); margin-top:0.25rem;">Kyoto · Milan · Paris</p>
+        </div>
+        <div style="display:flex; gap:1.5rem; font-size:0.875rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--on-dark-muted);">
+          <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://vimeo.com" target="_blank" rel="noopener">Vimeo</a>
+          <a href="https://behance.net" target="_blank" rel="noopener">Journal</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: HIGH-RES GARMENT PREVIEW / LIGHTBOX
+       ========================================================================== -->
+  <div id="preview-modal" role="dialog" aria-modal="true" aria-label="Garment Preview">
+    <div class="modal-backdrop" id="preview-modal-backdrop"></div>
+    <div class="modal-dialog-panel">
+      <button class="modal-close-icon" id="preview-close-btn" aria-label="Close Preview">✕</button>
+
+      <div class="modal-image-col">
+        <img id="modal-product-img" src="" alt="Garment Preview">
+      </div>
+
+      <div class="modal-details-col">
+        <div>
+          <span class="modal-edition-tag" id="modal-edition-tag">Strict Run of 50 · Editioned</span>
+          <h2 class="modal-title" id="modal-product-title">Garment Name</h2>
+          <div class="modal-price" id="modal-product-price">€0</div>
+        </div>
+
+        <p class="modal-description" id="modal-product-desc">
+          Crafted from 100% long-staple natural fibers. Tailored with architectural volume and hand-bound internal seams.
+        </p>
+
+        <div>
+          <div class="modal-swatches-title">Available Sizes</div>
+          <div class="modal-sizes-row" id="modal-sizes-container">
+            <button class="size-btn active">XS</button>
+            <button class="size-btn">S</button>
+            <button class="size-btn">M</button>
+            <button class="size-btn">L</button>
+            <button class="size-btn">XL</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="modal-swatches-title" style="margin-bottom:0.5rem;">Fabric & Care</div>
+          <p id="modal-product-fabric" style="font-size:0.85rem; color:var(--ink-muted);">
+            100% Virgin Wool · Dry Clean Only · Lifetime Atelier Repair
+          </p>
+        </div>
+
+        <div class="modal-actions-wrap">
+          <button id="modal-add-to-bag-btn" class="btn-cta btn-solid-light" style="width:100%; justify-content:center;">
+            <span>Add to Bag</span>
+            <span class="arrow">→</span>
+          </button>
+          <p style="font-size:0.75rem; text-align:center; color:var(--ink-faint);">
+            Complimentary insured courier delivery worldwide.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: ADMIN / SHOP OWNER MANAGER DASHBOARD (User core requirement)
+       ========================================================================== -->
+  <div id="admin-modal" role="dialog" aria-modal="true" aria-label="Shop Owner Atelier Manager">
+    <div class="modal-backdrop" id="admin-modal-backdrop"></div>
+    <div class="admin-panel-container">
+      <!-- Admin Header -->
+      <div class="admin-header">
+        <div>
+          <div class="eyebrow">Atelier Management System</div>
+          <h2 style="font-size:1.75rem; margin-top:0.35rem;">meri.clothing Shop Manager</h2>
+        </div>
+        <button class="btn-pill-small" id="admin-close-btn" style="padding:0.4rem 0.85rem;">
+          Close Dashboard ✕
+        </button>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="admin-stats-bar">
+        <div class="stat-chip">
+          <div class="stat-chip-val" id="admin-stat-total">0</div>
+          <div class="stat-chip-lbl">Total Catalog Items</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-val" id="admin-stat-categories">4</div>
+          <div class="stat-chip-lbl">Active Collections</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-val" id="admin-stat-avg-price">€850</div>
+          <div class="stat-chip-lbl">Average Piece Value</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-val" style="color:#10b981;">Online</div>
+          <div class="stat-chip-lbl">Local Storage Active</div>
+        </div>
+      </div>
+
+      <!-- Add or Edit Garment Form -->
+      <form id="admin-garment-form">
+        <input type="hidden" id="admin-edit-id" value="">
+        <div class="admin-form-grid">
+          <div class="admin-input-group col-span-2">
+            <label class="admin-label" for="form-title">Garment Title</label>
+            <input type="text" id="form-title" class="admin-input" placeholder="e.g. The Origami Trench Coat" required>
+          </div>
+
+          <div class="admin-input-group">
+            <label class="admin-label" for="form-category">Category</label>
+            <select id="form-category" class="admin-select" required>
+              <option value="Outerwear">Outerwear</option>
+              <option value="Tailoring">Tailoring</option>
+              <option value="Knitwear">Knitwear</option>
+              <option value="Essentials">Essentials</option>
+            </select>
+          </div>
+
+          <div class="admin-input-group">
+            <label class="admin-label" for="form-price">Price (EUR €)</label>
+            <input type="number" id="form-price" class="admin-input" placeholder="1250" min="50" required>
+          </div>
+
+          <div class="admin-input-group">
+            <label class="admin-label" for="form-edition">Edition Tag</label>
+            <input type="text" id="form-edition" class="admin-input" placeholder="e.g. Edition of 25 · Archival">
+          </div>
+
+          <div class="admin-input-group">
+            <label class="admin-label" for="form-fabric">Textile Composition</label>
+            <input type="text" id="form-fabric" class="admin-input" placeholder="e.g. 100% Biella Virgin Wool">
+          </div>
+
+          <div class="admin-input-group col-span-2">
+            <label class="admin-label" for="form-image">Image URL</label>
+            <input type="url" id="form-image" class="admin-input" placeholder="https://..." required>
+          </div>
+
+          <div class="admin-input-group">
+            <label class="admin-label" for="form-stock">Stock Availability</label>
+            <select id="form-stock" class="admin-select">
+              <option value="in_stock">In Stock & Ready</option>
+              <option value="limited">Limited (Low Stock)</option>
+              <option value="made_to_order">Made to Order</option>
+            </select>
+          </div>
+
+          <div class="admin-input-group col-span-3">
+            <label class="admin-label" for="form-description">Architectural Description</label>
+            <textarea id="form-description" class="admin-textarea" rows="2" placeholder="Describe the cut, silhouette, and movement..." required></textarea>
+          </div>
+
+          <div class="admin-input-group col-span-3" style="display:flex; flex-direction:row; gap:1rem; align-items:center; margin-top:0.5rem;">
+            <button type="submit" id="admin-submit-btn" class="btn-cta btn-solid-light" style="padding:0.75rem 1.5rem;">
+              <span id="admin-btn-label">Save New Garment</span>
+            </button>
+            <button type="button" id="admin-cancel-edit-btn" class="btn-pill-small" style="display:none;">
+              Cancel Editing
+            </button>
+            <button type="button" id="admin-reset-default-btn" class="btn-pill-small" style="margin-left:auto; color:var(--ink-muted);">
+              Reset to Original Collection
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Manage Existing Items Table -->
+      <div>
+        <h3 style="font-size:1.15rem; margin-bottom:1rem;">Current Atelier Inventory</h3>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Piece</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: CART / BAG SLIDE-OVER DRAWER
+       ========================================================================== -->
+  <div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Bag">
+    <div class="modal-backdrop" id="cart-backdrop"></div>
+    <div class="cart-drawer-panel">
+      <div class="cart-drawer-header">
+        <div>
+          <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.16em; color:var(--ink-faint);">Your Bag</span>
+          <h3 style="font-size:1.35rem; margin-top:0.15rem;">Selected Silhouettes</h3>
+        </div>
+        <button class="btn-pill-small" id="cart-close-btn">✕</button>
+      </div>
+
+      <div class="cart-items-scroll" id="cart-items-container">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="cart-footer-block">
+        <div class="cart-total-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal-val">€0</span>
+        </div>
+        <p style="font-size:0.75rem; color:var(--ink-muted);">
+          Insured courier packaging and duties calculated at dispatch.
+        </p>
+        <button id="checkout-stub-btn" class="btn-cta btn-solid-light" style="width:100%; justify-content:center;">
+          <span>Proceed to Atelier Checkout</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="notification-toast" role="status" aria-live="polite">
+    Action completed
+  </div>
+
+  <!-- ==========================================================================
+       CLIENT APPLICATION CORE JAVASCRIPT (ESM with Lenis)
+       ========================================================================== -->
+  <script type="module">
+    import Lenis from "lenis";
+
+    /* ==========================================================================
+       1. INITIAL CATALOG DATA STORE (Default FW26 Curated Luxury Items)
+       ========================================================================== */
+    const DEFAULT_CATALOG = [
+      {
+        id: "meri-01",
+        title: "The Cocoon Overcoat",
+        category: "Outerwear",
+        price: 1480,
+        edition: "Edition of 30 · Biella Wool",
+        fabric: "100% Double-Faced Virgin Wool",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l1.webp",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        stock: "in_stock",
+        description: "Cut with a dramatic sculptural cocoon curve and dropped raglan shoulders. Horn button fastenings and deep fleece-lined welt pockets."
+      },
+      {
+        id: "meri-02",
+        title: "Origami Double-Breasted Jacket",
+        category: "Tailoring",
+        price: 1120,
+        edition: "Edition of 25 · Kyoto Silk Weft",
+        fabric: "Wool & Mulberry Raw Silk Blend",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-p2.webp",
+        ratio: "ratio-3-4",
+        featuredZigZag: true,
+        stock: "limited",
+        description: "Architectural lapels that fold across the sternum without external buttons. Built upon a floating horsehair canvas."
+      },
+      {
+        id: "meri-03",
+        title: "Sculptural Draped Turtleneck",
+        category: "Knitwear",
+        price: 640,
+        edition: "Edition of 40 · 7-Gauge Cashmere",
+        fabric: "100% Organic Mongolian Cashmere",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l2.webp",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        stock: "in_stock",
+        description: "Seamless cylindrical knit that flows effortlessly down the neckline. Featherweight warmth with a cloud-like brushed surface."
+      },
+      {
+        id: "meri-04",
+        title: "Architectural Wide-Leg Trousers",
+        category: "Tailoring",
+        price: 780,
+        edition: "Edition of 35 · Structured Gabardine",
+        fabric: "High-Twist Worsted Wool Gabardine",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l4.webp",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        stock: "in_stock",
+        description: "Deep forward pleats and an extended waistband. Flows dynamically with each stride while maintaining a razor-sharp vertical crease."
+      },
+      {
+        id: "meri-05",
+        title: "Unstructured Raw Linen Kimono Haori",
+        category: "Outerwear",
+        price: 920,
+        edition: "Edition of 20 · Washed Flax",
+        fabric: "100% Heavy Belgian Flax Linen",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l3.webp",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        stock: "made_to_order",
+        description: "Inspired by classical Japanese work coats, reconstructed with clean modern geometry and concealed interior ribbon ties."
+      },
+      {
+        id: "meri-06",
+        title: "Minimalist Poplin Atelier Shirt",
+        category: "Essentials",
+        price: 460,
+        edition: "Core Archive · 140s Cotton",
+        fabric: "100% Giza Egyptian Long-Staple Cotton",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-l5.webp",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        stock: "in_stock",
+        description: "Concealed front placket, crisp mandarin collar, and mother-of-pearl buttons. Silky, breathable handfeel with natural drape."
+      },
+      {
+        id: "meri-07",
+        title: "Raw Edge Heavy Blanket Coat",
+        category: "Outerwear",
+        price: 1680,
+        edition: "Edition of 15 · Uncut Loom Edge",
+        fabric: "100% Unbleached Alpine Wool",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/artist-32290926f6/site/art-p3.webp",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        stock: "limited",
+        description: "An homage to archaic mountain garments. Preserves the natural selvedge fringing along the front hemline."
+      },
+      {
+        id: "meri-08",
+        title: "Pleated Column Midi Tunic",
+        category: "Tailoring",
+        price: 890,
+        edition: "Edition of 30 · Silk Crepe",
+        fabric: "100% Heavy Matte Silk Crepe de Chine",
+        image: "https://api.getlayers.ai/storage/v1/object/public/public/assets/baseline-88535e4000/1.webp",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        stock: "in_stock",
+        description: "Vertical architectural accordions that expand and contract as you move. Fluid, meditative motion in every step."
+      }
+    ];
+
+    const STORAGE_KEY = "meri_clothing_catalog_v2";
+
+    function getCatalog() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) return JSON.parse(saved);
+      } catch (e) {
+        console.warn("localStorage read error", e);
+      }
+      return DEFAULT_CATALOG;
+    }
+
+    function saveCatalog(items) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      } catch (e) {
+        console.warn("localStorage write error", e);
+      }
+    }
+
+    let catalogState = getCatalog();
+    let cartState = [];
+    let activeCategory = "all";
+    let activeSearchTerm = "";
+
+    /* ==========================================================================
+       2. LENIS SMOOTH SCROLL INITIALIZATION
+       ========================================================================== */
+    const lenis = new Lenis({
+      smoothWheel: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Scroll Lock Helpers for Modals
+    function lockScroll() {
+      lenis.stop();
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.height = "100%";
+    }
+    function unlockScroll() {
+      lenis.start();
+      document.documentElement.style.removeProperty("overflow");
+      document.documentElement.style.removeProperty("height");
+    }
+
+    /* ==========================================================================
+       3. ADAPTIVE REM JS SCALE (Baseline Spec: >1920px Dynamic Scaling)
+       ========================================================================== */
+    function adjustRootFontSize() {
+      const FONT_BASE = 16, BASE_W = 1920, COEF = 0.6666;
+      if (window.innerWidth > 1920) {
+        const reduction = ((BASE_W - window.innerWidth) / BASE_W) * 100 * COEF;
+        const size = FONT_BASE - (FONT_BASE * reduction) / 100;
+        document.documentElement.style.fontSize = size + "px";
+      } else {
+        document.documentElement.style.removeProperty("font-size");
+      }
+    }
+    window.addEventListener("resize", adjustRootFontSize);
+    adjustRootFontSize();
+
+    /* ==========================================================================
+       4. INTRO LOADER CURTAIN LOGIC (Baseline Spec)
+       ========================================================================== */
+    const introLoader = document.getElementById("intro-loader");
+    const loaderProgress = document.getElementById("loader-progress");
+
+    lockScroll();
+    setTimeout(() => {
+      loaderProgress.style.transform = "scaleX(1)";
+    }, 150);
+
+    setTimeout(() => {
+      introLoader.classList.add("slide-up");
+      unlockScroll();
+      triggerScrollReveals();
+    }, 1450);
+
+    /* ==========================================================================
+       5. NOTIFICATION TOAST HELPER
+       ========================================================================== */
+    const toast = document.getElementById("notification-toast");
+    let toastTimer = null;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3200);
+    }
+
+    /* ==========================================================================
+       6. RENDER FEATURED WORKS (ZIG-ZAG EDITORIAL GALLERY - Kai Nomura Spec)
+       ========================================================================== */
+    const zigzagContainer = document.getElementById("zigzag-gallery-container");
+
+    function renderZigZagGallery() {
+      const featured = catalogState.filter(item => item.featuredZigZag !== false);
+      zigzagContainer.innerHTML = featured.map((item, index) => {
+        const ratioClass = item.ratio || "ratio-3-2";
+        return `
+          <article class="zigzag-item reveal-item" data-id="${item.id}">
+            <figure class="work-figure">
+              <span class="work-quick-action">Preview Silhouette</span>
+              <div class="work-plate plate-box ${ratioClass}">
+                <img src="${item.image}" alt="${item.title} — ${item.fabric}" loading="lazy">
+              </div>
+              <figcaption class="work-caption">
+                <div class="work-caption-left">
+                  <h3>${item.title}</h3>
+                  <p>${item.fabric}</p>
+                </div>
+                <div class="work-caption-right">
+                  <div class="work-price">€${item.price.toLocaleString()}</div>
+                  <div class="work-tag">${item.edition}</div>
+                </div>
+              </figcaption>
+            </figure>
+          </article>
+        `;
+      }).join("");
+
+      // Wire click for quick preview
+      zigzagContainer.querySelectorAll(".zigzag-item").forEach(el => {
+        el.addEventListener("click", () => {
+          const id = el.getAttribute("data-id");
+          openPreviewModal(id);
+        });
+      });
+    }
+
+    /* ==========================================================================
+       7. RENDER FULL CATALOG (Storefront + Filters & Search)
+       ========================================================================== */
+    const catalogContainer = document.getElementById("catalog-grid-container");
+
+    function renderCatalogGrid() {
+      let filtered = catalogState;
+
+      if (activeCategory !== "all") {
+        filtered = filtered.filter(item => item.category.toLowerCase() === activeCategory.toLowerCase());
+      }
+
+      if (activeSearchTerm.trim() !== "") {
+        const term = activeSearchTerm.toLowerCase();
+        filtered = filtered.filter(item =>
+          item.title.toLowerCase().includes(term) ||
+          item.fabric.toLowerCase().includes(term) ||
+          item.category.toLowerCase().includes(term) ||
+          item.description.toLowerCase().includes(term)
+        );
+      }
+
+      if (filtered.length === 0) {
+        catalogContainer.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:4rem; color:var(--ink-muted);">
+            <p style="font-size:1.25rem; font-family:var(--font-display);">No garments match your search inquiry.</p>
+            <button class="btn-pill-small" id="reset-search-btn" style="margin-top:1rem;">Clear Search Filters</button>
+          </div>
+        `;
+        const resetBtn = document.getElementById("reset-search-btn");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", () => {
+            activeSearchTerm = "";
+            document.getElementById("catalog-search-input").value = "";
+            renderCatalogGrid();
+          });
+        }
+        return;
+      }
+
+      catalogContainer.innerHTML = filtered.map(item => {
+        return `
+          <article class="product-card reveal-item" data-id="${item.id}">
+            <div class="product-thumb-wrap">
+              <span class="product-badge-overlay">${item.category}</span>
+              <img src="${item.image}" alt="${item.title}" loading="lazy">
+              <button class="product-quick-add" data-id="${item.id}">+ Quick View</button>
+            </div>
+            <div class="product-info-row">
+              <div>
+                <h3 class="product-title">${item.title}</h3>
+                <p class="product-category">${item.fabric}</p>
+                <div class="product-meta-chips">
+                  <span class="meta-chip">${item.stock === 'in_stock' ? 'In Stock' : (item.stock === 'limited' ? 'Low Stock' : 'Made to Order')}</span>
+                  <span class="meta-chip">Complimentary Ship</span>
+                </div>
+              </div>
+              <div class="product-price">€${item.price.toLocaleString()}</div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      catalogContainer.querySelectorAll(".product-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const id = card.getAttribute("data-id");
+          openPreviewModal(id);
+        });
+      });
+
+      triggerScrollReveals();
+    }
+
+    /* Category Filter Buttons */
+    document.querySelectorAll("#catalog-category-tabs .btn-pill-small").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#catalog-category-tabs .btn-pill-small").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.getAttribute("data-category");
+        renderCatalogGrid();
+      });
+    });
+
+    /* Search Input Listener */
+    const searchInput = document.getElementById("catalog-search-input");
+    searchInput.addEventListener("input", (e) => {
+      activeSearchTerm = e.target.value;
+      renderCatalogGrid();
+    });
+
+    /* ==========================================================================
+       8. PREVIEW MODAL / LIGHTBOX CONTROLLER
+       ========================================================================== */
+    const previewModal = document.getElementById("preview-modal");
+    const previewBackdrop = document.getElementById("preview-modal-backdrop");
+    const previewCloseBtn = document.getElementById("preview-close-btn");
+
+    let currentPreviewItem = null;
+
+    function openPreviewModal(id) {
+      const item = catalogState.find(x => x.id === id);
+      if (!item) return;
+
+      currentPreviewItem = item;
+      document.getElementById("modal-product-img").src = item.image;
+      document.getElementById("modal-product-img").alt = item.title;
+      document.getElementById("modal-product-title").textContent = item.title;
+      document.getElementById("modal-product-price").textContent = `€${item.price.toLocaleString()}`;
+      document.getElementById("modal-product-desc").textContent = item.description;
+      document.getElementById("modal-product-fabric").textContent = `${item.fabric} · Lifetime Atelier Guarantee`;
+      document.getElementById("modal-edition-tag").textContent = item.edition || "Strict Limited Run";
+
+      previewModal.classList.add("open");
+      lockScroll();
+    }
+
+    function closePreviewModal() {
+      previewModal.classList.remove("open");
+      unlockScroll();
+    }
+
+    previewCloseBtn.addEventListener("click", closePreviewModal);
+    previewBackdrop.addEventListener("click", closePreviewModal);
+
+    // Size Selection in Preview Modal
+    document.querySelectorAll("#modal-sizes-container .size-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#modal-sizes-container .size-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    // Add to Bag from Modal
+    document.getElementById("modal-add-to-bag-btn").addEventListener("click", () => {
+      if (currentPreviewItem) {
+        const activeSize = document.querySelector("#modal-sizes-container .size-btn.active")?.textContent || "M";
+        addToCart(currentPreviewItem, activeSize);
+        closePreviewModal();
+        openCartDrawer();
+      }
+    });
+
+    /* ==========================================================================
+       9. SHOPPING BAG & CART DRAWER
+       ========================================================================== */
+    const cartDrawer = document.getElementById("cart-drawer");
+    const cartBackdrop = document.getElementById("cart-backdrop");
+    const cartCloseBtn = document.getElementById("cart-close-btn");
+    const openCartBtn = document.getElementById("open-cart-btn");
+    const cartCounter = document.getElementById("cart-counter");
+    const cartItemsContainer = document.getElementById("cart-items-container");
+    const cartSubtotalVal = document.getElementById("cart-subtotal-val");
+
+    function openCartDrawer() {
+      renderCartItems();
+      cartDrawer.classList.add("open");
+      lockScroll();
+    }
+    function closeCartDrawer() {
+      cartDrawer.classList.remove("open");
+      unlockScroll();
+    }
+
+    openCartBtn.addEventListener("click", openCartDrawer);
+    cartCloseBtn.addEventListener("click", closeCartDrawer);
+    cartBackdrop.addEventListener("click", closeCartDrawer);
+
+    function addToCart(item, size) {
+      const existing = cartState.find(x => x.id === item.id && x.size === size);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cartState.push({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          image: item.image,
+          fabric: item.fabric,
+          size: size,
+          qty: 1
+        });
+      }
+      updateCartBadge();
+      showToast(`Added ${item.title} (Size ${size}) to Bag.`);
+    }
+
+    function updateCartBadge() {
+      const totalQty = cartState.reduce((sum, item) => sum + item.qty, 0);
+      cartCounter.textContent = totalQty;
+    }
+
+    function renderCartItems() {
+      if (cartState.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div style="text-align:center; padding:3rem 1rem; color:var(--ink-muted);">
+            <p style="font-family:var(--font-display); font-size:1.25rem;">Your bag is currently empty.</p>
+            <p style="font-size:0.85rem; margin-top:0.5rem;">Explore the wardrobe archive to reserve pieces.</p>
+          </div>
+        `;
+        cartSubtotalVal.textContent = "€0";
+        return;
+      }
+
+      let subtotal = 0;
+      cartItemsContainer.innerHTML = cartState.map((item, idx) => {
+        subtotal += item.price * item.qty;
+        return `
+          <div class="cart-item-row">
+            <img class="cart-item-img" src="${item.image}" alt="${item.title}">
+            <div class="cart-item-meta">
+              <div>
+                <h4 style="font-size:0.95rem; font-weight:500;">${item.title}</h4>
+                <p style="font-size:0.75rem; color:var(--ink-muted);">Size: ${item.size} · ${item.fabric}</p>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-family:var(--font-display); font-size:0.95rem;">€${(item.price * item.qty).toLocaleString()}</span>
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                  <button class="btn-table-action" onclick="window.decrementCart(${idx})">-</button>
+                  <span style="font-size:0.8125rem;">${item.qty}</span>
+                  <button class="btn-table-action" onclick="window.incrementCart(${idx})">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      cartSubtotalVal.textContent = `€${subtotal.toLocaleString()}`;
+    }
+
+    window.incrementCart = function(index) {
+      if (cartState[index]) {
+        cartState[index].qty += 1;
+        updateCartBadge();
+        renderCartItems();
+      }
+    };
+
+    window.decrementCart = function(index) {
+      if (cartState[index]) {
+        cartState[index].qty -= 1;
+        if (cartState[index].qty <= 0) {
+          cartState.splice(index, 1);
+        }
+        updateCartBadge();
+        renderCartItems();
+      }
+    };
+
+    document.getElementById("checkout-stub-btn").addEventListener("click", () => {
+      if (cartState.length === 0) {
+        showToast("Your bag is empty.");
+        return;
+      }
+      showToast("Redirecting to Secure Atelier Checkout...");
+      setTimeout(() => {
+        alert("Thank you for choosing meri.clothing.\nOur concierge will contact you to confirm sizing, bespoke monogramming, and insured dispatch.");
+        cartState = [];
+        updateCartBadge();
+        closeCartDrawer();
+      }, 700);
+    });
+
+    /* ==========================================================================
+       10. ADMIN / SHOP OWNER MANAGER DASHBOARD CONTROLLER (User core requirement)
+       ========================================================================== */
+    const adminModal = document.getElementById("admin-modal");
+    const openAdminBtn = document.getElementById("open-admin-btn");
+    const adminCloseBtn = document.getElementById("admin-close-btn");
+    const adminModalBackdrop = document.getElementById("admin-modal-backdrop");
+    const adminGarmentForm = document.getElementById("admin-garment-form");
+    const adminTableBody = document.getElementById("admin-table-body");
+    const adminCancelEditBtn = document.getElementById("admin-cancel-edit-btn");
+    const adminResetDefaultBtn = document.getElementById("admin-reset-default-btn");
+
+    function openAdminModal() {
+      renderAdminDashboard();
+      adminModal.classList.add("open");
+      lockScroll();
+    }
+
+    function closeAdminModal() {
+      adminModal.classList.remove("open");
+      resetAdminForm();
+      unlockScroll();
+    }
+
+    openAdminBtn.addEventListener("click", openAdminModal);
+    adminCloseBtn.addEventListener("click", closeAdminModal);
+    adminModalBackdrop.addEventListener("click", closeAdminModal);
+
+    function renderAdminDashboard() {
+      // Update quick stats
+      document.getElementById("admin-stat-total").textContent = catalogState.length;
+      const categories = new Set(catalogState.map(i => i.category));
+      document.getElementById("admin-stat-categories").textContent = categories.size;
+      const avg = Math.round(catalogState.reduce((sum, i) => sum + i.price, 0) / (catalogState.length || 1));
+      document.getElementById("admin-stat-avg-price").textContent = `€${avg.toLocaleString()}`;
+
+      // Render items table
+      adminTableBody.innerHTML = catalogState.map((item, index) => {
+        return `
+          <tr>
+            <td>
+              <img class="admin-item-thumb" src="${item.image}" alt="${item.title}">
+            </td>
+            <td>
+              <strong>${item.title}</strong>
+              <div style="font-size:0.75rem; color:var(--ink-muted);">${item.fabric}</div>
+            </td>
+            <td>${item.category}</td>
+            <td>€${item.price.toLocaleString()}</td>
+            <td>
+              <span class="meta-chip">${item.stock === 'in_stock' ? 'In Stock' : (item.stock === 'limited' ? 'Low Stock' : 'Made to Order')}</span>
+            </td>
+            <td>
+              <button class="btn-table-action" onclick="window.editAdminItem('${item.id}')">Edit</button>
+              <button class="btn-table-action btn-table-danger" onclick="window.deleteAdminItem('${item.id}')">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // Handle Form Submit: Add or Edit item
+    adminGarmentForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const editId = document.getElementById("admin-edit-id").value;
+      const title = document.getElementById("form-title").value.trim();
+      const category = document.getElementById("form-category").value;
+      const price = parseFloat(document.getElementById("form-price").value) || 0;
+      const edition = document.getElementById("form-edition").value.trim() || "Limited Run";
+      const fabric = document.getElementById("form-fabric").value.trim() || "100% Natural Fiber";
+      const image = document.getElementById("form-image").value.trim();
+      const stock = document.getElementById("form-stock").value;
+      const description = document.getElementById("form-description").value.trim();
+
+      if (editId) {
+        // Update existing item
+        const idx = catalogState.findIndex(x => x.id === editId);
+        if (idx !== -1) {
+          catalogState[idx] = {
+            ...catalogState[idx],
+            title, category, price, edition, fabric, image, stock, description
+          };
+          showToast(`Updated "${title}" successfully.`);
+        }
+      } else {
+        // Add new garment
+        const newItem = {
+          id: "meri-" + Date.now(),
+          title, category, price, edition, fabric, image, stock, description,
+          ratio: "ratio-3-2",
+          featuredZigZag: true
+        };
+        catalogState.unshift(newItem);
+        showToast(`Created new garment: "${title}".`);
+      }
+
+      saveCatalog(catalogState);
+      renderAdminDashboard();
+      renderZigZagGallery();
+      renderCatalogGrid();
+      resetAdminForm();
+    });
+
+    window.editAdminItem = function(id) {
+      const item = catalogState.find(x => x.id === id);
+      if (!item) return;
+
+      document.getElementById("admin-edit-id").value = item.id;
+      document.getElementById("form-title").value = item.title;
+      document.getElementById("form-category").value = item.category;
+      document.getElementById("form-price").value = item.price;
+      document.getElementById("form-edition").value = item.edition;
+      document.getElementById("form-fabric").value = item.fabric;
+      document.getElementById("form-image").value = item.image;
+      document.getElementById("form-stock").value = item.stock || "in_stock";
+      document.getElementById("form-description").value = item.description;
+
+      document.getElementById("admin-btn-label").textContent = "Save Changes to Piece";
+      adminCancelEditBtn.style.display = "inline-block";
+      document.querySelector(".admin-panel-container").scrollTop = 0;
+    };
+
+    window.deleteAdminItem = function(id) {
+      if (confirm("Are you sure you wish to delete this garment from the live catalog?")) {
+        catalogState = catalogState.filter(x => x.id !== id);
+        saveCatalog(catalogState);
+        renderAdminDashboard();
+        renderZigZagGallery();
+        renderCatalogGrid();
+        showToast("Piece removed from catalog.");
+      }
+    };
+
+    function resetAdminForm() {
+      adminGarmentForm.reset();
+      document.getElementById("admin-edit-id").value = "";
+      document.getElementById("admin-btn-label").textContent = "Save New Garment";
+      adminCancelEditBtn.style.display = "none";
+    }
+
+    adminCancelEditBtn.addEventListener("click", resetAdminForm);
+
+    adminResetDefaultBtn.addEventListener("click", () => {
+      if (confirm("Reset catalog back to the original 8 curated FW26 pieces?")) {
+        catalogState = [...DEFAULT_CATALOG];
+        saveCatalog(catalogState);
+        renderAdminDashboard();
+        renderZigZagGallery();
+        renderCatalogGrid();
+        showToast("Catalog reset to default FW26 collection.");
+      }
+    });
+
+    /* ==========================================================================
+       11. FULLSCREEN MENU OVERLAY (Kai Nomura Spec)
+       ========================================================================== */
+    const menuOverlay = document.getElementById("menu-overlay");
+    const openMenuBtn = document.getElementById("open-menu-btn");
+    const menuCloseBtn = document.getElementById("menu-close-btn");
+
+    function openMenu() {
+      menuOverlay.classList.add("open");
+      lockScroll();
+    }
+    function closeMenu() {
+      menuOverlay.classList.remove("open");
+      unlockScroll();
+    }
+
+    openMenuBtn.addEventListener("click", openMenu);
+    menuCloseBtn.addEventListener("click", closeMenu);
+
+    document.querySelectorAll(".menu-link-row").forEach(link => {
+      link.addEventListener("click", () => {
+        const targetId = link.getAttribute("data-href");
+        closeMenu();
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          lenis.scrollTo(targetEl, { offset: -60 });
+        }
+      });
+    });
+
+    /* ==========================================================================
+       12. HERO AMBIENT MOTION & PALETTE SWITCHER LOGIC
+       ========================================================================== */
+    const heroBgVideo = document.getElementById("hero-bg-video");
+    const videoToggleBtn = document.getElementById("video-toggle-btn");
+    const videoToggleText = document.getElementById("video-toggle-text");
+    const videoIndicator = document.getElementById("video-indicator");
+    const fabricCanvas = document.getElementById("ambient-fabric-canvas");
+
+    let isMotionActive = true;
+    let fabricAnimationId = null;
+
+    // Generative Ethereal Silk Wave Simulation (Fallback & Enhancement)
+    if (fabricCanvas) {
+      const ctx = fabricCanvas.getContext("2d");
+      function resizeCanvas() {
+        fabricCanvas.width = window.innerWidth;
+        fabricCanvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      let t = 0;
+      function drawFabric() {
+        if (!isMotionActive) return;
+        ctx.clearRect(0, 0, fabricCanvas.width, fabricCanvas.height);
+        const w = fabricCanvas.width;
+        const h = fabricCanvas.height;
+
+        // Draw multiple layered flowing wave ribbons
+        for (let j = 0; j < 3; j++) {
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.4 + j * 50);
+          for (let x = 0; x <= w; x += 15) {
+            const y = h * 0.45 + j * 60 +
+              Math.sin(x * 0.003 + t + j * 1.5) * 45 +
+              Math.cos(x * 0.002 - t * 0.8) * 30;
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fillStyle = j === 0 ? "rgba(0,0,0,0.03)" : (j === 1 ? "rgba(0,0,0,0.02)" : "rgba(0,0,0,0.015)");
+          ctx.fill();
+        }
+        t += 0.012;
+        fabricAnimationId = requestAnimationFrame(drawFabric);
+      }
+      drawFabric();
+    }
+
+    videoToggleBtn.addEventListener("click", () => {
+      isMotionActive = !isMotionActive;
+      if (isMotionActive) {
+        if (heroBgVideo) {
+          heroBgVideo.play().catch(() => {});
+        }
+        videoToggleText.textContent = "Ambient Motion: Active";
+        videoIndicator.style.background = "#10b981";
+        if (fabricCanvas && !fabricAnimationId) {
+          const ctx = fabricCanvas.getContext("2d");
+          let t = 0;
+          function draw() {
+            if (!isMotionActive) return;
+            ctx.clearRect(0, 0, fabricCanvas.width, fabricCanvas.height);
+            const w = fabricCanvas.width;
+            const h = fabricCanvas.height;
+            for (let j = 0; j < 3; j++) {
+              ctx.beginPath();
+              ctx.moveTo(0, h * 0.4 + j * 50);
+              for (let x = 0; x <= w; x += 15) {
+                const y = h * 0.45 + j * 60 + Math.sin(x * 0.003 + t + j * 1.5) * 45 + Math.cos(x * 0.002 - t * 0.8) * 30;
+                ctx.lineTo(x, y);
+              }
+              ctx.lineTo(w, h);
+              ctx.lineTo(0, h);
+              ctx.closePath();
+              ctx.fillStyle = j === 0 ? "rgba(0,0,0,0.03)" : (j === 1 ? "rgba(0,0,0,0.02)" : "rgba(0,0,0,0.015)");
+              ctx.fill();
+            }
+            t += 0.012;
+            fabricAnimationId = requestAnimationFrame(draw);
+          }
+          draw();
+        }
+      } else {
+        if (heroBgVideo) {
+          heroBgVideo.pause();
+        }
+        if (fabricAnimationId) {
+          cancelAnimationFrame(fabricAnimationId);
+          fabricAnimationId = null;
+        }
+        videoToggleText.textContent = "Ambient Motion: Paused";
+        videoIndicator.style.background = "#9ca3af";
+      }
+    });
+
+    // Palette Switcher
+    document.querySelectorAll(".palette-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".palette-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const palette = btn.getAttribute("data-palette");
+        document.body.setAttribute("data-palette", palette);
+        showToast(`Theme updated to ${btn.querySelector('span:last-child').textContent}`);
+      });
+    });
+
+    /* Floating Collection Mini Slider (Baseline Hero Collection slider spec) */
+    const miniSliderThumb = document.getElementById("mini-slider-thumb");
+    const miniSliderTitle = document.getElementById("mini-slider-title");
+    const miniSliderFabric = document.getElementById("mini-slider-fabric");
+    const miniSliderPrice = document.getElementById("mini-slider-price");
+    const floatingCard = document.getElementById("floating-card-trigger");
+
+    let miniIndex = 0;
+    setInterval(() => {
+      if (catalogState.length === 0) return;
+      miniIndex = (miniIndex + 1) % catalogState.length;
+      const current = catalogState[miniIndex];
+      miniSliderThumb.src = current.image;
+      miniSliderTitle.textContent = current.title;
+      miniSliderFabric.textContent = current.fabric;
+      miniSliderPrice.textContent = `€${current.price.toLocaleString()} · Reserve`;
+    }, 4200);
+
+    floatingCard.addEventListener("click", () => {
+      if (catalogState[miniIndex]) {
+        openPreviewModal(catalogState[miniIndex].id);
+      }
+    });
+
+    /* ==========================================================================
+       13. FAQ ACCORDION LOGIC (Kai Nomura Spec)
+       ========================================================================== */
+    document.querySelectorAll(".faq-row").forEach(row => {
+      const trigger = row.querySelector(".faq-trigger");
+      const panel = row.querySelector(".faq-panel");
+      const content = row.querySelector(".faq-panel-content");
+
+      trigger.addEventListener("click", () => {
+        const isOpen = row.classList.contains("active");
+
+        // Close other rows for clean editorial feel
+        document.querySelectorAll(".faq-row").forEach(r => {
+          if (r !== row) {
+            r.classList.remove("active");
+            r.querySelector(".faq-trigger").setAttribute("aria-expanded", "false");
+            r.querySelector(".faq-panel").style.height = "0px";
+            r.querySelector(".faq-panel").style.opacity = "0";
+          }
+        });
+
+        if (!isOpen) {
+          row.classList.add("active");
+          trigger.setAttribute("aria-expanded", "true");
+          panel.style.height = content.scrollHeight + "px";
+          panel.style.opacity = "1";
+        } else {
+          row.classList.remove("active");
+          trigger.setAttribute("aria-expanded", "false");
+          panel.style.height = "0px";
+          panel.style.opacity = "0";
+        }
+      });
+    });
+
+    /* ==========================================================================
+       14. SCROLL REVEALS & INTERSECTION OBSERVER
+       ========================================================================== */
+    function triggerScrollReveals() {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      document.querySelectorAll(".reveal-item:not(.in-view)").forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Scroll Parallax on ZigZag Works (Kai Nomura Spec)
+    window.addEventListener("scroll", () => {
+      if (window.innerWidth >= 1024) {
+        document.querySelectorAll(".work-plate").forEach(plate => {
+          const rect = plate.getBoundingClientRect();
+          const viewH = window.innerHeight;
+          if (rect.top < viewH && rect.bottom > 0) {
+            const progress = (rect.top + rect.height) / (viewH + rect.height);
+            const translateY = (progress - 0.5) * -25;
+            plate.style.transform = `translateY(${translateY}px)`;
+          }
+        });
+      }
+    }, { passive: true });
+
+    /* ==========================================================================
+       15. KEYBOARD ACCESSIBILITY (Escape closes all open modals)
+       ========================================================================== */
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (previewModal.classList.contains("open")) closePreviewModal();
+        if (adminModal.classList.contains("open")) closeAdminModal();
+        if (cartDrawer.classList.contains("open")) closeCartDrawer();
+        if (menuOverlay.classList.contains("open")) closeMenu();
+      }
+    });
+
+    // Appointment button
+    document.getElementById("book-fitting-btn").addEventListener("click", () => {
+      alert("Atelier Concierge:\nPlease send your requested fitting dates, preferred city (Kyoto / Milan / Paris), and garment of interest to:\n\natelier@meri.clothing\n\nOur private tailor will respond within 24 hours.");
+    });
+
+    // Newsletter mock
+    document.getElementById("newsletter-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      showToast("Thank you. You have been added to the Private Gazette.");
+      e.target.reset();
+    });
+
+    // Initial renders
+    renderZigZagGallery();
+    renderCatalogGrid();
+    triggerScrollReveals();
+  </script>
+</body>
+</html>
