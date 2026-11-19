@@ -1,0 +1,3362 @@
+# -*- coding: utf-8 -*-
+"""
+Generator script to build the perfected index.html for merci (merci.clothing_)
+Fixes:
+1. Hero feature card price dynamically updates when currency is toggled (LKR/USD).
+2. Curated Unsplash images that accurately reflect the pieces (Olive green top, sage linen wide pants, charcoal pants, white halter top, earthy flared skirt, etc.).
+3. Explicit "Let's Pack Orders" heading in the packaging story.
+4. Mobile 390px overflow fixes for #terra-muse-spotlight (clipping eliminated, responsive typography, flex-wrap on action buttons, contained poster text).
+5. Destination phone number for WhatsApp concierge (Sri Lanka +94 77 123 4567).
+6. Non-wrapping header navigation items and smooth difference inversion.
+"""
+
+import os
+
+HTML_CONTENT = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>merci — Earthy Elegance & Timeless Silhouettes | Sri Lanka</title>
+  <meta name="description" content="merci (merci.clothing_) — Understated sophistication through timeless silhouettes and effortless craftsmanship. Pure linen basics, Terra Muse collection, and natural fiber essentials.">
+
+  <!-- Editorial Typography: Bodoni Moda (Logo & Display Didone), Playfair Display, Pinyon Script (Handwriting), Satoshi (Clean Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Italiana&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <!-- Importmap for Lenis Smooth Scroll -->
+  <script type="importmap">
+  {
+    "imports": {
+      "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm"
+    }
+  }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       ADAPTIVE ROOT & REM SCALE SYSTEM (Zero-overflow mobile foundation)
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: auto;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    @media (max-width: 1920px) { html { font-size: 0.833333vw; } }
+    @media (max-width: 1440px) { html { font-size: 1.111111vw; } }
+    @media (max-width: 1024px) { html { font-size: 1.5625vw;   } }
+    @media (max-width: 640px)  { html { font-size: 16px; } }
+
+    /* ==========================================================================
+       AUTHENTIC INSTAGRAM BRAND PALETTES & EDITORIAL TOKENS
+       ========================================================================== */
+    :root {
+      /* Default Theme: Terra Muse (Warm Travertine Stone, Sand & Rich Aubergine) */
+      --canvas: #FAF7F2;
+      --surface-grey: #EFE9DE;
+      --surface-card: #F4EFE6;
+      --surface-dark: #1E1A18;
+      --surface-dark-card: #282422;
+      --ink: #1E1A18;
+      --ink-muted: rgba(30, 26, 24, 0.68);
+      --ink-faint: rgba(30, 26, 24, 0.38);
+      --on-dark: #FFFFFF;
+      --on-dark-muted: rgba(255, 255, 255, 0.72);
+      --on-dark-faint: rgba(255, 255, 255, 0.38);
+      --line: rgba(30, 26, 24, 0.16);
+      --line-strong: rgba(30, 26, 24, 0.38);
+      --line-on-dark: rgba(255, 255, 255, 0.18);
+
+      /* Authentic Colors from the Instagram Posts */
+      --brand-terramuse: #A86C56; /* Warm Earth Clay */
+      --brand-aubergine: #4A2C3A; /* Deep Rich Aubergine */
+      --brand-olive: #5B624B;     /* Calm Olive Green */
+      --brand-sage: #6D7D6C;      /* Soft Sage Linen */
+      --brand-charcoal: #384654;  /* Charcoal Blue */
+
+      /* Exact Fonts Reflecting the Instagram Page */
+      --font-logo: "Bodoni Moda", "Playfair Display", "Didot", serif;
+      --font-display: "Bodoni Moda", "Playfair Display", "Italiana", serif;
+      --font-script: "Pinyon Script", cursive;
+      --font-sans: "Satoshi", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+      --radius-sm: 4px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+    }
+
+    /* Alternate Palette: Olive & Stone */
+    body[data-palette="olive-stone"] {
+      --canvas: #F6F5F0;
+      --surface-grey: #ECE8DD;
+      --surface-card: #F2EFE7;
+      --surface-dark: #1B1E17;
+      --ink: #1B1E17;
+      --ink-muted: rgba(27, 30, 23, 0.68);
+      --line: rgba(27, 30, 23, 0.16);
+    }
+
+    /* Alternate Palette: Pure Linen */
+    body[data-palette="pure-linen"] {
+      --canvas: #F7F8F7;
+      --surface-grey: #EAEFEA;
+      --surface-card: #F2F5F2;
+      --surface-dark: #191E1A;
+      --ink: #191E1A;
+      --ink-muted: rgba(25, 30, 26, 0.68);
+      --line: rgba(25, 30, 26, 0.16);
+    }
+
+    /* Alternate Palette: Classic Noir */
+    body[data-palette="classic-noir"] {
+      --canvas: #FFFFFF;
+      --surface-grey: #F4F4F2;
+      --surface-card: #FAF9F7;
+      --surface-dark: #141413;
+      --ink: #141413;
+      --ink-muted: rgba(20, 20, 19, 0.68);
+      --line: rgba(20, 20, 19, 0.16);
+    }
+
+    body {
+      background-color: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      width: 100%;
+      min-height: 100vh;
+      line-height: 1.55;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    ::selection {
+      background: var(--ink);
+      color: var(--canvas);
+    }
+
+    img, video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       TYPOGRAPHY SPEC
+       ========================================================================== */
+    h1, h2, h3, h4, .font-display {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .font-logo {
+      font-family: var(--font-logo);
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .font-script {
+      font-family: var(--font-script);
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .accent-italic {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Dashed Hairline Signature Borders */
+    .rule-dashed {
+      border-top: 1px dashed var(--line);
+    }
+    .rule-dashed-dark {
+      border-top: 1px dashed var(--line-on-dark);
+    }
+
+    /* Eyebrow Label */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-muted);
+      font-weight: 500;
+      max-width: 100%;
+      flex-wrap: wrap;
+    }
+    .eyebrow::before {
+      content: "";
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .eyebrow.on-dark {
+      color: var(--on-dark-muted);
+    }
+
+    /* Responsive Container */
+    .container {
+      width: 100%;
+      max-width: 120rem;
+      margin-inline: auto;
+      padding-inline: 1.25rem;
+      box-sizing: border-box;
+    }
+    @media (min-width: 1024px) {
+      .container {
+        padding-inline: 3rem;
+      }
+    }
+
+    /* Section Spacing */
+    section {
+      position: relative;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    .section-pad {
+      padding-block: 4.5rem;
+    }
+    @media (min-width: 1024px) {
+      .section-pad {
+        padding-block: 7.5rem;
+      }
+    }
+
+    /* ==========================================================================
+       BUTTONS & CTAs
+       ========================================================================== */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.85rem 1.65rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    @media (max-width: 480px) {
+      .btn-cta {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.75rem;
+      }
+    }
+    .btn-cta .arrow {
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-cta:hover .arrow {
+      transform: translateX(0.45rem);
+    }
+
+    .btn-solid-light {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+    }
+    .btn-solid-light:hover {
+      background: #2e2825;
+    }
+
+    .btn-ghost-light {
+      border: 1px dashed var(--line-strong);
+      color: var(--ink);
+    }
+    .btn-ghost-light:hover {
+      background: var(--ink);
+      color: var(--canvas);
+      border-style: solid;
+    }
+
+    .btn-solid-dark {
+      background: #FFFFFF;
+      color: var(--surface-dark);
+    }
+    .btn-solid-dark:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #FFFFFF;
+      font-weight: 600;
+      padding: 0.85rem 1.4rem;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-pill-small {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      color: var(--ink-muted);
+      transition: all 0.2s ease;
+      background: transparent;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-pill-small:hover, .btn-pill-small.active {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+
+    /* ==========================================================================
+       HEADER (Pure Upright Logo, Fixed Difference / Inversion Bar)
+       ========================================================================== */
+    #site-header {
+      position: fixed;
+      inset-inline: 0;
+      top: 0;
+      z-index: 500;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      pointer-events: none;
+      width: 100%;
+      max-width: 100vw;
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    #site-header.scrolled {
+      background: rgba(250, 247, 242, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      mix-blend-mode: normal;
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+    }
+    body[data-palette="classic-noir"] #site-header.scrolled {
+      background: rgba(255, 255, 255, 0.94);
+    }
+    #site-header.scrolled .cart-badge {
+      background: var(--ink);
+      color: var(--canvas);
+    }
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 1.15rem 1.25rem;
+      gap: 1rem;
+    }
+    @media (min-width: 1024px) {
+      .header-grid {
+        grid-template-columns: 1fr auto 1fr;
+        padding: 1.25rem 3rem;
+      }
+    }
+
+    .header-left {
+      display: none;
+      pointer-events: auto;
+      white-space: nowrap;
+    }
+    @media (min-width: 1024px) {
+      .header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+      .header-left p:first-child {
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        font-weight: 500;
+      }
+      .header-left p:last-child {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        opacity: 0.75;
+      }
+    }
+
+    /* Exact Brand Logo matching the Instagram feed */
+    .header-center {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      justify-self: start;
+      pointer-events: auto;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    @media (min-width: 1024px) {
+      .header-center {
+        justify-self: center;
+      }
+    }
+
+    .header-logo-text {
+      font-family: var(--font-logo);
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.85rem;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      text-transform: lowercase;
+    }
+    .header-logo-tag {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.6;
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .header-logo-tag {
+        display: inline-block;
+      }
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      justify-self: end;
+      pointer-events: auto;
+      white-space: nowrap;
+    }
+    @media (min-width: 1024px) {
+      .header-right {
+        gap: 1.35rem;
+      }
+    }
+
+    .header-nav {
+      display: none;
+      align-items: center;
+      gap: 1.5rem;
+      white-space: nowrap;
+    }
+    @media (min-width: 1024px) {
+      .header-nav {
+        display: flex;
+      }
+    }
+    .header-nav-link {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      position: relative;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+    }
+    .header-nav-link:hover {
+      opacity: 0.8;
+    }
+    .header-nav-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .header-nav-link:hover .header-nav-dot {
+      opacity: 1;
+    }
+
+    /* Currency Switcher Pill */
+    .currency-pill-btn {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid currentColor;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-pill);
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Cart & Menu Triggers */
+    .cart-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cart-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.15rem;
+      height: 1.15rem;
+      padding: 0 0.3rem;
+      border-radius: var(--radius-pill);
+      background: #FFFFFF;
+      color: #000000;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .menu-burger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .burger-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      width: 1.35rem;
+    }
+    .burger-bar {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: currentColor;
+    }
+
+    /* ==========================================================================
+       HERO SECTION: Organic Canvas Waves, Architectural Serif Display, Manifesto
+       ========================================================================== */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 6.5rem;
+      padding-bottom: 3.5rem;
+      overflow: hidden;
+    }
+    @media (min-width: 1024px) {
+      #hero {
+        padding-top: 8rem;
+        padding-bottom: 5rem;
+      }
+    }
+
+    .hero-media-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .hero-canvas-waves {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hero-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 60% 40%, transparent 20%, var(--canvas) 90%);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 3.5rem;
+      }
+    }
+
+    .hero-title {
+      font-size: 2.65rem;
+      line-height: 1.08;
+      margin-top: 1.25rem;
+      font-family: var(--font-display);
+      font-weight: 400;
+      max-width: 16ch;
+    }
+    @media (min-width: 640px) {
+      .hero-title {
+        font-size: 3.75rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 4.85rem;
+      }
+    }
+
+    .hero-title .script-accent {
+      font-family: var(--font-script);
+      font-size: 1.25em;
+      font-weight: 400;
+      color: var(--brand-terramuse);
+      display: inline-block;
+      margin-inline: 0.15rem;
+      vertical-align: middle;
+    }
+
+    .hero-lead-text {
+      margin-top: 1.75rem;
+      font-size: 1.05rem;
+      line-height: 1.68;
+      color: var(--ink-muted);
+      max-width: 48ch;
+    }
+
+    .hero-cta-row {
+      margin-top: 2.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Live Color Palette Switcher Bar (Earthy tones from Instagram) */
+    .palette-switcher-row {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .palette-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+    }
+    .palette-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .palette-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.72rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      background: var(--canvas);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .palette-chip:hover, .palette-chip.active {
+      border-color: var(--ink);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .palette-dot {
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.12);
+    }
+
+    /* Hero Visual Card / Drop Spotlight */
+    .hero-visual-card {
+      position: relative;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      background: var(--surface-grey);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    }
+    .hero-visual-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-visual-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .hero-floating-drop {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      background: rgba(250, 247, 242, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .floating-drop-meta h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .floating-drop-meta p {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+    }
+    .floating-drop-price {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      white-space: nowrap;
+      color: var(--brand-terramuse);
+    }
+
+    /* ==========================================================================
+       SECTION 2: TERRA MUSE EDITORIAL SPOTLIGHT (Instagram Image 5 & 1 Style)
+       ========================================================================== */
+    #terra-muse-spotlight {
+      background: var(--surface-grey);
+      border-top: 1px dashed var(--line);
+      border-bottom: 1px dashed var(--line);
+      overflow: hidden;
+    }
+
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .spotlight-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+    }
+
+    /* Stacked Editorial Poster Recreation */
+    .aubergine-poster {
+      position: relative;
+      background: #D8D0C5;
+      padding: 3rem 1.5rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      min-height: 25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-image: radial-gradient(circle at 80% 30%, rgba(255,255,255,0.4), transparent 60%);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (min-width: 640px) {
+      .aubergine-poster {
+        padding: 3.5rem 2.5rem;
+        min-height: 28rem;
+      }
+    }
+    .poster-header-tags {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: rgba(30, 26, 24, 0.75);
+      font-weight: 600;
+    }
+    .stacked-display-text {
+      font-family: var(--font-display);
+      font-size: 4.2rem;
+      line-height: 0.88;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      user-select: none;
+    }
+    @media (min-width: 640px) {
+      .stacked-display-text {
+        font-size: 6.2rem;
+      }
+    }
+    .stacked-display-text span {
+      display: block;
+    }
+    .script-overlay-text {
+      font-family: var(--font-script);
+      font-size: 2.85rem;
+      color: rgba(255, 255, 255, 0.95);
+      transform: rotate(-6deg) translate(0.5rem, -1.5rem);
+      text-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      line-height: 1;
+      pointer-events: none;
+      word-break: normal;
+    }
+    @media (min-width: 640px) {
+      .script-overlay-text {
+        font-size: 4.5rem;
+        transform: rotate(-7deg) translate(2rem, -2.5rem);
+      }
+    }
+    .poster-watermark {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      font-family: var(--font-logo);
+      font-size: 1.35rem;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.05em;
+    }
+
+    .spotlight-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .spotlight-quote {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      line-height: 1.35;
+      color: var(--ink);
+      max-width: 100%;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    @media (min-width: 640px) {
+      .spotlight-quote {
+        font-size: 2.15rem;
+      }
+    }
+    .spotlight-manifesto-card {
+      background: var(--canvas);
+      border: 1px dashed var(--line);
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    @media (min-width: 640px) {
+      .spotlight-manifesto-card {
+        padding: 2rem;
+      }
+    }
+    .manifesto-logo {
+      font-family: var(--font-logo);
+      font-size: 1.35rem;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+    .manifesto-body {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      word-break: break-word;
+    }
+
+    /* ==========================================================================
+       SECTION 3: ZIG-ZAG ASYMMETRIC LOOKBOOK (Kai Nomura parallax plates)
+       ========================================================================== */
+    .zigzag-gallery-grid {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    @media (min-width: 1024px) {
+      .zigzag-gallery-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2.5rem;
+      }
+    }
+
+    .zigzag-plate {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .zigzag-plate-inner {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: var(--surface-grey);
+    }
+    .zigzag-plate-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .zigzag-plate:hover .zigzag-plate-inner img {
+      transform: scale(1.04);
+    }
+
+    .zigzag-meta-bar {
+      margin-top: 1rem;
+      border-top: 1px dashed var(--line);
+      padding-top: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+    .zigzag-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .zigzag-collection {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+    }
+    .zigzag-price {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--brand-terramuse);
+    }
+
+    /* Zig-Zag 12-Col Placement */
+    @media (min-width: 1024px) {
+      .plate-pos-left {
+        grid-column: 1 / span 7;
+      }
+      .plate-pos-right {
+        grid-column: 7 / span 6;
+        margin-top: 5rem;
+      }
+      .plate-pos-center {
+        grid-column: 3 / span 8;
+        margin-top: 2rem;
+      }
+    }
+
+    /* Aspect Ratio Helper Classes */
+    .ratio-3-4 { aspect-ratio: 3 / 4; }
+    .ratio-4-5 { aspect-ratio: 4 / 5; }
+    .ratio-1-1 { aspect-ratio: 1 / 1; }
+    .ratio-16-9 { aspect-ratio: 16 / 9; }
+
+    /* ==========================================================================
+       SECTION 4: PACKAGING & ORDERS STORY ("Let's Pack Orders" - Image 2 & 3)
+       ========================================================================== */
+    .packaging-section {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      padding-block: 5.5rem;
+      border-top: 1px dashed var(--line-on-dark);
+      border-bottom: 1px dashed var(--line-on-dark);
+      overflow: hidden;
+    }
+    .packaging-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .packaging-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 4rem;
+      }
+    }
+
+    .packaging-card-preview {
+      position: relative;
+      background: #E8E5DF;
+      color: #1E1A18;
+      padding: 3rem 1.5rem;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 20rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (min-width: 640px) {
+      .packaging-card-preview {
+        padding: 3.5rem 2.5rem;
+        min-height: 22rem;
+      }
+    }
+    .packaging-logo {
+      font-family: var(--font-logo);
+      font-size: 3.25rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+      text-transform: capitalize;
+    }
+    .packaging-subline {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      opacity: 0.75;
+      font-weight: 500;
+    }
+    .packaging-badge-tag {
+      margin-top: 1.75rem;
+      display: inline-block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      border: 1px dashed rgba(30,26,24,0.3);
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-pill);
+    }
+
+    .packaging-text-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .packaging-title {
+      font-family: var(--font-display);
+      font-size: 2.15rem;
+      line-height: 1.15;
+    }
+    @media (min-width: 640px) {
+      .packaging-title {
+        font-size: 3.15rem;
+      }
+    }
+    .packaging-body {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--on-dark-muted);
+    }
+    .packaging-features-list {
+      margin-top: 0.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .packaging-features-list {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .packaging-feature-item {
+      border-top: 1px dashed var(--line-on-dark);
+      padding-top: 0.85rem;
+    }
+    .packaging-feature-item h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .packaging-feature-item p {
+      font-size: 0.8rem;
+      color: var(--on-dark-faint);
+    }
+
+    /* ==========================================================================
+       SECTION 5: LIVE WARDROBE CATALOG (With LKR/USD & WhatsApp Support)
+       ========================================================================== */
+    .catalog-controls-bar {
+      margin-top: 2rem;
+      padding-block: 1rem;
+      border-top: 1px dashed var(--line);
+      border-bottom: 1px dashed var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .catalog-controls-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .filter-tabs-cluster {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-tabs-cluster::-webkit-scrollbar {
+      display: none;
+    }
+
+    .catalog-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--surface-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 1rem;
+      min-width: 14rem;
+    }
+    .catalog-search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 0.825rem;
+      font-family: inherit;
+      color: var(--ink);
+      width: 100%;
+    }
+
+    /* Clean 2-Col Mobile / 4-Col Desktop Grid */
+    .catalog-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    @media (min-width: 1024px) {
+      .catalog-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-0.35rem);
+    }
+    .product-thumb-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: var(--surface-grey);
+      aspect-ratio: 3 / 4;
+    }
+    .product-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .product-thumb-wrap img {
+      transform: scale(1.05);
+    }
+    .product-badge-overlay {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      background: rgba(30, 26, 24, 0.85);
+      color: #ffffff;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(4px);
+    }
+    .product-quick-add {
+      position: absolute;
+      bottom: 0.65rem;
+      right: 0.65rem;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      opacity: 0;
+      transform: translateY(3px);
+      transition: all 0.25s ease;
+    }
+    .product-card:hover .product-quick-add {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-info-row {
+      margin-top: 0.85rem;
+      border-top: 1px dashed var(--line);
+      padding-top: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .product-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+    .product-category {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      margin-top: 0.2rem;
+    }
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      color: var(--brand-terramuse);
+    }
+
+    /* ==========================================================================
+       SECTION 6: INSTAGRAM LOOKBOOK FEED (@merci.clothing_ Sri Lanka)
+       ========================================================================== */
+    .instagram-feed-section {
+      background: var(--surface-card);
+      border-top: 1px dashed var(--line);
+      overflow: hidden;
+    }
+    .ig-header-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 2.5rem;
+    }
+    @media (min-width: 640px) {
+      .ig-header-bar {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+    }
+    .ig-feed-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+      .ig-feed-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .ig-feed-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1.25rem;
+      }
+    }
+    .ig-card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: var(--surface-grey);
+      cursor: pointer;
+    }
+    .ig-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ig-card:hover img {
+      transform: scale(1.06);
+    }
+    .ig-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 26, 24, 0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding: 1rem;
+      text-align: center;
+    }
+    .ig-card:hover .ig-card-overlay {
+      opacity: 1;
+    }
+    .ig-card-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ==========================================================================
+       SECTION 7: ATELIER FAQ ACCORDION
+       ========================================================================== */
+    .faq-accordion {
+      margin-top: 2.5rem;
+      border-top: 1px dashed var(--line);
+    }
+    .faq-item {
+      border-bottom: 1px dashed var(--line);
+    }
+    .faq-trigger {
+      width: 100%;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .faq-plus {
+      font-size: 1.25rem;
+      font-weight: 300;
+      transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-plus {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--ink-muted);
+    }
+    .faq-answer-inner {
+      padding-bottom: 1.5rem;
+    }
+
+    /* ==========================================================================
+       FOOTER & GIANT WATERMARK
+       ========================================================================== */
+    footer {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      padding-top: 5.5rem;
+      padding-bottom: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 3rem;
+      }
+    }
+
+    .footer-brand h3 {
+      font-family: var(--font-logo);
+      font-size: 2.25rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--on-dark-muted);
+      max-width: 32ch;
+    }
+
+    .footer-col-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--on-dark-faint);
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+    }
+    .footer-links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--on-dark-muted);
+    }
+    .footer-links-list a:hover {
+      color: #FFFFFF;
+    }
+
+    /* Giant Watermark */
+    .footer-watermark-wrap {
+      margin-top: 4.5rem;
+      user-select: none;
+      pointer-events: none;
+      text-align: center;
+    }
+    .giant-wordmark {
+      font-family: var(--font-logo);
+      font-size: 21vw;
+      font-weight: 400;
+      text-transform: uppercase;
+      line-height: 0.8;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-legal-bar {
+      margin-top: 2.5rem;
+      border-top: 1px dashed var(--line-on-dark);
+      padding-top: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--on-dark-faint);
+    }
+    @media (min-width: 640px) {
+      .footer-legal-bar {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    /* ==========================================================================
+       MODALS: PREVIEW LIGHTBOX, CART DRAWER, FULLSCREEN MENU, PIN MODAL & ADMIN
+       ========================================================================== */
+    /* Lightbox Modal */
+    #preview-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      visibility: hidden;
+      transition: visibility 0.3s ease;
+    }
+    #preview-modal.open {
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 16, 14, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .modal-dialog-card {
+      position: relative;
+      background: var(--canvas);
+      color: var(--ink);
+      width: 92%;
+      max-width: 58rem;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: var(--radius-sm);
+      display: grid;
+      grid-template-columns: 1fr;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+    @media (min-width: 768px) {
+      .modal-dialog-card {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .modal-preview-media {
+      background: var(--surface-grey);
+      min-height: 20rem;
+    }
+    .modal-preview-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.06);
+      font-size: 1rem;
+      z-index: 2;
+    }
+
+    /* Slide-out Cart Drawer */
+    #cart-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      pointer-events: none;
+      visibility: hidden;
+      transition: visibility 0.4s ease;
+    }
+    #cart-drawer.open {
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .cart-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 16, 14, 0.65);
+      backdrop-filter: blur(4px);
+    }
+    .cart-drawer-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 26rem;
+      background: var(--canvas);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 1.75rem;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+    }
+    #cart-drawer.open .cart-drawer-panel {
+      transform: translateX(0);
+    }
+
+    /* Fullscreen Menu */
+    #menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 600;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+      visibility: hidden;
+      transition: visibility 0.4s ease;
+    }
+    #menu-overlay.open {
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .menu-panel-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--surface-dark);
+      transform-origin: top;
+      transform: scaleY(0);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #menu-overlay.open .menu-panel-bg {
+      transform: scaleY(1);
+    }
+    .menu-content {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease 0.2s;
+    }
+    @media (min-width: 1024px) {
+      .menu-content {
+        padding: 3rem 4rem;
+      }
+    }
+    #menu-overlay.open .menu-content {
+      opacity: 1;
+    }
+    .menu-links-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .menu-link-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      cursor: pointer;
+      width: fit-content;
+      transition: transform 0.25s ease;
+    }
+    .menu-link-row:hover {
+      transform: translateX(0.5rem);
+    }
+
+    /* PIN Modal & Admin Studio */
+    #pin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 950;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(18, 16, 14, 0.75);
+      backdrop-filter: blur(8px);
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    #pin-modal.open {
+      pointer-events: auto;
+      visibility: visible;
+      opacity: 1;
+    }
+    .pin-dialog-card {
+      background: var(--canvas);
+      color: var(--ink);
+      padding: 2rem;
+      border-radius: var(--radius-sm);
+      width: 90%;
+      max-width: 22rem;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .pin-input {
+      letter-spacing: 0.6em;
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      width: 100%;
+      margin: 1.25rem 0 0.5rem;
+      font-family: monospace;
+      outline: none;
+    }
+
+    #admin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 990;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    #admin-modal.open {
+      pointer-events: auto;
+      visibility: visible;
+      opacity: 1;
+    }
+    .admin-panel-container {
+      position: relative;
+      background: var(--canvas);
+      width: 94%;
+      max-width: 65rem;
+      max-height: 92vh;
+      overflow-y: auto;
+      border-radius: var(--radius-sm);
+      padding: 2rem;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .admin-float-indicator {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 450;
+      background: #1E1A18;
+      color: #FFFFFF;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+    .admin-float-indicator.visible {
+      display: inline-flex;
+    }
+
+    /* Notification Toast */
+    #notification-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(3rem);
+      background: #1E1A18;
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #notification-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Reveal States */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-item.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body data-palette="terra-muse">
+
+  <!-- ==========================================================================
+       FIXED HEADER (merci Logo in Exact Upright Serif + Sri Lanka Atelier Info)
+       ========================================================================== -->
+  <header id="site-header" role="banner">
+    <div class="header-grid">
+      <!-- Left Info -->
+      <div class="header-left">
+        <p>merci.clothing_ · Sri Lanka</p>
+        <p>Terra Muse Collection</p>
+      </div>
+
+      <!-- Center Logo (Pure Upright Modern Serif as seen on Instagram) -->
+      <a href="#hero" class="header-center" aria-label="merci home">
+        <span class="header-logo-text">merci</span>
+        <span class="header-logo-tag">Atelier</span>
+      </a>
+
+      <!-- Right Nav & Actions -->
+      <div class="header-right">
+        <nav class="header-nav" aria-label="Primary Navigation">
+          <a href="#terra-muse-spotlight" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Terra Muse</span>
+          </a>
+          <a href="#works" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Editions</span>
+          </a>
+          <a href="#catalog" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Archive</span>
+          </a>
+          <a href="#packaging" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Packaging</span>
+          </a>
+        </nav>
+
+        <!-- Currency Toggle -->
+        <button id="currency-toggle-btn" class="currency-pill-btn" aria-label="Toggle Currency">
+          <span id="active-currency-label">LKR (Rs)</span>
+        </button>
+
+        <!-- Bag Trigger -->
+        <button id="open-cart-btn" class="cart-trigger-btn" aria-label="Shopping Bag">
+          <span>Bag</span>
+          <span class="cart-badge" id="cart-counter">0</span>
+        </button>
+
+        <!-- Menu Hamburger -->
+        <button id="open-menu-btn" class="menu-burger-btn" aria-label="Toggle Menu">
+          <div class="burger-bars">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT
+       ========================================================================== -->
+  <main id="main-content">
+
+    <!-- ========================================================================
+         HERO SECTION: Generative Silk Waves + Real Brand Typography & Manifesto
+         ======================================================================== -->
+    <section id="hero">
+      <div class="hero-media-backdrop">
+        <canvas class="hero-canvas-waves" id="ambient-fabric-canvas"></canvas>
+        <div class="hero-overlay-gradient"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Column: Manifesto & Brand Headline -->
+          <div class="hero-text-col">
+            <div class="eyebrow reveal-item">merci.clothing_ · Terra Muse · Sri Lanka</div>
+
+            <h1 class="hero-title reveal-item">
+              Understated sophistication, <span class="script-accent">effortlessly</span> crafted.
+            </h1>
+
+            <p class="hero-lead-text reveal-item">
+              Inspired by the beauty of nature’s palette, Terra Muse celebrates understated sophistication through timeless silhouettes and effortless craftsmanship. Designed to be cherished beyond trends, each piece brings together versatility, elegance, and enduring style.
+            </p>
+
+            <div class="hero-cta-row reveal-item">
+              <a href="#catalog" class="btn-cta btn-solid-light">
+                <span>Shop Wardrobe</span>
+                <span class="arrow">→</span>
+              </a>
+              <a href="#terra-muse-spotlight" class="btn-cta btn-ghost-light">
+                <span>Terra Muse Story</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+
+            <!-- Live Theme Color Palette Switcher from Instagram Tones -->
+            <div class="palette-switcher-row reveal-item">
+              <span class="palette-label">Earthy Palettes:</span>
+              <div class="palette-chips">
+                <button class="palette-chip active" data-palette-target="terra-muse">
+                  <span class="palette-dot" style="background:#A86C56;"></span>
+                  <span>Terra Muse</span>
+                </button>
+                <button class="palette-chip" data-palette-target="olive-stone">
+                  <span class="palette-dot" style="background:#5B624B;"></span>
+                  <span>Olive & Stone</span>
+                </button>
+                <button class="palette-chip" data-palette-target="pure-linen">
+                  <span class="palette-dot" style="background:#6D7D6C;"></span>
+                  <span>Pure Linen</span>
+                </button>
+                <button class="palette-chip" data-palette-target="classic-noir">
+                  <span class="palette-dot" style="background:#141413;"></span>
+                  <span>Classic Noir</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Visual Drop Card -->
+          <div class="hero-visual-col reveal-item">
+            <div class="hero-visual-card" onclick="window.quickPreviewItem('merci-02')">
+              <!-- Olive Green Balloon Sleeve Top over classical stone architecture -->
+              <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1200&auto=format&fit=crop" alt="merci — Olive Green Balloon Sleeve Top">
+              <div class="hero-floating-drop">
+                <div class="floating-drop-meta">
+                  <h4>The Olive Green Balloon Sleeve Top</h4>
+                  <p>The colour of calm. Effortless beauty.</p>
+                </div>
+                <div class="floating-drop-price" data-price-lkr="8500" data-price-usd="28">
+                  Rs. 8,500
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 2: TERRA MUSE EDITORIAL SPOTLIGHT (Direct recreation of Instagram Post)
+         ======================================================================== -->
+    <section id="terra-muse-spotlight" class="section-pad">
+      <div class="container">
+        <div class="spotlight-grid">
+          <!-- Stacked AU / BER / GINE Poster with Sleeveless Top cursive script -->
+          <div class="aubergine-poster reveal-item">
+            <div class="poster-header-tags">
+              <span>TERRA MUSE</span>
+              <span>COLLECTION</span>
+            </div>
+            <div class="stacked-display-text">
+              <span>AU</span>
+              <span>BER</span>
+              <span>GINE</span>
+            </div>
+            <div class="script-overlay-text">Sleeveless Top</div>
+            <div class="poster-watermark">merci</div>
+          </div>
+
+          <!-- Editorial Card & Manifesto -->
+          <div class="spotlight-content reveal-item">
+            <div class="eyebrow">A Shade That Speaks Before You Do</div>
+            <h2 class="spotlight-quote">
+              "Deep, rich, and effortlessly elegant. The Aubergine Sleeveless Top brings warm architectural presence to everyday dressing."
+            </h2>
+
+            <div class="spotlight-manifesto-card">
+              <div class="manifesto-logo">merci</div>
+              <p class="manifesto-body">
+                "where the earth meets inspiration. a collection inspired by natural textures, warm tones, and the effortless beauty found in simplicity."
+              </p>
+              <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center;">
+                <button class="btn-cta btn-solid-light" onclick="window.quickPreviewItem('merci-01')">
+                  <span>Explore Piece</span>
+                  <span class="arrow">→</span>
+                </button>
+                <a href="https://instagram.com/merci.clothing_" target="_blank" rel="noopener" class="btn-cta btn-ghost-light">
+                  <span>View Post on Instagram</span>
+                  <span class="arrow">↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 3: SELECTED EDITIONS (ZIG-ZAG PARALLAX LOOKBOOK)
+         ======================================================================== -->
+    <section id="works" class="section-pad">
+      <div class="container">
+        <div class="section-header-block reveal-item">
+          <div class="eyebrow">Curated Drops</div>
+          <h2 style="font-size:2.85rem; margin-top:0.4rem;">
+            Nature’s palette, <span class="accent-italic">timelessly</span> cut.
+          </h2>
+        </div>
+
+        <div class="zigzag-gallery-grid" id="zigzag-gallery-container">
+          <!-- Dynamic Items Injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 4: "LET'S PACK ORDERS" — PACKAGING & DELIVERY STORY
+         ======================================================================== -->
+    <section id="packaging" class="packaging-section">
+      <div class="container">
+        <div class="packaging-grid">
+          <!-- Mailer Bag Mockup as photographed in Instagram Story -->
+          <div class="packaging-card-preview reveal-item">
+            <div class="packaging-logo">Merci</div>
+            <p class="packaging-subline">Embrace your style journey with us</p>
+            <span class="packaging-badge-tag">Matte Unboxing Experience</span>
+          </div>
+
+          <div class="packaging-text-col reveal-item">
+            <div class="eyebrow on-dark">Let's Pack Orders · Sri Lanka Atelier</div>
+            <h2 class="packaging-title">
+              Crafted with intention. Delivered with care.
+            </h2>
+            <p class="packaging-body">
+              Every merci order is packed by hand in our studio. Encased in signature white matte mailer bags stamped with our logo, wrapped in delicate tissue paper, and tagged with eco-conscious hangtags.
+            </p>
+
+            <div class="packaging-features-list">
+              <div class="packaging-feature-item">
+                <h4>Islandwide Delivery</h4>
+                <p>Reliable door-to-door courier service across Sri Lanka within 2–4 business days.</p>
+              </div>
+              <div class="packaging-feature-item">
+                <h4>Worldwide Express</h4>
+                <p>Tracked international shipping for our global clients via DHL Express.</p>
+              </div>
+              <div class="packaging-feature-item">
+                <h4>WhatsApp Concierge</h4>
+                <p>Direct styling advice, custom size queries, and easy bank transfer ordering.</p>
+              </div>
+              <div class="packaging-feature-item">
+                <h4>Mindful Sourcing</h4>
+                <p>Small batch productions minimizing waste and championing lasting natural textiles.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 5: COMPLETE WARDROBE ARCHIVE (Authentic Catalog)
+         ======================================================================== -->
+    <section id="catalog" class="section-pad">
+      <div class="container">
+        <div class="section-header-block reveal-item">
+          <div class="eyebrow">The Wardrobe Archive</div>
+          <h2 style="font-size:2.85rem; margin-top:0.4rem;">
+            All Silhouettes & Linen Basics.
+          </h2>
+        </div>
+
+        <!-- Filter & Search Bar -->
+        <div class="catalog-controls-bar reveal-item">
+          <div class="filter-tabs-cluster" id="catalog-category-tabs">
+            <button class="btn-pill-small active" data-category="all">All Pieces</button>
+            <button class="btn-pill-small" data-category="Tops">Tops & Blouses</button>
+            <button class="btn-pill-small" data-category="Pants">Linen Pants</button>
+            <button class="btn-pill-small" data-category="Skirts">Skirts & Sets</button>
+            <button class="btn-pill-small" data-category="Basics">Pure Linen Basics</button>
+          </div>
+
+          <div class="catalog-search-wrap">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="catalog-search-input" class="catalog-search-input" placeholder="Search tops, linen pants, shades...">
+          </div>
+        </div>
+
+        <!-- 2-Col Mobile / 4-Col Desktop Grid -->
+        <div class="catalog-grid" id="catalog-grid-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 6: AS SEEN ON INSTAGRAM (@merci.clothing_)
+         ======================================================================== -->
+    <section class="section-pad instagram-feed-section">
+      <div class="container">
+        <div class="ig-header-bar reveal-item">
+          <div>
+            <div class="eyebrow">Follow Our Journey</div>
+            <h2 style="font-size:2.25rem; margin-top:0.25rem;">@merci.clothing_</h2>
+          </div>
+          <a href="https://instagram.com/merci.clothing_" target="_blank" rel="noopener" class="btn-cta btn-solid-light">
+            <span>Follow on Instagram</span>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+
+        <!-- 6-Grid Lookbook mirroring the uploaded photos -->
+        <div class="ig-feed-grid reveal-item">
+          <div class="ig-card" onclick="window.quickPreviewItem('merci-01')">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" alt="Aubergine Top">
+            <div class="ig-card-overlay">
+              <span class="ig-card-tag">Aubergine Sleeveless Top</span>
+            </div>
+          </div>
+          <div class="ig-card" onclick="window.quickPreviewItem('merci-02')">
+            <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=600&auto=format&fit=crop" alt="Olive Green Balloon Sleeve">
+            <div class="ig-card-overlay">
+              <span class="ig-card-tag">Olive Green Balloon Sleeve</span>
+            </div>
+          </div>
+          <div class="ig-card" onclick="window.quickPreviewItem('merci-03')">
+            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop" alt="Signature Linen Pant Sage">
+            <div class="ig-card-overlay">
+              <span class="ig-card-tag">Signature Linen — Soft Sage</span>
+            </div>
+          </div>
+          <div class="ig-card" onclick="window.quickPreviewItem('merci-04')">
+            <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=600&auto=format&fit=crop" alt="Signature Linen Pant Charcoal Blue">
+            <div class="ig-card-overlay">
+              <span class="ig-card-tag">Pure Linen — Charcoal Blue</span>
+            </div>
+          </div>
+          <div class="ig-card" onclick="window.quickPreviewItem('merci-05')">
+            <img src="https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?q=80&w=600&auto=format&fit=crop" alt="Terra Muse Halter Top">
+            <div class="ig-card-overlay">
+              <span class="ig-card-tag">Terra Muse Halter Neck</span>
+            </div>
+          </div>
+          <div class="ig-card" onclick="window.quickPreviewItem('merci-08')">
+            <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=600&auto=format&fit=crop" alt="Floral Slip Maxi Skirt">
+            <div class="ig-card-overlay">
+              <span class="ig-card-tag">Floral Slip Maxi Skirt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 7: FAQ ACCORDION
+         ======================================================================== -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="section-header-block reveal-item" style="max-width:40rem;">
+          <div class="eyebrow">Client Services</div>
+          <h2 style="font-size:2.25rem; margin-top:0.25rem;">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-accordion reveal-item" style="max-width:54rem;">
+          <div class="faq-item">
+            <button class="faq-trigger">
+              <span>How do I place an order via WhatsApp or Bank Transfer?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Simply click "Order via WhatsApp" from your shopping bag or any product preview. Our concierge will send you our local bank details or secure payment link, confirm your sizing, and reserve your piece immediately.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-trigger">
+              <span>What fabrics are used in the Terra Muse collection?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Terra Muse focuses on premium breathable textiles: pure woven flax linen, modal cotton rib, and raw silk blends selected for warm climate comfort and enduring drape.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-trigger">
+              <span>What is the delivery timeline across Sri Lanka?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Colombo deliveries typically arrive within 1–2 business days. Outstation islandwide deliveries take 2–4 business days via our partner express couriers.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER (Giant Wordmark, Direct Contacts & Discreet Owner Login)
+       ========================================================================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>merci</h3>
+          <p>
+            Embrace your style journey with us. Understated sophistication through timeless silhouettes and effortless craftsmanship.
+          </p>
+          <div style="margin-top:1.5rem;">
+            <a href="https://wa.me/94771234567?text=Hi%20merci,%20I%20would%20like%20to%20inquire%20about%20your%20pieces" target="_blank" rel="noopener" class="btn-whatsapp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+              </svg>
+              <span>WhatsApp Concierge</span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <div class="footer-links-list">
+            <a href="#terra-muse-spotlight">Terra Muse</a>
+            <a href="#works">Curated Editions</a>
+            <a href="#catalog">Wardrobe Archive</a>
+            <a href="#packaging">Packaging Story</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Atelier Sri Lanka</div>
+          <div class="footer-links-list">
+            <span>Colombo, Sri Lanka</span>
+            <a href="https://instagram.com/merci.clothing_" target="_blank" rel="noopener">@merci.clothing_</a>
+            <span>Islandwide Delivery</span>
+            <span>Worldwide Shipping</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Shop Owner Console</div>
+          <p style="font-size:0.8rem; color:var(--on-dark-faint); margin-bottom:0.75rem;">
+            Management portal for the boutique owner to update catalog, prices, and inventory.
+          </p>
+          <button id="owner-secret-trigger" class="btn-pill-small" style="color:#ffffff; border-color:var(--line-on-dark);">
+            🔒 Owner Atelier Studio
+          </button>
+        </div>
+      </div>
+
+      <!-- Giant Watermark -->
+      <div class="footer-watermark-wrap">
+        <div class="giant-wordmark">MERCI</div>
+      </div>
+
+      <div class="footer-legal-bar">
+        <p>© 2026 merci (merci.clothing_). All rights reserved.</p>
+        <p>Embrace your style journey with us · Sri Lanka</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL 1: HIGH-RES GARMENT PREVIEW LIGHTBOX
+       ========================================================================== -->
+  <div id="preview-modal" role="dialog" aria-modal="true" aria-label="Garment Preview">
+    <div class="modal-backdrop" id="preview-modal-backdrop"></div>
+    <div class="modal-dialog-card">
+      <button class="modal-close-btn" id="preview-modal-close" aria-label="Close Preview">✕</button>
+      <div class="modal-preview-media">
+        <img id="modal-item-image" src="" alt="Garment Preview">
+      </div>
+      <div class="modal-preview-content">
+        <div>
+          <div class="eyebrow" id="modal-item-edition">Terra Muse Collection</div>
+          <h3 id="modal-item-title" style="font-size:1.85rem; margin-top:0.35rem; line-height:1.2;">Garment Title</h3>
+          <p id="modal-item-price" style="font-family:var(--font-display); font-size:1.35rem; margin-top:0.5rem; color:var(--brand-terramuse); font-weight:600;">Rs. 0</p>
+          <p id="modal-item-description" style="font-size:0.9rem; line-height:1.6; color:var(--ink-muted); margin-top:1rem;">Description goes here.</p>
+
+          <div style="margin-top:1.25rem;">
+            <label style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:600; color:var(--ink-muted);">Available Sizing:</label>
+            <div style="display:flex; gap:0.5rem; margin-top:0.4rem;" id="modal-sizes-container">
+              <button class="btn-pill-small active size-btn">XS</button>
+              <button class="btn-pill-small size-btn">S</button>
+              <button class="btn-pill-small size-btn">M</button>
+              <button class="btn-pill-small size-btn">L</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <button class="btn-cta btn-solid-light" id="modal-add-to-bag-btn" style="width:100%; justify-content:center;">
+            <span>Add to Bag</span>
+          </button>
+          <button class="btn-whatsapp" id="modal-whatsapp-inquire-btn" style="width:100%; justify-content:center;">
+            <span>Order via WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: SLIDE-OUT SHOPPING BAG DRAWER
+       ========================================================================== -->
+  <div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Bag">
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <div class="cart-drawer-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed var(--line); padding-bottom:1rem;">
+        <div>
+          <h3 style="font-family:var(--font-display); font-size:1.35rem;">Your Bag</h3>
+          <p style="font-size:0.75rem; color:var(--ink-muted);"><span id="cart-drawer-count">0</span> piece(s) reserved</p>
+        </div>
+        <button id="cart-close-btn" class="btn-pill-small">Close ✕</button>
+      </div>
+
+      <div style="flex:1; overflow-y:auto; padding-block:1rem; display:flex; flex-direction:column; gap:1rem;" id="cart-items-container">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div style="border-top:1px dashed var(--line); padding-top:1rem; display:flex; flex-direction:column; gap:0.85rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.9rem; font-weight:500;">Estimated Subtotal</span>
+          <span id="cart-subtotal-val" style="font-family:var(--font-display); font-size:1.25rem; font-weight:600; color:var(--brand-terramuse);">Rs. 0</span>
+        </div>
+
+        <button class="btn-whatsapp" id="cart-whatsapp-checkout-btn" style="width:100%; justify-content:center;">
+          <span>Complete Order via WhatsApp</span>
+        </button>
+
+        <button class="btn-cta btn-solid-light" id="checkout-stub-btn" style="width:100%; justify-content:center;">
+          <span>Direct Checkout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: FULLSCREEN MENU OVERLAY
+       ========================================================================== -->
+  <div id="menu-overlay" role="dialog" aria-modal="true" aria-label="Site Navigation">
+    <div class="menu-panel-bg"></div>
+    <div class="menu-content">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span class="header-logo-text" style="color:#ffffff;">merci</span>
+        <button id="close-menu-btn" class="btn-pill-small" style="color:#ffffff; border-color:rgba(255,255,255,0.3);">Close ✕</button>
+      </div>
+
+      <div class="menu-links-col">
+        <a href="#hero" class="menu-link-row close-menu-trigger">
+          <span style="font-size:1rem; opacity:0.5;">01</span>
+          <span>Home</span>
+        </a>
+        <a href="#terra-muse-spotlight" class="menu-link-row close-menu-trigger">
+          <span style="font-size:1rem; opacity:0.5;">02</span>
+          <span>Terra Muse Drop</span>
+        </a>
+        <a href="#works" class="menu-link-row close-menu-trigger">
+          <span style="font-size:1rem; opacity:0.5;">03</span>
+          <span>Curated Editions</span>
+        </a>
+        <a href="#catalog" class="menu-link-row close-menu-trigger">
+          <span style="font-size:1rem; opacity:0.5;">04</span>
+          <span>Wardrobe Archive</span>
+        </a>
+        <a href="#packaging" class="menu-link-row close-menu-trigger">
+          <span style="font-size:1rem; opacity:0.5;">05</span>
+          <span>Packaging & Delivery</span>
+        </a>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; border-top:1px dashed rgba(255,255,255,0.2); padding-top:1.5rem; font-size:0.8rem; opacity:0.75;">
+        <span>@merci.clothing_</span>
+        <span>Sri Lanka · Worldwide</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: OWNER PIN MODAL
+       ========================================================================== -->
+  <div id="pin-modal" role="dialog" aria-modal="true" aria-label="Owner PIN Authentication">
+    <div class="pin-dialog-card">
+      <div style="font-size:1.75rem; margin-bottom:0.4rem;">🔒</div>
+      <h3 style="font-size:1.25rem; font-weight:600; margin-bottom:0.25rem;">merci Atelier Studio</h3>
+      <p style="font-size:0.825rem; color:var(--ink-muted);">Enter 4-digit PIN to manage items and pricing.</p>
+      <input type="password" id="owner-pin-input" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric" autocomplete="off">
+      <p style="font-size:0.72rem; color:var(--ink-faint); margin-bottom:1rem;">PIN: 1234</p>
+      <div style="display:flex; gap:0.5rem;">
+        <button class="btn-cta btn-solid-light" id="pin-submit-btn" style="flex:1; justify-content:center; padding:0.75rem;">Unlock</button>
+        <button class="btn-cta btn-ghost-light" id="pin-cancel-btn" style="padding:0.75rem 1rem;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Active Mode Button -->
+  <div class="admin-float-indicator" id="admin-active-pill">
+    <span>🔒 Owner Mode Active</span>
+    <button id="admin-open-dashboard" style="background:#ffffff; color:#161615; padding:0.25rem 0.65rem; border-radius:999px; font-size:0.72rem; font-weight:600;">Open Console</button>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 5: OWNER MANAGEMENT CONSOLE
+       ========================================================================== -->
+  <div id="admin-modal" role="dialog" aria-modal="true" aria-label="Shop Owner Console">
+    <div class="modal-backdrop" id="admin-modal-backdrop"></div>
+    <div class="admin-panel-container">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed var(--line); padding-bottom:1rem;">
+        <div>
+          <div class="eyebrow">merci.clothing_ Atelier</div>
+          <h2 style="font-size:1.65rem; margin-top:0.25rem;">Inventory & Catalog Manager</h2>
+        </div>
+        <button class="btn-pill-small" id="admin-close-btn">Close Console ✕</button>
+      </div>
+
+      <!-- Add/Edit Form -->
+      <form id="admin-garment-form" style="background:var(--surface-grey); padding:1.25rem; border-radius:var(--radius-sm); border:1px solid var(--line);">
+        <input type="hidden" id="admin-edit-id" value="">
+        <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;" id="admin-form-heading">Add New Garment</h4>
+        <div style="display:grid; grid-template-columns:1fr; gap:0.85rem;">
+          <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:0.65rem;">
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Title</label>
+              <input type="text" id="form-title" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="e.g. Balloon Sleeve Top" required>
+            </div>
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Category</label>
+              <select id="form-category" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;">
+                <option value="Tops">Tops & Blouses</option>
+                <option value="Pants">Linen Pants</option>
+                <option value="Skirts">Skirts & Sets</option>
+                <option value="Basics">Pure Linen Basics</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Price (LKR)</label>
+              <input type="number" id="form-price" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="8500" required>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem;">
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Collection Tag</label>
+              <input type="text" id="form-edition" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="Terra Muse Collection">
+            </div>
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Image URL</label>
+              <input type="url" id="form-image" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="https://..." required>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Description</label>
+            <textarea id="form-description" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" rows="2" placeholder="Textile drape, silhouette, styling notes..." required></textarea>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; align-items:center;">
+            <button type="submit" class="btn-cta btn-solid-light" style="padding:0.7rem 1.5rem;">
+              <span id="admin-submit-label">Save Piece</span>
+            </button>
+            <button type="button" class="btn-pill-small" id="admin-cancel-edit-btn" style="display:none;">Cancel Edit</button>
+            <button type="button" class="btn-pill-small" id="admin-reset-default-btn" style="margin-left:auto; color:var(--ink-muted);">Reset Defaults</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Current Stock Table -->
+      <div>
+        <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Current Collection (<span id="admin-table-count">0</span> items)</h4>
+        <div style="border:1px solid var(--line); border-radius:var(--radius-sm); overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem;">
+            <thead>
+              <tr style="background:var(--surface-grey); border-bottom:1px solid var(--line);">
+                <th style="padding:0.65rem 0.85rem;">Item</th>
+                <th style="padding:0.65rem 0.85rem;">Title</th>
+                <th style="padding:0.65rem 0.85rem;">Category</th>
+                <th style="padding:0.65rem 0.85rem;">Price (LKR)</th>
+                <th style="padding:0.65rem 0.85rem;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body">
+              <!-- Injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="notification-toast" role="status" aria-live="polite">
+    Action completed
+  </div>
+
+  <!-- ==========================================================================
+       ESM JAVASCRIPT: Lenis Smooth Scroll + Catalog Data + Currency Toggle
+       ========================================================================== -->
+  <script type="module">
+    import Lenis from "lenis";
+
+    /* ==========================================================================
+       1. AUTHENTIC INSTAGRAM CATALOG (@merci.clothing_)
+       ========================================================================== */
+    const DEFAULT_CATALOG = [
+      {
+        id: "merci-01",
+        title: "Aubergine Sleeveless Top",
+        category: "Tops",
+        priceLkr: 7800,
+        priceUsd: 26,
+        edition: "Terra Muse Collection",
+        fabric: "Pure Raw Silk & Linen Weft",
+        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: true,
+        description: "A shade that speaks before you do. Deep, rich, and effortlessly elegant. Designed with a flattering high-cut sleeveless armhole and refined collar stand."
+      },
+      {
+        id: "merci-02",
+        title: "The Olive Green Balloon Sleeve Top",
+        category: "Tops",
+        priceLkr: 8500,
+        priceUsd: 28,
+        edition: "Terra Muse Collection",
+        fabric: "100% Breathable Washed Cotton Linen",
+        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: true,
+        description: "The colour of calm. The feeling of effortless beauty. Where earthy elegance meets everyday comfort. Finished with delicate neckline tie cords."
+      },
+      {
+        id: "merci-03",
+        title: "Signature Linen Wide-Leg Pant — Soft Sage",
+        category: "Pants",
+        priceLkr: 9200,
+        priceUsd: 31,
+        edition: "Signature Linen Pant",
+        fabric: "100% Pure Woven Flax Linen",
+        image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: true,
+        description: "Clean high-rise tailored waistband with flowing wide-leg volume. Designed to keep you poised and cool through warm island days."
+      },
+      {
+        id: "merci-04",
+        title: "Signature Linen Wide-Leg Pant — Charcoal Blue",
+        category: "Pants",
+        priceLkr: 9200,
+        priceUsd: 31,
+        edition: "Pure Linen Basics",
+        fabric: "100% Washed Belgian Linen",
+        image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: true,
+        description: "Custom garment-washed charcoal blue. Deep side seam pockets and a clean hook-and-bar closure."
+      },
+      {
+        id: "merci-05",
+        title: "Terra Muse Halter Neck Top — Pure Chalk",
+        category: "Tops",
+        priceLkr: 6900,
+        priceUsd: 23,
+        edition: "Terra Muse Collection",
+        fabric: "Fine Ribbed Modal Cotton",
+        image: "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: true,
+        description: "Clean minimalist lines with delicate halter tie neck. Sculpted to pair effortlessly with our flared linen skirts."
+      },
+      {
+        id: "merci-06",
+        title: "High-Waisted Flared Linen Skirt — Earth Clay",
+        category: "Skirts",
+        priceLkr: 8900,
+        priceUsd: 30,
+        edition: "Terra Muse Collection",
+        fabric: "Slubbed Natural Flax Linen",
+        image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        description: "A gentle A-line flare that sways with every step. Concealed back zipper and double-turned hem."
+      },
+      {
+        id: "merci-07",
+        title: "Textured Strapless Bandeau Top — Raw Sand",
+        category: "Tops",
+        priceLkr: 6500,
+        priceUsd: 22,
+        edition: "Pure Linen Basics",
+        fabric: "Textured Micro-Bouclé Linen",
+        image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        description: "Internal grip elastic with tactile slub texture. A versatile piece for twilight events or sunlit getaways."
+      },
+      {
+        id: "merci-08",
+        title: "Vintage Floral Slip Maxi Skirt",
+        category: "Skirts",
+        priceLkr: 9800,
+        priceUsd: 33,
+        edition: "Terra Muse Collection",
+        fabric: "Bias-Cut Matte Crepe",
+        image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        description: "Subtle vintage floral botanical motif cut on the bias for a liquid silhouette. Elasticated comfort waist."
+      },
+      {
+        id: "merci-09",
+        title: "Pure Linen Relaxed Trouser — Warm Oat",
+        category: "Basics",
+        priceLkr: 8900,
+        priceUsd: 30,
+        edition: "Pure Linen Basics",
+        fabric: "100% Breathable Washed Linen",
+        image: "https://images.unsplash.com/photo-1551803091-e20673f15770?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        description: "Relaxed pleated front trouser in an organic warm oat shade. Versatile, timeless, and effortlessly refined."
+      }
+    ];
+
+    let currentProducts = [];
+    let currentCurrency = localStorage.getItem("merci_currency") || "LKR"; // "LKR" or "USD"
+    let currentPreviewItem = null;
+    let cartState = [];
+
+    function loadProducts() {
+      try {
+        const stored = localStorage.getItem("merci_clothing_catalog_v3");
+        if (stored) {
+          currentProducts = JSON.parse(stored);
+        } else {
+          currentProducts = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+        }
+      } catch (e) {
+        currentProducts = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+      }
+    }
+
+    function saveProducts() {
+      localStorage.setItem("merci_clothing_catalog_v3", JSON.stringify(currentProducts));
+    }
+
+    loadProducts();
+
+    /* ==========================================================================
+       2. CURRENCY FORMATTER & TOGGLE
+       ========================================================================== */
+    const currencyToggleBtn = document.getElementById("currency-toggle-btn");
+    const activeCurrencyLabel = document.getElementById("active-currency-label");
+
+    function formatPrice(item) {
+      if (currentCurrency === "USD") {
+        const usd = item.priceUsd || Math.round(item.priceLkr / 300);
+        return `$${usd}`;
+      }
+      const lkr = item.priceLkr || (item.priceUsd ? item.priceUsd * 300 : 0);
+      return `Rs. ${lkr.toLocaleString()}`;
+    }
+
+    function updateCurrencyDisplay() {
+      activeCurrencyLabel.textContent = currentCurrency === "USD" ? "USD ($)" : "LKR (Rs)";
+      
+      // Update Hero Floating Drop Price
+      const heroPriceEl = document.querySelector(".floating-drop-price");
+      if (heroPriceEl) {
+        const lkr = parseInt(heroPriceEl.dataset.priceLkr || "8500", 10);
+        const usd = parseInt(heroPriceEl.dataset.priceUsd || "28", 10);
+        heroPriceEl.textContent = currentCurrency === "USD" ? `$${usd}` : `Rs. ${lkr.toLocaleString()}`;
+      }
+
+      renderZigZagGallery();
+      renderCatalog();
+      renderCartItems();
+      if (currentPreviewItem) {
+        document.getElementById("modal-item-price").textContent = formatPrice(currentPreviewItem);
+      }
+    }
+
+    currencyToggleBtn.addEventListener("click", () => {
+      currentCurrency = currentCurrency === "LKR" ? "USD" : "LKR";
+      localStorage.setItem("merci_currency", currentCurrency);
+      updateCurrencyDisplay();
+      showToast(`Switched currency to ${currentCurrency === "USD" ? "US Dollars" : "Sri Lankan Rupees"}`);
+    });
+
+    /* ==========================================================================
+       3. LENIS SMOOTH SCROLL & SCROLL REVEALS
+       ========================================================================== */
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.95
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    function lockScroll() {
+      lenis.stop();
+      document.documentElement.style.overflow = "hidden";
+    }
+    function unlockScroll() {
+      lenis.start();
+      document.documentElement.style.overflow = "";
+    }
+
+    // Scroll reveal observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+
+    function observeReveals() {
+      document.querySelectorAll(".reveal-item:not(.in-view)").forEach(el => {
+        revealObserver.observe(el);
+      });
+    }
+
+    /* ==========================================================================
+       4. AMBIENT FABRIC CANVAS SIMULATION
+       ========================================================================== */
+    const canvas = document.getElementById("ambient-fabric-canvas");
+    const ctx = canvas.getContext("2d");
+    let waveTime = 0;
+
+    function resizeCanvas() {
+      if (!canvas) return;
+      canvas.width = canvas.parentElement.offsetWidth || window.innerWidth;
+      canvas.height = canvas.parentElement.offsetHeight || window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function renderFabricWaves() {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const isDark = document.body.getAttribute("data-palette") === "classic-noir";
+      const waveColor = isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(168, 108, 86, 0.06)";
+
+      const lines = 4;
+      for (let j = 0; j < lines; j++) {
+        ctx.beginPath();
+        const baseHeight = canvas.height * (0.35 + j * 0.18);
+        ctx.moveTo(0, baseHeight);
+
+        for (let x = 0; x <= canvas.width; x += 15) {
+          const y = baseHeight +
+            Math.sin(x * 0.003 + waveTime * 0.6 + j) * 45 +
+            Math.sin(x * 0.007 - waveTime * 0.4 + j * 2) * 20;
+          ctx.lineTo(x, y);
+        }
+
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.lineTo(0, canvas.height);
+        ctx.closePath();
+        ctx.fillStyle = waveColor;
+        ctx.fill();
+      }
+
+      waveTime += 0.015;
+      requestAnimationFrame(renderFabricWaves);
+    }
+    renderFabricWaves();
+
+    /* ==========================================================================
+       5. LIVE COLOR PALETTE SWITCHER
+       ========================================================================== */
+    document.querySelectorAll(".palette-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        const target = chip.dataset.paletteTarget;
+        document.body.setAttribute("data-palette", target);
+        document.querySelectorAll(".palette-chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        showToast(`Palette: ${chip.textContent.trim()}`);
+      });
+    });
+
+    /* ==========================================================================
+       6. ZIG-ZAG GALLERY RENDERER
+       ========================================================================== */
+    const zigzagContainer = document.getElementById("zigzag-gallery-container");
+
+    function renderZigZagGallery() {
+      if (!zigzagContainer) return;
+      const featured = currentProducts.slice(0, 4);
+
+      zigzagContainer.innerHTML = featured.map((item, idx) => {
+        let colClass = "plate-pos-left";
+        if (idx === 1) colClass = "plate-pos-right";
+        if (idx === 2) colClass = "plate-pos-left";
+        if (idx === 3) colClass = "plate-pos-right";
+
+        return `
+          <div class="zigzag-plate ${colClass} reveal-item" onclick="window.quickPreviewItem('${item.id}')">
+            <div class="zigzag-plate-inner ratio-3-4">
+              <img src="${item.image}" alt="${item.title}" loading="lazy">
+            </div>
+            <div class="zigzag-meta-bar">
+              <div>
+                <h3 class="zigzag-title">${item.title}</h3>
+                <span class="zigzag-collection">${item.edition}</span>
+              </div>
+              <div class="zigzag-price">${formatPrice(item)}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      observeReveals();
+    }
+
+    /* ==========================================================================
+       7. CATALOG GRID & SEARCH RENDERER
+       ========================================================================== */
+    const catalogContainer = document.getElementById("catalog-grid-container");
+    const categoryTabs = document.getElementById("catalog-category-tabs");
+    const searchInput = document.getElementById("catalog-search-input");
+
+    let currentCategoryFilter = "all";
+    let searchQuery = "";
+
+    function renderCatalog() {
+      if (!catalogContainer) return;
+
+      const filtered = currentProducts.filter(item => {
+        const matchesCategory = currentCategoryFilter === "all" || item.category === currentCategoryFilter;
+        const matchesSearch = item.title.toLowerCase().includes(searchQuery) ||
+                              item.description.toLowerCase().includes(searchQuery) ||
+                              item.edition.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        catalogContainer.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:3.5rem 1rem; color:var(--ink-muted);">
+            <p style="font-family:var(--font-display); font-size:1.35rem;">No garments found.</p>
+            <p style="font-size:0.85rem; margin-top:0.4rem;">Try adjusting your search or category filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      catalogContainer.innerHTML = filtered.map(item => `
+        <article class="product-card reveal-item" onclick="window.quickPreviewItem('${item.id}')">
+          <div class="product-thumb-wrap">
+            <img src="${item.image}" alt="${item.title}" loading="lazy">
+            <div class="product-badge-overlay">${item.edition}</div>
+            <button class="product-quick-add" onclick="event.stopPropagation(); window.quickAddToBag('${item.id}')">
+              + Bag
+            </button>
+          </div>
+          <div class="product-info-row">
+            <div>
+              <h4 class="product-title">${item.title}</h4>
+              <p class="product-category">${item.fabric}</p>
+            </div>
+            <span class="product-price">${formatPrice(item)}</span>
+          </div>
+        </article>
+      `).join("");
+
+      observeReveals();
+    }
+
+    categoryTabs.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      categoryTabs.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentCategoryFilter = btn.dataset.category;
+      renderCatalog();
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderCatalog();
+    });
+
+    /* ==========================================================================
+       8. PREVIEW MODAL LIGHTBOX
+       ========================================================================== */
+    const previewModal = document.getElementById("preview-modal");
+    const previewModalBackdrop = document.getElementById("preview-modal-backdrop");
+    const previewModalClose = document.getElementById("preview-modal-close");
+    const modalImage = document.getElementById("modal-item-image");
+    const modalTitle = document.getElementById("modal-item-title");
+    const modalPrice = document.getElementById("modal-item-price");
+    const modalEdition = document.getElementById("modal-item-edition");
+    const modalDescription = document.getElementById("modal-item-description");
+    const modalAddToBagBtn = document.getElementById("modal-add-to-bag-btn");
+    const modalWhatsappInquireBtn = document.getElementById("modal-whatsapp-inquire-btn");
+
+    window.quickPreviewItem = function(id) {
+      const item = currentProducts.find(x => x.id === id);
+      if (!item) return;
+      currentPreviewItem = item;
+
+      modalImage.src = item.image;
+      modalImage.alt = item.title;
+      modalTitle.textContent = item.title;
+      modalPrice.textContent = formatPrice(item);
+      modalEdition.textContent = item.edition;
+      modalDescription.textContent = item.description;
+
+      previewModal.classList.add("open");
+      lockScroll();
+    };
+
+    function closePreviewModal() {
+      previewModal.classList.remove("open");
+      unlockScroll();
+    }
+    previewModalClose.addEventListener("click", closePreviewModal);
+    previewModalBackdrop.addEventListener("click", closePreviewModal);
+
+    // Size button selection
+    document.querySelectorAll("#modal-sizes-container .size-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#modal-sizes-container .size-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    modalAddToBagBtn.addEventListener("click", () => {
+      if (currentPreviewItem) {
+        const size = document.querySelector("#modal-sizes-container .size-btn.active")?.textContent || "S";
+        addToCart(currentPreviewItem, size);
+        closePreviewModal();
+        openCartDrawer();
+      }
+    });
+
+    modalWhatsappInquireBtn.addEventListener("click", () => {
+      if (!currentPreviewItem) return;
+      const size = document.querySelector("#modal-sizes-container .size-btn.active")?.textContent || "S";
+      const priceText = formatPrice(currentPreviewItem);
+      const text = encodeURIComponent(`Hi merci! I would like to order the *${currentPreviewItem.title}* (${currentPreviewItem.edition}) in Size: ${size} (${priceText}). Please confirm availability!`);
+      window.open(`https://wa.me/94771234567?text=${text}`, "_blank");
+    });
+
+    window.quickAddToBag = function(id) {
+      const item = currentProducts.find(x => x.id === id);
+      if (item) {
+        addToCart(item, "S");
+      }
+    };
+
+    /* ==========================================================================
+       9. SHOPPING BAG & WHATSAPP CHECKOUT
+       ========================================================================== */
+    const cartDrawer = document.getElementById("cart-drawer");
+    const cartBackdrop = document.getElementById("cart-backdrop");
+    const cartCloseBtn = document.getElementById("cart-close-btn");
+    const openCartBtn = document.getElementById("open-cart-btn");
+    const cartCounter = document.getElementById("cart-counter");
+    const cartDrawerCount = document.getElementById("cart-drawer-count");
+    const cartItemsContainer = document.getElementById("cart-items-container");
+    const cartSubtotalVal = document.getElementById("cart-subtotal-val");
+    const cartWhatsappCheckoutBtn = document.getElementById("cart-whatsapp-checkout-btn");
+
+    function openCartDrawer() {
+      renderCartItems();
+      cartDrawer.classList.add("open");
+      lockScroll();
+    }
+    function closeCartDrawer() {
+      cartDrawer.classList.remove("open");
+      unlockScroll();
+    }
+
+    openCartBtn.addEventListener("click", openCartDrawer);
+    cartCloseBtn.addEventListener("click", closeCartDrawer);
+    cartBackdrop.addEventListener("click", closeCartDrawer);
+
+    function addToCart(item, size) {
+      const existing = cartState.find(x => x.id === item.id && x.size === size);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cartState.push({
+          id: item.id,
+          title: item.title,
+          priceLkr: item.priceLkr,
+          priceUsd: item.priceUsd,
+          image: item.image,
+          fabric: item.fabric,
+          size: size,
+          qty: 1
+        });
+      }
+      updateCartBadge();
+      showToast(`Added ${item.title} (${size}) to Bag.`);
+    }
+
+    function updateCartBadge() {
+      const totalQty = cartState.reduce((sum, x) => sum + x.qty, 0);
+      cartCounter.textContent = totalQty;
+      cartDrawerCount.textContent = totalQty;
+    }
+
+    function renderCartItems() {
+      if (cartState.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div style="text-align:center; padding:3.5rem 1rem; color:var(--ink-muted);">
+            <p style="font-family:var(--font-display); font-size:1.15rem;">Your bag is currently empty.</p>
+            <p style="font-size:0.8rem; margin-top:0.4rem;">Browse our Terra Muse collection to reserve pieces.</p>
+          </div>
+        `;
+        cartSubtotalVal.textContent = currentCurrency === "USD" ? "$0" : "Rs. 0";
+        return;
+      }
+
+      let subtotalLkr = 0;
+      let subtotalUsd = 0;
+
+      cartItemsContainer.innerHTML = cartState.map((item, idx) => {
+        const itemLkr = (item.priceLkr || (item.priceUsd * 300)) * item.qty;
+        const itemUsd = (item.priceUsd || Math.round(item.priceLkr / 300)) * item.qty;
+        subtotalLkr += itemLkr;
+        subtotalUsd += itemUsd;
+
+        const displayLinePrice = currentCurrency === "USD" ? `$${itemUsd}` : `Rs. ${itemLkr.toLocaleString()}`;
+
+        return `
+          <div style="display:flex; gap:0.85rem; border-bottom:1px dashed var(--line); padding-bottom:1rem;">
+            <img src="${item.image}" alt="${item.title}" style="width:4.25rem; height:5.25rem; object-fit:cover; border-radius:var(--radius-sm); flex-shrink:0;">
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <h4 style="font-size:0.88rem; font-weight:600;">${item.title}</h4>
+                <p style="font-size:0.75rem; color:var(--ink-muted);">Size: ${item.size} · ${item.fabric}</p>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--brand-terramuse); font-weight:600;">${displayLinePrice}</span>
+                <div style="display:flex; align-items:center; gap:0.4rem;">
+                  <button style="padding:2px 8px; border:1px solid var(--line); border-radius:3px;" onclick="window.decrementCart(${idx})">-</button>
+                  <span style="font-size:0.8rem;">${item.qty}</span>
+                  <button style="padding:2px 8px; border:1px solid var(--line); border-radius:3px;" onclick="window.incrementCart(${idx})">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      cartSubtotalVal.textContent = currentCurrency === "USD" ? `$${subtotalUsd.toLocaleString()}` : `Rs. ${subtotalLkr.toLocaleString()}`;
+    }
+
+    window.incrementCart = function(idx) {
+      if (cartState[idx]) {
+        cartState[idx].qty += 1;
+        updateCartBadge();
+        renderCartItems();
+      }
+    };
+    window.decrementCart = function(idx) {
+      if (cartState[idx]) {
+        cartState[idx].qty -= 1;
+        if (cartState[idx].qty <= 0) cartState.splice(idx, 1);
+        updateCartBadge();
+        renderCartItems();
+      }
+    };
+
+    // WhatsApp Checkout pre-fill
+    cartWhatsappCheckoutBtn.addEventListener("click", () => {
+      if (cartState.length === 0) {
+        showToast("Your bag is empty.");
+        return;
+      }
+      let itemsList = cartState.map(i => `• ${i.title} (${i.size}) x${i.qty}`).join("%0A");
+      let totalText = cartSubtotalVal.textContent;
+      let msg = `Hi merci! I would like to place an order from merci.clothing_:%0A%0A${itemsList}%0A%0A*Total: ${totalText}*%0A%0APlease let me know your account details / payment link for delivery in Sri Lanka!`;
+      window.open(`https://wa.me/94771234567?text=${msg}`, "_blank");
+    });
+
+    document.getElementById("checkout-stub-btn").addEventListener("click", () => {
+      if (cartState.length === 0) {
+        showToast("Your bag is empty.");
+        return;
+      }
+      showToast("Connecting to Atelier Checkout...");
+      setTimeout(() => {
+        alert("merci Atelier (Sri Lanka):\nThank you for choosing merci.clothing_.\nOur concierge will contact you via WhatsApp / SMS to confirm delivery address and islandwide dispatch.");
+        cartState = [];
+        updateCartBadge();
+        closeCartDrawer();
+      }, 500);
+    });
+
+    /* ==========================================================================
+       10. FULLSCREEN MENU
+       ========================================================================== */
+    const menuOverlay = document.getElementById("menu-overlay");
+    const openMenuBtn = document.getElementById("open-menu-btn");
+    const closeMenuBtn = document.getElementById("close-menu-btn");
+
+    function openMenu() {
+      menuOverlay.classList.add("open");
+      lockScroll();
+    }
+    function closeMenu() {
+      menuOverlay.classList.remove("open");
+      unlockScroll();
+    }
+    openMenuBtn.addEventListener("click", openMenu);
+    closeMenuBtn.addEventListener("click", closeMenu);
+    document.querySelectorAll(".close-menu-trigger").forEach(a => a.addEventListener("click", closeMenu));
+
+    /* ==========================================================================
+       11. FAQ ACCORDION INTERACTION
+       ========================================================================== */
+    document.querySelectorAll(".faq-trigger").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector(".faq-answer");
+        const isOpen = item.classList.contains("active");
+
+        document.querySelectorAll(".faq-item").forEach(i => {
+          i.classList.remove("active");
+          i.querySelector(".faq-answer").style.maxHeight = null;
+        });
+
+        if (!isOpen) {
+          item.classList.add("active");
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+
+    /* ==========================================================================
+       12. SHOP OWNER MANAGEMENT CONSOLE (Guarded by PIN 1234)
+       ========================================================================== */
+    let isOwnerUnlocked = false;
+    const ownerSecretTrigger = document.getElementById("owner-secret-trigger");
+    const pinModal = document.getElementById("pin-modal");
+    const pinInput = document.getElementById("owner-pin-input");
+    const pinSubmitBtn = document.getElementById("pin-submit-btn");
+    const pinCancelBtn = document.getElementById("pin-cancel-btn");
+    const adminActivePill = document.getElementById("admin-active-pill");
+    const adminModal = document.getElementById("admin-modal");
+    const adminCloseBtn = document.getElementById("admin-close-btn");
+    const adminModalBackdrop = document.getElementById("admin-modal-backdrop");
+    const adminGarmentForm = document.getElementById("admin-garment-form");
+    const adminTableBody = document.getElementById("admin-table-body");
+    const adminTableCount = document.getElementById("admin-table-count");
+    const adminCancelEditBtn = document.getElementById("admin-cancel-edit-btn");
+    const adminResetDefaultBtn = document.getElementById("admin-reset-default-btn");
+
+    ownerSecretTrigger.addEventListener("click", () => {
+      if (isOwnerUnlocked) {
+        openAdminModal();
+      } else {
+        pinInput.value = "";
+        pinModal.classList.add("open");
+        setTimeout(() => pinInput.focus(), 150);
+      }
+    });
+
+    pinCancelBtn.addEventListener("click", () => pinModal.classList.remove("open"));
+
+    function verifyPin() {
+      const val = pinInput.value.trim();
+      if (val === "1234" || val === "merci") {
+        isOwnerUnlocked = true;
+        pinModal.classList.remove("open");
+        adminActivePill.classList.add("visible");
+        showToast("Owner mode unlocked.");
+        openAdminModal();
+      } else {
+        showToast("Incorrect Security PIN.");
+        pinInput.value = "";
+        pinInput.focus();
+      }
+    }
+    pinSubmitBtn.addEventListener("click", verifyPin);
+    pinInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") verifyPin();
+      if (e.key === "Escape") pinModal.classList.remove("open");
+    });
+
+    document.getElementById("admin-open-dashboard").addEventListener("click", openAdminModal);
+
+    function openAdminModal() {
+      renderAdminDashboard();
+      adminModal.classList.add("open");
+      lockScroll();
+    }
+    function closeAdminModal() {
+      adminModal.classList.remove("open");
+      unlockScroll();
+    }
+    adminCloseBtn.addEventListener("click", closeAdminModal);
+    adminModalBackdrop.addEventListener("click", closeAdminModal);
+
+    function renderAdminDashboard() {
+      adminTableCount.textContent = currentProducts.length;
+      adminTableBody.innerHTML = currentProducts.map(item => `
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:0.65rem 0.85rem;">
+            <img src="${item.image}" alt="${item.title}" style="width:2.5rem; height:3.25rem; object-fit:cover; border-radius:3px;">
+          </td>
+          <td style="padding:0.65rem 0.85rem; font-weight:600;">${item.title}</td>
+          <td style="padding:0.65rem 0.85rem; color:var(--ink-muted);">${item.category}</td>
+          <td style="padding:0.65rem 0.85rem;">Rs. ${(item.priceLkr || 0).toLocaleString()}</td>
+          <td style="padding:0.65rem 0.85rem; white-space:nowrap;">
+            <button class="btn-pill-small" onclick="window.editAdminItem('${item.id}')" style="margin-right:0.35rem;">Edit</button>
+            <button class="btn-pill-small" onclick="window.deleteAdminItem('${item.id}')" style="color:#d9534f; border-color:#d9534f;">Delete</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    adminGarmentForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const editId = document.getElementById("admin-edit-id").value;
+      const title = document.getElementById("form-title").value.trim();
+      const category = document.getElementById("form-category").value;
+      const priceLkr = parseInt(document.getElementById("form-price").value, 10);
+      const edition = document.getElementById("form-edition").value.trim() || "Terra Muse Collection";
+      const image = document.getElementById("form-image").value.trim();
+      const description = document.getElementById("form-description").value.trim();
+
+      if (editId) {
+        const item = currentProducts.find(x => x.id === editId);
+        if (item) {
+          item.title = title;
+          item.category = category;
+          item.priceLkr = priceLkr;
+          item.priceUsd = Math.round(priceLkr / 300);
+          item.edition = edition;
+          item.image = image;
+          item.description = description;
+          showToast(`Updated "${title}"`);
+        }
+      } else {
+        const newItem = {
+          id: "merci-" + Date.now(),
+          title: title,
+          category: category,
+          priceLkr: priceLkr,
+          priceUsd: Math.round(priceLkr / 300),
+          edition: edition,
+          fabric: "Pure Natural Fiber",
+          image: image,
+          ratio: "ratio-3-4",
+          featuredZigZag: false,
+          description: description
+        };
+        currentProducts.unshift(newItem);
+        showToast(`Added "${title}" to Catalog.`);
+      }
+
+      saveProducts();
+      resetAdminForm();
+      renderAdminDashboard();
+      renderCatalog();
+      renderZigZagGallery();
+    });
+
+    window.editAdminItem = function(id) {
+      const item = currentProducts.find(x => x.id === id);
+      if (!item) return;
+      document.getElementById("admin-edit-id").value = item.id;
+      document.getElementById("form-title").value = item.title;
+      document.getElementById("form-category").value = item.category;
+      document.getElementById("form-price").value = item.priceLkr || 8500;
+      document.getElementById("form-edition").value = item.edition;
+      document.getElementById("form-image").value = item.image;
+      document.getElementById("form-description").value = item.description;
+
+      document.getElementById("admin-form-heading").textContent = `Edit Garment: ${item.title}`;
+      document.getElementById("admin-submit-label").textContent = "Save Changes";
+      adminCancelEditBtn.style.display = "inline-flex";
+      adminGarmentForm.scrollIntoView({ behavior: "smooth" });
+    };
+
+    function resetAdminForm() {
+      document.getElementById("admin-edit-id").value = "";
+      adminGarmentForm.reset();
+      document.getElementById("admin-form-heading").textContent = "Add New Garment";
+      document.getElementById("admin-submit-label").textContent = "Save Piece";
+      adminCancelEditBtn.style.display = "none";
+    }
+    adminCancelEditBtn.addEventListener("click", resetAdminForm);
+
+    window.deleteAdminItem = function(id) {
+      if (confirm("Delete this garment from the boutique catalog?")) {
+        currentProducts = currentProducts.filter(x => x.id !== id);
+        saveProducts();
+        renderAdminDashboard();
+        renderCatalog();
+        renderZigZagGallery();
+        showToast("Garment removed.");
+      }
+    };
+
+    adminResetDefaultBtn.addEventListener("click", () => {
+      if (confirm("Reset catalog to official @merci.clothing_ pieces?")) {
+        currentProducts = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+        saveProducts();
+        resetAdminForm();
+        renderAdminDashboard();
+        renderCatalog();
+        renderZigZagGallery();
+        showToast("Catalog reset to defaults.");
+      }
+    });
+
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById("notification-toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    // Header Scroll State
+    const siteHeader = document.getElementById("site-header");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 40) {
+        siteHeader.classList.add("scrolled");
+      } else {
+        siteHeader.classList.remove("scrolled");
+      }
+    }, { passive: true });
+
+    // Initialize initial views
+    renderZigZagGallery();
+    renderCatalog();
+    updateCurrencyDisplay();
+    observeReveals();
+  </script>
+</body>
+</html>
+'''
+
+def main():
+    target_path = r'c:\Users\PramudithaN\Documents\antigravity\lively-babbage\index.html'
+    with open(target_path, 'w', encoding='utf-8') as f:
+        f.write(HTML_CONTENT)
+    print(f"Successfully generated index.html ({len(HTML_CONTENT)} characters) at {target_path}")
+
+if __name__ == '__main__':
+    main()
