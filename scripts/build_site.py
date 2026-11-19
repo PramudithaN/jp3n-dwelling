@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 """
 Generator script to build the perfected index.html for merci (merci.clothing_)
-Fixes:
-1. Hero feature card price dynamically updates when currency is toggled (LKR/USD).
-2. Curated Unsplash images that accurately reflect the pieces (Olive green top, sage linen wide pants, charcoal pants, white halter top, earthy flared skirt, etc.).
-3. Explicit "Let's Pack Orders" heading in the packaging story.
-4. Mobile 390px overflow fixes for #terra-muse-spotlight (clipping eliminated, responsive typography, flex-wrap on action buttons, contained poster text).
-5. Destination phone number for WhatsApp concierge (Sri Lanka +94 77 123 4567).
-6. Non-wrapping header navigation items and smooth difference inversion.
+Includes:
+1. Editorial Brand Intro Curtain Loader (smooth cubic-bezier upward lift).
+2. Repositioned Notification Toast (top-right / top-center, completely away from bottom action buttons).
+3. Graceful image error handler & placeholder fallback.
+4. Redesigned Curated Editions ("Nature’s palette, timelessly cut."):
+   - Magnificent magazine-style editorial layout with a Featured Drop Hero Banner and a balanced 3-column gallery (no awkward gaps on desktop!).
+5. Secret Shop Owner Access (NO visible admin buttons for normal users!):
+   - Access via URL hash (#owner / #atelier / ?owner=true)
+   - Secret double-click on header logo or giant MERCI watermark
+   - Secret keyboard shortcut (Shift + A or Alt + M)
+   - PIN guarded (1234)
+6. Beautifully theme-matched, scrollable, mobile-responsive Shop Owner Atelier Console.
+7. Mobile-first zero-overflow layout.
 """
 
 import os
@@ -25,6 +31,14 @@ HTML_CONTENT = r'''<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Italiana&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <script>
+    // Early Image Fallback Handler (available before any image renders)
+    window.handleImgError = function(img) {
+      img.onerror = null;
+      img.src = "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop";
+    };
+  </script>
 
   <!-- Importmap for Lenis Smooth Scroll -->
   <script type="importmap">
@@ -59,7 +73,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     @media (max-width: 640px)  { html { font-size: 16px; } }
 
     /* ==========================================================================
-       AUTHENTIC INSTAGRAM BRAND PALETTES & EDITORIAL TOKENS
+       AUTHENTIC BRAND PALETTES & EDITORIAL TOKENS
        ========================================================================== */
     :root {
       /* Default Theme: Terra Muse (Warm Travertine Stone, Sand & Rich Aubergine) */
@@ -155,6 +169,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       width: 100%;
       height: 100%;
       object-fit: cover;
+      background: #EAE4D9; /* Graceful placeholder tone */
     }
 
     a {
@@ -171,6 +186,58 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       display: inline-flex;
       align-items: center;
       justify-content: center;
+    }
+
+    /* ==========================================================================
+       INTRO CURTAIN LOADER (Obsidian / Atelier Entry Curtain)
+       ========================================================================== */
+    #intro-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #181514;
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease 0.3s;
+      pointer-events: auto;
+    }
+    #intro-loader.loaded {
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+    .loader-brand-title {
+      font-family: var(--font-logo);
+      font-size: 3.5rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+      text-transform: lowercase;
+    }
+    .loader-progress-track {
+      width: 11rem;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .loader-progress-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: #FFFFFF;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .loader-subtext {
+      margin-top: 1.25rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: rgba(255, 255, 255, 0.6);
     }
 
     /* ==========================================================================
@@ -365,7 +432,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     }
 
     /* ==========================================================================
-       HEADER (Pure Upright Logo, Fixed Difference / Inversion Bar)
+       HEADER (Pure Upright Logo, Fixed Difference / Frosted Scroll Bar)
        ========================================================================== */
     #site-header {
       position: fixed;
@@ -377,7 +444,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       pointer-events: none;
       width: 100%;
       max-width: 100vw;
-      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
     }
     #site-header.scrolled {
       background: rgba(250, 247, 242, 0.94);
@@ -394,6 +461,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       background: var(--ink);
       color: var(--canvas);
     }
+
     .header-grid {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -432,7 +500,6 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       }
     }
 
-    /* Exact Brand Logo matching the Instagram feed */
     .header-center {
       display: flex;
       align-items: baseline;
@@ -441,6 +508,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       pointer-events: auto;
       cursor: pointer;
       white-space: nowrap;
+      user-select: none;
     }
     @media (min-width: 1024px) {
       .header-center {
@@ -685,7 +753,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       gap: 1rem;
     }
 
-    /* Live Color Palette Switcher Bar (Earthy tones from Instagram) */
+    /* Live Color Palette Switcher Bar */
     .palette-switcher-row {
       margin-top: 2.5rem;
       padding-top: 1.5rem;
@@ -738,6 +806,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       aspect-ratio: 4 / 5;
       background: var(--surface-grey);
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
     }
     .hero-visual-card img {
       width: 100%;
@@ -782,7 +851,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     }
 
     /* ==========================================================================
-       SECTION 2: TERRA MUSE EDITORIAL SPOTLIGHT (Instagram Image 5 & 1 Style)
+       SECTION 2: TERRA MUSE EDITORIAL SPOTLIGHT
        ========================================================================== */
     #terra-muse-spotlight {
       background: var(--surface-grey);
@@ -805,7 +874,6 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       }
     }
 
-    /* Stacked Editorial Poster Recreation */
     .aubergine-poster {
       position: relative;
       background: #D8D0C5;
@@ -865,7 +933,6 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       text-shadow: 0 4px 15px rgba(0,0,0,0.15);
       line-height: 1;
       pointer-events: none;
-      word-break: normal;
     }
     @media (min-width: 640px) {
       .script-overlay-text {
@@ -935,92 +1002,208 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     }
 
     /* ==========================================================================
-       SECTION 3: ZIG-ZAG ASYMMETRIC LOOKBOOK (Kai Nomura parallax plates)
+       SECTION 3: CURATED EDITIONS (REDESIGNED EDITORIAL LOOKBOOK SPREAD)
+       "Nature’s palette, timelessly cut."
        ========================================================================== */
-    .zigzag-gallery-grid {
-      margin-top: 3.5rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3.5rem;
+    #works {
+      border-top: 1px dashed var(--line);
     }
-    @media (min-width: 1024px) {
-      .zigzag-gallery-grid {
-        grid-template-columns: repeat(12, 1fr);
-        gap: 2.5rem;
-      }
+    .editions-header {
+      max-width: 48rem;
+    }
+    .editions-lead-desc {
+      margin-top: 0.85rem;
+      font-size: 1rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
     }
 
-    .zigzag-plate {
-      position: relative;
-      display: flex;
-      flex-direction: column;
+    /* Magazine-Style Featured Drop Hero Banner */
+    .editions-hero-card {
+      margin-top: 3rem;
+      background: var(--surface-card);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
       cursor: pointer;
     }
-    .zigzag-plate-inner {
+    @media (min-width: 1024px) {
+      .editions-hero-card {
+        grid-template-columns: 1.25fr 0.85fr;
+      }
+    }
+    .editions-hero-media {
       position: relative;
+      min-height: 22rem;
       overflow: hidden;
-      border-radius: var(--radius-sm);
       background: var(--surface-grey);
     }
-    .zigzag-plate-inner img {
+    @media (min-width: 1024px) {
+      .editions-hero-media {
+        min-height: 32rem;
+      }
+    }
+    .editions-hero-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .zigzag-plate:hover .zigzag-plate-inner img {
-      transform: scale(1.04);
+    .editions-hero-card:hover .editions-hero-media img {
+      transform: scale(1.03);
+    }
+    .editions-hero-badge {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      background: rgba(30, 26, 24, 0.88);
+      color: #FFFFFF;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(6px);
     }
 
-    .zigzag-meta-bar {
+    .editions-hero-content {
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    @media (min-width: 1024px) {
+      .editions-hero-content {
+        padding: 3.5rem;
+      }
+    }
+    .editions-hero-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--line-strong);
+      line-height: 1;
+    }
+    .editions-hero-title {
+      font-size: 1.85rem;
+      line-height: 1.2;
+      margin-top: 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .editions-hero-title {
+        font-size: 2.45rem;
+      }
+    }
+    .editions-hero-notes {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      margin-top: 1rem;
+    }
+    .editions-hero-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--line);
+      padding-top: 1.25rem;
+    }
+
+    /* 3-Column Editorial Grid Below Hero */
+    .editions-trio-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    @media (min-width: 640px) {
+      .editions-trio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .editions-trio-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.25rem;
+      }
+    }
+
+    .editions-card {
+      background: var(--canvas);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+    }
+    .editions-card:hover {
+      transform: translateY(-0.4rem);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+    }
+    .editions-card-media {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: var(--surface-grey);
+    }
+    .editions-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .editions-card:hover .editions-card-media img {
+      transform: scale(1.04);
+    }
+    .editions-card-number {
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      background: rgba(30, 26, 24, 0.8);
+      color: #FFFFFF;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.1em;
+    }
+    .editions-card-body {
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+    .editions-card-title {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .editions-card-fabric {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-top: 0.25rem;
+    }
+    .editions-card-footer {
       margin-top: 1rem;
       border-top: 1px dashed var(--line);
       padding-top: 0.75rem;
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
+      align-items: center;
     }
-    .zigzag-title {
+    .editions-card-price {
       font-family: var(--font-display);
-      font-size: 1.15rem;
-      color: var(--ink);
-    }
-    .zigzag-collection {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--ink-muted);
-    }
-    .zigzag-price {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--brand-terramuse);
     }
 
-    /* Zig-Zag 12-Col Placement */
-    @media (min-width: 1024px) {
-      .plate-pos-left {
-        grid-column: 1 / span 7;
-      }
-      .plate-pos-right {
-        grid-column: 7 / span 6;
-        margin-top: 5rem;
-      }
-      .plate-pos-center {
-        grid-column: 3 / span 8;
-        margin-top: 2rem;
-      }
-    }
-
-    /* Aspect Ratio Helper Classes */
-    .ratio-3-4 { aspect-ratio: 3 / 4; }
-    .ratio-4-5 { aspect-ratio: 4 / 5; }
-    .ratio-1-1 { aspect-ratio: 1 / 1; }
-    .ratio-16-9 { aspect-ratio: 16 / 9; }
-
     /* ==========================================================================
-       SECTION 4: PACKAGING & ORDERS STORY ("Let's Pack Orders" - Image 2 & 3)
+       SECTION 4: PACKAGING & ORDERS STORY ("Let's Pack Orders")
        ========================================================================== */
     .packaging-section {
       background: var(--surface-dark);
@@ -1411,7 +1594,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     }
 
     /* ==========================================================================
-       FOOTER & GIANT WATERMARK
+       FOOTER & GIANT WATERMARK (NO ADMIN BUTTONS FOR NORMAL USERS!)
        ========================================================================== */
     footer {
       background: var(--surface-dark);
@@ -1438,6 +1621,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       font-size: 2.25rem;
       letter-spacing: 0.04em;
       margin-bottom: 0.75rem;
+      user-select: none;
     }
     .footer-brand p {
       font-size: 0.9rem;
@@ -1465,12 +1649,12 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       color: #FFFFFF;
     }
 
-    /* Giant Watermark */
+    /* Giant Watermark (Secret double-click trigger for admin) */
     .footer-watermark-wrap {
       margin-top: 4.5rem;
       user-select: none;
-      pointer-events: none;
       text-align: center;
+      cursor: default;
     }
     .giant-wordmark {
       font-family: var(--font-logo);
@@ -1480,6 +1664,10 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       line-height: 0.8;
       letter-spacing: 0.04em;
       color: rgba(255, 255, 255, 0.05);
+      transition: color 0.3s ease;
+    }
+    .giant-wordmark:hover {
+      color: rgba(255, 255, 255, 0.08);
     }
 
     .footer-legal-bar {
@@ -1671,7 +1859,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       transform: translateX(0.5rem);
     }
 
-    /* PIN Modal & Admin Studio */
+    /* PIN Modal (Owner Authentication) */
     #pin-modal {
       position: fixed;
       inset: 0;
@@ -1679,8 +1867,8 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(18, 16, 14, 0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(18, 16, 14, 0.78);
+      backdrop-filter: blur(10px);
       pointer-events: none;
       visibility: hidden;
       opacity: 0;
@@ -1694,17 +1882,18 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     .pin-dialog-card {
       background: var(--canvas);
       color: var(--ink);
-      padding: 2rem;
+      padding: 2.25rem;
       border-radius: var(--radius-sm);
+      border: 1px dashed var(--line-strong);
       width: 90%;
       max-width: 22rem;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.35);
     }
     .pin-input {
       letter-spacing: 0.6em;
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       padding: 0.75rem;
       border: 1px solid var(--line);
       border-radius: var(--radius-sm);
@@ -1712,8 +1901,35 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       margin: 1.25rem 0 0.5rem;
       font-family: monospace;
       outline: none;
+      background: var(--surface-card);
+    }
+    .pin-input:focus {
+      border-color: var(--brand-terramuse);
     }
 
+    /* Sleek Floating Toolbar when Owner is Unlocked */
+    .admin-float-indicator {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 450;
+      background: #1E1A18;
+      color: #FFFFFF;
+      padding: 0.6rem 1.15rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 0.85rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .admin-float-indicator.visible {
+      display: inline-flex;
+    }
+
+    /* Redesigned, Theme-Matched Shop Owner Atelier Console */
     #admin-modal {
       position: fixed;
       inset: 0;
@@ -1731,61 +1947,109 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       visibility: visible;
       opacity: 1;
     }
+    .admin-form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    @media (min-width: 640px) {
+      .admin-form-row-3 {
+        grid-template-columns: 2fr 1fr 1fr;
+      }
+    }
+    .admin-form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    @media (min-width: 640px) {
+      .admin-form-row-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .admin-table-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+    }
+    .admin-table-wrap table {
+      min-width: 32rem;
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
     .admin-panel-container {
       position: relative;
       background: var(--canvas);
       width: 94%;
-      max-width: 65rem;
-      max-height: 92vh;
+      max-width: 68rem;
+      max-height: 88vh;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       border-radius: var(--radius-sm);
-      padding: 2rem;
+      border: 1px dashed var(--line-strong);
+      padding: 1.5rem;
       box-shadow: 0 30px 60px rgba(0,0,0,0.35);
       z-index: 1;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.75rem;
+      pointer-events: auto;
+    }
+    @media (min-width: 768px) {
+      .admin-panel-container {
+        padding: 2.5rem;
+      }
     }
 
-    .admin-float-indicator {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 450;
-      background: #1E1A18;
-      color: #FFFFFF;
-      padding: 0.6rem 1rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.75rem;
-      font-weight: 600;
-      display: none;
-      align-items: center;
-      gap: 0.75rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    }
-    .admin-float-indicator.visible {
-      display: inline-flex;
+    .admin-tab-nav {
+      display: flex;
+      gap: 0.65rem;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 0.75rem;
+      overflow-x: auto;
     }
 
-    /* Notification Toast */
+    /* REPOSITIONED NOTIFICATION TOAST (Top Right / Top Center) */
     #notification-toast {
       position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(3rem);
-      background: #1E1A18;
+      top: 5.5rem;
+      right: 1.5rem;
+      z-index: 1200;
+      background: var(--surface-dark);
       color: #FFFFFF;
-      padding: 0.75rem 1.5rem;
+      padding: 0.75rem 1.4rem;
       border-radius: var(--radius-pill);
       font-size: 0.8rem;
-      z-index: 1000;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transform: translateY(-2rem);
       opacity: 0;
       pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
     #notification-toast.show {
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
       opacity: 1;
+    }
+    @media (max-width: 640px) {
+      #notification-toast {
+        top: 4.5rem;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateY(-2rem);
+        width: max-content;
+        max-width: 90vw;
+      }
+      #notification-toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
     }
 
     /* Reveal States */
@@ -1803,6 +2067,17 @@ HTML_CONTENT = r'''<!DOCTYPE html>
 <body data-palette="terra-muse">
 
   <!-- ==========================================================================
+       INTRO CURTAIN LOADER
+       ========================================================================== -->
+  <aside id="intro-loader" aria-label="Loading merci atelier">
+    <div class="loader-brand-title">merci</div>
+    <div class="loader-progress-track">
+      <div class="loader-progress-fill" id="loader-progress-bar"></div>
+    </div>
+    <p class="loader-subtext">Terra Muse Collection · Sri Lanka</p>
+  </aside>
+
+  <!-- ==========================================================================
        FIXED HEADER (merci Logo in Exact Upright Serif + Sri Lanka Atelier Info)
        ========================================================================== -->
   <header id="site-header" role="banner">
@@ -1813,8 +2088,8 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         <p>Terra Muse Collection</p>
       </div>
 
-      <!-- Center Logo (Pure Upright Modern Serif as seen on Instagram) -->
-      <a href="#hero" class="header-center" aria-label="merci home">
+      <!-- Center Logo (Secret double-click trigger for admin access) -->
+      <a href="#hero" class="header-center" id="brand-logo-trigger" aria-label="merci home" title="merci atelier">
         <span class="header-logo-text">merci</span>
         <span class="header-logo-tag">Atelier</span>
       </a>
@@ -1895,8 +2170,8 @@ HTML_CONTENT = r'''<!DOCTYPE html>
                 <span>Shop Wardrobe</span>
                 <span class="arrow">→</span>
               </a>
-              <a href="#terra-muse-spotlight" class="btn-cta btn-ghost-light">
-                <span>Terra Muse Story</span>
+              <a href="#works" class="btn-cta btn-ghost-light">
+                <span>Curated Editions</span>
                 <span class="arrow">→</span>
               </a>
             </div>
@@ -1928,8 +2203,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
           <!-- Right Column: Visual Drop Card -->
           <div class="hero-visual-col reveal-item">
             <div class="hero-visual-card" onclick="window.quickPreviewItem('merci-02')">
-              <!-- Olive Green Balloon Sleeve Top over classical stone architecture -->
-              <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1200&auto=format&fit=crop" alt="merci — Olive Green Balloon Sleeve Top">
+              <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1200&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="merci — Olive Green Balloon Sleeve Top">
               <div class="hero-floating-drop">
                 <div class="floating-drop-meta">
                   <h4>The Olive Green Balloon Sleeve Top</h4>
@@ -1946,7 +2220,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     </section>
 
     <!-- ========================================================================
-         SECTION 2: TERRA MUSE EDITORIAL SPOTLIGHT (Direct recreation of Instagram Post)
+         SECTION 2: TERRA MUSE EDITORIAL SPOTLIGHT
          ======================================================================== -->
     <section id="terra-muse-spotlight" class="section-pad">
       <div class="container">
@@ -1995,19 +2269,51 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     </section>
 
     <!-- ========================================================================
-         SECTION 3: SELECTED EDITIONS (ZIG-ZAG PARALLAX LOOKBOOK)
+         SECTION 3: CURATED EDITIONS (REDESIGNED MAGAZINE-STYLE SPREAD)
+         "Nature’s palette, timelessly cut."
          ======================================================================== -->
     <section id="works" class="section-pad">
       <div class="container">
-        <div class="section-header-block reveal-item">
-          <div class="eyebrow">Curated Drops</div>
+        <div class="editions-header reveal-item">
+          <div class="eyebrow">Curated Drops · Limited Cuts</div>
           <h2 style="font-size:2.85rem; margin-top:0.4rem;">
             Nature’s palette, <span class="accent-italic">timelessly</span> cut.
           </h2>
+          <p class="editions-lead-desc">
+            Crafted in mindful small batches using pure natural fibers, each silhouette is tailored for fluid movement, breathable lightness, and understated poise.
+          </p>
         </div>
 
-        <div class="zigzag-gallery-grid" id="zigzag-gallery-container">
-          <!-- Dynamic Items Injected by JS -->
+        <!-- Featured Drop Hero Banner -->
+        <article class="editions-hero-card reveal-item" onclick="window.quickPreviewItem('merci-02')">
+          <div class="editions-hero-media">
+            <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1200&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="The Olive Green Balloon Sleeve Top">
+            <div class="editions-hero-badge">Drop 01 · Spotlight</div>
+          </div>
+          <div class="editions-hero-content">
+            <div>
+              <span class="editions-hero-number">01</span>
+              <h3 class="editions-hero-title">The Olive Green Balloon Sleeve Top</h3>
+              <p class="editions-hero-notes">
+                "The colour of calm. The feeling of effortless beauty. Where earthy elegance meets everyday comfort. Tailored in breathable washed cotton linen with delicate neck cords."
+              </p>
+            </div>
+            <div class="editions-hero-meta-row">
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.16em; color:var(--ink-muted);">Terra Muse Capsule</span>
+                <div style="font-family:var(--font-display); font-size:1.45rem; font-weight:600; color:var(--brand-terramuse);" id="hero-edition-price">Rs. 8,500</div>
+              </div>
+              <button class="btn-cta btn-solid-light">
+                <span>Reserve Piece</span>
+                <span class="arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Balanced 3-Column Editorial Grid Below -->
+        <div class="editions-trio-grid" id="editions-trio-container">
+          <!-- Populated by JS -->
         </div>
       </div>
     </section>
@@ -2058,7 +2364,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     </section>
 
     <!-- ========================================================================
-         SECTION 5: COMPLETE WARDROBE ARCHIVE (Authentic Catalog)
+         SECTION 5: COMPLETE WARDROBE ARCHIVE
          ======================================================================== -->
     <section id="catalog" class="section-pad">
       <div class="container">
@@ -2114,37 +2420,37 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         <!-- 6-Grid Lookbook mirroring the uploaded photos -->
         <div class="ig-feed-grid reveal-item">
           <div class="ig-card" onclick="window.quickPreviewItem('merci-01')">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" alt="Aubergine Top">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Aubergine Top">
             <div class="ig-card-overlay">
               <span class="ig-card-tag">Aubergine Sleeveless Top</span>
             </div>
           </div>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-02')">
-            <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=600&auto=format&fit=crop" alt="Olive Green Balloon Sleeve">
+            <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Olive Green Balloon Sleeve">
             <div class="ig-card-overlay">
               <span class="ig-card-tag">Olive Green Balloon Sleeve</span>
             </div>
           </div>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-03')">
-            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop" alt="Signature Linen Pant Sage">
+            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Signature Linen Pant Sage">
             <div class="ig-card-overlay">
               <span class="ig-card-tag">Signature Linen — Soft Sage</span>
             </div>
           </div>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-04')">
-            <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=600&auto=format&fit=crop" alt="Signature Linen Pant Charcoal Blue">
+            <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Signature Linen Pant Charcoal Blue">
             <div class="ig-card-overlay">
               <span class="ig-card-tag">Pure Linen — Charcoal Blue</span>
             </div>
           </div>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-05')">
-            <img src="https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?q=80&w=600&auto=format&fit=crop" alt="Terra Muse Halter Top">
+            <img src="https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Terra Muse Halter Top">
             <div class="ig-card-overlay">
               <span class="ig-card-tag">Terra Muse Halter Neck</span>
             </div>
           </div>
           <div class="ig-card" onclick="window.quickPreviewItem('merci-08')">
-            <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=600&auto=format&fit=crop" alt="Floral Slip Maxi Skirt">
+            <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=600&auto=format&fit=crop" onerror="window.handleImgError(this)" alt="Floral Slip Maxi Skirt">
             <div class="ig-card-overlay">
               <span class="ig-card-tag">Floral Slip Maxi Skirt</span>
             </div>
@@ -2204,7 +2510,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
   </main>
 
   <!-- ==========================================================================
-       FOOTER (Giant Wordmark, Direct Contacts & Discreet Owner Login)
+       FOOTER & GIANT WATERMARK (NO ADMIN BUTTONS VISIBLE FOR NORMAL USERS!)
        ========================================================================== -->
   <footer>
     <div class="container">
@@ -2244,19 +2550,20 @@ HTML_CONTENT = r'''<!DOCTYPE html>
           </div>
         </div>
 
+        <!-- 4th Column: Customer Services (Discreet, Clean, User-Friendly) -->
         <div>
-          <div class="footer-col-title">Shop Owner Console</div>
-          <p style="font-size:0.8rem; color:var(--on-dark-faint); margin-bottom:0.75rem;">
-            Management portal for the boutique owner to update catalog, prices, and inventory.
-          </p>
-          <button id="owner-secret-trigger" class="btn-pill-small" style="color:#ffffff; border-color:var(--line-on-dark);">
-            🔒 Owner Atelier Studio
-          </button>
+          <div class="footer-col-title">Boutique Services</div>
+          <div class="footer-links-list">
+            <span>Sizing & Fit Advice</span>
+            <span>Pure Linen Care Guide</span>
+            <span>Local Bank Transfer Orders</span>
+            <span>Track Islandwide Dispatch</span>
+          </div>
         </div>
       </div>
 
-      <!-- Giant Watermark -->
-      <div class="footer-watermark-wrap">
+      <!-- Giant Watermark (Secret double-click trigger for admin access) -->
+      <div class="footer-watermark-wrap" id="footer-secret-watermark" title="merci.">
         <div class="giant-wordmark">MERCI</div>
       </div>
 
@@ -2275,7 +2582,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     <div class="modal-dialog-card">
       <button class="modal-close-btn" id="preview-modal-close" aria-label="Close Preview">✕</button>
       <div class="modal-preview-media">
-        <img id="modal-item-image" src="" alt="Garment Preview">
+        <img id="modal-item-image" src="" onerror="window.handleImgError(this)" alt="Garment Preview">
       </div>
       <div class="modal-preview-content">
         <div>
@@ -2384,7 +2691,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
   </div>
 
   <!-- ==========================================================================
-       MODAL 4: OWNER PIN MODAL
+       MODAL 4: OWNER PIN MODAL (Protected Behind Secret Triggers)
        ========================================================================== -->
   <div id="pin-modal" role="dialog" aria-modal="true" aria-label="Owner PIN Authentication">
     <div class="pin-dialog-card">
@@ -2400,14 +2707,14 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- Floating Active Mode Button -->
+  <!-- Floating Active Mode Button (Only visible after successful owner unlock) -->
   <div class="admin-float-indicator" id="admin-active-pill">
     <span>🔒 Owner Mode Active</span>
     <button id="admin-open-dashboard" style="background:#ffffff; color:#161615; padding:0.25rem 0.65rem; border-radius:999px; font-size:0.72rem; font-weight:600;">Open Console</button>
   </div>
 
   <!-- ==========================================================================
-       MODAL 5: OWNER MANAGEMENT CONSOLE
+       MODAL 5: SHOP OWNER ATELIER CONSOLE (Redesigned & Theme-Matched)
        ========================================================================== -->
   <div id="admin-modal" role="dialog" aria-modal="true" aria-label="Shop Owner Console">
     <div class="modal-backdrop" id="admin-modal-backdrop"></div>
@@ -2425,14 +2732,14 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         <input type="hidden" id="admin-edit-id" value="">
         <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;" id="admin-form-heading">Add New Garment</h4>
         <div style="display:grid; grid-template-columns:1fr; gap:0.85rem;">
-          <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:0.65rem;">
+          <div class="admin-form-row-3">
             <div>
               <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Title</label>
-              <input type="text" id="form-title" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="e.g. Balloon Sleeve Top" required>
+              <input type="text" id="form-title" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit; background:#ffffff;" placeholder="e.g. Balloon Sleeve Top" required>
             </div>
             <div>
               <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Category</label>
-              <select id="form-category" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;">
+              <select id="form-category" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit; background:#ffffff;">
                 <option value="Tops">Tops & Blouses</option>
                 <option value="Pants">Linen Pants</option>
                 <option value="Skirts">Skirts & Sets</option>
@@ -2441,27 +2748,27 @@ HTML_CONTENT = r'''<!DOCTYPE html>
             </div>
             <div>
               <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Price (LKR)</label>
-              <input type="number" id="form-price" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="8500" required>
+              <input type="number" id="form-price" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit; background:#ffffff;" placeholder="8500" required>
             </div>
           </div>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem;">
+          <div class="admin-form-row-2">
             <div>
               <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Collection Tag</label>
-              <input type="text" id="form-edition" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="Terra Muse Collection">
+              <input type="text" id="form-edition" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit; background:#ffffff;" placeholder="Terra Muse Collection">
             </div>
             <div>
               <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Image URL</label>
-              <input type="url" id="form-image" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="https://..." required>
+              <input type="url" id="form-image" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit; background:#ffffff;" placeholder="https://..." required>
             </div>
           </div>
 
           <div>
             <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Description</label>
-            <textarea id="form-description" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" rows="2" placeholder="Textile drape, silhouette, styling notes..." required></textarea>
+            <textarea id="form-description" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit; background:#ffffff;" rows="2" placeholder="Textile drape, silhouette, styling notes..." required></textarea>
           </div>
 
-          <div style="display:flex; gap:0.75rem; align-items:center;">
+          <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
             <button type="submit" class="btn-cta btn-solid-light" style="padding:0.7rem 1.5rem;">
               <span id="admin-submit-label">Save Piece</span>
             </button>
@@ -2474,8 +2781,8 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       <!-- Current Stock Table -->
       <div>
         <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Current Collection (<span id="admin-table-count">0</span> items)</h4>
-        <div style="border:1px solid var(--line); border-radius:var(--radius-sm); overflow-x:auto;">
-          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem;">
+        <div class="admin-table-wrap">
+          <table>
             <thead>
               <tr style="background:var(--surface-grey); border-bottom:1px solid var(--line);">
                 <th style="padding:0.65rem 0.85rem;">Item</th>
@@ -2494,7 +2801,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- Toast Notification -->
+  <!-- REPOSITIONED TOAST NOTIFICATION (TOP RIGHT) -->
   <div id="notification-toast" role="status" aria-live="polite">
     Action completed
   </div>
@@ -2506,7 +2813,35 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     import Lenis from "lenis";
 
     /* ==========================================================================
-       1. AUTHENTIC INSTAGRAM CATALOG (@merci.clothing_)
+       0. IMAGE ERROR & PLACEHOLDER FALLBACK
+       ========================================================================== */
+    const FALLBACK_IMG = "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop";
+    window.handleImgError = function(img) {
+      if (img.src !== FALLBACK_IMG) {
+        img.onerror = null;
+        img.src = FALLBACK_IMG;
+      }
+    };
+
+    /* ==========================================================================
+       1. INTRO LOADER ANIMATION
+       ========================================================================== */
+    const introLoader = document.getElementById("intro-loader");
+    const loaderProgressBar = document.getElementById("loader-progress-bar");
+
+    if (loaderProgressBar) {
+      setTimeout(() => { loaderProgressBar.style.width = "40%"; }, 80);
+      setTimeout(() => { loaderProgressBar.style.width = "85%"; }, 350);
+      setTimeout(() => {
+        loaderProgressBar.style.width = "100%";
+        setTimeout(() => {
+          introLoader.classList.add("loaded");
+        }, 300);
+      }, 700);
+    }
+
+    /* ==========================================================================
+       2. AUTHENTIC INSTAGRAM CATALOG (@merci.clothing_)
        ========================================================================== */
     const DEFAULT_CATALOG = [
       {
@@ -2571,7 +2906,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         fabric: "Fine Ribbed Modal Cotton",
         image: "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?q=80&w=1000&auto=format&fit=crop",
         ratio: "ratio-3-4",
-        featuredZigZag: true,
+        featuredZigZag: false,
         description: "Clean minimalist lines with delicate halter tie neck. Sculpted to pair effortlessly with our flared linen skirts."
       },
       {
@@ -2635,7 +2970,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
 
     function loadProducts() {
       try {
-        const stored = localStorage.getItem("merci_clothing_catalog_v3");
+        const stored = localStorage.getItem("merci_clothing_catalog_v4");
         if (stored) {
           currentProducts = JSON.parse(stored);
         } else {
@@ -2647,13 +2982,13 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     }
 
     function saveProducts() {
-      localStorage.setItem("merci_clothing_catalog_v3", JSON.stringify(currentProducts));
+      localStorage.setItem("merci_clothing_catalog_v4", JSON.stringify(currentProducts));
     }
 
     loadProducts();
 
     /* ==========================================================================
-       2. CURRENCY FORMATTER & TOGGLE
+       3. CURRENCY FORMATTER & TOGGLE
        ========================================================================== */
     const currencyToggleBtn = document.getElementById("currency-toggle-btn");
     const activeCurrencyLabel = document.getElementById("active-currency-label");
@@ -2678,7 +3013,13 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         heroPriceEl.textContent = currentCurrency === "USD" ? `$${usd}` : `Rs. ${lkr.toLocaleString()}`;
       }
 
-      renderZigZagGallery();
+      // Update Featured Editions Hero Price
+      const heroEditionPrice = document.getElementById("hero-edition-price");
+      if (heroEditionPrice) {
+        heroEditionPrice.textContent = currentCurrency === "USD" ? "$28" : "Rs. 8,500";
+      }
+
+      renderEditionsTrio();
       renderCatalog();
       renderCartItems();
       if (currentPreviewItem) {
@@ -2694,7 +3035,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     });
 
     /* ==========================================================================
-       3. LENIS SMOOTH SCROLL & SCROLL REVEALS
+       4. LENIS SMOOTH SCROLL & SCROLL REVEALS
        ========================================================================== */
     const lenis = new Lenis({
       duration: 1.15,
@@ -2718,14 +3059,13 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       document.documentElement.style.overflow = "";
     }
 
-    // Scroll reveal observer
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("in-view");
         }
       });
-    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    }, { threshold: 0.08, rootMargin: "0px 0px -30px 0px" });
 
     function observeReveals() {
       document.querySelectorAll(".reveal-item:not(.in-view)").forEach(el => {
@@ -2733,8 +3073,18 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       });
     }
 
+    // Header Scroll State
+    const siteHeader = document.getElementById("site-header");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 40) {
+        siteHeader.classList.add("scrolled");
+      } else {
+        siteHeader.classList.remove("scrolled");
+      }
+    }, { passive: true });
+
     /* ==========================================================================
-       4. AMBIENT FABRIC CANVAS SIMULATION
+       5. AMBIENT FABRIC CANVAS SIMULATION
        ========================================================================== */
     const canvas = document.getElementById("ambient-fabric-canvas");
     const ctx = canvas.getContext("2d");
@@ -2781,7 +3131,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     renderFabricWaves();
 
     /* ==========================================================================
-       5. LIVE COLOR PALETTE SWITCHER
+       6. LIVE COLOR PALETTE SWITCHER
        ========================================================================== */
     document.querySelectorAll(".palette-chip").forEach(chip => {
       chip.addEventListener("click", () => {
@@ -2794,33 +3144,38 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     });
 
     /* ==========================================================================
-       6. ZIG-ZAG GALLERY RENDERER
+       7. CURATED EDITIONS TRIO RENDERER (Clean 3-Column Desktop Spread)
        ========================================================================== */
-    const zigzagContainer = document.getElementById("zigzag-gallery-container");
+    const editionsTrioContainer = document.getElementById("editions-trio-container");
 
-    function renderZigZagGallery() {
-      if (!zigzagContainer) return;
-      const featured = currentProducts.slice(0, 4);
+    function renderEditionsTrio() {
+      if (!editionsTrioContainer) return;
+      // Standout pieces: Aubergine Top, Sage Pant, Charcoal Blue Pant
+      const trioItems = [
+        currentProducts.find(x => x.id === "merci-01") || currentProducts[0],
+        currentProducts.find(x => x.id === "merci-03") || currentProducts[2],
+        currentProducts.find(x => x.id === "merci-04") || currentProducts[3]
+      ];
 
-      zigzagContainer.innerHTML = featured.map((item, idx) => {
-        let colClass = "plate-pos-left";
-        if (idx === 1) colClass = "plate-pos-right";
-        if (idx === 2) colClass = "plate-pos-left";
-        if (idx === 3) colClass = "plate-pos-right";
-
+      editionsTrioContainer.innerHTML = trioItems.map((item, idx) => {
+        const dropNumber = `0${idx + 2}`;
         return `
-          <div class="zigzag-plate ${colClass} reveal-item" onclick="window.quickPreviewItem('${item.id}')">
-            <div class="zigzag-plate-inner ratio-3-4">
-              <img src="${item.image}" alt="${item.title}" loading="lazy">
+          <article class="editions-card reveal-item" onclick="window.quickPreviewItem('${item.id}')">
+            <div class="editions-card-media">
+              <img src="${item.image}" alt="${item.title}" onerror="window.handleImgError(this)" loading="lazy">
+              <span class="editions-card-number">Drop ${dropNumber}</span>
             </div>
-            <div class="zigzag-meta-bar">
+            <div class="editions-card-body">
               <div>
-                <h3 class="zigzag-title">${item.title}</h3>
-                <span class="zigzag-collection">${item.edition}</span>
+                <h4 class="editions-card-title">${item.title}</h4>
+                <p class="editions-card-fabric">${item.fabric}</p>
               </div>
-              <div class="zigzag-price">${formatPrice(item)}</div>
+              <div class="editions-card-footer">
+                <span class="editions-card-price">${formatPrice(item)}</span>
+                <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:600;">View Piece →</span>
+              </div>
             </div>
-          </div>
+          </article>
         `;
       }).join("");
 
@@ -2828,7 +3183,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     }
 
     /* ==========================================================================
-       7. CATALOG GRID & SEARCH RENDERER
+       8. CATALOG GRID & SEARCH RENDERER
        ========================================================================== */
     const catalogContainer = document.getElementById("catalog-grid-container");
     const categoryTabs = document.getElementById("catalog-category-tabs");
@@ -2861,7 +3216,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       catalogContainer.innerHTML = filtered.map(item => `
         <article class="product-card reveal-item" onclick="window.quickPreviewItem('${item.id}')">
           <div class="product-thumb-wrap">
-            <img src="${item.image}" alt="${item.title}" loading="lazy">
+            <img src="${item.image}" alt="${item.title}" onerror="window.handleImgError(this)" loading="lazy">
             <div class="product-badge-overlay">${item.edition}</div>
             <button class="product-quick-add" onclick="event.stopPropagation(); window.quickAddToBag('${item.id}')">
               + Bag
@@ -2895,7 +3250,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     });
 
     /* ==========================================================================
-       8. PREVIEW MODAL LIGHTBOX
+       9. PREVIEW MODAL LIGHTBOX
        ========================================================================== */
     const previewModal = document.getElementById("preview-modal");
     const previewModalBackdrop = document.getElementById("preview-modal-backdrop");
@@ -2964,7 +3319,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     };
 
     /* ==========================================================================
-       9. SHOPPING BAG & WHATSAPP CHECKOUT
+       10. SHOPPING BAG & WHATSAPP CHECKOUT
        ========================================================================== */
     const cartDrawer = document.getElementById("cart-drawer");
     const cartBackdrop = document.getElementById("cart-backdrop");
@@ -3041,7 +3396,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
 
         return `
           <div style="display:flex; gap:0.85rem; border-bottom:1px dashed var(--line); padding-bottom:1rem;">
-            <img src="${item.image}" alt="${item.title}" style="width:4.25rem; height:5.25rem; object-fit:cover; border-radius:var(--radius-sm); flex-shrink:0;">
+            <img src="${item.image}" alt="${item.title}" onerror="window.handleImgError(this)" style="width:4.25rem; height:5.25rem; object-fit:cover; border-radius:var(--radius-sm); flex-shrink:0;">
             <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
                 <h4 style="font-size:0.88rem; font-weight:600;">${item.title}</h4>
@@ -3079,7 +3434,6 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       }
     };
 
-    // WhatsApp Checkout pre-fill
     cartWhatsappCheckoutBtn.addEventListener("click", () => {
       if (cartState.length === 0) {
         showToast("Your bag is empty.");
@@ -3106,7 +3460,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     });
 
     /* ==========================================================================
-       10. FULLSCREEN MENU
+       11. FULLSCREEN MENU
        ========================================================================== */
     const menuOverlay = document.getElementById("menu-overlay");
     const openMenuBtn = document.getElementById("open-menu-btn");
@@ -3125,7 +3479,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     document.querySelectorAll(".close-menu-trigger").forEach(a => a.addEventListener("click", closeMenu));
 
     /* ==========================================================================
-       11. FAQ ACCORDION INTERACTION
+       12. FAQ ACCORDION INTERACTION
        ========================================================================== */
     document.querySelectorAll(".faq-trigger").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -3146,10 +3500,13 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     });
 
     /* ==========================================================================
-       12. SHOP OWNER MANAGEMENT CONSOLE (Guarded by PIN 1234)
+       13. DISCREET SHOP OWNER ACCESS (HIDDEN FROM NORMAL USERS)
+       Triggers:
+       - URL hash: #owner or #atelier or ?owner=true
+       - Secret double-click on header logo or giant MERCI footer watermark
+       - Keyboard shortcut: Shift + A or Alt + M
        ========================================================================== */
     let isOwnerUnlocked = false;
-    const ownerSecretTrigger = document.getElementById("owner-secret-trigger");
     const pinModal = document.getElementById("pin-modal");
     const pinInput = document.getElementById("owner-pin-input");
     const pinSubmitBtn = document.getElementById("pin-submit-btn");
@@ -3164,7 +3521,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
     const adminCancelEditBtn = document.getElementById("admin-cancel-edit-btn");
     const adminResetDefaultBtn = document.getElementById("admin-reset-default-btn");
 
-    ownerSecretTrigger.addEventListener("click", () => {
+    function triggerSecretOwnerAccess() {
       if (isOwnerUnlocked) {
         openAdminModal();
       } else {
@@ -3172,7 +3529,43 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         pinModal.classList.add("open");
         setTimeout(() => pinInput.focus(), 150);
       }
+    }
+
+    // Secret Double-Click Triggers (Logo or Giant Watermark)
+    const brandLogoTrigger = document.getElementById("brand-logo-trigger");
+    if (brandLogoTrigger) {
+      brandLogoTrigger.addEventListener("dblclick", (e) => {
+        e.preventDefault();
+        triggerSecretOwnerAccess();
+      });
+    }
+
+    const footerSecretWatermark = document.getElementById("footer-secret-watermark");
+    if (footerSecretWatermark) {
+      footerSecretWatermark.addEventListener("dblclick", (e) => {
+        e.preventDefault();
+        triggerSecretOwnerAccess();
+      });
+    }
+
+    // Secret Keyboard Shortcut: Shift + A or Alt + M
+    window.addEventListener("keydown", (e) => {
+      if ((e.shiftKey && e.key === "A") || (e.altKey && (e.key === "m" || e.key === "M"))) {
+        e.preventDefault();
+        triggerSecretOwnerAccess();
+      }
     });
+
+    // Secret URL Hash / Query Parameter Check (#owner / #atelier / ?owner=true)
+    function checkSecretUrl() {
+      const hash = window.location.hash.toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+      if (hash === "#owner" || hash === "#atelier" || params.get("owner") === "true" || params.get("admin") === "true") {
+        setTimeout(triggerSecretOwnerAccess, 500);
+      }
+    }
+    window.addEventListener("hashchange", checkSecretUrl);
+    checkSecretUrl();
 
     pinCancelBtn.addEventListener("click", () => pinModal.classList.remove("open"));
 
@@ -3182,7 +3575,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         isOwnerUnlocked = true;
         pinModal.classList.remove("open");
         adminActivePill.classList.add("visible");
-        showToast("Owner mode unlocked.");
+        showToast("Owner Mode Unlocked");
         openAdminModal();
       } else {
         showToast("Incorrect Security PIN.");
@@ -3215,7 +3608,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       adminTableBody.innerHTML = currentProducts.map(item => `
         <tr style="border-bottom:1px solid var(--line);">
           <td style="padding:0.65rem 0.85rem;">
-            <img src="${item.image}" alt="${item.title}" style="width:2.5rem; height:3.25rem; object-fit:cover; border-radius:3px;">
+            <img src="${item.image}" alt="${item.title}" onerror="window.handleImgError(this)" style="width:2.5rem; height:3.25rem; object-fit:cover; border-radius:3px;">
           </td>
           <td style="padding:0.65rem 0.85rem; font-weight:600;">${item.title}</td>
           <td style="padding:0.65rem 0.85rem; color:var(--ink-muted);">${item.category}</td>
@@ -3272,7 +3665,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       resetAdminForm();
       renderAdminDashboard();
       renderCatalog();
-      renderZigZagGallery();
+      renderEditionsTrio();
     });
 
     window.editAdminItem = function(id) {
@@ -3307,7 +3700,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         saveProducts();
         renderAdminDashboard();
         renderCatalog();
-        renderZigZagGallery();
+        renderEditionsTrio();
         showToast("Garment removed.");
       }
     };
@@ -3319,7 +3712,7 @@ HTML_CONTENT = r'''<!DOCTYPE html>
         resetAdminForm();
         renderAdminDashboard();
         renderCatalog();
-        renderZigZagGallery();
+        renderEditionsTrio();
         showToast("Catalog reset to defaults.");
       }
     });
@@ -3332,18 +3725,8 @@ HTML_CONTENT = r'''<!DOCTYPE html>
       setTimeout(() => toast.classList.remove("show"), 2800);
     }
 
-    // Header Scroll State
-    const siteHeader = document.getElementById("site-header");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 40) {
-        siteHeader.classList.add("scrolled");
-      } else {
-        siteHeader.classList.remove("scrolled");
-      }
-    }, { passive: true });
-
     // Initialize initial views
-    renderZigZagGallery();
+    renderEditionsTrio();
     renderCatalog();
     updateCurrencyDisplay();
     observeReveals();
