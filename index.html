@@ -3,17 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>meri. — Modern Luxury & Everyday Silhouettes</title>
-  <meta name="description" content="meri.clothing is a modern architectural clothing brand. Premium natural fibers, contemporary cuts, and timeless everyday luxury.">
+  <title>merci. — Architectural Clothing Atelier | Kyoto · Milan · Paris</title>
+  <meta name="description" content="merci. (merci.clothing) — An architectural clothing atelier. Minimalist tailoring, raw natural fibers, and numbered limited editions.">
 
-  <!-- High-end Fonts -->
+  <!-- Editorial Fonts: Playfair Display (Serif), Satoshi (Sans), Onest (Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <!-- Importmap for Lenis Smooth Scroll -->
+  <script type="importmap">
+  {
+    "imports": {
+      "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm"
+    }
+  }
+  </script>
 
   <style>
     /* ==========================================================================
-       CSS RESET & MOBILE-FIRST VARIABLES
+       ADAPTIVE ROOT & REM SCALE SYSTEM (Kai Nomura + Baseline Synthesis)
        ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -22,86 +32,99 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    :root {
-      /* Warm Rich Luxury Palette (Cashmere Cream & Cognac) */
-      --canvas: #fcfbf9;
-      --surface-card: #ffffff;
-      --surface-subtle: #f5f2eb;
-      --ink-primary: #121212;
-      --ink-secondary: #5a5752;
-      --ink-tertiary: #96928b;
-      --accent-warm: #c59b6d;
-      --accent-rich: #9e6f3b;
-      --accent-badge: #e8ded1;
-      --border-light: rgba(18, 18, 18, 0.08);
-      --border-medium: rgba(18, 18, 18, 0.14);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
-
-      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-serif: 'Playfair Display', Georgia, serif;
-
-      --radius-xs: 6px;
-      --radius-sm: 10px;
-      --radius-md: 16px;
-      --radius-lg: 24px;
-      --radius-pill: 9999px;
-      --header-h: 56px;
-      --bottom-bar-h: 60px;
-    }
-
-    /* Color Theme Palettes */
-    body[data-theme="midnight"] {
-      --canvas: #111214;
-      --surface-card: #1a1c20;
-      --surface-subtle: #22262c;
-      --ink-primary: #f8f9fa;
-      --ink-secondary: #a8b0b8;
-      --ink-tertiary: #6b7280;
-      --accent-warm: #d4af37;
-      --accent-rich: #e5c158;
-      --accent-badge: rgba(212, 175, 55, 0.15);
-      --border-light: rgba(255, 255, 255, 0.1);
-      --border-medium: rgba(255, 255, 255, 0.18);
-    }
-
-    body[data-theme="sage"] {
-      --canvas: #f7f9f6;
-      --surface-card: #ffffff;
-      --surface-subtle: #eef2ed;
-      --ink-primary: #151d16;
-      --ink-secondary: #4a574c;
-      --ink-tertiary: #839285;
-      --accent-warm: #5c7c64;
-      --accent-rich: #425b48;
-      --accent-badge: #dbe4dc;
-      --border-light: rgba(21, 29, 22, 0.08);
-      --border-medium: rgba(21, 29, 22, 0.14);
-    }
-
-    html, body {
+    html {
+      font-size: 16px;
+      scroll-behavior: auto; /* Driven by Lenis */
       width: 100%;
       max-width: 100vw;
       overflow-x: hidden;
-      font-size: 16px;
-      scroll-behavior: smooth;
+    }
+    @media (max-width: 1920px) { html { font-size: 0.833333vw; } } /* 16*100/1920 */
+    @media (max-width: 1440px) { html { font-size: 1.111111vw; } } /* 16*100/1440 */
+    @media (max-width: 1024px) { html { font-size: 1.5625vw;   } } /* 16*100/1024 */
+    @media (max-width: 640px)  { html { font-size: 16px; } }      /* Native legible rem on mobile */
+
+    /* ==========================================================================
+       COLOR PALETTES & EDITORIAL DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      /* Classic Noir & Chalk (Default Editorial Monochrome with Mineral Depth) */
+      --canvas: #ffffff;
+      --surface-grey: #f7f6f4;
+      --surface-dark: #161615;
+      --surface-dark-card: #20201e;
+      --ink: #161615;
+      --ink-muted: rgba(22, 22, 21, 0.65);
+      --ink-faint: rgba(22, 22, 21, 0.35);
+      --on-dark: #ffffff;
+      --on-dark-muted: rgba(255, 255, 255, 0.68);
+      --on-dark-faint: rgba(255, 255, 255, 0.35);
+      --line: rgba(22, 22, 21, 0.16);
+      --line-strong: rgba(22, 22, 21, 0.38);
+      --line-on-dark: rgba(255, 255, 255, 0.18);
+      --brand-accent: #c49a6c; /* Warm Cognac Raw Silk */
+
+      --font-display: "Playfair Display", Georgia, serif;
+      --font-sans: "Satoshi", "Onest", system-ui, -apple-system, sans-serif;
+
+      --radius-sm: 4px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+    }
+
+    /* Interactive Color Palette Themes */
+    body[data-palette="raw-linen"] {
+      --canvas: #fbf9f4;
+      --surface-grey: #f2eee5;
+      --surface-dark: #1f1d1b;
+      --ink: #1f1d1b;
+      --ink-muted: rgba(31, 29, 27, 0.65);
+      --ink-faint: rgba(31, 29, 27, 0.35);
+      --line: rgba(31, 29, 27, 0.16);
+      --brand-accent: #a47a4c;
+    }
+
+    body[data-palette="slate-umber"] {
+      --canvas: #f6f7f8;
+      --surface-grey: #e9ecef;
+      --surface-dark: #121518;
+      --ink: #121518;
+      --ink-muted: rgba(18, 21, 24, 0.65);
+      --ink-faint: rgba(18, 21, 24, 0.35);
+      --line: rgba(18, 21, 24, 0.16);
+      --brand-accent: #4a637d;
+    }
+
+    body[data-palette="kyoto-sage"] {
+      --canvas: #f8faf8;
+      --surface-grey: #eff3ee;
+      --surface-dark: #171c18;
+      --ink: #171c18;
+      --ink-muted: rgba(23, 28, 24, 0.65);
+      --ink-faint: rgba(23, 28, 24, 0.35);
+      --line: rgba(23, 28, 24, 0.16);
+      --brand-accent: #5e7a62;
     }
 
     body {
       background-color: var(--canvas);
-      color: var(--ink-primary);
-      font-family: var(--font-body);
-      line-height: 1.45;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-weight: 400;
       -webkit-font-smoothing: antialiased;
-      padding-bottom: calc(var(--bottom-bar-h) + 16px);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      width: 100%;
+      min-height: 100vh;
+      line-height: 1.5;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
-    @media (min-width: 1024px) {
-      body {
-        padding-bottom: 0;
-      }
+    ::selection {
+      background: var(--ink);
+      color: var(--canvas);
     }
 
     img, video {
@@ -127,999 +150,1836 @@
       justify-content: center;
     }
 
+    /* ==========================================================================
+       TYPOGRAPHY SPEC
+       ========================================================================== */
+    h1, h2, h3, h4, .font-serif {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.12;
+    }
+
+    .accent {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Dashed Hairlines — Signature Editorial Detail */
+    .rule-dashed {
+      border-top: 1px dashed var(--line);
+    }
+    .rule-dashed-dark {
+      border-top: 1px dashed var(--line-on-dark);
+    }
+
+    /* Eyebrow Component */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--ink-muted);
+      font-weight: 500;
+    }
+    .eyebrow::before {
+      content: "";
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--ink-muted);
+    }
+    .eyebrow.on-dark {
+      color: var(--on-dark-muted);
+    }
+    .eyebrow.on-dark::before {
+      background: var(--on-dark-muted);
+    }
+
     /* Container */
     .container {
       width: 100%;
-      max-width: 1240px;
+      max-width: 120rem;
       margin-inline: auto;
-      padding-inline: 0.85rem;
-    }
-    @media (min-width: 640px) {
-      .container {
-        padding-inline: 1.5rem;
-      }
+      padding-inline: 1.25rem;
     }
     @media (min-width: 1024px) {
       .container {
-        padding-inline: 2.5rem;
+        padding-inline: 3rem;
       }
     }
 
-    /* ==========================================================================
-       TOP ANNOUNCEMENT BAR
-       ========================================================================== */
-    .top-announcement {
-      background: var(--ink-primary);
-      color: var(--canvas);
-      font-size: 0.68rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      font-weight: 600;
-      padding: 0.4rem 0.75rem;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      line-height: 1.3;
-    }
-    .announcement-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-warm);
-      flex-shrink: 0;
-    }
-
-    /* ==========================================================================
-       STICKY LUXURY NAVIGATION HEADER (Clean & 100% Mobile Friendly)
-       ========================================================================== */
-    .site-header {
-      position: sticky;
-      top: 0;
-      left: 0;
-      right: 0;
+    /* Section Rhythm */
+    section {
+      position: relative;
       width: 100%;
-      height: var(--header-h);
-      background: rgba(252, 251, 249, 0.95);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-light);
-      z-index: 500;
-      transition: background 0.3s ease;
     }
-    body[data-theme="midnight"] .site-header {
-      background: rgba(17, 18, 20, 0.95);
-    }
-
-    .header-inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      flex: 1;
-    }
-
-    .icon-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--ink-primary);
-      transition: background 0.2s ease;
-    }
-    .icon-btn:active {
-      background: var(--surface-subtle);
-    }
-
-    .nav-desktop-links {
-      display: none;
-      align-items: center;
-      gap: 1.5rem;
-      margin-left: 0.75rem;
+    .section-pad {
+      padding-block: 5rem;
     }
     @media (min-width: 1024px) {
-      .nav-desktop-links {
-        display: flex;
+      .section-pad {
+        padding-block: 8rem;
       }
     }
-    .nav-desktop-links a {
-      font-size: 0.85rem;
+
+    /* ==========================================================================
+       BUTTONS & CTAs (Spring Hover Effects)
+       ========================================================================== */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.85rem;
+      font-size: 0.825rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
       font-weight: 500;
-      color: var(--ink-secondary);
-      transition: color 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
     }
-    .nav-desktop-links a:hover {
-      color: var(--ink-primary);
+    .btn-cta .arrow {
+      display: inline-block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-cta:hover .arrow {
+      transform: translateX(0.45rem);
     }
 
-    .header-brand {
-      display: flex;
-      align-items: baseline;
-      gap: 0.15rem;
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--ink-primary);
-      text-align: center;
-      user-select: none;
+    .btn-solid-light {
+      background: var(--surface-dark);
+      color: var(--on-dark);
     }
-    .header-brand span.dot {
-      color: var(--accent-warm);
-      font-size: 1.6rem;
+    .btn-solid-light:hover {
+      background: #2b2b28;
+    }
+
+    .btn-ghost-light {
+      border: 1px dashed var(--line-strong);
+      color: var(--ink);
+    }
+    .btn-ghost-light:hover {
+      background: var(--ink);
+      color: var(--canvas);
+      border-style: solid;
+    }
+
+    .btn-solid-dark {
+      background: #ffffff;
+      color: var(--surface-dark);
+    }
+    .btn-solid-dark:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-ghost-dark {
+      border: 1px dashed var(--line-on-dark);
+      color: #ffffff;
+    }
+    .btn-ghost-dark:hover {
+      background: #ffffff;
+      color: var(--surface-dark);
+      border-style: solid;
+    }
+
+    .btn-pill-small {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1.15rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .btn-pill-small:hover, .btn-pill-small.active {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+
+    /* Aspect Ratio Containers */
+    .plate-box {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--surface-grey);
+    }
+    .plate-box img, .plate-box video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ratio-3-4 { aspect-ratio: 3 / 4; }
+    .ratio-3-2 { aspect-ratio: 3 / 2; }
+
+    /* ==========================================================================
+       INTRO CURTAIN LOADER (Baseline Spec)
+       ========================================================================== */
+    #intro-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--surface-dark);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.75rem;
+      transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+      pointer-events: all;
+    }
+    #intro-loader.slide-up {
+      transform: translateY(-102%);
+      pointer-events: none;
+    }
+    .loader-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1.5rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .loader-diamond {
+      width: 0.75rem;
+      height: 0.75rem;
+      border: 1px solid #ffffff;
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+    .loader-progress-track {
+      width: 12rem;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-progress-fill {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1.25s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    .loader-subtext {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ==========================================================================
+       FIXED HEADER (Kai Nomura Spec - mix-blend-mode: difference)
+       ========================================================================== */
+    #site-header {
+      position: fixed;
+      inset-inline: 0;
+      top: 0;
+      z-index: 500;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      padding: 1rem 1.25rem;
+      pointer-events: none; /* Children enable pointer-events */
+    }
+    @media (min-width: 1024px) {
+      #site-header {
+        padding: 1.25rem 3rem;
+      }
+    }
+    .header-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .header-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1.2fr;
+      }
+    }
+    .header-left {
+      display: none;
+      pointer-events: auto;
+    }
+    @media (min-width: 1024px) {
+      .header-left {
+        display: block;
+      }
+    }
+    .header-left p:first-child {
+      font-size: 0.825rem;
+      letter-spacing: -0.01em;
+      font-weight: 500;
+    }
+    .header-left p:last-child {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: auto;
+    }
+    @media (min-width: 1024px) {
+      .header-center {
+        justify-self: center;
+        gap: 0.75rem;
+      }
+    }
+    .logo-diamond {
+      width: 0.55rem;
+      height: 0.55rem;
+      border: 1px solid currentColor;
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+    .header-logo-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      font-weight: 400;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: 0.15rem;
-      flex: 1;
-    }
-
-    .cart-btn-wrap {
-      position: relative;
-    }
-    .cart-count-pill {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: var(--accent-rich);
-      color: #ffffff;
-      font-size: 0.65rem;
-      font-weight: 700;
-      min-width: 18px;
-      height: 18px;
-      padding: 0 4px;
-      border-radius: var(--radius-pill);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-
-    /* ==========================================================================
-       HERO BANNER (Vibrant, Edge-to-Edge, Non-Cluttered)
-       ========================================================================== */
-    .hero-banner {
-      position: relative;
-      margin: 0.65rem 0.65rem 1.25rem;
-      width: calc(100% - 1.3rem);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      min-height: 420px;
-      height: 65vh;
-      max-height: 580px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 1.75rem 1.15rem;
-      box-shadow: var(--shadow-md);
+      gap: 1rem;
+      justify-self: end;
+      pointer-events: auto;
     }
     @media (min-width: 640px) {
-      .hero-banner {
-        margin: 1rem 1.5rem 2rem;
-        width: calc(100% - 3rem);
-        padding: 2.75rem 2.25rem;
-        min-height: 480px;
-        border-radius: var(--radius-lg);
-      }
-    }
-    @media (min-width: 1024px) {
-      .hero-banner {
-        margin: 1.5rem auto 2.5rem;
-        max-width: 1240px;
-        height: 70vh;
-        max-height: 640px;
-      }
-    }
-
-    .hero-media-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-    }
-    .hero-media-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-      filter: brightness(0.92);
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .hero-banner:hover .hero-media-bg img {
-      transform: scale(1.03);
-    }
-
-    .hero-gradient-scrim {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.85) 100%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 3;
-      color: #ffffff;
-      width: 100%;
-      max-width: 30rem;
-    }
-
-    .hero-pill-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.3rem 0.75rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.65rem;
-    }
-    .hero-pill-badge span.dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #facc15;
-    }
-
-    .hero-title {
-      font-family: var(--font-serif);
-      font-size: 2.15rem;
-      font-weight: 500;
-      line-height: 1.1;
-      letter-spacing: -0.015em;
-      margin-bottom: 0.6rem;
-      word-break: break-word;
-    }
-    @media (min-width: 640px) {
-      .hero-title {
-        font-size: 3rem;
-      }
-    }
-    @media (min-width: 1024px) {
-      .hero-title {
-        font-size: 3.75rem;
-      }
-    }
-
-    .hero-subtitle {
-      font-size: 0.88rem;
-      line-height: 1.45;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 1.25rem;
-      font-weight: 400;
-      max-width: 24rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-
-    .btn-primary {
-      background: var(--surface-card);
-      color: var(--ink-primary);
-      padding: 0.75rem 1.4rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.825rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-      transition: all 0.2s ease;
-      min-height: 44px;
-    }
-    .btn-primary:active {
-      transform: scale(0.97);
-    }
-
-    .btn-glass {
-      background: rgba(255, 255, 255, 0.16);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(8px);
-      padding: 0.75rem 1.4rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.825rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      transition: all 0.2s ease;
-      min-height: 44px;
-    }
-    .btn-glass:active {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    /* ==========================================================================
-       HORIZONTAL SCROLLABLE CATEGORIES BAR (Thumb-friendly on mobile)
-       ========================================================================== */
-    .category-pills-bar {
-      display: flex;
-      gap: 0.4rem;
-      overflow-x: auto;
-      width: 100%;
-      max-width: 100vw;
-      padding: 0.25rem 0.85rem 0.85rem;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .category-pills-bar::-webkit-scrollbar {
-      display: none;
-    }
-    @media (min-width: 640px) {
-      .category-pills-bar {
-        padding-inline: 1.5rem;
-      }
-    }
-    @media (min-width: 1024px) {
-      .category-pills-bar {
-        max-width: 1240px;
-        margin-inline: auto;
-        padding-inline: 2.5rem;
-        justify-content: center;
-      }
-    }
-
-    .cat-pill {
-      flex-shrink: 0;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.78rem;
-      font-weight: 600;
-      background: var(--surface-card);
-      border: 1px solid var(--border-light);
-      color: var(--ink-secondary);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
-      min-height: 38px;
-    }
-    .cat-pill:hover, .cat-pill.active {
-      background: var(--ink-primary);
-      color: var(--canvas);
-      border-color: var(--ink-primary);
-    }
-
-    /* Theme Palette Selector in Page (Clean chip row) */
-    .palette-strip {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.65rem 0.85rem;
-      margin-bottom: 0.85rem;
-      background: var(--surface-subtle);
-      border-radius: var(--radius-sm);
-      font-size: 0.72rem;
-      font-weight: 600;
-    }
-    .palette-dots {
-      display: flex;
-      gap: 0.4rem;
-    }
-    .p-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 2px solid #ffffff;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease;
-    }
-    .p-dot:active {
-      transform: scale(1.15);
-    }
-    .p-dot.active {
-      outline: 2px solid var(--accent-warm);
-    }
-
-    /* ==========================================================================
-       SECTION HEADERS
-       ========================================================================== */
-    .section-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-top: 1.25rem;
-      margin-bottom: 1rem;
-    }
-    .section-head h2 {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-    .section-head a, .section-head span {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--accent-rich);
-    }
-
-    /* ==========================================================================
-       2-COLUMN MOBILE PRODUCT GRID (High Density, Zero Clutter)
-       ========================================================================== */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-    }
-    @media (min-width: 640px) {
-      .products-grid {
-        gap: 1.25rem;
-      }
-    }
-    @media (min-width: 1024px) {
-      .products-grid {
-        grid-template-columns: repeat(4, 1fr);
+      .header-right {
         gap: 1.5rem;
       }
     }
 
-    .item-card {
-      background: var(--surface-card);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-    }
-    .item-card:hover {
-      box-shadow: var(--shadow-md);
-    }
-    @media (min-width: 1024px) {
-      .item-card:hover {
-        transform: translateY(-4px);
-      }
-    }
-
-    .item-media-wrap {
-      position: relative;
-      aspect-ratio: 3 / 4;
-      background: var(--surface-subtle);
-      overflow: hidden;
-    }
-    .item-media-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .item-card:hover .item-media-wrap img {
-      transform: scale(1.04);
-    }
-
-    .item-tag {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      background: rgba(18, 18, 18, 0.82);
-      backdrop-filter: blur(4px);
-      color: #ffffff;
-      font-size: 0.62rem;
-      font-weight: 600;
-      padding: 0.2rem 0.5rem;
-      border-radius: var(--radius-pill);
-      letter-spacing: 0.04em;
-    }
-
-    .item-quick-btn {
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
-      width: 32px;
-      height: 32px;
-      background: #ffffff;
-      color: #121212;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.18);
-      font-weight: 700;
-      font-size: 1rem;
-      transition: transform 0.2s ease;
-    }
-    .item-quick-btn:active {
-      transform: scale(0.9);
-    }
-
-    .item-details {
-      padding: 0.65rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      justify-content: space-between;
-    }
-    @media (min-width: 640px) {
-      .item-details {
-        padding: 0.85rem;
-      }
-    }
-
-    .item-category {
-      font-size: 0.65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-tertiary);
-      margin-bottom: 0.2rem;
-    }
-
-    .item-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--ink-primary);
-      line-height: 1.25;
-      margin-bottom: 0.35rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    @media (min-width: 640px) {
-      .item-title {
-        font-size: 0.95rem;
-      }
-    }
-
-    .item-price-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: auto;
-      padding-top: 0.25rem;
-    }
-    .item-price {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--ink-primary);
-    }
-    .item-stock-indicator {
-      font-size: 0.62rem;
-      font-weight: 600;
-      color: #16a34a;
-    }
-
-    /* ==========================================================================
-       HIGHLIGHT PROMO CARD (Zero fluff, visual high-impact)
-       ========================================================================== */
-    .promo-banner-card {
-      margin-block: 2rem;
-      background: var(--surface-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.5rem 1rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-      align-items: center;
-      border: 1px solid var(--border-light);
-    }
-    @media (min-width: 768px) {
-      .promo-banner-card {
-        grid-template-columns: 1fr 1fr;
-        padding: 2.25rem;
-      }
-    }
-
-    .promo-content h3 {
-      font-family: var(--font-serif);
-      font-size: 1.6rem;
-      line-height: 1.2;
-      margin-bottom: 0.65rem;
-    }
-    .promo-content p {
-      font-size: 0.85rem;
-      color: var(--ink-secondary);
-      line-height: 1.55;
-      margin-bottom: 1.15rem;
-    }
-
-    .promo-media {
-      aspect-ratio: 16 / 10;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* Three Value Micro-Pillars */
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.65rem;
-      margin-block: 1.75rem;
-    }
-    @media (min-width: 640px) {
-      .pillars-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.85rem;
-      }
-    }
-    .pillar-box {
-      background: var(--surface-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-    .pillar-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-xs);
-      background: var(--surface-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-rich);
-      flex-shrink: 0;
-    }
-    .pillar-text h4 {
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 0.15rem;
-    }
-    .pillar-text p {
-      font-size: 0.72rem;
-      color: var(--ink-secondary);
-      line-height: 1.35;
-    }
-
-    /* ==========================================================================
-       ACCORDION FAQ (Compact & Clean)
-       ========================================================================== */
-    .faq-compact {
-      margin-block: 1.75rem;
-    }
-    .faq-item {
-      background: var(--surface-card);
-      border-radius: var(--radius-xs);
-      border: 1px solid var(--border-light);
-      margin-bottom: 0.45rem;
-      overflow: hidden;
-    }
-    .faq-question-btn {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      text-align: left;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--ink-primary);
-    }
-    .faq-answer-panel {
+    .header-nav {
       display: none;
-      padding: 0 1rem 0.85rem;
-      font-size: 0.8rem;
-      color: var(--ink-secondary);
-      line-height: 1.5;
-    }
-    .faq-item.active .faq-answer-panel {
-      display: block;
-    }
-    .faq-item.active .faq-question-btn span.plus {
-      transform: rotate(45deg);
-    }
-    .faq-question-btn span.plus {
-      transition: transform 0.2s ease;
-      font-size: 1.15rem;
-      line-height: 1;
-    }
-
-    /* ==========================================================================
-       MOBILE BOTTOM DOCK NAVIGATION (True Mobile-First UX)
-       ========================================================================== */
-    .mobile-bottom-dock {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      height: var(--bottom-bar-h);
-      background: rgba(252, 251, 249, 0.96);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid var(--border-light);
-      display: flex;
       align-items: center;
-      justify-content: space-around;
-      z-index: 400;
-      padding-bottom: env(safe-area-inset-bottom, 0);
-    }
-    body[data-theme="midnight"] .mobile-bottom-dock {
-      background: rgba(17, 18, 20, 0.96);
+      gap: 2rem;
     }
     @media (min-width: 1024px) {
-      .mobile-bottom-dock {
-        display: none;
+      .header-nav {
+        display: flex;
       }
     }
-
-    .dock-tab {
-      display: flex;
-      flex-direction: column;
+    .header-nav-link {
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 2px;
-      color: var(--ink-secondary);
-      font-size: 0.65rem;
-      font-weight: 600;
-      padding: 4px 12px;
-      position: relative;
+      gap: 0.5rem;
     }
-    .dock-tab.active {
-      color: var(--ink-primary);
-    }
-    .dock-tab svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    /* ==========================================================================
-       MODAL 1: MOBILE BOTTOM SHEET / QUICK VIEW
-       ========================================================================== */
-    .sheet-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
+    .header-nav-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: currentColor;
       opacity: 0;
-      pointer-events: none;
       transition: opacity 0.25s ease;
     }
-    .sheet-modal-backdrop.active {
+    .header-nav-link:hover .header-nav-dot {
       opacity: 1;
-      pointer-events: auto;
     }
 
-    .bottom-sheet {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--surface-card);
-      border-radius: var(--radius-md) var(--radius-md) 0 0;
-      box-shadow: var(--shadow-lg);
-      z-index: 1001;
-      max-height: 85vh;
-      overflow-y: auto;
-      transform: translateY(100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 1.25rem;
-    }
-    @media (min-width: 768px) {
-      .bottom-sheet {
-        max-width: 440px;
-        left: 50%;
-        bottom: 50%;
-        transform: translate(-50%, 60%) scale(0.95);
-        border-radius: var(--radius-md);
-        opacity: 0;
-        pointer-events: none;
-      }
-      .bottom-sheet.open {
-        transform: translate(-50%, 50%) scale(1);
-        opacity: 1;
-        pointer-events: auto;
-      }
-    }
-    .bottom-sheet.open {
-      transform: translateY(0);
-    }
-
-    .sheet-drag-handle {
-      width: 36px;
-      height: 4px;
-      border-radius: var(--radius-pill);
-      background: var(--border-medium);
-      margin: 0 auto 1rem;
-    }
-    @media (min-width: 768px) {
-      .sheet-drag-handle {
-        display: none;
-      }
-    }
-
-    .sheet-img-wrap {
-      aspect-ratio: 4 / 4;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      margin-bottom: 0.85rem;
-      background: var(--surface-subtle);
-    }
-
-    .size-selector-row {
-      display: flex;
-      gap: 0.4rem;
-      margin-block: 0.75rem;
-    }
-    .size-chip {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-xs);
-      border: 1px solid var(--border-medium);
+    .cart-trigger-btn {
+      position: relative;
       font-size: 0.78rem;
-      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .cart-badge {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid currentColor;
+      min-width: 1.15rem;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .menu-burger-btn {
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
-    .size-chip.selected {
-      background: var(--ink-primary);
-      color: var(--canvas);
-      border-color: var(--ink-primary);
+    .burger-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 1.35rem;
+    }
+    .burger-bar {
+      height: 1px;
+      width: 100%;
+      background: currentColor;
     }
 
     /* ==========================================================================
-       CART SLIDE-OVER DRAWER (Fixed Overlay & Stacking)
+       HERO SECTION (Video Loop + Live Palette Bar + Collection Slider)
        ========================================================================== */
-    .cart-drawer-wrap {
-      position: fixed;
-      inset: 0;
-      z-index: 1200;
-      pointer-events: none;
-      visibility: hidden;
-      transition: visibility 0.3s ease;
-    }
-    .cart-drawer-wrap.open {
-      pointer-events: auto;
-      visibility: visible;
-    }
-
-    .cart-drawer-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .cart-drawer-wrap.open .cart-drawer-backdrop {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .cart-drawer-panel {
+    #hero {
+      min-height: 100svh;
       position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 360px;
-      height: 100%;
-      background: var(--surface-card);
-      box-shadow: var(--shadow-lg);
       display: flex;
       flex-direction: column;
-      margin-left: auto;
-      transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      justify-content: center;
+      padding-top: 6.5rem;
+      padding-bottom: 3.5rem;
+      overflow: hidden;
     }
-    .cart-drawer-wrap.open .cart-drawer-panel {
-      transform: translateX(0);
+    @media (min-width: 1024px) {
+      #hero {
+        padding-top: 9rem;
+        padding-bottom: 5rem;
+      }
     }
 
-    .cart-header {
-      padding: 1rem 1.15rem;
-      border-bottom: 1px solid var(--border-light);
+    .hero-media-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: -10;
+      overflow: hidden;
+      background: var(--canvas);
+    }
+    .hero-canvas-waves {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .hero-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 75% 40%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.85) 75%, var(--canvas) 100%);
+      pointer-events: none;
+    }
+    body[data-palette="slate-umber"] .hero-overlay-gradient {
+      background: radial-gradient(circle at 75% 40%, rgba(246,247,248,0.1) 0%, rgba(246,247,248,0.85) 75%, var(--canvas) 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2.5rem;
+      }
+    }
+
+    .hero-content-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .hero-content-col {
+        grid-column: span 7;
+      }
+    }
+
+    .hero-visual-col {
+      grid-column: span 1;
+      position: relative;
+    }
+    @media (min-width: 1024px) {
+      .hero-visual-col {
+        grid-column: span 5;
+      }
+    }
+
+    /* Hero Heading with Line Reveal Clip */
+    .hero-title {
+      font-size: 2.85rem;
+      line-height: 1.05;
+      max-width: 14ch;
+      margin-top: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    @media (min-width: 640px) {
+      .hero-title {
+        font-size: 4.25rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 5.75rem;
+      }
+    }
+
+    .hero-lead-text {
+      max-width: 44ch;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--ink-muted);
+      margin-top: 1.75rem;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 2.25rem;
+    }
+
+    /* Ambient Motion Toggle Chip */
+    .motion-ctrl-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.35rem 0.75rem;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-pill);
+      color: var(--ink-muted);
+      cursor: pointer;
+      margin-top: 1rem;
+      width: fit-content;
+      transition: all 0.25s ease;
+    }
+    .motion-ctrl-chip:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+    .play-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      animation: pulseMotion 2s infinite;
+    }
+    @keyframes pulseMotion {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.4; }
+    }
+
+    /* Interactive Color Palette Showcase Bar */
+    .palette-switcher-bar {
+      margin-top: 2.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .palette-label-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
     }
-    .cart-items-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem;
+    .palette-swatches {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .palette-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .palette-btn:hover, .palette-btn.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--canvas);
+    }
+    .color-chip {
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+
+    /* Facts Row */
+    .hero-facts-row {
+      margin-top: 2.75rem;
+      border-top: 1px solid var(--line);
+      padding-top: 1.75rem;
+      display: none;
+    }
+    @media (min-width: 1024px) {
+      .hero-facts-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+    .hero-facts-row dt {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+    }
+    .hero-facts-row dd {
+      font-size: 0.85rem;
+      color: var(--ink);
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
+    /* Hero Portrait + Floating Collection Glass Card (Baseline synthesis) */
+    .hero-portrait-card {
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.14);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .floating-collection-card {
+      position: absolute;
+      bottom: -1rem;
+      left: -1rem;
+      width: 17rem;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      z-index: 10;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .floating-collection-card:hover {
+      transform: translateY(-4px);
+    }
+    .mini-thumb {
+      width: 3.75rem;
+      height: 4.5rem;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .collection-mini-meta h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .collection-mini-meta p {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      margin-top: 0.15rem;
+    }
+    .collection-mini-meta span {
+      display: inline-block;
+      margin-top: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--brand-accent);
+    }
+
+    /* ==========================================================================
+       STATEMENT SECTION (Kai Nomura Spec: Large editorial passage)
+       ========================================================================== */
+    #statement {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      padding-block: 6rem;
+    }
+    @media (min-width: 1024px) {
+      #statement {
+        padding-block: 9rem;
+      }
+    }
+    .statement-inner {
+      max-width: 76rem;
+      margin-inline: auto;
+    }
+    .statement-quote {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      line-height: 1.32;
+      color: var(--ink);
+      margin-top: 2rem;
+    }
+    @media (min-width: 640px) {
+      .statement-quote {
+        font-size: 2.35rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .statement-quote {
+        font-size: 3.1rem;
+        line-height: 1.25;
+      }
+    }
+    .statement-signature {
+      margin-top: 2.5rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--ink-muted);
+    }
+
+    /* ==========================================================================
+       FEATURED WORKS (ZIG-ZAG EDITORIAL GALLERY WITH SCROLL PARALLAX)
+       ========================================================================== */
+    #works {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .section-header-block {
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
     }
-    .cart-item-card {
-      display: flex;
-      gap: 0.75rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border-light);
+    .section-title {
+      font-size: 2.15rem;
+      max-width: 20ch;
+      line-height: 1.1;
     }
-    .cart-thumb {
-      width: 60px;
-      height: 75px;
-      border-radius: var(--radius-xs);
-      overflow: hidden;
-      flex-shrink: 0;
+    @media (min-width: 640px) {
+      .section-title {
+        font-size: 2.85rem;
+      }
     }
-    .cart-meta {
-      flex: 1;
+    @media (min-width: 1024px) {
+      .section-title {
+        font-size: 3.85rem;
+      }
+    }
+
+    /* Asymmetric Zig-Zag Gallery Grid */
+    .zigzag-gallery-grid {
+      margin-top: 3.5rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 3.5rem;
     }
-    .cart-footer {
-      padding: 1.15rem;
-      background: var(--surface-subtle);
-      border-top: 1px solid var(--border-light);
+    @media (min-width: 1024px) {
+      .zigzag-gallery-grid {
+        margin-top: 5.5rem;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    .zigzag-item {
+      grid-column: span 1;
+      position: relative;
+      cursor: pointer;
+    }
+    @media (min-width: 1024px) {
+      .zigzag-item {
+        grid-column: span 7;
+      }
+      .zigzag-item:nth-child(even) {
+        grid-column-start: 6;
+        margin-top: 6rem;
+      }
+      .zigzag-item:nth-child(odd) {
+        grid-column-start: 1;
+      }
+    }
+
+    .work-figure {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+    }
+    .work-plate {
+      position: relative;
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .work-figure:hover .work-plate img {
+      transform: scale(1.05);
+    }
+    .work-plate img {
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-quick-action {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 5;
+      background: rgba(22, 22, 21, 0.75);
+      color: #ffffff;
+      backdrop-filter: blur(8px);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: all 0.3s ease;
+    }
+    .zigzag-item:hover .work-quick-action {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .work-caption {
+      border-top: 1px dashed var(--line);
+      margin-top: 1.25rem;
+      padding-top: 1.15rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1.25rem;
+    }
+    .work-caption-left h3 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .work-caption-left p {
+      font-size: 0.825rem;
+      color: var(--ink-muted);
+      margin-top: 0.25rem;
+    }
+    .work-caption-right {
+      text-align: right;
+    }
+    .work-price {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .work-tag {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      margin-top: 0.2rem;
     }
 
     /* ==========================================================================
-       OWNER ACCESS PIN MODAL (Clean Integrated Modal)
+       PINNED CTA #1 (Dark - Kai Nomura Spec)
        ========================================================================== */
-    .pin-modal-wrap {
+    .pinned-cta-dark {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      border-top: 1px dashed var(--line-on-dark);
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-block: 5.5rem;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-dark {
+        padding-block: 8rem;
+      }
+    }
+    .pinned-cta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .pinned-cta-content {
+      grid-column: span 1;
+      max-width: 36rem;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-content {
+        grid-column: span 6;
+      }
+    }
+    .pinned-cta-title {
+      font-size: 2.15rem;
+      color: var(--on-dark);
+      margin-top: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .pinned-cta-title {
+        font-size: 2.85rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-title {
+        font-size: 3.65rem;
+      }
+    }
+    .pinned-cta-body {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--on-dark-muted);
+      margin-top: 1.75rem;
+    }
+    .pinned-cta-media {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .pinned-cta-media {
+        grid-column: span 5;
+        grid-column-start: 8;
+      }
+    }
+
+    /* ==========================================================================
+       STUDIO PRINCIPLES (Grey Section - Kai Nomura Spec)
+       ========================================================================== */
+    #principles {
+      background: var(--surface-grey);
+      border-top: 1px dashed var(--line);
+    }
+    .principles-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+    }
+    @media (min-width: 640px) {
+      .principles-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .principle-card {
+      border-top: 1px dashed var(--line);
+      padding-top: 1.75rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .principle-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ink);
+    }
+    .principle-card h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-top: 1.25rem;
+      line-height: 1.25;
+    }
+    .principle-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--ink-muted);
+      margin-top: 0.65rem;
+    }
+
+    /* ==========================================================================
+       USER-FRIENDLY WARDROBE CATALOG & FILTER TABS
+       ========================================================================== */
+    #catalog {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .catalog-controls-bar {
+      margin-top: 2.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px dashed var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .catalog-controls-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .filter-tabs-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .catalog-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface-grey);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      max-width: 20rem;
+      width: 100%;
+    }
+    .catalog-search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 0.825rem;
+      font-family: inherit;
+      color: var(--ink);
+      width: 100%;
+    }
+
+    /* Clean 2-Col Mobile / 4-Col Desktop Grid */
+    .catalog-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    @media (min-width: 1024px) {
+      .catalog-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-0.35rem);
+    }
+    .product-thumb-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: var(--surface-grey);
+      aspect-ratio: 3 / 4;
+    }
+    .product-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .product-thumb-wrap img {
+      transform: scale(1.05);
+    }
+    .product-badge-overlay {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      background: rgba(22, 22, 21, 0.85);
+      color: #ffffff;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(4px);
+    }
+    .product-quick-add {
+      position: absolute;
+      bottom: 0.65rem;
+      right: 0.65rem;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      opacity: 0;
+      transform: translateY(3px);
+      transition: all 0.25s ease;
+    }
+    .product-card:hover .product-quick-add {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .product-info-row {
+      margin-top: 0.85rem;
+      border-top: 1px dashed var(--line);
+      padding-top: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .product-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+    .product-category {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      margin-top: 0.2rem;
+    }
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    /* ==========================================================================
+       ABOUT ATELIER (Kai Nomura Spec)
+       ========================================================================== */
+    #about {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .about-top-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    @media (min-width: 1024px) {
+      .about-top-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .about-left-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .about-left-col {
+        grid-column: span 7;
+      }
+    }
+    .about-lead-title {
+      font-size: 2.15rem;
+      line-height: 1.12;
+      max-width: 20ch;
+      margin-top: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .about-lead-title {
+        font-size: 2.85rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .about-lead-title {
+        font-size: 3.65rem;
+      }
+    }
+    .about-right-col {
+      grid-column: span 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    @media (min-width: 1024px) {
+      .about-right-col {
+        grid-column: span 5;
+      }
+    }
+    .about-right-col p {
+      font-size: 0.95rem;
+      line-height: 1.68;
+      color: var(--ink-muted);
+      max-width: 48ch;
+    }
+
+    .about-photo-grid {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .about-photo-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .about-photo-item {
+      overflow: hidden;
+      aspect-ratio: 3 / 2;
+      position: relative;
+    }
+    .about-photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .about-photo-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .facts-ledger {
+      margin-top: 3.5rem;
+      border-top: 1px dashed var(--line);
+      padding-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .facts-ledger {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .facts-ledger dt {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+    }
+    .facts-ledger dd {
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-top: 0.4rem;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       PROCESS SECTION (Sticky Heading + Steps - Kai Nomura Spec)
+       ========================================================================== */
+    #process {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 5rem;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    @media (min-width: 1024px) {
+      .process-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .process-sticky-left {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .process-sticky-left {
+        grid-column: span 5;
+        position: sticky;
+        top: 7rem;
+        height: fit-content;
+      }
+    }
+    .process-steps-list {
+      grid-column: span 1;
+      list-style: none;
+    }
+    @media (min-width: 1024px) {
+      .process-steps-list {
+        grid-column: span 7;
+      }
+    }
+    .process-step-item {
+      border-top: 1px dashed var(--line);
+      padding-block: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .process-step-item {
+        flex-direction: row;
+        gap: 2.5rem;
+        padding-block: 3rem;
+      }
+    }
+    .process-step-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--ink-faint);
+      min-width: 5.5rem;
+    }
+    .process-step-body h3 {
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .process-step-body p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--ink-muted);
+      margin-top: 0.85rem;
+      max-width: 46ch;
+    }
+
+    /* ==========================================================================
+       PINNED CTA #2 (Centered Dark - Kai Nomura Spec)
+       ========================================================================== */
+    #contact-section {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      border-top: 1px dashed var(--line-on-dark);
+      min-height: 85svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-block: 5.5rem;
+      scroll-margin-top: 5rem;
+    }
+    .pinned-cta-centered {
+      max-width: 40rem;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pinned-cta-centered h2 {
+      font-size: 2.35rem;
+      line-height: 1.1;
+      margin-top: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .pinned-cta-centered h2 {
+        font-size: 3.35rem;
+      }
+    }
+    .pinned-cta-centered p {
+      font-size: 1.05rem;
+      color: var(--on-dark-muted);
+      line-height: 1.65;
+      margin-top: 1.75rem;
+    }
+
+    /* ==========================================================================
+       FAQ ACCORDION (Kai Nomura Spec: Rotating + Glyph to 45deg)
+       ========================================================================== */
+    #faq {
+      background: var(--canvas);
+      border-top: 1px dashed var(--line);
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    @media (min-width: 1024px) {
+      .faq-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    }
+    .faq-left {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .faq-left {
+        grid-column: span 4;
+      }
+    }
+    .faq-right {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .faq-right {
+        grid-column: span 8;
+      }
+    }
+    .faq-row {
+      border-top: 1px dashed var(--line);
+    }
+    .faq-trigger {
+      width: 100%;
+      padding-block: 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: left;
+      cursor: pointer;
+    }
+    .faq-question {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    @media (min-width: 1024px) {
+      .faq-question {
+        font-size: 1.35rem;
+      }
+    }
+    .faq-icon-plus {
+      font-size: 1.4rem;
+      line-height: 1;
+      color: var(--ink);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+    }
+    .faq-row.active .faq-icon-plus {
+      transform: rotate(45deg);
+    }
+    .faq-panel {
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+    }
+    .faq-panel-content {
+      padding-bottom: 2rem;
+    }
+    .faq-panel-content p {
+      max-width: 58ch;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--ink-muted);
+    }
+
+    /* ==========================================================================
+       FOOTER (Dark with Giant 18vw "MERCI" Wordmark)
+       ========================================================================== */
+    #site-footer {
+      background: var(--surface-dark);
+      color: #ffffff;
+      padding-top: 5.5rem;
+      padding-bottom: 2.75rem;
+      overflow: hidden;
+    }
+    .footer-top-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    @media (min-width: 1024px) {
+      .footer-top-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2.5rem;
+      }
+    }
+    .footer-brand-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .footer-brand-col {
+        grid-column: span 5;
+      }
+    }
+    .footer-tagline {
+      margin-top: 1.25rem;
+      max-width: 28ch;
+      font-size: 1.35rem;
+      color: var(--on-dark-muted);
+    }
+    .footer-email-link {
+      display: inline-block;
+      margin-top: 1.75rem;
+      font-size: 0.825rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #ffffff;
+      transition: color 0.2s ease;
+    }
+    .footer-email-link:hover {
+      color: var(--on-dark-muted);
+    }
+
+    .footer-col {
+      grid-column: span 1;
+    }
+    @media (min-width: 1024px) {
+      .footer-col-2 { grid-column: span 2; }
+      .footer-col-3 { grid-column: span 3; }
+    }
+    .footer-col-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--on-dark-faint);
+    }
+    .footer-links-list {
+      margin-top: 1.25rem;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-links-list a {
+      font-size: 0.95rem;
+      color: var(--on-dark-muted);
+      transition: color 0.2s ease;
+    }
+    .footer-links-list a:hover {
+      color: #ffffff;
+    }
+
+    /* Giant 18vw Brand Wordmark */
+    .giant-wordmark-wrap {
+      margin-top: 5rem;
+      overflow: hidden;
+      user-select: none;
+      pointer-events: none;
+      text-align: center;
+    }
+    .giant-wordmark {
+      font-size: 18vw;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.82;
+      letter-spacing: -0.04em;
+      color: rgba(255, 255, 255, 0.08);
+      font-family: var(--font-sans);
+    }
+
+    .footer-legal-bar {
+      margin-top: 2.75rem;
+      border-top: 1px dashed var(--line-on-dark);
+      padding-top: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      justify-content: space-between;
+      font-size: 0.825rem;
+      color: var(--on-dark-faint);
+    }
+    @media (min-width: 640px) {
+      .footer-legal-bar {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    /* ==========================================================================
+       MODALS: LIGHTBOX, MENU, CART & OWNER PIN
+       ========================================================================== */
+    /* 1. Fullscreen Menu Overlay (Kai Nomura Spec) */
+    #menu-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(4px);
-      z-index: 1500;
+      z-index: 600;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+      visibility: hidden;
+      transition: visibility 0.4s ease;
+    }
+    #menu-overlay.open {
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .menu-panel-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--surface-dark);
+      transform-origin: top;
+      transform: scaleY(0);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #menu-overlay.open .menu-panel-bg {
+      transform: scaleY(1);
+    }
+    .menu-content {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease 0.2s;
+    }
+    @media (min-width: 1024px) {
+      .menu-content {
+        padding: 2.5rem 3rem;
+      }
+    }
+    #menu-overlay.open .menu-content {
+      opacity: 1;
+    }
+    .menu-nav-links {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .menu-link-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      cursor: pointer;
+      width: fit-content;
+    }
+    .menu-link-index {
+      width: 2rem;
+      font-size: 0.875rem;
+      color: var(--on-dark-muted);
+      font-family: var(--font-display);
+    }
+    .menu-link-label {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      line-height: 1.1;
+      transition: font-style 0.2s ease, transform 0.2s ease;
+    }
+    @media (min-width: 640px) {
+      .menu-link-label {
+        font-size: 3.75rem;
+      }
+    }
+    .menu-link-row:hover .menu-link-label {
+      font-style: italic;
+      transform: translateX(0.4rem);
+    }
+
+    /* 2. High-Res Garment Lightbox Modal */
+    #preview-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    #preview-modal.open {
+      pointer-events: auto;
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(22, 22, 21, 0.7);
+      backdrop-filter: blur(8px);
+    }
+    .modal-dialog-panel {
+      position: relative;
+      background: var(--canvas);
+      color: var(--ink);
+      max-width: 58rem;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr;
+      z-index: 10;
+      transform: scale(0.96) translateY(1.25rem);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 768px) {
+      .modal-dialog-panel {
+        grid-template-columns: 1.1fr 1fr;
+      }
+    }
+    #preview-modal.open .modal-dialog-panel {
+      transform: scale(1) translateY(0);
+    }
+    .modal-image-col {
+      background: var(--surface-grey);
+      min-height: 22rem;
+    }
+    .modal-details-col {
+      padding: 2.25rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .size-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .size-btn:hover, .size-btn.active {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+
+    /* 3. Shopping Bag Slide-Over Drawer */
+    #cart-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 750;
+      pointer-events: none;
+      visibility: hidden;
+      transition: visibility 0.3s ease;
+    }
+    #cart-drawer.open {
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .cart-drawer-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(22, 22, 21, 0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #cart-drawer.open .cart-drawer-backdrop {
+      opacity: 1;
+    }
+    .cart-drawer-panel {
+      position: relative;
+      margin-left: auto;
+      width: 100%;
+      max-width: 26rem;
+      height: 100%;
+      background: var(--canvas);
+      color: var(--ink);
+      box-shadow: -15px 0 35px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #cart-drawer.open .cart-drawer-panel {
+      transform: translateX(0);
+    }
+
+    /* 4. Owner Access PIN Modal Dialog */
+    #pin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      background: rgba(22, 22, 21, 0.65);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    #pin-modal.open {
+      pointer-events: auto;
+      visibility: visible;
+      opacity: 1;
+    }
+    .pin-dialog-card {
+      background: var(--canvas);
+      color: var(--ink);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      width: 100%;
+      max-width: 24rem;
+      padding: 1.75rem;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+    .pin-input {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1.35rem;
+      text-align: center;
+      letter-spacing: 0.35em;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      margin-block: 0.85rem;
+      outline: none;
+      font-family: inherit;
+    }
+
+    /* 5. Shop Owner Manager Full Dashboard Modal */
+    #admin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 850;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1rem;
-      opacity: 0;
       pointer-events: none;
       visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    .pin-modal-wrap.open {
-      opacity: 1;
+    #admin-modal.open {
       pointer-events: auto;
       visibility: visible;
+      opacity: 1;
     }
-    .pin-dialog-card {
-      background: var(--surface-card);
-      border-radius: var(--radius-md);
-      width: 100%;
-      max-width: 360px;
-      padding: 1.5rem;
-      box-shadow: var(--shadow-lg);
-      text-align: center;
-    }
-    .pin-input-field {
-      width: 100%;
-      padding: 0.75rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-medium);
-      font-size: 1.25rem;
-      text-align: center;
-      letter-spacing: 0.4em;
+    .admin-panel-container {
+      position: relative;
       background: var(--canvas);
-      color: var(--ink-primary);
-      margin-block: 0.75rem;
-      outline: none;
+      color: var(--ink);
+      max-width: 66rem;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
     }
 
     /* Floating Owner Mode Active Indicator */
     .admin-float-indicator {
       display: none;
       position: fixed;
-      bottom: 75px;
-      right: 14px;
-      background: #121212;
+      bottom: 24px;
+      right: 20px;
+      background: var(--surface-dark);
       color: #ffffff;
-      padding: 0.55rem 1rem;
+      padding: 0.6rem 1.15rem;
       border-radius: var(--radius-pill);
-      font-size: 0.72rem;
-      font-weight: 700;
-      box-shadow: var(--shadow-lg);
+      font-size: 0.75rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
       z-index: 450;
-      gap: 0.4rem;
+      gap: 0.5rem;
       align-items: center;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
@@ -1127,306 +1987,553 @@
       display: flex;
     }
 
-    /* Admin Full Dashboard Modal */
-    .admin-modal-wrap {
+    /* Notification Toast */
+    #notification-toast {
       position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(6px);
-      z-index: 1600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      opacity: 0;
-      pointer-events: none;
-      visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
-    }
-    .admin-modal-wrap.open {
-      opacity: 1;
-      pointer-events: auto;
-      visibility: visible;
-    }
-
-    .admin-dialog-card {
-      background: var(--surface-card);
-      border-radius: var(--radius-md);
-      width: 100%;
-      max-width: 580px;
-      max-height: 88vh;
-      overflow-y: auto;
-      padding: 1.25rem;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .admin-input-field {
-      width: 100%;
-      padding: 0.65rem;
-      border-radius: var(--radius-xs);
-      border: 1px solid var(--border-medium);
-      font-size: 0.85rem;
-      font-family: inherit;
-      background: var(--canvas);
-      color: var(--ink-primary);
-      margin-top: 0.25rem;
-      outline: none;
-    }
-
-    /* Toast */
-    .toast-msg {
-      position: fixed;
-      top: 65px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: var(--ink-primary);
-      color: var(--canvas);
-      padding: 0.6rem 1.15rem;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9990;
+      background: var(--surface-dark);
+      color: #ffffff;
+      padding: 0.75rem 1.35rem;
       border-radius: var(--radius-pill);
       font-size: 0.78rem;
-      font-weight: 600;
-      box-shadow: var(--shadow-md);
-      z-index: 9999;
+      letter-spacing: 0.08em;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transform: translateY(2.5rem);
       opacity: 0;
       pointer-events: none;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .toast-msg.show {
-      transform: translateX(-50%) translateY(0);
+    #notification-toast.show {
+      transform: translateY(0);
       opacity: 1;
     }
 
-    /* Footer */
-    .site-footer {
-      background: var(--surface-subtle);
-      border-top: 1px solid var(--border-light);
-      padding: 2.5rem 1rem 1.75rem;
-      margin-top: 2.5rem;
-      font-size: 0.82rem;
-      color: var(--ink-secondary);
+    /* Motion & Spring Reveal States */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .footer-brand {
-      font-family: var(--font-serif);
-      font-size: 1.35rem;
-      color: var(--ink-primary);
-      font-weight: 700;
-      margin-bottom: 0.4rem;
+    .reveal-item.in-view {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .footer-admin-trigger {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.72rem;
-      color: var(--ink-tertiary);
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-    .footer-admin-trigger:hover {
-      color: var(--ink-primary);
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+      .reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
   </style>
 </head>
-<body data-theme="warm">
+<body data-palette="classic-noir">
 
   <!-- ==========================================================================
-       TOP ANNOUNCEMENT BAR
+       1. INTRO LOADER CURTAIN (Baseline spec)
        ========================================================================== -->
-  <aside class="top-announcement">
-    <span class="announcement-dot"></span>
-    <span>Complimentary Insured Express Worldwide Delivery</span>
+  <aside id="intro-loader" aria-label="Loading merci atelier">
+    <div class="loader-brand">
+      <span class="loader-diamond"></span>
+      <span>merci.clothing</span>
+    </div>
+    <div class="loader-progress-track">
+      <div class="loader-progress-fill" id="loader-progress"></div>
+    </div>
+    <p class="loader-subtext">FW26 Capsule · Form Sculpted in Silence</p>
   </aside>
 
   <!-- ==========================================================================
-       STICKY LUXURY MOBILE-FIRST NAVBAR
+       2. FIXED HEADER (Kai Nomura spec: mix-blend-mode: difference)
        ========================================================================== -->
-  <header class="site-header">
-    <div class="container header-inner">
+  <header id="site-header" role="banner">
+    <div class="header-grid">
+      <!-- Left info (desktop) -->
       <div class="header-left">
-        <button class="icon-btn" id="mobile-menu-toggle" aria-label="Open Navigation Menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="4" y1="7" x2="20" y2="7"></line>
-            <line x1="4" y1="12" x2="20" y2="12"></line>
-            <line x1="4" y1="17" x2="20" y2="17"></line>
-          </svg>
-        </button>
-
-        <nav class="nav-desktop-links">
-          <a href="#catalog" class="nav-link">Collection</a>
-          <a href="#pillars" class="nav-link">Craft</a>
-          <a href="#lookbook" class="nav-link">Lookbook</a>
-          <a href="#faq" class="nav-link">Client Care</a>
-        </nav>
+        <p>Architectural Atelier</p>
+        <p>Kyoto · Milan · Paris</p>
       </div>
 
-      <!-- Center Logo -->
-      <a href="#" class="header-brand">
-        meri<span class="dot">.</span>
+      <!-- Center Brand Logo -->
+      <a href="#hero" class="header-center" aria-label="merci home">
+        <span class="logo-diamond"></span>
+        <span class="header-logo-text">merci.</span>
       </a>
 
-      <!-- Right Actions -->
+      <!-- Right Nav & Actions -->
       <div class="header-right">
-        <button class="icon-btn" id="search-toggle-btn" aria-label="Search Collection">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
+        <nav class="header-nav" aria-label="Primary Navigation">
+          <a href="#works" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Editions</span>
+          </a>
+          <a href="#catalog" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Archive</span>
+          </a>
+          <a href="#about" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Atelier</span>
+          </a>
+          <a href="#process" class="header-nav-link">
+            <span class="header-nav-dot"></span>
+            <span>Process</span>
+          </a>
+        </nav>
+
+        <!-- Cart Trigger -->
+        <button id="open-cart-btn" class="cart-trigger-btn" aria-label="Shopping Bag">
+          <span>Bag</span>
+          <span class="cart-badge" id="cart-counter">0</span>
         </button>
 
-        <button class="icon-btn cart-btn-wrap" id="cart-toggle-btn" aria-label="View Shopping Bag">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
-          </svg>
-          <span class="cart-count-pill" id="cart-pill-badge">0</span>
+        <!-- Menu Hamburger -->
+        <button id="open-menu-btn" class="menu-burger-btn" aria-label="Toggle Fullscreen Menu">
+          <span>Menu</span>
+          <div class="burger-bars">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+          </div>
         </button>
       </div>
     </div>
   </header>
 
   <!-- ==========================================================================
-       HERO BANNER (Vibrant Visual & Thumb-Friendly CTAs)
-       ========================================================================== -->
-  <section class="hero-banner">
-    <div class="hero-media-bg">
-      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop" alt="meri.clothing FW26 Capsule Lookbook">
-    </div>
-    <div class="hero-gradient-scrim"></div>
-
-    <div class="hero-content">
-      <div class="hero-pill-badge">
-        <span class="dot"></span>
-        <span>FW26 Permanent Capsule</span>
-      </div>
-      <h1 class="hero-title">Form, Woven in Silence.</h1>
-      <p class="hero-subtitle">
-        Sculptural tailoring and untreated natural silks. Designed with quiet architectural grace to outlive seasonal trends.
-      </p>
-      <div class="hero-actions">
-        <a href="#catalog" class="btn-primary">Shop Collection →</a>
-        <button class="btn-glass" id="open-lookbook-btn">Explore Lookbook</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
        MAIN CONTENT CONTAINER
        ========================================================================== -->
-  <main class="container">
+  <main id="main-content">
 
-    <!-- Interactive Palette Selector Strip -->
-    <div class="palette-strip">
-      <span>Color Theme</span>
-      <div class="palette-dots">
-        <button class="p-dot active" data-set-theme="warm" style="background:#c59b6d;" title="Cashmere & Cognac"></button>
-        <button class="p-dot" data-set-theme="midnight" style="background:#111214;" title="Midnight Obsidian"></button>
-        <button class="p-dot" data-set-theme="sage" style="background:#5c7c64;" title="Kyoto Sage"></button>
+    <!-- ========================================================================
+         HERO SECTION (Video/Canvas Flow + Palette Bar + Mini Collection Slider)
+         ======================================================================== -->
+    <section id="hero">
+      <div class="hero-media-backdrop">
+        <!-- Generative Silk Waves Canvas & Video -->
+        <canvas class="hero-canvas-waves" id="ambient-fabric-canvas"></canvas>
+        <div class="hero-overlay-gradient"></div>
       </div>
-    </div>
 
-    <!-- Quick Thumb-friendly Category Filter Pills -->
-    <nav class="category-pills-bar" id="category-pills-nav" aria-label="Filter Garments">
-      <button class="cat-pill active" data-cat="all">All Pieces</button>
-      <button class="cat-pill" data-cat="Outerwear">Coats & Trench</button>
-      <button class="cat-pill" data-cat="Tailoring">Tailoring</button>
-      <button class="cat-pill" data-cat="Knitwear">Cashmere & Knit</button>
-      <button class="cat-pill" data-cat="Essentials">Shirts & Trousers</button>
-    </nav>
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Column -->
+          <div class="hero-content-col">
+            <div class="eyebrow reveal-item">Haute Silhouettes · FW26</div>
 
-    <!-- Search Overlay / Input (Expandable) -->
-    <div id="search-bar-wrap" style="display:none; margin-bottom:1.25rem;">
-      <input type="text" id="live-search-input" class="admin-input-field" placeholder="Search by silhouette, cloth, or style..." style="background:var(--surface-card); padding:0.75rem 1rem;">
-    </div>
+            <h1 class="hero-title reveal-item">
+              Form, <span class="accent">sculpted</span> in silence.
+            </h1>
 
-    <!-- Section Title -->
-    <div class="section-head" id="catalog">
-      <h2>The Wardrobe</h2>
-      <span id="catalog-count-label">8 Silhouettes</span>
-    </div>
+            <p class="hero-lead-text reveal-item">
+              merci. crafts sculptural everyday garments where Japanese architectural geometry meets raw Biella wools and untreated mulberry silks. Limited numbered cuts, tailored to outlive seasonal noise.
+            </p>
 
-    <!-- 2-COLUMN MOBILE PRODUCT GRID -->
-    <section class="products-grid" id="product-grid-container">
-      <!-- Populated via JavaScript from catalogState -->
+            <div class="hero-cta-row reveal-item">
+              <a href="#catalog" class="btn-cta btn-solid-light">
+                <span>Explore Catalog</span>
+                <span class="arrow">→</span>
+              </a>
+              <a href="#works" class="btn-cta btn-ghost-light">
+                <span>View Editions</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+
+            <!-- Ambient Motion Toggle Chip -->
+            <button class="motion-ctrl-chip reveal-item" id="motion-toggle-btn">
+              <span class="play-pulse" id="motion-indicator"></span>
+              <span id="motion-toggle-text">Ambient Motion: Active</span>
+            </button>
+
+            <!-- Dynamic Palette Switcher Bar (User requirement: color palettes) -->
+            <div class="palette-switcher-bar reveal-item">
+              <div class="palette-label-row">
+                <span>Curated Mineral Palettes</span>
+                <span>Select to restyle atelier</span>
+              </div>
+              <div class="palette-swatches">
+                <button class="palette-btn active" data-palette="classic-noir">
+                  <span class="color-chip" style="background:#161615;"></span>
+                  <span>Classic Noir & Chalk</span>
+                </button>
+                <button class="palette-btn" data-palette="raw-linen">
+                  <span class="color-chip" style="background:#a47a4c;"></span>
+                  <span>Raw Linen & Clay</span>
+                </button>
+                <button class="palette-btn" data-palette="slate-umber">
+                  <span class="color-chip" style="background:#4a637d;"></span>
+                  <span>Slate & Charcoal</span>
+                </button>
+                <button class="palette-btn" data-palette="kyoto-sage">
+                  <span class="color-chip" style="background:#5e7a62;"></span>
+                  <span>Kyoto Sage Dust</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Facts Ledger Row (Desktop) -->
+            <dl class="hero-facts-row reveal-item">
+              <div>
+                <dt>Mills Origin</dt>
+                <dd>Biella & Kyoto</dd>
+              </div>
+              <div>
+                <dt>Philosophy</dt>
+                <dd>100% Traceable Fiber</dd>
+              </div>
+              <div>
+                <dt>Production Run</dt>
+                <dd>Strictly 50 Per Cut</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Right Visual Column (Portrait Plate + Floating Mini Slider) -->
+          <div class="hero-visual-col reveal-item">
+            <div class="hero-portrait-card plate-box ratio-3-4">
+              <img id="hero-hero-image" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop" alt="merci. - Tailored Double-Breasted Silhouette">
+            </div>
+
+            <!-- Floating Collection Glass Card (Baseline Carousel component) -->
+            <div class="floating-collection-card" id="floating-card-trigger">
+              <img class="mini-thumb" id="mini-slider-thumb" src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=600&auto=format&fit=crop" alt="Drop Highlight">
+              <div class="collection-mini-meta">
+                <h4 id="mini-slider-title">The Cocoon Overcoat</h4>
+                <p id="mini-slider-fabric">Uncut Heavy Wool Blend</p>
+                <span id="mini-slider-price">€1,350 · Reserve</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- PROMOTIONAL STORY CARD (Editorial High-Impact) -->
-    <section class="promo-banner-card" id="lookbook">
-      <div class="promo-content">
-        <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-rich); font-weight:700;">Atelier Craft</span>
-        <h3>Built with single-tailor precision in Kyoto & Milan.</h3>
-        <p>We reject fast-fashion synthetics. Every garment is cut from a single continuous bolt of raw organic fiber, finished with hand-bound seams and certified for lifetime repair.</p>
-        <a href="#catalog" class="btn-primary" style="background:var(--ink-primary); color:var(--canvas);">Discover Provenance</a>
-      </div>
-      <div class="promo-media">
-        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1000&auto=format&fit=crop" alt="Craftsmanship and Loom Weft">
-      </div>
-    </section>
-
-    <!-- VALUE PILLARS (Clean Micro-Cards) -->
-    <section class="pillars-grid" id="pillars">
-      <div class="pillar-box">
-        <div class="pillar-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <div class="pillar-text">
-          <h4>100% Traceable Fiber</h4>
-          <p>Direct partnerships with ethical mills in Biella & Okayama.</p>
-        </div>
-      </div>
-      <div class="pillar-box">
-        <div class="pillar-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="pillar-text">
-          <h4>Strict Batch Runs</h4>
-          <p>Limited to 50 numbered pieces per cut. No surplus waste.</p>
-        </div>
-      </div>
-      <div class="pillar-box">
-        <div class="pillar-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        </div>
-        <div class="pillar-text">
-          <h4>Complimentary Shipping</h4>
-          <p>Carbon-neutral express delivery and lifetime seam restoration.</p>
+    <!-- ========================================================================
+         STATEMENT SECTION (Kai Nomura spec: Large editorial passage)
+         ======================================================================== -->
+    <section id="statement">
+      <div class="container">
+        <div class="statement-inner">
+          <div class="eyebrow reveal-item">The Atelier Manifesto</div>
+          <p class="statement-quote reveal-item">
+            "Clothing should not shout for attention; it should provide quiet architectural sanctuary. At merci., we treat raw fiber like masonry — cutting away excess until nothing remains except pure weight, fluid drape, and uncompromised tactile comfort."
+          </p>
+          <div class="statement-signature reveal-item">
+            — merci. atelier, Kyoto & Milan
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ACCORDION FAQ -->
-    <section class="faq-compact" id="faq">
-      <div class="section-head">
-        <h2>Inquiries & Care</h2>
-      </div>
+    <!-- ========================================================================
+         FEATURED WORKS (ZIG-ZAG ASYMMETRIC GALLERY - Kai Nomura spec)
+         ======================================================================== -->
+    <section id="works" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Selected Editions</div>
+          <h2 class="section-title reveal-item">
+            A field of <span class="accent">form</span>, never mass produced.
+          </h2>
+        </div>
 
-      <div class="faq-item">
-        <button class="faq-question-btn">
-          <span>How does sizing and fit drape?</span>
-          <span class="plus">+</span>
-        </button>
-        <div class="faq-answer-panel">
-          Our silhouettes are cut with architectural, relaxed ease. For a clean fitted silhouette, select your standard size; for loose draped volume, size up one step.
+        <!-- Dynamic Zig-Zag Gallery Grid populated by JS with Parallax Scroll -->
+        <div class="zigzag-gallery-grid" id="zigzag-gallery-container">
+          <!-- Rendered dynamically -->
         </div>
       </div>
+    </section>
 
-      <div class="faq-item">
-        <button class="faq-question-btn">
-          <span>How do I care for untreated wool and silk?</span>
-          <span class="plus">+</span>
-        </button>
-        <div class="faq-answer-panel">
-          Natural fibers self-refresh in open air. Occasional steaming or gentle eco-friendly dry cleaning preserves the original drape for decades.
+    <!-- ========================================================================
+         PINNED CTA #1 (Dark - Kai Nomura spec)
+         ======================================================================== -->
+    <section class="pinned-cta-dark">
+      <div class="container">
+        <div class="pinned-cta-grid">
+          <div class="pinned-cta-content reveal-item">
+            <div class="eyebrow on-dark">Numbered Drops</div>
+            <h2 class="pinned-cta-title">Some silhouettes only exist once.</h2>
+            <p class="pinned-cta-body">
+              Each garment in our capsule is cut by a single artisan, numbered on an embroidered silk label, and archived. When the bolt of textile is depleted, the pattern is permanently sealed.
+            </p>
+            <div style="margin-top:2.5rem;">
+              <a href="#catalog" class="btn-cta btn-solid-dark">
+                <span>View Current Archive</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="pinned-cta-media reveal-item">
+            <div class="plate-box ratio-3-4" style="border-radius: var(--radius-sm);">
+              <img src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=1200&auto=format&fit=crop" alt="Limited Edition Atelier Trench">
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="faq-item">
-        <button class="faq-question-btn">
-          <span>Can I request custom sleeve adjustments?</span>
-          <span class="plus">+</span>
-        </button>
-        <div class="faq-answer-panel">
-          Yes. Our Kyoto and Milan ateliers provide bespoke hem and sleeve adjustments upon checkout at no extra charge.
+    <!-- ========================================================================
+         STUDIO PRINCIPLES (Kai Nomura spec: 3-column grey cards)
+         ======================================================================== -->
+    <section id="principles" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Atelier Principles</div>
+          <h2 class="section-title reveal-item">Three tenets merci. lives by.</h2>
+        </div>
+
+        <div class="principles-grid">
+          <article class="principle-card reveal-item">
+            <span class="principle-num">01</span>
+            <h3>The textile dictates the cut.</h3>
+            <p>We do not force rigid trends onto delicate cloth. The natural drape, grain, and breathability of raw wool and washed linen guide every seam.</p>
+          </article>
+          <article class="principle-card reveal-item">
+            <span class="principle-num">02</span>
+            <h3>Impermanence of trend, permanence of structure.</h3>
+            <p>Garments built to last thirty years outlive momentary micro-trends. Double-faced construction and hand-bound interior hems ensure enduring dignity.</p>
+          </article>
+          <article class="principle-card reveal-item">
+            <span class="principle-num">03</span>
+            <h3>Garments as personal architecture.</h3>
+            <p>A coat is portable shelter. It provides warmth, tactile calm, and effortless poise the moment you step into the world.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         LIVE CATALOG & ATELIER STORE (User-Friendly & High-Fashion)
+         ======================================================================== -->
+    <section id="catalog" class="section-pad">
+      <div class="container">
+        <div class="section-header-block">
+          <div class="eyebrow reveal-item">Complete Wardrobe Archive</div>
+          <h2 class="section-title reveal-item">
+            Permanent pieces & seasonal cuts.
+          </h2>
+        </div>
+
+        <!-- Category Filter & Search Bar -->
+        <div class="catalog-controls-bar reveal-item">
+          <div class="filter-tabs-cluster" id="catalog-category-tabs">
+            <button class="btn-pill-small active" data-category="all">All Garments</button>
+            <button class="btn-pill-small" data-category="Outerwear">Outerwear</button>
+            <button class="btn-pill-small" data-category="Tailoring">Tailoring</button>
+            <button class="btn-pill-small" data-category="Knitwear">Knitwear</button>
+            <button class="btn-pill-small" data-category="Essentials">Essentials</button>
+          </div>
+
+          <div class="catalog-search-wrap">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="catalog-search-input" class="catalog-search-input" placeholder="Search cuts, fabrics, tones...">
+          </div>
+        </div>
+
+        <!-- Catalog Items Grid (Clean 2-Col Mobile / 4-Col Desktop) -->
+        <div class="catalog-grid" id="catalog-grid-container">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ABOUT SECTION (Kai Nomura spec: 12-col + photo grid + facts ledger)
+         ======================================================================== -->
+    <section id="about" class="section-pad">
+      <div class="container">
+        <div class="about-top-grid">
+          <div class="about-left-col reveal-item">
+            <div class="eyebrow">Atelier Origins</div>
+            <h2 class="about-lead-title">
+              We design garments that reveal their luxury through touch, not loud logos.
+            </h2>
+          </div>
+
+          <div class="about-right-col reveal-item">
+            <p>
+              Founded between Kyoto's historic textile quarters and Milan's sartorial workshops, merci. was born from a desire for tactile honesty. In a world saturated with synthetic disposables, we slow down.
+            </p>
+            <p>
+              Every pattern is drafted by hand on heavy kraft paper. We partner with multi-generational family mills that spin raw organic wool, unbleached flax, and wild mulberry silk.
+            </p>
+            <p>
+              When you wear a piece from merci., you feel the weight of intention. It moves with your body, softens with every wear, and becomes a permanent companion.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3-Photo Grid with Hover Springs -->
+        <div class="about-photo-grid">
+          <div class="about-photo-item plate-box reveal-item">
+            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=800&auto=format&fit=crop" alt="Atelier Pattern Cutting">
+          </div>
+          <div class="about-photo-item plate-box reveal-item">
+            <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Loom and Weft Study">
+          </div>
+          <div class="about-photo-item plate-box reveal-item">
+            <img src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=800&auto=format&fit=crop" alt="Hand-Finishing Seams">
+          </div>
+        </div>
+
+        <!-- Facts Ledger -->
+        <dl class="facts-ledger reveal-item">
+          <div>
+            <dt>Main Atelier</dt>
+            <dd>Kyoto · Milan · Paris</dd>
+          </div>
+          <div>
+            <dt>Textile Partners</dt>
+            <dd>12 Family Mills</dd>
+          </div>
+          <div>
+            <dt>Zero Synthetics</dt>
+            <dd>100% Organic Yarns</dd>
+          </div>
+          <div>
+            <dt>Bespoke Tailoring</dt>
+            <dd>Available by Request</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         PROCESS SECTION (Sticky Heading + 4-Step Ordered List)
+         ======================================================================== -->
+    <section id="process" class="section-pad">
+      <div class="container">
+        <div class="process-grid">
+          <div class="process-sticky-left reveal-item">
+            <div class="eyebrow">The Craft Cycle</div>
+            <h2 class="section-title" style="margin-top:1.25rem;">From raw fiber to your silhouette.</h2>
+          </div>
+
+          <ol class="process-steps-list">
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">01</span>
+              <div class="process-step-body">
+                <h3>Fiber Selection & Sourcing</h3>
+                <p>We source long-staple virgin merino wool, Belgian flax, and raw mulberry silk directly from certified ethical farms with unblemished provenance.</p>
+              </div>
+            </li>
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">02</span>
+              <div class="process-step-body">
+                <h3>Drafting & Three-Dimensional Drape</h3>
+                <p>Patterns are draped in unbleached calico muslin on live forms, tested in dynamic motion, and refined for natural ease of movement.</p>
+              </div>
+            </li>
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">03</span>
+              <div class="process-step-body">
+                <h3>Precision Cutting & Hand Tailoring</h3>
+                <p>Garments are individually bench-cut. Master tailors construct inner canvas chest pieces, horn buttonholes, and hand-bound french seams.</p>
+              </div>
+            </li>
+            <li class="process-step-item reveal-item">
+              <span class="process-step-num">04</span>
+              <div class="process-step-body">
+                <h3>Numbered Labeling & Archiving</h3>
+                <p>Every edition is hand-stamped with its unique batch number, certified for lifetime repair, and dispatched in recyclable linen garment bags.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         PINNED CTA #2 (Centered Dark - Kai Nomura Spec)
+         ======================================================================== -->
+    <section id="contact-section">
+      <div class="container">
+        <div class="pinned-cta-centered reveal-item">
+          <div class="eyebrow on-dark">Private Fittings</div>
+          <h2>Experience the garments in person.</h2>
+          <p>
+            Whether commissioning a bespoke tailored overcoat or scheduling a private fitting session at our Kyoto, Milan, or Paris showrooms, our head tailor is at your disposal.
+          </p>
+          <div style="margin-top:2.25rem;">
+            <button id="book-fitting-btn" class="btn-cta btn-solid-dark">
+              <span>Request Private Appointment</span>
+              <span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         FAQ ACCORDION (Kai Nomura spec: interactive rotating +)
+         ======================================================================== -->
+    <section id="faq" class="section-pad">
+      <div class="container">
+        <div class="faq-grid">
+          <div class="faq-left reveal-item">
+            <div class="eyebrow">Inquiries</div>
+            <h2 class="section-title" style="margin-top:1.25rem;">Before you acquire.</h2>
+          </div>
+
+          <div class="faq-right reveal-item">
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">How does sizing and fit drape?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>Our silhouettes are tailored with relaxed architectural ease. If you prefer a crisp closer fit, choose your usual standard size; if you love layered volume, size up one step. We provide complimentary sleeve and hem adjustments upon checkout.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">How do I care for untreated natural textiles?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>Pure wools and silks have natural antimicrobial and self-cleaning attributes. Airing your garments outdoors after wearing is usually sufficient. When necessary, we recommend gentle green eco dry-cleaning or cold hand wash with cedar soap.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">Can I commission a bespoke or custom fit piece?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>Yes. Our master atelier accepts a limited allotment of bespoke appointments each season. We will craft an individual pattern based on your measurements and chosen archive cloth.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-row">
+              <button class="faq-trigger" aria-expanded="false">
+                <span class="faq-question">What is your shipping and lifetime repair policy?</span>
+                <span class="faq-icon-plus">+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-content">
+                  <p>All garments are shipped complimentary worldwide via carbon-neutral express courier. We provide a lifetime repair guarantee: if a seam tears or a button loosens at any point in the garment's life, return it to our atelier for restorative hand-repair.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1434,515 +2541,806 @@
   </main>
 
   <!-- ==========================================================================
-       MOBILE BOTTOM NAVIGATION DOCK (True Mobile App-like Feel)
+       FOOTER (Dark with Giant 18vw "MERCI" Wordmark)
        ========================================================================== -->
-  <nav class="mobile-bottom-dock" aria-label="Mobile Dock Navigation">
-    <a href="#" class="dock-tab active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      <span>Home</span>
-    </a>
-    <a href="#catalog" class="dock-tab">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      <span>Shop</span>
-    </a>
-    <a href="#lookbook" class="dock-tab">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      <span>Lookbook</span>
-    </a>
-    <button class="dock-tab" id="dock-cart-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-      <span>Bag (<span id="dock-cart-count">0</span>)</span>
-    </button>
-  </nav>
+  <footer id="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <div class="loader-brand" style="color:#ffffff;">
+            <span class="loader-diamond"></span>
+            <span>merci.</span>
+          </div>
+          <p class="footer-tagline accent">
+            Form, sculpted in silence.
+          </p>
+          <a href="mailto:atelier@merci.clothing" class="footer-email-link">
+            atelier@merci.clothing
+          </a>
+        </div>
 
-  <!-- ==========================================================================
-       MODAL 1: MOBILE BOTTOM SHEET / QUICK VIEW
-       ========================================================================== -->
-  <div class="sheet-modal-backdrop" id="sheet-backdrop"></div>
-  <div class="bottom-sheet" id="quick-view-sheet" role="dialog" aria-modal="true">
-    <div class="sheet-drag-handle"></div>
-    <div class="sheet-img-wrap">
-      <img id="sheet-product-img" src="" alt="Piece Preview">
-    </div>
-    <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-rich); font-weight:700;" id="sheet-product-edition">Editioned Piece</span>
-    <h3 style="font-family:var(--font-serif); font-size:1.35rem; margin-top:0.25rem;" id="sheet-product-title">Garment Title</h3>
-    <div style="font-size:1.15rem; font-weight:700; margin-top:0.25rem;" id="sheet-product-price">€0</div>
-    <p style="font-size:0.82rem; color:var(--ink-secondary); margin-top:0.5rem; line-height:1.45;" id="sheet-product-desc">Description</p>
+        <div class="footer-col footer-col-2">
+          <p class="footer-col-title">Archive</p>
+          <ul class="footer-links-list">
+            <li><a href="#works">Selected Editions</a></li>
+            <li><a href="#catalog">Outerwear</a></li>
+            <li><a href="#catalog">Tailoring</a></li>
+            <li><a href="#catalog">Knitwear</a></li>
+          </ul>
+        </div>
 
-    <div style="margin-top:0.85rem;">
-      <span style="font-size:0.72rem; font-weight:700; text-transform:uppercase;">Select Sizing</span>
-      <div class="size-selector-row" id="sheet-sizes">
-        <button class="size-chip">XS</button>
-        <button class="size-chip selected">S</button>
-        <button class="size-chip">M</button>
-        <button class="size-chip">L</button>
-        <button class="size-chip">XL</button>
+        <div class="footer-col footer-col-2">
+          <p class="footer-col-title">Atelier</p>
+          <ul class="footer-links-list">
+            <li><a href="#about">Philosophy</a></li>
+            <li><a href="#process">Craftsmanship</a></li>
+            <li><a href="#faq">Care & Repairs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col-3">
+          <p class="footer-col-title">Private Gazette</p>
+          <p style="font-size:0.85rem; color:var(--on-dark-muted); margin-top:0.85rem; line-height:1.5;">
+            Receive quiet announcements when new fabric bolts arrive and capsule drops open.
+          </p>
+          <form id="newsletter-form" style="margin-top:1.15rem; display:flex; gap:0.5rem;">
+            <input type="email" placeholder="Your email address" required style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:0.55rem 0.85rem; font-size:0.8rem; border-radius:var(--radius-pill); flex:1; outline:none;">
+            <button type="submit" class="btn-pill-small" style="background:#ffffff; color:#161615; border:none; padding:0.55rem 1rem;">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Giant 18vw Brand Wordmark -->
+      <div class="giant-wordmark-wrap" aria-hidden="true">
+        <span class="giant-wordmark">MERCI</span>
+      </div>
+
+      <!-- Legal bar with Hidden Owner Access -->
+      <div class="footer-legal-bar">
+        <p>© 2026 merci.clothing Atelier. All rights reserved.</p>
+        <div style="display:flex; gap:1.5rem; align-items:center;">
+          <a href="#">Privacy Charter</a>
+          <a href="#">Provenance Terms</a>
+          <!-- Discreet Owner Access Button -->
+          <button type="button" id="owner-secret-trigger" style="color:var(--on-dark-faint); font-size:0.75rem; display:inline-flex; align-items:center; gap:0.35rem;" aria-label="Open Atelier Owner Portal">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Owner Access</span>
+          </button>
+        </div>
       </div>
     </div>
+  </footer>
 
-    <button id="sheet-add-to-bag" class="btn-primary" style="width:100%; background:var(--ink-primary); color:var(--canvas); margin-top:0.85rem;">
-      Add to Shopping Bag
-    </button>
+  <!-- ==========================================================================
+       MODAL 1: FULLSCREEN OVERLAY MENU (Kai Nomura Spec)
+       ========================================================================== -->
+  <div id="menu-overlay" role="dialog" aria-modal="true" aria-label="Atelier Menu">
+    <div class="menu-panel-bg"></div>
+    <div class="menu-content">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.25em; color:var(--on-dark-faint);">Capsule Navigation</span>
+        <button id="menu-close-btn" style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.16em; color:#fff;">Close ✕</button>
+      </div>
+
+      <nav class="menu-nav-links">
+        <div class="menu-link-row" data-href="#hero">
+          <span class="menu-link-index">01</span>
+          <span class="menu-link-label">Entrance</span>
+        </div>
+        <div class="menu-link-row" data-href="#works">
+          <span class="menu-link-index">02</span>
+          <span class="menu-link-label">Editions</span>
+        </div>
+        <div class="menu-link-row" data-href="#catalog">
+          <span class="menu-link-index">03</span>
+          <span class="menu-link-label">Archive</span>
+        </div>
+        <div class="menu-link-row" data-href="#about">
+          <span class="menu-link-index">04</span>
+          <span class="menu-link-label">Atelier</span>
+        </div>
+        <div class="menu-link-row" data-href="#process">
+          <span class="menu-link-index">05</span>
+          <span class="menu-link-label">Process</span>
+        </div>
+      </nav>
+
+      <div style="border-top:1px dashed var(--line-on-dark); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:flex-end;">
+        <div>
+          <a href="mailto:atelier@merci.clothing" style="font-size:1.1rem; color:#fff;">atelier@merci.clothing</a>
+          <p style="font-size:0.825rem; color:var(--on-dark-muted); margin-top:0.25rem;">Kyoto · Milan · Paris</p>
+        </div>
+        <div style="display:flex; gap:1.25rem; font-size:0.825rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--on-dark-muted);">
+          <a href="#">Instagram</a>
+          <a href="#">Journal</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL 2: SHOPPING BAG SLIDE-OVER DRAWER (No occluding bugs)
+       MODAL 2: HIGH-RES GARMENT PREVIEW / LIGHTBOX
        ========================================================================== -->
-  <div class="cart-drawer-wrap" id="cart-drawer">
-    <div class="cart-drawer-backdrop" id="cart-backdrop-click"></div>
+  <div id="preview-modal" role="dialog" aria-modal="true" aria-label="Garment Preview">
+    <div class="modal-backdrop" id="preview-modal-backdrop"></div>
+    <div class="modal-dialog-panel">
+      <button class="icon-btn" id="preview-close-btn" aria-label="Close Preview" style="position:absolute; top:1rem; right:1rem; z-index:20; background:rgba(255,255,255,0.85); width:36px; height:36px; border-radius:50%; border:1px solid var(--line);">✕</button>
+
+      <div class="modal-image-col">
+        <img id="modal-product-img" src="" alt="Garment Preview">
+      </div>
+
+      <div class="modal-details-col">
+        <div>
+          <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.18em; color:var(--ink-faint);" id="modal-edition-tag">Strict Run of 50 · Editioned</span>
+          <h2 style="font-size:1.85rem; line-height:1.15; margin-top:0.25rem;" id="modal-product-title">Garment Name</h2>
+          <div style="font-family:var(--font-display); font-size:1.45rem; color:var(--ink); margin-top:0.35rem;" id="modal-product-price">€0</div>
+        </div>
+
+        <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.6; border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); padding-block:0.85rem;" id="modal-product-desc">
+          Crafted from 100% natural fibers with architectural volume and hand-bound internal seams.
+        </p>
+
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--ink-muted); font-weight:600;">Available Sizing</div>
+          <div style="display:flex; gap:0.45rem; margin-top:0.45rem;" id="modal-sizes-container">
+            <button class="size-btn">XS</button>
+            <button class="size-btn active">S</button>
+            <button class="size-btn">M</button>
+            <button class="size-btn">L</button>
+            <button class="size-btn">XL</button>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--ink-muted); font-weight:600; margin-bottom:0.35rem;">Textile & Care</div>
+          <p id="modal-product-fabric" style="font-size:0.825rem; color:var(--ink-muted);">
+            100% Virgin Wool · Dry Clean Only · Lifetime Atelier Repair
+          </p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:0.65rem; margin-top:0.35rem;">
+          <button id="modal-add-to-bag-btn" class="btn-cta btn-solid-light" style="width:100%; justify-content:center;">
+            <span>Add to Shopping Bag</span>
+            <span class="arrow">→</span>
+          </button>
+          <p style="font-size:0.72rem; text-align:center; color:var(--ink-faint);">
+            Complimentary insured express courier delivery worldwide.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: SHOPPING BAG SLIDE-OVER DRAWER (Crisp, No Occlusion Bug)
+       ========================================================================== -->
+  <div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Bag">
+    <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
     <div class="cart-drawer-panel">
-      <div class="cart-header">
-        <h3 style="font-size:1.05rem; font-weight:700;">Shopping Bag (<span id="cart-drawer-count">0</span>)</h3>
-        <button class="icon-btn" id="cart-drawer-close">✕</button>
-      </div>
-
-      <div class="cart-items-list" id="cart-items-list">
-        <!-- Rendered dynamically -->
-      </div>
-
-      <div class="cart-footer">
-        <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.05rem; margin-bottom:0.85rem;">
-          <span>Subtotal</span>
-          <span id="cart-subtotal-text">€0</span>
+      <div style="padding:1.25rem; border-bottom:1px dashed var(--line); display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.16em; color:var(--ink-faint);">Your Bag</span>
+          <h3 style="font-size:1.25rem; margin-top:0.15rem;">Selected Silhouettes (<span id="cart-drawer-count">0</span>)</h3>
         </div>
-        <button class="btn-primary" id="checkout-btn" style="width:100%; background:var(--ink-primary); color:var(--canvas);">
-          Proceed to Checkout →
+        <button class="btn-pill-small" id="cart-close-btn" style="padding:0.35rem 0.75rem;">✕</button>
+      </div>
+
+      <div style="flex:1; overflow-y:auto; padding:1.25rem; display:flex; flex-direction:column; gap:1rem;" id="cart-items-container">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div style="padding:1.25rem; border-top:1px dashed var(--line); background:var(--surface-grey); display:flex; flex-direction:column; gap:0.85rem;">
+        <div style="display:flex; justify-content:space-between; font-size:1.1rem; font-weight:600;">
+          <span>Subtotal</span>
+          <span id="cart-subtotal-val">€0</span>
+        </div>
+        <p style="font-size:0.72rem; color:var(--ink-muted);">
+          Insured courier packaging and duties calculated at dispatch.
+        </p>
+        <button id="checkout-stub-btn" class="btn-cta btn-solid-light" style="width:100%; justify-content:center;">
+          <span>Proceed to Atelier Checkout</span>
+          <span class="arrow">→</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL 3: INTEGRATED OWNER PIN AUTHENTICATION MODAL (Replaces window.prompt)
+       MODAL 4: INTEGRATED OWNER PIN AUTHENTICATION MODAL
        ========================================================================== -->
-  <div class="pin-modal-wrap" id="pin-modal" role="dialog" aria-modal="true">
+  <div id="pin-modal" role="dialog" aria-modal="true" aria-label="Owner PIN Authentication">
     <div class="pin-dialog-card">
-      <div style="font-size:1.75rem; margin-bottom:0.5rem;">🔒</div>
-      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.25rem;">Atelier Owner Access</h3>
-      <p style="font-size:0.82rem; color:var(--ink-secondary);">Enter your 4-digit security PIN to unlock the shop manager.</p>
-      <input type="password" id="owner-pin-input" class="pin-input-field" maxlength="4" placeholder="••••" inputmode="numeric" autocomplete="off">
-      <p style="font-size:0.72rem; color:var(--ink-tertiary); margin-bottom:1rem;">Default Security PIN: 1234</p>
+      <div style="font-size:1.75rem; margin-bottom:0.4rem;">🔒</div>
+      <h3 style="font-size:1.25rem; font-weight:600; margin-bottom:0.25rem;">Atelier Owner Access</h3>
+      <p style="font-size:0.825rem; color:var(--ink-muted);">Enter your 4-digit security PIN to unlock the management console.</p>
+      <input type="password" id="owner-pin-input" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric" autocomplete="off">
+      <p style="font-size:0.72rem; color:var(--ink-faint); margin-bottom:1rem;">Default Security PIN: 1234</p>
       <div style="display:flex; gap:0.5rem;">
-        <button class="btn-primary" id="pin-submit-btn" style="flex:1; background:var(--ink-primary); color:var(--canvas);">Unlock Console</button>
-        <button class="btn-glass" id="pin-cancel-btn" style="color:var(--ink-primary); border:1px solid var(--border-medium);">Cancel</button>
+        <button class="btn-cta btn-solid-light" id="pin-submit-btn" style="flex:1; justify-content:center; padding:0.75rem;">Unlock</button>
+        <button class="btn-cta btn-ghost-light" id="pin-cancel-btn" style="padding:0.75rem 1rem;">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- Floating Owner Mode Active Indicator -->
+  <!-- Floating Indicator when Owner Mode is Unlocked -->
   <div class="admin-float-indicator" id="admin-active-pill">
-    <span>🔒 Store Owner Mode</span>
-    <button id="admin-open-dashboard" style="background:#ffffff; color:#121212; padding:0.2rem 0.6rem; border-radius:999px; font-size:0.7rem; font-weight:700;">Manage</button>
+    <span>🔒 Owner Mode Active</span>
+    <button id="admin-open-dashboard" style="background:#ffffff; color:#161615; padding:0.25rem 0.65rem; border-radius:999px; font-size:0.72rem; font-weight:600;">Open Console</button>
   </div>
 
-  <!-- Admin Full Dashboard Modal -->
-  <div class="admin-modal-wrap" id="admin-modal" role="dialog" aria-modal="true">
-    <div class="admin-dialog-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.15rem;">
+  <!-- ==========================================================================
+       MODAL 5: FULL OWNER / ADMIN MANAGEMENT DASHBOARD
+       ========================================================================== -->
+  <div id="admin-modal" role="dialog" aria-modal="true" aria-label="Shop Owner Atelier Manager">
+    <div class="modal-backdrop" id="admin-modal-backdrop"></div>
+    <div class="admin-panel-container">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed var(--line); padding-bottom:1rem;">
         <div>
-          <span style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--accent-rich);">Private Owner Console</span>
-          <h3 style="font-size:1.25rem; font-weight:700;">Product Inventory</h3>
+          <div class="eyebrow">Private Atelier Console</div>
+          <h2 style="font-size:1.65rem; margin-top:0.25rem;">merci. Inventory Manager</h2>
         </div>
-        <button class="icon-btn" id="admin-close-modal">✕</button>
+        <button class="btn-pill-small" id="admin-close-btn">Close Dashboard ✕</button>
       </div>
 
-      <form id="admin-add-product-form" style="display:flex; flex-direction:column; gap:0.65rem;">
-        <div>
-          <label style="font-size:0.72rem; font-weight:700;">Garment Title</label>
-          <input type="text" id="adm-title" class="admin-input-field" placeholder="e.g. Sculpted Cashmere Overcoat" required>
-        </div>
-
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
-          <div>
-            <label style="font-size:0.72rem; font-weight:700;">Category</label>
-            <select id="adm-cat" class="admin-input-field">
-              <option value="Outerwear">Outerwear</option>
-              <option value="Tailoring">Tailoring</option>
-              <option value="Knitwear">Knitwear</option>
-              <option value="Essentials">Essentials</option>
-            </select>
+      <!-- Add or Edit Product Form -->
+      <form id="admin-garment-form" style="background:var(--surface-grey); padding:1.25rem; border-radius:var(--radius-sm); border:1px solid var(--line);">
+        <input type="hidden" id="admin-edit-id" value="">
+        <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;" id="admin-form-heading">Add New Garment to Catalog</h4>
+        <div style="display:grid; grid-template-columns:1fr; gap:0.85rem;">
+          <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:0.65rem;">
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Garment Title</label>
+              <input type="text" id="form-title" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="e.g. Cocoon Overcoat" required>
+            </div>
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Category</label>
+              <select id="form-category" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;">
+                <option value="Outerwear">Outerwear</option>
+                <option value="Tailoring">Tailoring</option>
+                <option value="Knitwear">Knitwear</option>
+                <option value="Essentials">Essentials</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Price (€)</label>
+              <input type="number" id="form-price" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="1250" required>
+            </div>
           </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem;">
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Edition Tag</label>
+              <input type="text" id="form-edition" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="Edition of 30 · Biella Wool">
+            </div>
+            <div>
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Image URL</label>
+              <input type="url" id="form-image" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" placeholder="https://..." required>
+            </div>
+          </div>
+
           <div>
-            <label style="font-size:0.72rem; font-weight:700;">Price (€)</label>
-            <input type="number" id="adm-price" class="admin-input-field" placeholder="1250" required>
+            <label style="font-size:0.72rem; text-transform:uppercase; font-weight:600; color:var(--ink-muted);">Description</label>
+            <textarea id="form-description" style="width:100%; padding:0.65rem; border:1px solid var(--line); border-radius:var(--radius-sm); margin-top:0.25rem; font-family:inherit;" rows="2" placeholder="Silhouette, volume, and textile drape..." required></textarea>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; align-items:center;">
+            <button type="submit" class="btn-cta btn-solid-light" style="padding:0.7rem 1.5rem;">
+              <span id="admin-submit-label">Save Piece</span>
+            </button>
+            <button type="button" class="btn-pill-small" id="admin-cancel-edit-btn" style="display:none;">Cancel Edit</button>
+            <button type="button" class="btn-pill-small" id="admin-reset-default-btn" style="margin-left:auto; color:var(--ink-muted);">Reset FW26 Capsule</button>
           </div>
         </div>
-
-        <div>
-          <label style="font-size:0.72rem; font-weight:700;">Image URL</label>
-          <input type="url" id="adm-img" class="admin-input-field" placeholder="https://images.unsplash.com/..." required>
-        </div>
-
-        <div>
-          <label style="font-size:0.72rem; font-weight:700;">Description</label>
-          <textarea id="adm-desc" class="admin-input-field" rows="2" placeholder="Fabric drape, tailoring structure..." required></textarea>
-        </div>
-
-        <button type="submit" class="btn-primary" style="background:var(--ink-primary); color:var(--canvas); margin-top:0.4rem;">
-          Add Piece to Storefront
-        </button>
       </form>
 
-      <div style="margin-top:1.25rem;">
-        <h4 style="font-size:0.85rem; font-weight:700; margin-bottom:0.6rem;">Existing Products</h4>
-        <div id="admin-inventory-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:200px; overflow-y:auto;">
-          <!-- Rendered in JS -->
+      <!-- Inventory Table -->
+      <div>
+        <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Current Stock (<span id="admin-table-count">0</span> Pieces)</h4>
+        <div style="border:1px solid var(--line); border-radius:var(--radius-sm); overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem;">
+            <thead>
+              <tr style="background:var(--surface-grey); border-bottom:1px solid var(--line);">
+                <th style="padding:0.65rem 0.85rem;">Piece</th>
+                <th style="padding:0.65rem 0.85rem;">Title</th>
+                <th style="padding:0.65rem 0.85rem;">Category</th>
+                <th style="padding:0.65rem 0.85rem;">Price</th>
+                <th style="padding:0.65rem 0.85rem;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Notification Toast -->
-  <div class="toast-msg" id="toast">Action Complete</div>
+  <div id="notification-toast" role="status" aria-live="polite">
+    Action completed
+  </div>
 
   <!-- ==========================================================================
-       FOOTER
+       CLIENT APPLICATION CORE JAVASCRIPT (ESM with Lenis & Scroll Animations)
        ========================================================================== -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-brand">meri.</div>
-      <p style="max-width:24rem; margin-bottom:1.25rem;">
-        Modern silhouettes and untreated natural yarns. Crafted with architectural precision for everyday quiet luxury.
-      </p>
+  <script type="module">
+    import Lenis from "lenis";
 
-      <div style="display:flex; gap:1.25rem; flex-wrap:wrap; font-size:0.78rem; font-weight:600;">
-        <a href="#catalog">Collection</a>
-        <a href="#pillars">Provenance</a>
-        <a href="#faq">Client Service</a>
-        <a href="mailto:concierge@meri.clothing">concierge@meri.clothing</a>
-      </div>
-
-      <div style="margin-top:1.75rem; padding-top:1.25rem; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
-        <p>© 2026 meri.clothing. All rights reserved.</p>
-
-        <!-- Hidden Discreet Owner Portal Trigger (Accessible Button) -->
-        <button type="button" class="footer-admin-trigger" id="owner-secret-trigger" aria-label="Open Atelier Owner Portal">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <span>Owner Access</span>
-        </button>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==========================================================================
-       JAVASCRIPT APP LOGIC
-       ========================================================================== -->
-  <script>
-    /* 1. Curated Luxury Outerwear & Tailoring Catalog Data */
+    /* ==========================================================================
+       1. INITIAL CATALOG DATA STORE (merci. FW26 Collection)
+       ========================================================================== */
     const DEFAULT_CATALOG = [
       {
-        id: "m-01",
-        title: "Cocoon Architectural Overcoat",
+        id: "merci-01",
+        title: "The Cocoon Overcoat",
         category: "Outerwear",
         price: 1350,
-        edition: "Limited Run of 30",
-        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop",
-        desc: "Sculpted from double-faced virgin wool with relaxed raglan volume and deep horn button closures."
+        edition: "Edition of 30 · Biella Wool",
+        fabric: "100% Double-Faced Virgin Wool",
+        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        description: "Sculpted with a dramatic architectural cocoon curve and dropped raglan shoulders. Horn button fastenings and deep welt hand pockets."
       },
       {
-        id: "m-02",
-        title: "Origami Lapel Tailored Blazer",
+        id: "merci-02",
+        title: "Origami Double-Breasted Blazer",
         category: "Tailoring",
         price: 980,
-        edition: "Edition of 25",
-        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800&auto=format&fit=crop",
-        desc: "Structured chest canvas crafted with raw silk and wool blend. Asymmetrical geometric cross-lapel."
+        edition: "Edition of 25 · Kyoto Silk Weft",
+        fabric: "Wool & Mulberry Raw Silk Blend",
+        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: true,
+        description: "Architectural lapels that fold across the chest without external buttons. Built upon a floating horsehair canvas."
       },
       {
-        id: "m-03",
+        id: "merci-03",
         title: "Seamless Cashmere Turtleneck",
         category: "Knitwear",
         price: 590,
-        edition: "Pure Mongolian Cashmere",
-        image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=800&auto=format&fit=crop",
-        desc: "7-gauge brushed organic cashmere. Zero side seams for pure tactile comfort and fluid drape."
+        edition: "Edition of 40 · 7-Gauge Cashmere",
+        fabric: "100% Organic Mongolian Cashmere",
+        image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        description: "Seamless cylindrical knit that flows effortlessly down the neckline. Featherweight tactile warmth with a brushed cloud finish."
       },
       {
-        id: "m-04",
-        title: "Wide-Leg Pleated Gabardine Trouser",
+        id: "merci-04",
+        title: "Architectural Wide-Leg Trousers",
         category: "Tailoring",
         price: 680,
-        edition: "High-Twist Wool",
-        image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop",
-        desc: "Deep forward knife pleats that move with architectural sway. Extended tailored waistband."
+        edition: "Edition of 35 · Structured Gabardine",
+        fabric: "High-Twist Worsted Wool Gabardine",
+        image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        description: "Deep forward pleats and an extended waistband. Flows dynamically with each stride while maintaining a razor-sharp vertical crease."
       },
       {
-        id: "m-05",
-        title: "Raw Washed Flax Kimono Duster",
+        id: "merci-05",
+        title: "Unstructured Raw Flax Kimono",
         category: "Outerwear",
         price: 840,
-        edition: "Belgian Flax Linen",
-        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop",
-        desc: "Unlined relaxed kimono cut. Softened heavy linen with concealed interior ribbon closures."
+        edition: "Edition of 20 · Washed Belgian Linen",
+        fabric: "100% Heavy Belgian Flax Linen",
+        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        description: "Inspired by classical Japanese work coats, reconstructed with clean modern geometry and concealed interior ribbon ties."
       },
       {
-        id: "m-06",
-        title: "Poplin Studio Atelier Shirt",
+        id: "merci-06",
+        title: "Minimalist Poplin Studio Shirt",
         category: "Essentials",
         price: 420,
-        edition: "Egyptian Long-Staple",
-        image: "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?q=80&w=800&auto=format&fit=crop",
-        desc: "140s Giza cotton with crisp mandarin collar and mother-of-pearl buttons. Effortless everyday luxury."
+        edition: "Core Archive · 140s Cotton",
+        fabric: "100% Giza Egyptian Long-Staple Cotton",
+        image: "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-2",
+        featuredZigZag: true,
+        description: "Concealed front placket, crisp mandarin collar, and mother-of-pearl buttons. Silky, breathable handfeel with natural fluid drape."
       },
       {
-        id: "m-07",
-        title: "Minimalist Column Slip Dress",
+        id: "merci-07",
+        title: "Column Matte Silk Slip Dress",
         category: "Essentials",
         price: 760,
-        edition: "Heavy Silk Crepe",
-        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=800&auto=format&fit=crop",
-        desc: "Bias-cut matte silk that skims the silhouette. Clean straight neckline with delicate spaghetti straps."
+        edition: "Edition of 25 · Heavy Silk Crepe",
+        fabric: "100% Heavy Matte Silk Crepe de Chine",
+        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        description: "Bias-cut matte silk that skims the silhouette. Clean straight neckline with delicate spaghetti straps."
       },
       {
-        id: "m-08",
+        id: "merci-08",
         title: "Double-Breasted Wool Trench",
         category: "Outerwear",
         price: 1480,
-        edition: "Archival Piece",
-        image: "https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800&auto=format&fit=crop",
-        desc: "Water-repellent compact wool gabardine with removable storm flap and horn-buckle waist belt."
+        edition: "Archival Piece · Storm Flap",
+        fabric: "100% Compact Wool Gabardine",
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=1000&auto=format&fit=crop",
+        ratio: "ratio-3-4",
+        featuredZigZag: false,
+        description: "Water-repellent compact wool gabardine with removable storm flap, deep storm collar, and horn-buckle waist belt."
       }
     ];
 
-    const STORAGE_KEY = "meri_clothing_store_v4";
-    let catalog = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_CATALOG;
-    let cart = [];
-    let selectedCategory = "all";
-    let selectedSize = "S";
-    let activeQuickItem = null;
+    const STORAGE_KEY = "merci_clothing_catalog_v5";
 
-    // Toast helper
-    const toast = document.getElementById("toast");
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2400);
+    function getCatalog() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) return JSON.parse(saved);
+      } catch (e) {
+        console.warn("Storage read error", e);
+      }
+      return DEFAULT_CATALOG;
     }
 
-    // Render Product Grid (Mobile 2-column)
-    const gridContainer = document.getElementById("product-grid-container");
-    const countLabel = document.getElementById("catalog-count-label");
+    function saveCatalog(items) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      } catch (e) {
+        console.warn("Storage write error", e);
+      }
+    }
 
-    function renderCatalog() {
-      let filtered = catalog;
-      if (selectedCategory !== "all") {
-        filtered = filtered.filter(i => i.category.toLowerCase() === selectedCategory.toLowerCase());
+    let catalogState = getCatalog();
+    let cartState = [];
+    let activeCategory = "all";
+    let activeSearchTerm = "";
+
+    /* ==========================================================================
+       2. LENIS SMOOTH SCROLL INITIALIZATION
+       ========================================================================== */
+    const lenis = new Lenis({
+      smoothWheel: true,
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    function lockScroll() {
+      lenis.stop();
+      document.documentElement.style.overflow = "hidden";
+    }
+    function unlockScroll() {
+      lenis.start();
+      document.documentElement.style.removeProperty("overflow");
+    }
+
+    /* ==========================================================================
+       3. INTRO CURTAIN LOADER (Baseline Spec)
+       ========================================================================== */
+    const introLoader = document.getElementById("intro-loader");
+    const loaderProgress = document.getElementById("loader-progress");
+
+    lockScroll();
+    setTimeout(() => {
+      loaderProgress.style.transform = "scaleX(1)";
+    }, 120);
+
+    setTimeout(() => {
+      introLoader.classList.add("slide-up");
+      unlockScroll();
+      triggerScrollReveals();
+    }, 1350);
+
+    /* ==========================================================================
+       4. NOTIFICATION TOAST
+       ========================================================================== */
+    const toast = document.getElementById("notification-toast");
+    let toastTimer = null;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    /* ==========================================================================
+       5. RENDER FEATURED WORKS (ZIG-ZAG ASYMMETRIC GALLERY - Kai Nomura Spec)
+       ========================================================================== */
+    const zigzagContainer = document.getElementById("zigzag-gallery-container");
+
+    function renderZigZagGallery() {
+      const featured = catalogState.filter(item => item.featuredZigZag !== false);
+      zigzagContainer.innerHTML = featured.map(item => {
+        const ratioClass = item.ratio || "ratio-3-2";
+        return `
+          <article class="zigzag-item reveal-item" data-id="${item.id}">
+            <figure class="work-figure">
+              <span class="work-quick-action">Preview Silhouette</span>
+              <div class="work-plate plate-box ${ratioClass}">
+                <img src="${item.image}" alt="${item.title}" loading="lazy">
+              </div>
+              <figcaption class="work-caption">
+                <div class="work-caption-left">
+                  <h3>${item.title}</h3>
+                  <p>${item.fabric}</p>
+                </div>
+                <div class="work-caption-right">
+                  <div class="work-price">€${item.price.toLocaleString()}</div>
+                  <div class="work-tag">${item.edition}</div>
+                </div>
+              </figcaption>
+            </figure>
+          </article>
+        `;
+      }).join("");
+
+      zigzagContainer.querySelectorAll(".zigzag-item").forEach(el => {
+        el.addEventListener("click", () => {
+          const id = el.getAttribute("data-id");
+          openPreviewModal(id);
+        });
+      });
+    }
+
+    /* ==========================================================================
+       6. RENDER WARDROBE CATALOG (Storefront + Filters & Search)
+       ========================================================================== */
+    const catalogContainer = document.getElementById("catalog-grid-container");
+
+    function renderCatalogGrid() {
+      let filtered = catalogState;
+
+      if (activeCategory !== "all") {
+        filtered = filtered.filter(item => item.category.toLowerCase() === activeCategory.toLowerCase());
       }
 
-      const searchElem = document.getElementById("live-search-input");
-      const query = searchElem ? searchElem.value.trim().toLowerCase() : "";
-      if (query) {
-        filtered = filtered.filter(i => i.title.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query));
+      if (activeSearchTerm.trim() !== "") {
+        const term = activeSearchTerm.toLowerCase();
+        filtered = filtered.filter(item =>
+          item.title.toLowerCase().includes(term) ||
+          item.fabric.toLowerCase().includes(term) ||
+          item.category.toLowerCase().includes(term) ||
+          item.description.toLowerCase().includes(term)
+        );
       }
-
-      countLabel.textContent = `${filtered.length} Silhouette${filtered.length === 1 ? '' : 's'}`;
 
       if (filtered.length === 0) {
-        gridContainer.innerHTML = `
-          <div style="grid-column:1/-1; text-align:center; padding:3rem 1rem; color:var(--ink-secondary);">
-            <p style="font-weight:600;">No pieces found in this category.</p>
+        catalogContainer.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--ink-muted);">
+            <p style="font-size:1.15rem; font-family:var(--font-display);">No garments match your search inquiry.</p>
           </div>
         `;
         return;
       }
 
-      gridContainer.innerHTML = filtered.map(item => `
-        <article class="item-card" data-id="${item.id}">
-          <div class="item-media-wrap">
-            <span class="item-tag">${item.category}</span>
+      catalogContainer.innerHTML = filtered.map(item => `
+        <article class="product-card reveal-item" data-id="${item.id}">
+          <div class="product-thumb-wrap">
+            <span class="product-badge-overlay">${item.category}</span>
             <img src="${item.image}" alt="${item.title}" loading="lazy">
-            <button class="item-quick-btn" title="Quick View" onclick="event.stopPropagation(); window.openSheet('${item.id}')">+</button>
+            <button class="product-quick-add">+ Quick View</button>
           </div>
-          <div class="item-details">
+          <div class="product-info-row">
             <div>
-              <div class="item-category">${item.edition}</div>
-              <h3 class="item-title">${item.title}</h3>
+              <h3 class="product-title">${item.title}</h3>
+              <p class="product-category">${item.fabric}</p>
             </div>
-            <div class="item-price-row">
-              <span class="item-price">€${item.price.toLocaleString()}</span>
-              <span class="item-stock-indicator">In Stock</span>
-            </div>
+            <div class="product-price">€${item.price.toLocaleString()}</div>
           </div>
         </article>
       `).join("");
 
-      // Card click opens sheet
-      gridContainer.querySelectorAll(".item-card").forEach(c => {
-        c.addEventListener("click", () => {
-          const id = c.getAttribute("data-id");
-          window.openSheet(id);
+      catalogContainer.querySelectorAll(".product-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const id = card.getAttribute("data-id");
+          openPreviewModal(id);
         });
       });
+
+      triggerScrollReveals();
     }
 
-    // Category Filter Navigation
-    document.querySelectorAll(".cat-pill").forEach(pill => {
-      pill.addEventListener("click", () => {
-        document.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("active"));
-        pill.classList.add("active");
-        selectedCategory = pill.getAttribute("data-cat");
-        renderCatalog();
+    // Category Tabs
+    document.querySelectorAll("#catalog-category-tabs .btn-pill-small").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#catalog-category-tabs .btn-pill-small").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.getAttribute("data-category");
+        renderCatalogGrid();
       });
     });
 
-    // Search Toggle
-    const searchWrap = document.getElementById("search-bar-wrap");
-    const searchInput = document.getElementById("live-search-input");
-    document.getElementById("search-toggle-btn").addEventListener("click", () => {
-      searchWrap.style.display = searchWrap.style.display === "none" ? "block" : "none";
-      if (searchWrap.style.display === "block") searchInput.focus();
-    });
-    searchInput.addEventListener("input", renderCatalog);
-
-    // Color Palette Theme Switcher
-    document.querySelectorAll(".p-dot").forEach(dot => {
-      dot.addEventListener("click", () => {
-        document.querySelectorAll(".p-dot").forEach(d => d.classList.remove("active"));
-        dot.classList.add("active");
-        const theme = dot.getAttribute("data-set-theme");
-        document.body.setAttribute("data-theme", theme);
-        showToast(`Theme switched to ${dot.getAttribute("title")}`);
-      });
+    // Search Input
+    document.getElementById("catalog-search-input").addEventListener("input", (e) => {
+      activeSearchTerm = e.target.value;
+      renderCatalogGrid();
     });
 
-    // Mobile Bottom Sheet Quick View
-    const sheet = document.getElementById("quick-view-sheet");
-    const sheetBackdrop = document.getElementById("sheet-backdrop");
+    /* ==========================================================================
+       7. GARMENT PREVIEW / LIGHTBOX MODAL
+       ========================================================================== */
+    const previewModal = document.getElementById("preview-modal");
+    const previewBackdrop = document.getElementById("preview-modal-backdrop");
+    const previewCloseBtn = document.getElementById("preview-close-btn");
 
-    window.openSheet = function(id) {
-      const item = catalog.find(x => x.id === id);
+    let currentPreviewItem = null;
+
+    function openPreviewModal(id) {
+      const item = catalogState.find(x => x.id === id);
       if (!item) return;
-      activeQuickItem = item;
 
-      document.getElementById("sheet-product-img").src = item.image;
-      document.getElementById("sheet-product-title").textContent = item.title;
-      document.getElementById("sheet-product-price").textContent = `€${item.price.toLocaleString()}`;
-      document.getElementById("sheet-product-desc").textContent = item.desc;
-      document.getElementById("sheet-product-edition").textContent = item.edition;
+      currentPreviewItem = item;
+      document.getElementById("modal-product-img").src = item.image;
+      document.getElementById("modal-product-img").alt = item.title;
+      document.getElementById("modal-product-title").textContent = item.title;
+      document.getElementById("modal-product-price").textContent = `€${item.price.toLocaleString()}`;
+      document.getElementById("modal-product-desc").textContent = item.description;
+      document.getElementById("modal-product-fabric").textContent = `${item.fabric} · Lifetime Atelier Guarantee`;
+      document.getElementById("modal-edition-tag").textContent = item.edition || "Strict Limited Run";
 
-      sheet.classList.add("open");
-      sheetBackdrop.classList.add("active");
-      document.body.style.overflow = "hidden";
-    };
-
-    function closeSheet() {
-      sheet.classList.remove("open");
-      sheetBackdrop.classList.remove("active");
-      document.body.style.overflow = "";
+      previewModal.classList.add("open");
+      lockScroll();
     }
-    sheetBackdrop.addEventListener("click", closeSheet);
+
+    function closePreviewModal() {
+      previewModal.classList.remove("open");
+      unlockScroll();
+    }
+
+    previewCloseBtn.addEventListener("click", closePreviewModal);
+    previewBackdrop.addEventListener("click", closePreviewModal);
 
     // Size Selection
-    document.querySelectorAll("#sheet-sizes .size-chip").forEach(chip => {
-      chip.addEventListener("click", () => {
-        document.querySelectorAll("#sheet-sizes .size-chip").forEach(c => c.classList.remove("selected"));
-        chip.classList.add("selected");
-        selectedSize = chip.textContent;
+    document.querySelectorAll("#modal-sizes-container .size-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#modal-sizes-container .size-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
       });
     });
 
-    // Add to Shopping Bag
-    document.getElementById("sheet-add-to-bag").addEventListener("click", () => {
-      if (!activeQuickItem) return;
-      addToCart(activeQuickItem, selectedSize);
-      closeSheet();
-      openCart();
+    // Add to Bag
+    document.getElementById("modal-add-to-bag-btn").addEventListener("click", () => {
+      if (currentPreviewItem) {
+        const activeSize = document.querySelector("#modal-sizes-container .size-btn.active")?.textContent || "S";
+        addToCart(currentPreviewItem, activeSize);
+        closePreviewModal();
+        openCartDrawer();
+      }
     });
 
-    // Cart Management
+    /* ==========================================================================
+       8. SHOPPING BAG DRAWER
+       ========================================================================== */
     const cartDrawer = document.getElementById("cart-drawer");
-    const cartCountPill = document.getElementById("cart-pill-badge");
-    const dockCartCount = document.getElementById("dock-cart-count");
-    const cartItemsList = document.getElementById("cart-items-list");
-    const cartSubtotalText = document.getElementById("cart-subtotal-text");
+    const cartBackdrop = document.getElementById("cart-backdrop");
+    const cartCloseBtn = document.getElementById("cart-close-btn");
+    const openCartBtn = document.getElementById("open-cart-btn");
+    const cartCounter = document.getElementById("cart-counter");
     const cartDrawerCount = document.getElementById("cart-drawer-count");
+    const cartItemsContainer = document.getElementById("cart-items-container");
+    const cartSubtotalVal = document.getElementById("cart-subtotal-val");
+
+    function openCartDrawer() {
+      renderCartItems();
+      cartDrawer.classList.add("open");
+      lockScroll();
+    }
+    function closeCartDrawer() {
+      cartDrawer.classList.remove("open");
+      unlockScroll();
+    }
+
+    openCartBtn.addEventListener("click", openCartDrawer);
+    cartCloseBtn.addEventListener("click", closeCartDrawer);
+    cartBackdrop.addEventListener("click", closeCartDrawer);
 
     function addToCart(item, size) {
-      const existing = cart.find(x => x.id === item.id && x.size === size);
+      const existing = cartState.find(x => x.id === item.id && x.size === size);
       if (existing) {
         existing.qty += 1;
       } else {
-        cart.push({ ...item, size, qty: 1 });
+        cartState.push({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          image: item.image,
+          fabric: item.fabric,
+          size: size,
+          qty: 1
+        });
       }
-      updateCartUI();
-      showToast(`Added ${item.title} (${size}) to Bag`);
+      updateCartBadge();
+      showToast(`Added ${item.title} (${size}) to Bag.`);
     }
 
-    function updateCartUI() {
-      const totalCount = cart.reduce((acc, i) => acc + i.qty, 0);
-      cartCountPill.textContent = totalCount;
-      dockCartCount.textContent = totalCount;
-      cartDrawerCount.textContent = totalCount;
+    function updateCartBadge() {
+      const totalQty = cartState.reduce((sum, item) => sum + item.qty, 0);
+      cartCounter.textContent = totalQty;
+      cartDrawerCount.textContent = totalQty;
+    }
+
+    function renderCartItems() {
+      if (cartState.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div style="text-align:center; padding:3rem 1rem; color:var(--ink-muted);">
+            <p style="font-family:var(--font-display); font-size:1.15rem;">Your bag is currently empty.</p>
+            <p style="font-size:0.8rem; margin-top:0.4rem;">Explore the wardrobe archive to reserve pieces.</p>
+          </div>
+        `;
+        cartSubtotalVal.textContent = "€0";
+        return;
+      }
 
       let subtotal = 0;
-      if (cart.length === 0) {
-        cartItemsList.innerHTML = `<p style="text-align:center; color:var(--ink-secondary); padding:3rem 1rem;">Your bag is empty.</p>`;
-      } else {
-        cartItemsList.innerHTML = cart.map((item, idx) => {
-          subtotal += item.price * item.qty;
-          return `
-            <div class="cart-item-card">
-              <img src="${item.image}" class="cart-thumb" alt="${item.title}">
-              <div class="cart-meta">
-                <div>
-                  <h4 style="font-size:0.82rem; font-weight:700;">${item.title}</h4>
-                  <p style="font-size:0.72rem; color:var(--ink-secondary);">Size: ${item.size}</p>
-                </div>
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <span style="font-weight:700; font-size:0.88rem;">€${(item.price * item.qty).toLocaleString()}</span>
-                  <div style="display:flex; align-items:center; gap:0.35rem;">
-                    <button onclick="window.changeQty(${idx}, -1)" style="padding:2px 7px; border:1px solid var(--border-medium); border-radius:4px;">-</button>
-                    <span style="font-size:0.8rem;">${item.qty}</span>
-                    <button onclick="window.changeQty(${idx}, 1)" style="padding:2px 7px; border:1px solid var(--border-medium); border-radius:4px;">+</button>
-                  </div>
+      cartItemsContainer.innerHTML = cartState.map((item, idx) => {
+        subtotal += item.price * item.qty;
+        return `
+          <div style="display:flex; gap:0.85rem; border-bottom:1px dashed var(--line); padding-bottom:1rem;">
+            <img src="${item.image}" alt="${item.title}" style="width:4.25rem; height:5.25rem; object-fit:cover; border-radius:var(--radius-sm); flex-shrink:0;">
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <h4 style="font-size:0.9rem; font-weight:600;">${item.title}</h4>
+                <p style="font-size:0.75rem; color:var(--ink-muted);">Size: ${item.size} · ${item.fabric}</p>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-family:var(--font-display); font-size:0.95rem;">€${(item.price * item.qty).toLocaleString()}</span>
+                <div style="display:flex; align-items:center; gap:0.4rem;">
+                  <button style="padding:2px 8px; border:1px solid var(--line); border-radius:3px;" onclick="window.decrementCart(${idx})">-</button>
+                  <span style="font-size:0.8rem;">${item.qty}</span>
+                  <button style="padding:2px 8px; border:1px solid var(--line); border-radius:3px;" onclick="window.incrementCart(${idx})">+</button>
                 </div>
               </div>
             </div>
-          `;
-        }).join("");
-      }
-      cartSubtotalText.textContent = `€${subtotal.toLocaleString()}`;
+          </div>
+        `;
+      }).join("");
+
+      cartSubtotalVal.textContent = `€${subtotal.toLocaleString()}`;
     }
 
-    window.changeQty = function(idx, delta) {
-      if (!cart[idx]) return;
-      cart[idx].qty += delta;
-      if (cart[idx].qty <= 0) cart.splice(idx, 1);
-      updateCartUI();
+    window.incrementCart = function(index) {
+      if (cartState[index]) {
+        cartState[index].qty += 1;
+        updateCartBadge();
+        renderCartItems();
+      }
     };
 
-    function openCart() {
-      cartDrawer.classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
-    function closeCart() {
-      cartDrawer.classList.remove("open");
-      document.body.style.overflow = "";
-    }
+    window.decrementCart = function(index) {
+      if (cartState[index]) {
+        cartState[index].qty -= 1;
+        if (cartState[index].qty <= 0) {
+          cartState.splice(index, 1);
+        }
+        updateCartBadge();
+        renderCartItems();
+      }
+    };
 
-    document.getElementById("cart-toggle-btn").addEventListener("click", openCart);
-    document.getElementById("dock-cart-btn").addEventListener("click", openCart);
-    document.getElementById("cart-drawer-close").addEventListener("click", closeCart);
-    document.getElementById("cart-backdrop-click").addEventListener("click", closeCart);
-
-    document.getElementById("checkout-btn").addEventListener("click", () => {
-      if (cart.length === 0) return showToast("Your bag is empty.");
-      alert("Atelier Concierge:\nThank you for choosing meri.\nYour order has been reserved. Our tailor will contact you for dispatch confirmation.");
-      cart = [];
-      updateCartUI();
-      closeCart();
+    document.getElementById("checkout-stub-btn").addEventListener("click", () => {
+      if (cartState.length === 0) {
+        showToast("Your bag is empty.");
+        return;
+      }
+      showToast("Connecting to Atelier Checkout...");
+      setTimeout(() => {
+        alert("merci. Atelier:\nThank you for choosing merci.clothing.\nOur concierge will contact you directly to confirm sizing, bespoke monogramming, and insured dispatch.");
+        cartState = [];
+        updateCartBadge();
+        closeCartDrawer();
+      }, 600);
     });
 
-    // Accordion FAQ toggle
-    document.querySelectorAll(".faq-item").forEach(item => {
-      item.querySelector(".faq-question-btn").addEventListener("click", () => {
-        item.classList.toggle("active");
-      });
-    });
-
-    // =========================================================================
-    // PROTECTED OWNER ACCESS VIA EMBEDDED PIN MODAL (No window.prompt block)
-    // =========================================================================
+    /* ==========================================================================
+       9. PROTECTED OWNER ACCESS VIA EMBEDDED PIN MODAL (No window.prompt block)
+       ========================================================================== */
     let isOwnerUnlocked = false;
     const ownerSecretTrigger = document.getElementById("owner-secret-trigger");
     const pinModal = document.getElementById("pin-modal");
@@ -1951,6 +3349,13 @@
     const pinCancelBtn = document.getElementById("pin-cancel-btn");
     const adminActivePill = document.getElementById("admin-active-pill");
     const adminModal = document.getElementById("admin-modal");
+    const adminCloseBtn = document.getElementById("admin-close-btn");
+    const adminModalBackdrop = document.getElementById("admin-modal-backdrop");
+    const adminGarmentForm = document.getElementById("admin-garment-form");
+    const adminTableBody = document.getElementById("admin-table-body");
+    const adminTableCount = document.getElementById("admin-table-count");
+    const adminCancelEditBtn = document.getElementById("admin-cancel-edit-btn");
+    const adminResetDefaultBtn = document.getElementById("admin-reset-default-btn");
 
     ownerSecretTrigger.addEventListener("click", () => {
       if (isOwnerUnlocked) {
@@ -1968,7 +3373,7 @@
 
     function verifyPin() {
       const pin = pinInput.value.trim();
-      if (pin === "1234" || pin === "meri") {
+      if (pin === "1234" || pin === "merci") {
         isOwnerUnlocked = true;
         pinModal.classList.remove("open");
         adminActivePill.classList.add("visible");
@@ -1988,70 +3393,350 @@
     });
 
     document.getElementById("admin-open-dashboard").addEventListener("click", openAdminModal);
-    document.getElementById("admin-close-modal").addEventListener("click", () => adminModal.classList.remove("open"));
 
     function openAdminModal() {
-      renderAdminInventory();
+      renderAdminDashboard();
       adminModal.classList.add("open");
+      lockScroll();
     }
 
-    function renderAdminInventory() {
-      const list = document.getElementById("admin-inventory-list");
-      list.innerHTML = catalog.map((item, idx) => `
-        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface-subtle); padding:0.5rem 0.75rem; border-radius:6px; font-size:0.78rem;">
-          <div>
+    function closeAdminModal() {
+      adminModal.classList.remove("open");
+      resetAdminForm();
+      unlockScroll();
+    }
+
+    adminCloseBtn.addEventListener("click", closeAdminModal);
+    adminModalBackdrop.addEventListener("click", closeAdminModal);
+
+    function renderAdminDashboard() {
+      adminTableCount.textContent = catalogState.length;
+      adminTableBody.innerHTML = catalogState.map(item => `
+        <tr style="border-bottom:1px dashed var(--line);">
+          <td style="padding:0.65rem 0.85rem;">
+            <img src="${item.image}" alt="${item.title}" style="width:2.5rem; height:3.25rem; object-fit:cover; border-radius:3px;">
+          </td>
+          <td style="padding:0.65rem 0.85rem;">
             <strong>${item.title}</strong>
-            <span style="color:var(--ink-secondary); margin-left:0.5rem;">€${item.price}</span>
-          </div>
-          <button onclick="window.deleteAdminItem(${idx})" style="color:#ef4444; font-weight:700;">Delete</button>
-        </div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">${item.fabric}</div>
+          </td>
+          <td style="padding:0.65rem 0.85rem;">${item.category}</td>
+          <td style="padding:0.65rem 0.85rem;">€${item.price.toLocaleString()}</td>
+          <td style="padding:0.65rem 0.85rem;">
+            <button class="btn-pill-small" style="padding:0.25rem 0.6rem; margin-right:0.35rem;" onclick="window.editAdminItem('${item.id}')">Edit</button>
+            <button class="btn-pill-small" style="padding:0.25rem 0.6rem; color:#dc2626; border-color:rgba(220,38,38,0.3);" onclick="window.deleteAdminItem('${item.id}')">Delete</button>
+          </td>
+        </tr>
       `).join("");
     }
 
-    window.deleteAdminItem = function(idx) {
-      if (confirm(`Remove "${catalog[idx].title}" from store?`)) {
-        catalog.splice(idx, 1);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(catalog));
-        renderAdminInventory();
-        renderCatalog();
-        showToast("Piece removed from store.");
+    adminGarmentForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const editId = document.getElementById("admin-edit-id").value;
+      const title = document.getElementById("form-title").value.trim();
+      const category = document.getElementById("form-category").value;
+      const price = parseFloat(document.getElementById("form-price").value) || 0;
+      const edition = document.getElementById("form-edition").value.trim() || "Edition of 30";
+      const image = document.getElementById("form-image").value.trim();
+      const description = document.getElementById("form-description").value.trim();
+      const fabric = "Natural Fiber Blend";
+
+      if (editId) {
+        const idx = catalogState.findIndex(x => x.id === editId);
+        if (idx !== -1) {
+          catalogState[idx] = { ...catalogState[idx], title, category, price, edition, image, description };
+          showToast(`Updated "${title}".`);
+        }
+      } else {
+        const newItem = {
+          id: "merci-" + Date.now(),
+          title, category, price, edition, fabric, image, description,
+          ratio: "ratio-3-2",
+          featuredZigZag: true
+        };
+        catalogState.unshift(newItem);
+        showToast(`Created piece: "${title}".`);
+      }
+
+      saveCatalog(catalogState);
+      renderAdminDashboard();
+      renderZigZagGallery();
+      renderCatalogGrid();
+      resetAdminForm();
+    });
+
+    window.editAdminItem = function(id) {
+      const item = catalogState.find(x => x.id === id);
+      if (!item) return;
+
+      document.getElementById("admin-edit-id").value = item.id;
+      document.getElementById("form-title").value = item.title;
+      document.getElementById("form-category").value = item.category;
+      document.getElementById("form-price").value = item.price;
+      document.getElementById("form-edition").value = item.edition;
+      document.getElementById("form-image").value = item.image;
+      document.getElementById("form-description").value = item.description;
+
+      document.getElementById("admin-form-heading").textContent = `Editing: ${item.title}`;
+      document.getElementById("admin-submit-label").textContent = "Save Changes";
+      adminCancelEditBtn.style.display = "inline-block";
+      document.querySelector(".admin-panel-container").scrollTop = 0;
+    };
+
+    window.deleteAdminItem = function(id) {
+      if (confirm("Remove this piece from the store?")) {
+        catalogState = catalogState.filter(x => x.id !== id);
+        saveCatalog(catalogState);
+        renderAdminDashboard();
+        renderZigZagGallery();
+        renderCatalogGrid();
+        showToast("Piece removed from catalog.");
       }
     };
 
-    document.getElementById("admin-add-product-form").addEventListener("submit", (e) => {
+    function resetAdminForm() {
+      adminGarmentForm.reset();
+      document.getElementById("admin-edit-id").value = "";
+      document.getElementById("admin-form-heading").textContent = "Add New Garment to Catalog";
+      document.getElementById("admin-submit-label").textContent = "Save Piece";
+      adminCancelEditBtn.style.display = "none";
+    }
+
+    adminCancelEditBtn.addEventListener("click", resetAdminForm);
+
+    adminResetDefaultBtn.addEventListener("click", () => {
+      if (confirm("Reset catalog back to the original 8 curated FW26 pieces?")) {
+        catalogState = [...DEFAULT_CATALOG];
+        saveCatalog(catalogState);
+        renderAdminDashboard();
+        renderZigZagGallery();
+        renderCatalogGrid();
+        showToast("Reset to default FW26 capsule.");
+      }
+    });
+
+    /* ==========================================================================
+       10. FULLSCREEN MENU OVERLAY (Kai Nomura Spec)
+       ========================================================================== */
+    const menuOverlay = document.getElementById("menu-overlay");
+    const openMenuBtn = document.getElementById("open-menu-btn");
+    const menuCloseBtn = document.getElementById("menu-close-btn");
+
+    function openMenu() {
+      menuOverlay.classList.add("open");
+      lockScroll();
+    }
+    function closeMenu() {
+      menuOverlay.classList.remove("open");
+      unlockScroll();
+    }
+
+    openMenuBtn.addEventListener("click", openMenu);
+    menuCloseBtn.addEventListener("click", closeMenu);
+
+    document.querySelectorAll(".menu-link-row").forEach(link => {
+      link.addEventListener("click", () => {
+        const targetId = link.getAttribute("data-href");
+        closeMenu();
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          lenis.scrollTo(targetEl, { offset: -60 });
+        }
+      });
+    });
+
+    /* ==========================================================================
+       11. AMBIENT MOTION CANVAS & PALETTE SWITCHER
+       ========================================================================== */
+    const motionToggleBtn = document.getElementById("motion-toggle-btn");
+    const motionToggleText = document.getElementById("motion-toggle-text");
+    const motionIndicator = document.getElementById("motion-indicator");
+    const fabricCanvas = document.getElementById("ambient-fabric-canvas");
+
+    let isMotionActive = true;
+    let fabricAnimId = null;
+
+    if (fabricCanvas) {
+      const ctx = fabricCanvas.getContext("2d");
+      function resizeCanvas() {
+        fabricCanvas.width = window.innerWidth;
+        fabricCanvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      let t = 0;
+      function drawFabric() {
+        if (!isMotionActive) return;
+        ctx.clearRect(0, 0, fabricCanvas.width, fabricCanvas.height);
+        const w = fabricCanvas.width;
+        const h = fabricCanvas.height;
+
+        for (let j = 0; j < 3; j++) {
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.45 + j * 45);
+          for (let x = 0; x <= w; x += 15) {
+            const y = h * 0.45 + j * 50 +
+              Math.sin(x * 0.003 + t + j * 1.5) * 40 +
+              Math.cos(x * 0.002 - t * 0.8) * 25;
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fillStyle = j === 0 ? "rgba(0,0,0,0.03)" : (j === 1 ? "rgba(0,0,0,0.02)" : "rgba(0,0,0,0.015)");
+          ctx.fill();
+        }
+        t += 0.012;
+        fabricAnimId = requestAnimationFrame(drawFabric);
+      }
+      drawFabric();
+    }
+
+    motionToggleBtn.addEventListener("click", () => {
+      isMotionActive = !isMotionActive;
+      if (isMotionActive) {
+        motionToggleText.textContent = "Ambient Motion: Active";
+        motionIndicator.style.background = "#10b981";
+      } else {
+        if (fabricAnimId) cancelAnimationFrame(fabricAnimId);
+        motionToggleText.textContent = "Ambient Motion: Paused";
+        motionIndicator.style.background = "#9ca3af";
+      }
+    });
+
+    // Palette Switcher
+    document.querySelectorAll(".palette-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".palette-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const palette = btn.getAttribute("data-palette");
+        document.body.setAttribute("data-palette", palette);
+        showToast(`Theme updated to ${btn.querySelector('span:last-child').textContent}`);
+      });
+    });
+
+    // Floating Collection Mini Slider
+    const miniSliderThumb = document.getElementById("mini-slider-thumb");
+    const miniSliderTitle = document.getElementById("mini-slider-title");
+    const miniSliderFabric = document.getElementById("mini-slider-fabric");
+    const miniSliderPrice = document.getElementById("mini-slider-price");
+    const floatingCard = document.getElementById("floating-card-trigger");
+
+    let miniIndex = 0;
+    setInterval(() => {
+      if (catalogState.length === 0) return;
+      miniIndex = (miniIndex + 1) % catalogState.length;
+      const current = catalogState[miniIndex];
+      miniSliderThumb.src = current.image;
+      miniSliderTitle.textContent = current.title;
+      miniSliderFabric.textContent = current.fabric;
+      miniSliderPrice.textContent = `€${current.price.toLocaleString()} · Reserve`;
+    }, 4200);
+
+    floatingCard.addEventListener("click", () => {
+      if (catalogState[miniIndex]) {
+        openPreviewModal(catalogState[miniIndex].id);
+      }
+    });
+
+    /* ==========================================================================
+       12. FAQ ACCORDION LOGIC
+       ========================================================================== */
+    document.querySelectorAll(".faq-row").forEach(row => {
+      const trigger = row.querySelector(".faq-trigger");
+      const panel = row.querySelector(".faq-panel");
+      const content = row.querySelector(".faq-panel-content");
+
+      trigger.addEventListener("click", () => {
+        const isOpen = row.classList.contains("active");
+
+        document.querySelectorAll(".faq-row").forEach(r => {
+          if (r !== row) {
+            r.classList.remove("active");
+            r.querySelector(".faq-trigger").setAttribute("aria-expanded", "false");
+            r.querySelector(".faq-panel").style.height = "0px";
+            r.querySelector(".faq-panel").style.opacity = "0";
+          }
+        });
+
+        if (!isOpen) {
+          row.classList.add("active");
+          trigger.setAttribute("aria-expanded", "true");
+          panel.style.height = content.scrollHeight + "px";
+          panel.style.opacity = "1";
+        } else {
+          row.classList.remove("active");
+          trigger.setAttribute("aria-expanded", "false");
+          panel.style.height = "0px";
+          panel.style.opacity = "0";
+        }
+      });
+    });
+
+    /* ==========================================================================
+       13. SCROLL REVEALS & PARALLAX SCROLL-SCRUB
+       ========================================================================== */
+    function triggerScrollReveals() {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      document.querySelectorAll(".reveal-item:not(.in-view)").forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Parallax Scroll-Scrub on Zig-Zag Gallery Plates (Kai Nomura Spec)
+    window.addEventListener("scroll", () => {
+      if (window.innerWidth >= 1024) {
+        document.querySelectorAll(".work-plate").forEach(plate => {
+          const rect = plate.getBoundingClientRect();
+          const viewH = window.innerHeight;
+          if (rect.top < viewH && rect.bottom > 0) {
+            const progress = (rect.top + rect.height) / (viewH + rect.height);
+            const translateY = (progress - 0.5) * -28;
+            plate.style.transform = `translateY(${translateY}px)`;
+          }
+        });
+      }
+    }, { passive: true });
+
+    // Keyboard ESC closes modals
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (previewModal.classList.contains("open")) closePreviewModal();
+        if (adminModal.classList.contains("open")) closeAdminModal();
+        if (cartDrawer.classList.contains("open")) closeCartDrawer();
+        if (menuOverlay.classList.contains("open")) closeMenu();
+        if (pinModal.classList.contains("open")) pinModal.classList.remove("open");
+      }
+    });
+
+    // Appointment button
+    document.getElementById("book-fitting-btn").addEventListener("click", () => {
+      alert("merci. Atelier Concierge:\nPlease email your desired fitting dates, preferred city (Kyoto / Milan / Paris), and garment inquiries to:\n\natelier@merci.clothing\n\nOur head tailor will respond within 24 hours.");
+    });
+
+    // Newsletter form
+    document.getElementById("newsletter-form").addEventListener("submit", (e) => {
       e.preventDefault();
-      const newItem = {
-        id: "m-" + Date.now(),
-        title: document.getElementById("adm-title").value.trim(),
-        category: document.getElementById("adm-cat").value,
-        price: parseFloat(document.getElementById("adm-price").value) || 0,
-        image: document.getElementById("adm-img").value.trim(),
-        edition: "Atelier Piece",
-        desc: document.getElementById("adm-desc").value.trim()
-      };
-      catalog.unshift(newItem);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(catalog));
-      renderCatalog();
-      renderAdminInventory();
-      adminModal.classList.remove("open");
+      showToast("Thank you. You have been added to the Private Gazette.");
       e.target.reset();
-      showToast(`Added "${newItem.title}" to store.`);
     });
 
-    // Lookbook CTA button
-    document.getElementById("open-lookbook-btn").addEventListener("click", () => {
-      document.getElementById("lookbook").scrollIntoView({ behavior: "smooth" });
-    });
-
-    // Mobile menu toggle
-    document.getElementById("mobile-menu-toggle").addEventListener("click", () => {
-      document.getElementById("catalog").scrollIntoView({ behavior: "smooth" });
-      showToast("Browsing collection");
-    });
-
-    // Initial render
-    renderCatalog();
-    updateCartUI();
+    // Initial renders
+    renderZigZagGallery();
+    renderCatalogGrid();
+    triggerScrollReveals();
   </script>
 </body>
 </html>
