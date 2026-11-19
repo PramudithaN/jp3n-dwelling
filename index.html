@@ -47,8 +47,8 @@
       --radius-md: 16px;
       --radius-lg: 24px;
       --radius-pill: 9999px;
-      --header-h: 60px;
-      --bottom-bar-h: 64px;
+      --header-h: 56px;
+      --bottom-bar-h: 60px;
     }
 
     /* Color Theme Palettes */
@@ -80,7 +80,10 @@
       --border-medium: rgba(21, 29, 22, 0.14);
     }
 
-    html {
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
       font-size: 16px;
       scroll-behavior: smooth;
     }
@@ -91,8 +94,7 @@
       font-family: var(--font-body);
       line-height: 1.45;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      padding-bottom: calc(var(--bottom-bar-h) + 20px);
+      padding-bottom: calc(var(--bottom-bar-h) + 16px);
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -128,9 +130,9 @@
     /* Container */
     .container {
       width: 100%;
-      max-width: 1280px;
+      max-width: 1240px;
       margin-inline: auto;
-      padding-inline: 1rem;
+      padding-inline: 0.85rem;
     }
     @media (min-width: 640px) {
       .container {
@@ -149,22 +151,24 @@
     .top-announcement {
       background: var(--ink-primary);
       color: var(--canvas);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       font-weight: 600;
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.75rem;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
+      line-height: 1.3;
     }
     .announcement-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
       background: var(--accent-warm);
+      flex-shrink: 0;
     }
 
     /* ==========================================================================
@@ -175,16 +179,17 @@
       top: 0;
       left: 0;
       right: 0;
+      width: 100%;
       height: var(--header-h);
-      background: rgba(252, 251, 249, 0.92);
+      background: rgba(252, 251, 249, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-light);
-      z-index: 1000;
+      z-index: 500;
       transition: background 0.3s ease;
     }
     body[data-theme="midnight"] .site-header {
-      background: rgba(17, 18, 20, 0.92);
+      background: rgba(17, 18, 20, 0.95);
     }
 
     .header-inner {
@@ -192,19 +197,19 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.25rem;
       flex: 1;
     }
 
     .icon-btn {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
@@ -219,8 +224,8 @@
     .nav-desktop-links {
       display: none;
       align-items: center;
-      gap: 1.75rem;
-      margin-left: 1rem;
+      gap: 1.5rem;
+      margin-left: 0.75rem;
     }
     @media (min-width: 1024px) {
       .nav-desktop-links {
@@ -228,7 +233,7 @@
       }
     }
     .nav-desktop-links a {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--ink-secondary);
       transition: color 0.2s ease;
@@ -240,24 +245,25 @@
     .header-brand {
       display: flex;
       align-items: baseline;
-      gap: 0.2rem;
+      gap: 0.15rem;
       font-family: var(--font-serif);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--ink-primary);
       text-align: center;
+      user-select: none;
     }
     .header-brand span.dot {
       color: var(--accent-warm);
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
 
     .header-right {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 0.25rem;
+      gap: 0.15rem;
       flex: 1;
     }
 
@@ -266,8 +272,8 @@
     }
     .cart-count-pill {
       position: absolute;
-      top: 6px;
-      right: 6px;
+      top: 5px;
+      right: 5px;
       background: var(--accent-rich);
       color: #ffffff;
       font-size: 0.65rem;
@@ -287,31 +293,34 @@
        ========================================================================== */
     .hero-banner {
       position: relative;
-      margin: 0.75rem 0.75rem 1.5rem;
-      border-radius: var(--radius-lg);
+      margin: 0.65rem 0.65rem 1.25rem;
+      width: calc(100% - 1.3rem);
+      border-radius: var(--radius-md);
       overflow: hidden;
-      min-height: 480px;
-      height: 72vh;
-      max-height: 640px;
+      min-height: 420px;
+      height: 65vh;
+      max-height: 580px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 2rem 1.25rem;
+      padding: 1.75rem 1.15rem;
       box-shadow: var(--shadow-md);
     }
     @media (min-width: 640px) {
       .hero-banner {
         margin: 1rem 1.5rem 2rem;
-        padding: 3rem 2.5rem;
-        min-height: 540px;
+        width: calc(100% - 3rem);
+        padding: 2.75rem 2.25rem;
+        min-height: 480px;
+        border-radius: var(--radius-lg);
       }
     }
     @media (min-width: 1024px) {
       .hero-banner {
-        margin: 1.5rem auto 3rem;
-        max-width: 1280px;
-        height: 75vh;
-        max-height: 700px;
+        margin: 1.5rem auto 2.5rem;
+        max-width: 1240px;
+        height: 70vh;
+        max-height: 640px;
       }
     }
 
@@ -324,7 +333,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 25%;
+      object-position: center 20%;
       filter: brightness(0.92);
       transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -336,31 +345,32 @@
       position: absolute;
       inset: 0;
       z-index: 2;
-      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.85) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.85) 100%);
     }
 
     .hero-content {
       position: relative;
       z-index: 3;
       color: #ffffff;
-      max-width: 32rem;
+      width: 100%;
+      max-width: 30rem;
     }
 
     .hero-pill-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.35rem 0.85rem;
+      padding: 0.3rem 0.75rem;
       border-radius: var(--radius-pill);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.65rem;
     }
     .hero-pill-badge span.dot {
       width: 6px;
@@ -371,66 +381,67 @@
 
     .hero-title {
       font-family: var(--font-serif);
-      font-size: 2.35rem;
+      font-size: 2.15rem;
       font-weight: 500;
       line-height: 1.1;
       letter-spacing: -0.015em;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
+      word-break: break-word;
     }
     @media (min-width: 640px) {
       .hero-title {
-        font-size: 3.25rem;
+        font-size: 3rem;
       }
     }
     @media (min-width: 1024px) {
       .hero-title {
-        font-size: 4rem;
+        font-size: 3.75rem;
       }
     }
 
     .hero-subtitle {
-      font-size: 0.95rem;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.88);
-      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.25rem;
       font-weight: 400;
-      max-width: 26rem;
+      max-width: 24rem;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
 
     .btn-primary {
       background: var(--surface-card);
       color: var(--ink-primary);
-      padding: 0.85rem 1.75rem;
+      padding: 0.75rem 1.4rem;
       border-radius: var(--radius-pill);
-      font-size: 0.875rem;
+      font-size: 0.825rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
       transition: all 0.2s ease;
-      min-height: 48px;
+      min-height: 44px;
     }
     .btn-primary:active {
       transform: scale(0.97);
     }
 
     .btn-glass {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.16);
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.35);
       backdrop-filter: blur(8px);
-      padding: 0.85rem 1.75rem;
+      padding: 0.75rem 1.4rem;
       border-radius: var(--radius-pill);
-      font-size: 0.875rem;
+      font-size: 0.825rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       transition: all 0.2s ease;
-      min-height: 48px;
+      min-height: 44px;
     }
     .btn-glass:active {
       background: rgba(255, 255, 255, 0.25);
@@ -441,9 +452,11 @@
        ========================================================================== */
     .category-pills-bar {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
       overflow-x: auto;
-      padding: 0.25rem 1rem 1rem;
+      width: 100%;
+      max-width: 100vw;
+      padding: 0.25rem 0.85rem 0.85rem;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
@@ -457,7 +470,7 @@
     }
     @media (min-width: 1024px) {
       .category-pills-bar {
-        max-width: 1280px;
+        max-width: 1240px;
         margin-inline: auto;
         padding-inline: 2.5rem;
         justify-content: center;
@@ -466,16 +479,16 @@
 
     .cat-pill {
       flex-shrink: 0;
-      padding: 0.6rem 1.15rem;
+      padding: 0.5rem 1rem;
       border-radius: var(--radius-pill);
-      font-size: 0.8125rem;
+      font-size: 0.78rem;
       font-weight: 600;
       background: var(--surface-card);
       border: 1px solid var(--border-light);
       color: var(--ink-secondary);
       box-shadow: var(--shadow-sm);
       transition: all 0.2s ease;
-      min-height: 40px;
+      min-height: 38px;
     }
     .cat-pill:hover, .cat-pill.active {
       background: var(--ink-primary);
@@ -488,20 +501,20 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 1rem;
-      margin-bottom: 1rem;
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 0.85rem;
       background: var(--surface-subtle);
-      border-radius: var(--radius-md);
-      font-size: 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.72rem;
       font-weight: 600;
     }
     .palette-dots {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     .p-dot {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       border: 2px solid #ffffff;
       cursor: pointer;
@@ -522,17 +535,17 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-top: 1.5rem;
-      margin-bottom: 1.25rem;
+      margin-top: 1.25rem;
+      margin-bottom: 1rem;
     }
     .section-head h2 {
       font-family: var(--font-serif);
-      font-size: 1.65rem;
+      font-size: 1.5rem;
       font-weight: 600;
       letter-spacing: -0.01em;
     }
     .section-head a, .section-head span {
-      font-size: 0.8125rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--accent-rich);
     }
@@ -543,7 +556,7 @@
     .products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.85rem;
+      gap: 0.75rem;
     }
     @media (min-width: 640px) {
       .products-grid {
@@ -553,19 +566,19 @@
     @media (min-width: 1024px) {
       .products-grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 1.75rem;
+        gap: 1.5rem;
       }
     }
 
     .item-card {
       background: var(--surface-card);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
     }
     .item-card:hover {
@@ -587,40 +600,41 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .item-card:hover .item-media-wrap img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .item-tag {
       position: absolute;
-      top: 8px;
-      left: 8px;
+      top: 6px;
+      left: 6px;
       background: rgba(18, 18, 18, 0.82);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(4px);
       color: #ffffff;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 600;
-      padding: 0.25rem 0.6rem;
+      padding: 0.2rem 0.5rem;
       border-radius: var(--radius-pill);
       letter-spacing: 0.04em;
     }
 
     .item-quick-btn {
       position: absolute;
-      bottom: 8px;
-      right: 8px;
-      width: 36px;
-      height: 36px;
+      bottom: 6px;
+      right: 6px;
+      width: 32px;
+      height: 32px;
       background: #ffffff;
       color: #121212;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.18);
       font-weight: 700;
+      font-size: 1rem;
       transition: transform 0.2s ease;
     }
     .item-quick-btn:active {
@@ -628,7 +642,7 @@
     }
 
     .item-details {
-      padding: 0.75rem;
+      padding: 0.65rem;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -636,12 +650,12 @@
     }
     @media (min-width: 640px) {
       .item-details {
-        padding: 1rem;
+        padding: 0.85rem;
       }
     }
 
     .item-category {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -650,11 +664,11 @@
     }
 
     .item-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--ink-primary);
-      line-height: 1.3;
-      margin-bottom: 0.4rem;
+      line-height: 1.25;
+      margin-bottom: 0.35rem;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -662,7 +676,7 @@
     }
     @media (min-width: 640px) {
       .item-title {
-        font-size: 1rem;
+        font-size: 0.95rem;
       }
     }
 
@@ -671,15 +685,15 @@
       align-items: center;
       justify-content: space-between;
       margin-top: auto;
-      padding-top: 0.35rem;
+      padding-top: 0.25rem;
     }
     .item-price {
-      font-size: 1rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--ink-primary);
     }
     .item-stock-indicator {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 600;
       color: #16a34a;
     }
@@ -688,39 +702,39 @@
        HIGHLIGHT PROMO CARD (Zero fluff, visual high-impact)
        ========================================================================== */
     .promo-banner-card {
-      margin-block: 2.5rem;
+      margin-block: 2rem;
       background: var(--surface-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1.75rem 1.25rem;
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1rem;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
       align-items: center;
       border: 1px solid var(--border-light);
     }
     @media (min-width: 768px) {
       .promo-banner-card {
         grid-template-columns: 1fr 1fr;
-        padding: 2.5rem;
+        padding: 2.25rem;
       }
     }
 
     .promo-content h3 {
       font-family: var(--font-serif);
-      font-size: 1.75rem;
+      font-size: 1.6rem;
       line-height: 1.2;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
     }
     .promo-content p {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--ink-secondary);
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
+      line-height: 1.55;
+      margin-bottom: 1.15rem;
     }
 
     .promo-media {
       aspect-ratio: 16 / 10;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
     }
@@ -729,28 +743,28 @@
     .pillars-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 0.75rem;
-      margin-block: 2rem;
+      gap: 0.65rem;
+      margin-block: 1.75rem;
     }
     @media (min-width: 640px) {
       .pillars-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
+        gap: 0.85rem;
       }
     }
     .pillar-box {
       background: var(--surface-card);
       border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
       display: flex;
       align-items: flex-start;
-      gap: 0.85rem;
+      gap: 0.75rem;
     }
     .pillar-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-sm);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-xs);
       background: var(--surface-subtle);
       display: flex;
       align-items: center;
@@ -759,46 +773,46 @@
       flex-shrink: 0;
     }
     .pillar-text h4 {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.15rem;
     }
     .pillar-text p {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--ink-secondary);
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     /* ==========================================================================
        ACCORDION FAQ (Compact & Clean)
        ========================================================================== */
     .faq-compact {
-      margin-block: 2rem;
+      margin-block: 1.75rem;
     }
     .faq-item {
       background: var(--surface-card);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-xs);
       border: 1px solid var(--border-light);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
       overflow: hidden;
     }
     .faq-question-btn {
       width: 100%;
-      padding: 1rem 1.25rem;
+      padding: 0.85rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       text-align: left;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--ink-primary);
     }
     .faq-answer-panel {
       display: none;
-      padding: 0 1.25rem 1rem;
-      font-size: 0.85rem;
+      padding: 0 1rem 0.85rem;
+      font-size: 0.8rem;
       color: var(--ink-secondary);
-      line-height: 1.55;
+      line-height: 1.5;
     }
     .faq-item.active .faq-answer-panel {
       display: block;
@@ -808,7 +822,7 @@
     }
     .faq-question-btn span.plus {
       transition: transform 0.2s ease;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       line-height: 1;
     }
 
@@ -820,19 +834,20 @@
       bottom: 0;
       left: 0;
       right: 0;
+      width: 100%;
       height: var(--bottom-bar-h);
-      background: rgba(252, 251, 249, 0.95);
+      background: rgba(252, 251, 249, 0.96);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid var(--border-light);
       display: flex;
       align-items: center;
       justify-content: space-around;
-      z-index: 999;
+      z-index: 400;
       padding-bottom: env(safe-area-inset-bottom, 0);
     }
     body[data-theme="midnight"] .mobile-bottom-dock {
-      background: rgba(17, 18, 20, 0.95);
+      background: rgba(17, 18, 20, 0.96);
     }
     @media (min-width: 1024px) {
       .mobile-bottom-dock {
@@ -845,35 +860,35 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 3px;
+      gap: 2px;
       color: var(--ink-secondary);
       font-size: 0.65rem;
       font-weight: 600;
-      padding: 6px 12px;
+      padding: 4px 12px;
       position: relative;
     }
     .dock-tab.active {
       color: var(--ink-primary);
     }
     .dock-tab svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
     }
 
     /* ==========================================================================
-       MODAL: MOBILE BOTTOM SHEET / QUICK VIEW
+       MODAL 1: MOBILE BOTTOM SHEET / QUICK VIEW
        ========================================================================== */
-    .sheet-backdrop {
+    .sheet-modal-backdrop {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
-      z-index: 2000;
+      z-index: 1000;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
-    .sheet-backdrop.active {
+    .sheet-modal-backdrop.active {
       opacity: 1;
       pointer-events: auto;
     }
@@ -884,22 +899,22 @@
       left: 0;
       right: 0;
       background: var(--surface-card);
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
       box-shadow: var(--shadow-lg);
-      z-index: 2001;
-      max-height: 90vh;
+      z-index: 1001;
+      max-height: 85vh;
       overflow-y: auto;
       transform: translateY(100%);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 1.5rem;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 1.25rem;
     }
     @media (min-width: 768px) {
       .bottom-sheet {
-        max-width: 480px;
+        max-width: 440px;
         left: 50%;
         bottom: 50%;
         transform: translate(-50%, 60%) scale(0.95);
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-md);
         opacity: 0;
         pointer-events: none;
       }
@@ -914,11 +929,11 @@
     }
 
     .sheet-drag-handle {
-      width: 40px;
+      width: 36px;
       height: 4px;
       border-radius: var(--radius-pill);
       background: var(--border-medium);
-      margin: 0 auto 1.25rem;
+      margin: 0 auto 1rem;
     }
     @media (min-width: 768px) {
       .sheet-drag-handle {
@@ -928,23 +943,23 @@
 
     .sheet-img-wrap {
       aspect-ratio: 4 / 4;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       overflow: hidden;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       background: var(--surface-subtle);
     }
 
     .size-selector-row {
       display: flex;
-      gap: 0.5rem;
-      margin-block: 1rem;
+      gap: 0.4rem;
+      margin-block: 0.75rem;
     }
     .size-chip {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-sm);
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-xs);
       border: 1px solid var(--border-medium);
-      font-size: 0.8125rem;
+      font-size: 0.78rem;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -958,30 +973,45 @@
     }
 
     /* ==========================================================================
-       CART SLIDE-OVER DRAWER
+       CART SLIDE-OVER DRAWER (Fixed Overlay & Stacking)
        ========================================================================== */
     .cart-drawer-wrap {
       position: fixed;
       inset: 0;
-      z-index: 2500;
-      display: flex;
-      justify-content: flex-end;
+      z-index: 1200;
       pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      visibility: hidden;
+      transition: visibility 0.3s ease;
     }
     .cart-drawer-wrap.open {
       pointer-events: auto;
-      opacity: 1;
+      visibility: visible;
     }
+
+    .cart-drawer-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .cart-drawer-wrap.open .cart-drawer-backdrop {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .cart-drawer-panel {
+      position: relative;
+      z-index: 10;
       width: 100%;
-      max-width: 380px;
+      max-width: 360px;
       height: 100%;
       background: var(--surface-card);
       box-shadow: var(--shadow-lg);
       display: flex;
       flex-direction: column;
+      margin-left: auto;
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -990,7 +1020,7 @@
     }
 
     .cart-header {
-      padding: 1.25rem;
+      padding: 1rem 1.15rem;
       border-bottom: 1px solid var(--border-light);
       display: flex;
       align-items: center;
@@ -1002,7 +1032,7 @@
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.85rem;
     }
     .cart-item-card {
       display: flex;
@@ -1011,8 +1041,8 @@
       border-bottom: 1px solid var(--border-light);
     }
     .cart-thumb {
-      width: 65px;
-      height: 80px;
+      width: 60px;
+      height: 75px;
       border-radius: var(--radius-xs);
       overflow: hidden;
       flex-shrink: 0;
@@ -1024,27 +1054,71 @@
       justify-content: space-between;
     }
     .cart-footer {
-      padding: 1.25rem;
+      padding: 1.15rem;
       background: var(--surface-subtle);
       border-top: 1px solid var(--border-light);
     }
 
     /* ==========================================================================
-       PROTECTED ADMIN SHOP MANAGER (Hidden from Public Customers)
+       OWNER ACCESS PIN MODAL (Clean Integrated Modal)
        ========================================================================== */
+    .pin-modal-wrap {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 1500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .pin-modal-wrap.open {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .pin-dialog-card {
+      background: var(--surface-card);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 360px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .pin-input-field {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-medium);
+      font-size: 1.25rem;
+      text-align: center;
+      letter-spacing: 0.4em;
+      background: var(--canvas);
+      color: var(--ink-primary);
+      margin-block: 0.75rem;
+      outline: none;
+    }
+
+    /* Floating Owner Mode Active Indicator */
     .admin-float-indicator {
       display: none;
       position: fixed;
-      bottom: 80px;
-      right: 16px;
+      bottom: 75px;
+      right: 14px;
       background: #121212;
       color: #ffffff;
-      padding: 0.65rem 1.15rem;
+      padding: 0.55rem 1rem;
       border-radius: var(--radius-pill);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       box-shadow: var(--shadow-lg);
-      z-index: 1500;
+      z-index: 450;
       gap: 0.4rem;
       align-items: center;
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1053,63 +1127,63 @@
       display: flex;
     }
 
+    /* Admin Full Dashboard Modal */
     .admin-modal-wrap {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(6px);
-      z-index: 3000;
+      z-index: 1600;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1rem;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
     }
     .admin-modal-wrap.open {
       opacity: 1;
       pointer-events: auto;
+      visibility: visible;
     }
 
     .admin-dialog-card {
       background: var(--surface-card);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-md);
       width: 100%;
-      max-width: 640px;
-      max-height: 90vh;
+      max-width: 580px;
+      max-height: 88vh;
       overflow-y: auto;
-      padding: 1.5rem;
+      padding: 1.25rem;
       box-shadow: var(--shadow-lg);
     }
 
     .admin-input-field {
       width: 100%;
-      padding: 0.75rem;
-      border-radius: var(--radius-sm);
+      padding: 0.65rem;
+      border-radius: var(--radius-xs);
       border: 1px solid var(--border-medium);
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-family: inherit;
       background: var(--canvas);
       color: var(--ink-primary);
-      margin-top: 0.35rem;
+      margin-top: 0.25rem;
       outline: none;
-    }
-    .admin-input-field:focus {
-      border-color: var(--accent-warm);
     }
 
     /* Toast */
     .toast-msg {
       position: fixed;
-      top: 70px;
+      top: 65px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
       background: var(--ink-primary);
       color: var(--canvas);
-      padding: 0.65rem 1.25rem;
+      padding: 0.6rem 1.15rem;
       border-radius: var(--radius-pill);
-      font-size: 0.8125rem;
+      font-size: 0.78rem;
       font-weight: 600;
       box-shadow: var(--shadow-md);
       z-index: 9999;
@@ -1126,26 +1200,30 @@
     .site-footer {
       background: var(--surface-subtle);
       border-top: 1px solid var(--border-light);
-      padding: 3rem 1rem 2rem;
-      margin-top: 3rem;
-      font-size: 0.85rem;
+      padding: 2.5rem 1rem 1.75rem;
+      margin-top: 2.5rem;
+      font-size: 0.82rem;
       color: var(--ink-secondary);
     }
     .footer-brand {
       font-family: var(--font-serif);
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: var(--ink-primary);
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
     .footer-admin-trigger {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--ink-tertiary);
-      margin-top: 1.5rem;
       cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .footer-admin-trigger:hover {
+      color: var(--ink-primary);
     }
   </style>
 </head>
@@ -1166,7 +1244,7 @@
     <div class="container header-inner">
       <div class="header-left">
         <button class="icon-btn" id="mobile-menu-toggle" aria-label="Open Navigation Menu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="4" y1="7" x2="20" y2="7"></line>
             <line x1="4" y1="12" x2="20" y2="12"></line>
             <line x1="4" y1="17" x2="20" y2="17"></line>
@@ -1189,14 +1267,14 @@
       <!-- Right Actions -->
       <div class="header-right">
         <button class="icon-btn" id="search-toggle-btn" aria-label="Search Collection">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
 
         <button class="icon-btn cart-btn-wrap" id="cart-toggle-btn" aria-label="View Shopping Bag">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -1212,7 +1290,7 @@
        ========================================================================== -->
   <section class="hero-banner">
     <div class="hero-media-bg">
-      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop" alt="meri.clothing FW26 Capsule Lookbook">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop" alt="meri.clothing FW26 Capsule Lookbook">
     </div>
     <div class="hero-gradient-scrim"></div>
 
@@ -1257,8 +1335,8 @@
     </nav>
 
     <!-- Search Overlay / Input (Expandable) -->
-    <div id="search-bar-wrap" style="display:none; margin-bottom:1.5rem;">
-      <input type="text" id="live-search-input" class="admin-input-field" placeholder="Search by silhouette, cloth, or style..." style="background:var(--surface-card); padding:0.85rem 1rem;">
+    <div id="search-bar-wrap" style="display:none; margin-bottom:1.25rem;">
+      <input type="text" id="live-search-input" class="admin-input-field" placeholder="Search by silhouette, cloth, or style..." style="background:var(--surface-card); padding:0.75rem 1rem;">
     </div>
 
     <!-- Section Title -->
@@ -1275,7 +1353,7 @@
     <!-- PROMOTIONAL STORY CARD (Editorial High-Impact) -->
     <section class="promo-banner-card" id="lookbook">
       <div class="promo-content">
-        <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-rich); font-weight:700;">Atelier Craft</span>
+        <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-rich); font-weight:700;">Atelier Craft</span>
         <h3>Built with single-tailor precision in Kyoto & Milan.</h3>
         <p>We reject fast-fashion synthetics. Every garment is cut from a single continuous bolt of raw organic fiber, finished with hand-bound seams and certified for lifetime repair.</p>
         <a href="#catalog" class="btn-primary" style="background:var(--ink-primary); color:var(--canvas);">Discover Provenance</a>
@@ -1289,7 +1367,7 @@
     <section class="pillars-grid" id="pillars">
       <div class="pillar-box">
         <div class="pillar-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
         <div class="pillar-text">
           <h4>100% Traceable Fiber</h4>
@@ -1298,7 +1376,7 @@
       </div>
       <div class="pillar-box">
         <div class="pillar-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <div class="pillar-text">
           <h4>Strict Batch Runs</h4>
@@ -1307,7 +1385,7 @@
       </div>
       <div class="pillar-box">
         <div class="pillar-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
         </div>
         <div class="pillar-text">
           <h4>Complimentary Shipping</h4>
@@ -1380,19 +1458,19 @@
   <!-- ==========================================================================
        MODAL 1: MOBILE BOTTOM SHEET / QUICK VIEW
        ========================================================================== -->
-  <div class="sheet-backdrop" id="sheet-backdrop"></div>
+  <div class="sheet-modal-backdrop" id="sheet-backdrop"></div>
   <div class="bottom-sheet" id="quick-view-sheet" role="dialog" aria-modal="true">
     <div class="sheet-drag-handle"></div>
     <div class="sheet-img-wrap">
       <img id="sheet-product-img" src="" alt="Piece Preview">
     </div>
-    <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-rich); font-weight:700;" id="sheet-product-edition">Editioned Piece</span>
-    <h3 style="font-family:var(--font-serif); font-size:1.45rem; margin-top:0.25rem;" id="sheet-product-title">Garment Title</h3>
-    <div style="font-size:1.25rem; font-weight:700; margin-top:0.25rem;" id="sheet-product-price">€0</div>
-    <p style="font-size:0.85rem; color:var(--ink-secondary); margin-top:0.6rem; line-height:1.5;" id="sheet-product-desc">Description</p>
+    <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-rich); font-weight:700;" id="sheet-product-edition">Editioned Piece</span>
+    <h3 style="font-family:var(--font-serif); font-size:1.35rem; margin-top:0.25rem;" id="sheet-product-title">Garment Title</h3>
+    <div style="font-size:1.15rem; font-weight:700; margin-top:0.25rem;" id="sheet-product-price">€0</div>
+    <p style="font-size:0.82rem; color:var(--ink-secondary); margin-top:0.5rem; line-height:1.45;" id="sheet-product-desc">Description</p>
 
-    <div style="margin-top:1rem;">
-      <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase;">Select Sizing</span>
+    <div style="margin-top:0.85rem;">
+      <span style="font-size:0.72rem; font-weight:700; text-transform:uppercase;">Select Sizing</span>
       <div class="size-selector-row" id="sheet-sizes">
         <button class="size-chip">XS</button>
         <button class="size-chip selected">S</button>
@@ -1402,19 +1480,19 @@
       </div>
     </div>
 
-    <button id="sheet-add-to-bag" class="btn-primary" style="width:100%; background:var(--ink-primary); color:var(--canvas); margin-top:1rem;">
+    <button id="sheet-add-to-bag" class="btn-primary" style="width:100%; background:var(--ink-primary); color:var(--canvas); margin-top:0.85rem;">
       Add to Shopping Bag
     </button>
   </div>
 
   <!-- ==========================================================================
-       MODAL 2: SHOPPING BAG SLIDE-OVER DRAWER
+       MODAL 2: SHOPPING BAG SLIDE-OVER DRAWER (No occluding bugs)
        ========================================================================== -->
   <div class="cart-drawer-wrap" id="cart-drawer">
-    <div class="sheet-backdrop" id="cart-backdrop-click" style="opacity:1; pointer-events:auto;"></div>
+    <div class="cart-drawer-backdrop" id="cart-backdrop-click"></div>
     <div class="cart-drawer-panel">
       <div class="cart-header">
-        <h3 style="font-size:1.15rem; font-weight:700;">Shopping Bag (<span id="cart-drawer-count">0</span>)</h3>
+        <h3 style="font-size:1.05rem; font-weight:700;">Shopping Bag (<span id="cart-drawer-count">0</span>)</h3>
         <button class="icon-btn" id="cart-drawer-close">✕</button>
       </div>
 
@@ -1423,7 +1501,7 @@
       </div>
 
       <div class="cart-footer">
-        <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; margin-bottom:1rem;">
+        <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.05rem; margin-bottom:0.85rem;">
           <span>Subtotal</span>
           <span id="cart-subtotal-text">€0</span>
         </div>
@@ -1435,34 +1513,48 @@
   </div>
 
   <!-- ==========================================================================
-       OWNER / ADMIN PORTAL (Secret & Protected from Public Customers)
+       MODAL 3: INTEGRATED OWNER PIN AUTHENTICATION MODAL (Replaces window.prompt)
        ========================================================================== -->
-  <!-- Floating pill appears ONLY after owner unlocks with PIN -->
+  <div class="pin-modal-wrap" id="pin-modal" role="dialog" aria-modal="true">
+    <div class="pin-dialog-card">
+      <div style="font-size:1.75rem; margin-bottom:0.5rem;">🔒</div>
+      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.25rem;">Atelier Owner Access</h3>
+      <p style="font-size:0.82rem; color:var(--ink-secondary);">Enter your 4-digit security PIN to unlock the shop manager.</p>
+      <input type="password" id="owner-pin-input" class="pin-input-field" maxlength="4" placeholder="••••" inputmode="numeric" autocomplete="off">
+      <p style="font-size:0.72rem; color:var(--ink-tertiary); margin-bottom:1rem;">Default Security PIN: 1234</p>
+      <div style="display:flex; gap:0.5rem;">
+        <button class="btn-primary" id="pin-submit-btn" style="flex:1; background:var(--ink-primary); color:var(--canvas);">Unlock Console</button>
+        <button class="btn-glass" id="pin-cancel-btn" style="color:var(--ink-primary); border:1px solid var(--border-medium);">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Owner Mode Active Indicator -->
   <div class="admin-float-indicator" id="admin-active-pill">
     <span>🔒 Store Owner Mode</span>
     <button id="admin-open-dashboard" style="background:#ffffff; color:#121212; padding:0.2rem 0.6rem; border-radius:999px; font-size:0.7rem; font-weight:700;">Manage</button>
   </div>
 
-  <!-- Admin Modal Dialog -->
-  <div class="admin-modal-wrap" id="admin-modal">
+  <!-- Admin Full Dashboard Modal -->
+  <div class="admin-modal-wrap" id="admin-modal" role="dialog" aria-modal="true">
     <div class="admin-dialog-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.15rem;">
         <div>
-          <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--accent-rich);">Private Owner Console</span>
-          <h3 style="font-size:1.35rem; font-weight:700;">meri. Product Inventory</h3>
+          <span style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--accent-rich);">Private Owner Console</span>
+          <h3 style="font-size:1.25rem; font-weight:700;">Product Inventory</h3>
         </div>
         <button class="icon-btn" id="admin-close-modal">✕</button>
       </div>
 
-      <form id="admin-add-product-form" style="display:flex; flex-direction:column; gap:0.75rem;">
+      <form id="admin-add-product-form" style="display:flex; flex-direction:column; gap:0.65rem;">
         <div>
-          <label style="font-size:0.75rem; font-weight:700;">Garment Title</label>
+          <label style="font-size:0.72rem; font-weight:700;">Garment Title</label>
           <input type="text" id="adm-title" class="admin-input-field" placeholder="e.g. Sculpted Cashmere Overcoat" required>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
           <div>
-            <label style="font-size:0.75rem; font-weight:700;">Category</label>
+            <label style="font-size:0.72rem; font-weight:700;">Category</label>
             <select id="adm-cat" class="admin-input-field">
               <option value="Outerwear">Outerwear</option>
               <option value="Tailoring">Tailoring</option>
@@ -1471,29 +1563,29 @@
             </select>
           </div>
           <div>
-            <label style="font-size:0.75rem; font-weight:700;">Price (€)</label>
+            <label style="font-size:0.72rem; font-weight:700;">Price (€)</label>
             <input type="number" id="adm-price" class="admin-input-field" placeholder="1250" required>
           </div>
         </div>
 
         <div>
-          <label style="font-size:0.75rem; font-weight:700;">Image URL</label>
+          <label style="font-size:0.72rem; font-weight:700;">Image URL</label>
           <input type="url" id="adm-img" class="admin-input-field" placeholder="https://images.unsplash.com/..." required>
         </div>
 
         <div>
-          <label style="font-size:0.75rem; font-weight:700;">Description</label>
+          <label style="font-size:0.72rem; font-weight:700;">Description</label>
           <textarea id="adm-desc" class="admin-input-field" rows="2" placeholder="Fabric drape, tailoring structure..." required></textarea>
         </div>
 
-        <button type="submit" class="btn-primary" style="background:var(--ink-primary); color:var(--canvas); margin-top:0.5rem;">
+        <button type="submit" class="btn-primary" style="background:var(--ink-primary); color:var(--canvas); margin-top:0.4rem;">
           Add Piece to Storefront
         </button>
       </form>
 
-      <div style="margin-top:1.5rem;">
-        <h4 style="font-size:0.9rem; font-weight:700; margin-bottom:0.75rem;">Existing Products</h4>
-        <div id="admin-inventory-list" style="display:flex; flex-direction:column; gap:0.5rem; max-height:220px; overflow-y:auto;">
+      <div style="margin-top:1.25rem;">
+        <h4 style="font-size:0.85rem; font-weight:700; margin-bottom:0.6rem;">Existing Products</h4>
+        <div id="admin-inventory-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:200px; overflow-y:auto;">
           <!-- Rendered in JS -->
         </div>
       </div>
@@ -1509,34 +1601,34 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-brand">meri.</div>
-      <p style="max-width:24rem; margin-bottom:1.5rem;">
+      <p style="max-width:24rem; margin-bottom:1.25rem;">
         Modern silhouettes and untreated natural yarns. Crafted with architectural precision for everyday quiet luxury.
       </p>
 
-      <div style="display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.8rem; font-weight:600;">
+      <div style="display:flex; gap:1.25rem; flex-wrap:wrap; font-size:0.78rem; font-weight:600;">
         <a href="#catalog">Collection</a>
         <a href="#pillars">Provenance</a>
         <a href="#faq">Client Service</a>
         <a href="mailto:concierge@meri.clothing">concierge@meri.clothing</a>
       </div>
 
-      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+      <div style="margin-top:1.75rem; padding-top:1.25rem; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
         <p>© 2026 meri.clothing. All rights reserved.</p>
 
-        <!-- Hidden Discreet Owner Portal Trigger -->
-        <span class="footer-admin-trigger" id="owner-secret-trigger" title="Shop Owner Portal">
+        <!-- Hidden Discreet Owner Portal Trigger (Accessible Button) -->
+        <button type="button" class="footer-admin-trigger" id="owner-secret-trigger" aria-label="Open Atelier Owner Portal">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           <span>Owner Access</span>
-        </span>
+        </button>
       </div>
     </div>
   </footer>
 
   <!-- ==========================================================================
-       JAVASCRIPT APP LOGIC (Lightweight, Mobile-First, Highly Responsive)
+       JAVASCRIPT APP LOGIC
        ========================================================================== -->
   <script>
-    /* 1. Curated Luxury Catalog Data */
+    /* 1. Curated Luxury Outerwear & Tailoring Catalog Data */
     const DEFAULT_CATALOG = [
       {
         id: "m-01",
@@ -1544,7 +1636,7 @@
         category: "Outerwear",
         price: 1350,
         edition: "Limited Run of 30",
-        image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop",
         desc: "Sculpted from double-faced virgin wool with relaxed raglan volume and deep horn button closures."
       },
       {
@@ -1562,7 +1654,7 @@
         category: "Knitwear",
         price: 590,
         edition: "Pure Mongolian Cashmere",
-        image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=800&auto=format&fit=crop",
         desc: "7-gauge brushed organic cashmere. Zero side seams for pure tactile comfort and fluid drape."
       },
       {
@@ -1580,7 +1672,7 @@
         category: "Outerwear",
         price: 840,
         edition: "Belgian Flax Linen",
-        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop",
         desc: "Unlined relaxed kimono cut. Softened heavy linen with concealed interior ribbon closures."
       },
       {
@@ -1612,7 +1704,7 @@
       }
     ];
 
-    const STORAGE_KEY = "meri_clothing_store_v3";
+    const STORAGE_KEY = "meri_clothing_store_v4";
     let catalog = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_CATALOG;
     let cart = [];
     let selectedCategory = "all";
@@ -1624,7 +1716,7 @@
     function showToast(msg) {
       toast.textContent = msg;
       toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2600);
+      setTimeout(() => toast.classList.remove("show"), 2400);
     }
 
     // Render Product Grid (Mobile 2-column)
@@ -1637,7 +1729,8 @@
         filtered = filtered.filter(i => i.category.toLowerCase() === selectedCategory.toLowerCase());
       }
 
-      const query = document.getElementById("live-search-input").value.trim().toLowerCase();
+      const searchElem = document.getElementById("live-search-input");
+      const query = searchElem ? searchElem.value.trim().toLowerCase() : "";
       if (query) {
         filtered = filtered.filter(i => i.title.toLowerCase().includes(query) || i.desc.toLowerCase().includes(query));
       }
@@ -1792,15 +1885,15 @@
               <img src="${item.image}" class="cart-thumb" alt="${item.title}">
               <div class="cart-meta">
                 <div>
-                  <h4 style="font-size:0.85rem; font-weight:700;">${item.title}</h4>
-                  <p style="font-size:0.75rem; color:var(--ink-secondary);">Size: ${item.size}</p>
+                  <h4 style="font-size:0.82rem; font-weight:700;">${item.title}</h4>
+                  <p style="font-size:0.72rem; color:var(--ink-secondary);">Size: ${item.size}</p>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <span style="font-weight:700; font-size:0.9rem;">€${(item.price * item.qty).toLocaleString()}</span>
-                  <div style="display:flex; align-items:center; gap:0.4rem;">
-                    <button onclick="window.changeQty(${idx}, -1)" style="padding:2px 8px; border:1px solid var(--border-medium); border-radius:4px;">-</button>
+                  <span style="font-weight:700; font-size:0.88rem;">€${(item.price * item.qty).toLocaleString()}</span>
+                  <div style="display:flex; align-items:center; gap:0.35rem;">
+                    <button onclick="window.changeQty(${idx}, -1)" style="padding:2px 7px; border:1px solid var(--border-medium); border-radius:4px;">-</button>
                     <span style="font-size:0.8rem;">${item.qty}</span>
-                    <button onclick="window.changeQty(${idx}, 1)" style="padding:2px 8px; border:1px solid var(--border-medium); border-radius:4px;">+</button>
+                    <button onclick="window.changeQty(${idx}, 1)" style="padding:2px 7px; border:1px solid var(--border-medium); border-radius:4px;">+</button>
                   </div>
                 </div>
               </div>
@@ -1848,27 +1941,50 @@
     });
 
     // =========================================================================
-    // PROTECTED OWNER / ADMIN ACCESS (Hidden from public shoppers)
+    // PROTECTED OWNER ACCESS VIA EMBEDDED PIN MODAL (No window.prompt block)
     // =========================================================================
     let isOwnerUnlocked = false;
     const ownerSecretTrigger = document.getElementById("owner-secret-trigger");
+    const pinModal = document.getElementById("pin-modal");
+    const pinInput = document.getElementById("owner-pin-input");
+    const pinSubmitBtn = document.getElementById("pin-submit-btn");
+    const pinCancelBtn = document.getElementById("pin-cancel-btn");
     const adminActivePill = document.getElementById("admin-active-pill");
     const adminModal = document.getElementById("admin-modal");
 
     ownerSecretTrigger.addEventListener("click", () => {
-      if (!isOwnerUnlocked) {
-        const pin = prompt("Enter 4-Digit Owner Security PIN (Default: 1234):");
-        if (pin === "1234" || pin === "meri") {
-          isOwnerUnlocked = true;
-          adminActivePill.classList.add("visible");
-          showToast("Owner mode activated.");
-          openAdminModal();
-        } else if (pin !== null) {
-          showToast("Incorrect security PIN.");
-        }
-      } else {
+      if (isOwnerUnlocked) {
         openAdminModal();
+      } else {
+        pinInput.value = "";
+        pinModal.classList.add("open");
+        setTimeout(() => pinInput.focus(), 150);
       }
+    });
+
+    pinCancelBtn.addEventListener("click", () => {
+      pinModal.classList.remove("open");
+    });
+
+    function verifyPin() {
+      const pin = pinInput.value.trim();
+      if (pin === "1234" || pin === "meri") {
+        isOwnerUnlocked = true;
+        pinModal.classList.remove("open");
+        adminActivePill.classList.add("visible");
+        showToast("Owner mode verified.");
+        openAdminModal();
+      } else {
+        showToast("Incorrect Security PIN.");
+        pinInput.value = "";
+        pinInput.focus();
+      }
+    }
+
+    pinSubmitBtn.addEventListener("click", verifyPin);
+    pinInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") verifyPin();
+      if (e.key === "Escape") pinModal.classList.remove("open");
     });
 
     document.getElementById("admin-open-dashboard").addEventListener("click", openAdminModal);
@@ -1882,7 +1998,7 @@
     function renderAdminInventory() {
       const list = document.getElementById("admin-inventory-list");
       list.innerHTML = catalog.map((item, idx) => `
-        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface-subtle); padding:0.5rem 0.75rem; border-radius:6px; font-size:0.8rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface-subtle); padding:0.5rem 0.75rem; border-radius:6px; font-size:0.78rem;">
           <div>
             <strong>${item.title}</strong>
             <span style="color:var(--ink-secondary); margin-left:0.5rem;">€${item.price}</span>
