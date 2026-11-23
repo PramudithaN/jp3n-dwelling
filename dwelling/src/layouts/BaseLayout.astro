@@ -57,6 +57,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <ThemeEngine />
 </head>
 <body>
+  <!-- Theme-Matched Screen Content Loader -->
+  <div class="jp3n-screen-loader" id="jp3nScreenLoader" aria-hidden="true">
+    <div class="loader-core">
+      <div class="loader-ring"></div>
+      <span class="loader-brand">JP3N</span>
+    </div>
+    <span class="loader-status">LOADING CONTENT</span>
+  </div>
+
   <!-- Minimal Theme-Matched Route & Load Progress Bar -->
   <div class="jp3n-route-loader" id="jp3nRouteLoader" aria-hidden="true"></div>
   {isMaintenance ? (
@@ -80,22 +89,40 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <script is:inline>
         (function () {
           var bar = document.getElementById('jp3nRouteLoader');
-          if (!bar) return;
+          var screen = document.getElementById('jp3nScreenLoader');
+          if (!bar && !screen) return;
 
-          function finishBar() {
-            bar.classList.remove('is-loading');
-            bar.classList.add('is-done');
-            setTimeout(function () {
-              bar.classList.remove('is-done');
-            }, 320);
+          function hideLoaders() {
+            if (bar) {
+              bar.classList.remove('is-loading');
+              bar.classList.add('is-done');
+              setTimeout(function () {
+                bar.classList.remove('is-done');
+              }, 320);
+            }
+            if (screen) {
+              screen.classList.add('is-hidden');
+            }
           }
 
-          window.addEventListener('pageshow', finishBar);
+          function showLoaders() {
+            if (bar) {
+              bar.classList.remove('is-done');
+              bar.classList.add('is-loading');
+            }
+            if (screen) {
+              screen.classList.remove('is-hidden');
+            }
+          }
+
+          window.addEventListener('pageshow', hideLoaders);
           if (document.readyState === 'complete') {
-            finishBar();
+            hideLoaders();
           } else {
-            bar.classList.add('is-loading');
-            window.addEventListener('load', finishBar, { once: true });
+            showLoaders();
+            window.addEventListener('load', hideLoaders, { once: true });
+            // Safety cap so slow third-party resources never block the screen
+            setTimeout(hideLoaders, 1800);
           }
 
           document.addEventListener('click', function (e) {
@@ -114,12 +141,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             ) {
               return;
             }
-            // Only show bar on actual cross-page navigation (not same-page hash)
             try {
               var dest = new URL(target.href, window.location.href);
               if (dest.origin === window.location.origin && dest.pathname !== window.location.pathname) {
-                bar.classList.remove('is-done');
-                bar.classList.add('is-loading');
+                showLoaders();
               }
             } catch {}
           });
@@ -171,5 +196,64 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .jp3n-route-loader.is-done {
     opacity: 0;
     width: 100%;
+  }
+
+  /* Theme-Matched Screen Content Loader */
+  .jp3n-screen-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10040;
+    background-color: var(--bg-canvas);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    opacity: 1;
+    transition: opacity 280ms ease, visibility 280ms ease;
+  }
+
+  .jp3n-screen-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .loader-core {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loader-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--border-hairline);
+    border-top-color: var(--text-accent);
+    border-right-color: var(--text-accent-soft);
+    animation: jp3nLoaderSpin 0.85s linear infinite;
+  }
+
+  .loader-brand {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--text-primary);
+  }
+
+  .loader-status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--text-accent);
+  }
+
+  @keyframes jp3nLoaderSpin {
+    to { transform: rotate(360deg); }
   }
 </style>
