@@ -24,6 +24,8 @@ export interface SiteConfig {
     name: string;
     role: string;
     bio: string;
+    afk: string;
+    afkNote: string;
     githubHandle: string;
     portrait: string;
     stack: string[];
@@ -74,6 +76,8 @@ export const siteConfig: SiteConfig = {
       name: 'Jude Maria Bevan',
       role: 'Full-Stack & DevOps Engineer',
       bio: 'Bridges Java/Spring Boot backends, Flutter mobile apps, and containerized CI/CD pipelines with Docker, Minikube, and Jenkins.',
+      afk: 'Lights, Camera, Relax',
+      afkNote: 'Trading code for credits, with one more movie before bed.',
       githubHandle: 'judebevan',
       portrait: '/images/team/member-3-f1.jpg',
       stack: ['Java', 'C++', 'Flutter', 'Docker']
@@ -82,6 +86,8 @@ export const siteConfig: SiteConfig = {
       name: 'Peenaka Wedamulla',
       role: 'AI Tooling & QA Automation Engineer',
       bio: 'Develops AI-powered coding-agent CLIs, enterprise Espresso/BrowserStack mobile test frameworks, and real-time Java/Angular systems (ContexaForge).',
+      afk: 'Leading with Heart',
+      afkNote: 'Turning good intentions into action, one service project at a time.',
       githubHandle: 'peenaka',
       portrait: '/images/team/member-4-f1.jpg',
       stack: ['JavaScript', 'Java', 'Angular', 'C#']
@@ -90,6 +96,8 @@ export const siteConfig: SiteConfig = {
       name: 'Pathum Sandeepa',
       role: 'Platform & Cloud Engineer',
       bio: 'Architects Go control planes, Kubernetes operators, multi-tenant TypeScript platforms, and interactive 3D web experiences (iconfigly, Three-JS-3D-Earth).',
+      afk: 'Live from the Dev World',
+      afkNote: 'Following live coding sessions, tech talks, and builds as they happen.',
       githubHandle: 'pathumsandeepa',
       portrait: '/images/team/member-2-f1.jpg',
       stack: ['Go', 'TypeScript', 'Kubernetes', 'PHP']
@@ -98,6 +106,8 @@ export const siteConfig: SiteConfig = {
       name: 'Pramuditha Nadun',
       role: 'Systems & Tooling Architect',
       bio: 'Builds offline-first utilities, GPU-accelerated web engines, and procedural developer tools across TypeScript, Rust, C#, and Python (Filee, git-tulkun, bytesift).',
+      afk: 'Recharging the Dev Battery',
+      afkNote: 'Logged off and recharging for the next big commit.',
       githubHandle: 'PramudithaN',
       portrait: '/images/team/member-1-f1.jpg',
       stack: ['TypeScript', 'Rust', 'C#', 'Python']
@@ -106,6 +116,8 @@ export const siteConfig: SiteConfig = {
       name: 'Nipun Kariyawasam',
       role: 'Frontend, Astro & AI Researcher',
       bio: 'Crafts zero-bloat Astro interfaces and TypeScript hardware utilities alongside CNN 3D gaze estimation and Unity AI research (pregnantbattery, synth-gaze-fyp).',
+      afk: 'On a Leo Mission',
+      afkNote: 'Giving back through volunteering, community drives, and Leo teamwork.',
       githubHandle: 'sanszerif',
       portrait: '/images/team/member-5-f1.jpg',
       stack: ['Astro', 'TypeScript', 'Python', 'Dart']

@@ -8,6 +8,9 @@ import ThoughtsNoise from '../components/ThoughtsNoise.astro';
 import EditorialCanvasCallout from '../components/EditorialCanvasCallout.astro';
 import RetroWorkstation from '../components/RetroWorkstation.astro';
 import ProjectsFolderStack from '../components/ProjectsFolderStack.astro';
+import TeamCalendar from '../components/TeamCalendar.astro';
+import WorkshopsFolders from '../components/WorkshopsFolders.astro';
+import AfkSection from '../components/AfkSection.astro';
 import { siteConfig } from '../config/site';
 
 const team = siteConfig.team;
@@ -51,60 +54,10 @@ const { email, github, linkedin } = siteConfig.contact;
         <h2 id="workshops-heading" class="section-heading">Four In-House Workshops</h2>
         <p class="section-sub">Zero outsourcing. Every craft executed by senior specialists.</p>
       </div>
+    </div>
 
-      <div class="workshops-cards">
-        <article class="workshop-box">
-          <span class="box-num">01</span>
-          <h3 class="box-title">Web Laboratory</h3>
-          <p class="box-desc">
-            Astro SSG platforms, TypeScript architectures, zero framework bloat, and sub-second 4G paint.
-          </p>
-          <div class="box-specs">
-            <span>Static HTML</span>
-            <span>TypeScript</span>
-            <span>Zero JS Hydration</span>
-          </div>
-        </article>
-
-        <article class="workshop-box">
-          <span class="box-num">02</span>
-          <h3 class="box-title">Graphics Studio</h3>
-          <p class="box-desc">
-            Tactile visual identities, publication typography, and design token systems with verified WCAG AA contrast.
-          </p>
-          <div class="box-specs">
-            <span>Flat Color Systems</span>
-            <span>Vector Identity</span>
-            <span>Print & Digital</span>
-          </div>
-        </article>
-
-        <article class="workshop-box">
-          <span class="box-num">03</span>
-          <h3 class="box-title">Motion Bay</h3>
-          <p class="box-desc">
-            Product walkthroughs and interactive video narratives. Every asset compressed under 1.5MB with zero audio autoplay.
-          </p>
-          <div class="box-specs">
-            <span>Under 1.5MB Loops</span>
-            <span>Product Walkthroughs</span>
-            <span>Zero Audio Autoplay</span>
-          </div>
-        </article>
-
-        <article class="workshop-box">
-          <span class="box-num">04</span>
-          <h3 class="box-title">Open Forge</h3>
-          <p class="box-desc">
-            Community developer tools and open software utilities. Open source codebases with curated Good First Issues.
-          </p>
-          <div class="box-specs">
-            <span>MIT & OFL</span>
-            <span>Public RFCs</span>
-            <span>Welcoming Repos</span>
-          </div>
-        </article>
-      </div>
+    <div class="workshops-full-bleed">
+      <WorkshopsFolders />
     </div>
   </section>
 
@@ -117,6 +70,16 @@ const { email, github, linkedin } = siteConfig.contact;
        SECTION 5: THE COLLECTIVE (Meet the Team)
        ========================================================================= -->
   <TeamSection />
+
+  <!-- =========================================================================
+       SECTION 5B: BUILD CALENDAR (Daily GitHub Contributions)
+       ========================================================================= -->
+  <TeamCalendar id="calendar" />
+
+  <!-- =========================================================================
+       SECTION 5C: AFK (Time Off the Keyboard)
+       ========================================================================= -->
+  <AfkSection id="afk" />
 
   <!-- =========================================================================
        SECTION 6: THOUGHTS & SIGNAL NOISE
@@ -1204,6 +1167,11 @@ const { email, github, linkedin } = siteConfig.contact;
   }
 
   /* --- 4. WORKSHOPS --- */
+  .workshops-full-bleed {
+    width: 100%;
+    padding: 0 clamp(1.25rem, 2.5vw, 2.5rem);
+  }
+
   .workshops-section {
     padding: var(--space-4xl) 0;
     border-bottom: 1px solid var(--border-hairline);

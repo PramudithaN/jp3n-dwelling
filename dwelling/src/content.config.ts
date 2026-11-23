@@ -10,6 +10,11 @@ const workCollection = defineCollection({
     liveUrl: z.string().url().optional(),
     repoUrl: z.string().url().optional(),
     status: z.enum(['production', 'beta', 'concept']),
+    owner: z.string(),
+    ownerHandle: z.string(),
+    languages: z.array(z.string()),
+    stars: z.number().int().default(0),
+    forks: z.number().int().default(0),
     techStack: z.array(z.string()),
     metrics: z.record(z.string()).optional(),
     featuredOrder: z.number().int()

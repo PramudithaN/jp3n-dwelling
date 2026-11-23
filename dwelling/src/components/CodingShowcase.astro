@@ -1,0 +1,277 @@
+---
+// Recreated CRT phosphor-glowing code display + JP3N coding practices
+---
+
+<div class="coding-showcase">
+  <div class="coding-grid">
+    <!-- Left: Recreated CRT Phosphor-Glow Code Screen (Pure HTML + CSS) -->
+    <div class="crt-code-frame">
+      <div class="crt-scanlines" aria-hidden="true"></div>
+      <div class="crt-vignette" aria-hidden="true"></div>
+
+      <pre class="crt-code" aria-label="JP3N First-Principles Engineering Code"><code><span class="c-cmt">// JP3N Tech Dwelling</span>
+<span class="c-cmt">// main.cpp — first-principles runtime</span>
+<span class="c-inc">#include</span> <span class="c-str">"atelier.h"</span> <span class="c-cmt">// zero-bloat core</span>
+
+<span class="c-kw">int</span> <span class="c-fn">main</span>()
+<span class="c-punc">&#123;</span>
+    <span class="c-cmt">// Allocate clean static architecture</span>
+    <span class="c-type">Atelier</span>* <span class="c-var">craft</span> = <span class="c-kw">new</span> <span class="c-type">Atelier</span>();
+
+    <span class="c-cmt">// Loop while shipping production systems</span>
+    <span class="c-kw">while</span> (<span class="c-var">craft</span>-&gt;<span class="c-fn">is_shipping</span>())
+    <span class="c-punc">&#123;</span>
+        <span class="c-var">craft</span>-&gt;<span class="c-fn">strip_framework_bloat</span>();
+
+        <span class="c-cmt">// Core engineering invariants</span>
+        <span class="c-kw">if</span> (<span class="c-var">craft</span>-&gt;<span class="c-fn">static_html</span>() &amp;&amp; <span class="c-var">craft</span>-&gt;<span class="c-fn">zero_trackers</span>() &amp;&amp;
+            <span class="c-var">craft</span>-&gt;<span class="c-fn">wcag_aa</span>() &amp;&amp; <span class="c-var">craft</span>-&gt;<span class="c-fn">sub_second_lcp</span>())
+        <span class="c-punc">&#123;</span>
+            <span class="c-cmt">// Ship clean, deterministic software</span>
+            <span class="c-var">craft</span>-&gt;<span class="c-var">production_ready</span> = <span class="c-kw">true</span>;
+            <span class="c-var">craft</span>-&gt;<span class="c-fn">deploy_to_edge</span>();
+        <span class="c-punc">&#125;</span>
+        <span class="c-kw">else</span>
+        <span class="c-punc">&#123;</span>
+            <span class="c-cmt">// Refactor until simple &amp; fast</span>
+            <span class="c-var">craft</span>-&gt;<span class="c-fn">audit_bottlenecks</span>();
+            <span class="c-var">craft</span>-&gt;<span class="c-var">production_ready</span> = <span class="c-kw">false</span>;
+        <span class="c-punc">&#125;</span>
+    <span class="c-punc">&#125;</span>
+
+    <span class="c-cmt">// Clean teardown, zero leaked state</span>
+    <span class="c-kw">delete</span> <span class="c-var">craft</span>;
+    <span class="c-kw">return</span> <span class="c-num">0</span>;
+<span class="c-punc">&#125;</span></code></pre>
+    </div>
+
+    <!-- Right: What We Do About Coding -->
+    <div class="coding-details">
+      <span class="coding-kicker">WEB LABORATORY // CODING DISCIPLINE</span>
+      <h2 class="coding-title">How We Write &amp; Ship Code</h2>
+      <p class="coding-lead">
+        We treat software as durable engineering—not disposable framework glue. Every line we write is audited for runtime cost, clarity, and long-term maintainability.
+      </p>
+
+      <div class="coding-pillars">
+        <div class="pillar-item">
+          <span class="pillar-num">01</span>
+          <div class="pillar-body">
+            <h3>Zero-Bloat Static &amp; Systems Architecture</h3>
+            <p>We compile web platforms to pure static HTML with Astro and TypeScript, and build native CLI/backend tooling in Rust, Go, Java, and Python.</p>
+          </div>
+        </div>
+
+        <div class="pillar-item">
+          <span class="pillar-num">02</span>
+          <div class="pillar-body">
+            <h3>Client-Only &amp; Privacy-First Execution</h3>
+            <p>Utilities like ByteSift and pregnantbattery run 100% locally in browser memory—zero tracking pixels, zero telemetry beacons, and zero unnecessary server round-trips.</p>
+          </div>
+        </div>
+
+        <div class="pillar-item">
+          <span class="pillar-num">03</span>
+          <div class="pillar-body">
+            <h3>Deterministic Design Tokens &amp; Accessibility</h3>
+            <p>All UI styling is driven by semantic CSS custom properties with verified WCAG AA contrast, semantic HTML landmarks, and keyboard-first navigation.</p>
+          </div>
+        </div>
+
+        <div class="pillar-item">
+          <span class="pillar-num">04</span>
+          <div class="pillar-body">
+            <h3>Automated QA &amp; Clean Repositories</h3>
+            <p>Typed schemas, CI/CD pipelines, Espresso/BrowserStack mobile verification, and documented open-source repositories built for real contributors.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .coding-showcase {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .coding-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 980px) {
+    .coding-grid {
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  /* CRT Phosphor-Glow Code Screen */
+  .crt-code-frame {
+    position: relative;
+    background: radial-gradient(circle at 45% 45%, #0c120d 0%, #040705 100%);
+    border: 1px solid var(--border-hairline-bright);
+    border-radius: 10px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 42px rgba(0, 0, 0, 0.9),
+      0 22px 44px -14px rgba(0, 0, 0, 0.85);
+  }
+
+  .crt-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 2px,
+      rgba(0, 0, 0, 0.28) 3px,
+      rgba(0, 0, 0, 0.28) 4px
+    );
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .crt-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 52%, rgba(0, 0, 0, 0.72) 100%);
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .crt-code {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(0.68rem, 1.05vw, 0.82rem);
+    line-height: 1.55;
+    overflow-x: auto;
+    color: var(--text-primary);
+  }
+
+  /* CRT Phosphor Syntax Halation */
+  .c-cmt {
+    color: var(--text-accent-soft);
+    font-style: italic;
+    opacity: 0.82;
+    text-shadow: 0 0 8px rgba(164, 172, 134, 0.25);
+  }
+
+  .c-inc {
+    color: #e07a5f;
+    text-shadow: 0 0 10px rgba(224, 122, 95, 0.55);
+  }
+
+  .c-str {
+    color: var(--text-accent);
+    text-shadow: 0 0 10px var(--theme-accent-glow);
+  }
+
+  .c-kw {
+    color: #ff6b6b;
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(255, 107, 107, 0.55);
+  }
+
+  .c-type {
+    color: #ffd166;
+    text-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
+  }
+
+  .c-fn {
+    color: var(--text-accent);
+    text-shadow: 0 0 12px var(--theme-accent-glow);
+  }
+
+  .c-var {
+    color: #ffd166;
+    text-shadow: 0 0 8px rgba(255, 209, 102, 0.4);
+  }
+
+  .c-num {
+    color: #72efdd;
+    text-shadow: 0 0 10px rgba(114, 239, 221, 0.5);
+  }
+
+  .c-punc {
+    color: #72efdd;
+    opacity: 0.85;
+  }
+
+  /* Right Column: Coding Details */
+  .coding-kicker {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-accent);
+    margin-bottom: var(--space-xs);
+  }
+
+  .coding-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3vw, 2.5rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  .coding-lead {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-xl);
+  }
+
+  .coding-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .pillar-item {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 12px;
+    padding: 14px 16px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-hairline);
+    transition: border-color 150ms ease;
+  }
+
+  .pillar-item:hover {
+    border-color: var(--border-hairline-bright);
+  }
+
+  .pillar-num {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-accent);
+    padding-top: 2px;
+  }
+
+  .pillar-body h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .pillar-body p {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+</style>
