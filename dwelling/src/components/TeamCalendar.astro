@@ -17,6 +17,16 @@ const teamMembers = siteConfig.team.map((m) => ({
 
 const serializedData = JSON.stringify(teamContributions);
 const serializedColors = JSON.stringify(memberColors);
+const serializedMembers = JSON.stringify(teamMembers);
+
+const buildNow = new Date();
+const monthNamesSSR = [
+  'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+  'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+];
+const initialMonthName = monthNamesSSR[buildNow.getMonth()];
+const initialYear = buildNow.getFullYear();
+const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padStart(2, '0')}`;
 ---
 
 <section class="calendar-section" id={id} aria-labelledby="calendar-heading">
@@ -32,10 +42,10 @@ const serializedColors = JSON.stringify(memberColors);
 
         <div class="cal-title-block">
           <span class="cal-kicker">The JP3N Build Calendar</span>
-          <h2 id="calendar-heading" class="cal-month-title" data-month="2026-11">
-            NOVEMBER
+          <h2 id="calendar-heading" class="cal-month-title" data-month={initialMonthAttr}>
+            {initialMonthName}
           </h2>
-          <span class="cal-year-sub" id="calYearSub">2026 · DAILY GITHUB CONTRIBUTIONS</span>
+          <span class="cal-year-sub" id="calYearSub">{initialYear} · DAILY GITHUB CONTRIBUTIONS</span>
         </div>
 
         <button type="button" class="cal-nav-btn" id="calNextBtn" aria-label="Next month" title="Next month">
@@ -90,19 +100,27 @@ const serializedColors = JSON.stringify(memberColors);
   </div>
 </section>
 
-<script define:vars={{ serializedData, serializedColors }}>
+<script define:vars={{ serializedData, serializedColors, serializedMembers }}>
   const contributionsByDate = JSON.parse(serializedData);
   const colorsMap = JSON.parse(serializedColors);
+  const membersList = JSON.parse(serializedMembers);
 
   const monthNames = [
     'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
     'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
   ];
 
-  let currentYear = 2026;
-  let currentMonth = 10; // 0-indexed: 10 = November 2026
+  const now = new Date();
+  let currentYear = now.getFullYear();
+  let currentMonth = now.getMonth(); // Automatically matches current real-world month
   let activeMember = 'all';
-  let selectedDate = '2026-11-23';
+
+  // Remove duplicate pad() since it is now defined above
+
+  const todayStr = `${currentYear}-${pad(currentMonth + 1)}-${pad(now.getDate())}`;
+  let selectedDate = contributionsByDate[todayStr]
+    ? todayStr
+    : `${currentYear}-${pad(currentMonth + 1)}-${pad(now.getDate())}`;
 
   const monthTitleEl = document.getElementById('calendar-heading');
   const yearSubEl = document.getElementById('calYearSub');
@@ -113,9 +131,7 @@ const serializedColors = JSON.stringify(memberColors);
   const inspectorDateEl = document.getElementById('inspectorDateLabel');
   const inspectorEntriesEl = document.getElementById('inspectorEntries');
 
-  function pad(n) {
-    return n < 10 ? `0${n}` : `${n}`;
-  }
+  // Remove duplicate pad() since it is now defined above
 
   function pickDefaultDateForMonth(year, month) {
     const prefix = `${year}-${pad(month + 1)}-`;
@@ -279,6 +295,61 @@ const serializedColors = JSON.stringify(memberColors);
 
   renderCalendar();
   renderInspector(selectedDate);
+
+  // Sync live public GitHub events for the current/recent months without blocking render
+  async function syncLiveGithubEvents() {
+    let updated = false;
+    await Promise.all(
+      membersList.map(async (m) => {
+        try {
+          const res = await fetch(`https://api.github.com/users/${encodeURIComponent(m.handle)}/events/public?per_page=30`);
+          if (!res.ok) return;
+          const events = await res.json();
+          if (!Array.isArray(events)) return;
+
+          for (const ev of events) {
+            if (!ev?.created_at || !ev?.repo?.name) continue;
+            const dateStr = String(ev.created_at).slice(0, 10);
+            const repoShort = ev.repo.name.startsWith(`${m.handle}/`)
+              ? ev.repo.name.slice(m.handle.length + 1)
+              : ev.repo.name;
+
+            if (!contributionsByDate[dateStr]) {
+              contributionsByDate[dateStr] = { date: dateStr, contributions: [] };
+            }
+            const day = contributionsByDate[dateStr];
+            let entry = day.contributions.find((c) => c.githubHandle === m.handle);
+            if (!entry) {
+              entry = {
+                memberName: m.shortName,
+                githubHandle: m.handle,
+                repos: [repoShort],
+                eventsCount: 1
+              };
+              day.contributions.push(entry);
+              updated = true;
+            } else if (!entry.repos.includes(repoShort)) {
+              entry.repos.push(repoShort);
+              entry.eventsCount += 1;
+              updated = true;
+            }
+          }
+        } catch {
+          // Silently keep verified static data if offline or rate-limited
+        }
+      })
+    );
+
+    if (updated) {
+      if (!contributionsByDate[selectedDate]) {
+        selectedDate = pickDefaultDateForMonth(currentYear, currentMonth);
+      }
+      renderCalendar();
+      renderInspector(selectedDate);
+    }
+  }
+
+  syncLiveGithubEvents();
 </script>
 
 <style>
