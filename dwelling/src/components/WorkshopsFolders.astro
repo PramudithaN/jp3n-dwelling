@@ -1,6 +1,7 @@
 ---
 interface WorkshopCol {
   num: string;
+  headline: string;
   pill: string;
   lines: string[];
   href: string;
@@ -10,33 +11,37 @@ interface WorkshopCol {
 
 const workshops: WorkshopCol[] = [
   {
-    num: '1',
+    num: '01',
+    headline: 'Websites',
     pill: 'WEB LABORATORY',
-    lines: ['Astro SSG & Static HTML', 'TypeScript Architectures', 'Zero JS Hydration'],
+    lines: ['Custom websites & web apps', 'Fast on every screen', 'Built how you want it'],
     href: '/process',
     image: '/images/workshops/web-lab.jpg',
     alt: 'Web Laboratory — minimalist engineering monitor and dark workspace'
   },
   {
-    num: '2',
+    num: '02',
+    headline: 'Graphic Design',
     pill: 'GRAPHICS STUDIO',
-    lines: ['Flat Color Systems', 'Vector Identity', 'WCAG AA Design Tokens'],
+    lines: ['Logos & brand identity', 'Posters & visual kits', 'Clean colors & typography'],
     href: '/themes',
     image: '/images/workshops/graphics-studio.jpg',
     alt: 'Graphics Studio — monochrome brutalist architectural geometry'
   },
   {
-    num: '3',
+    num: '03',
+    headline: 'Videos & Motion',
     pill: 'MOTION BAY',
-    lines: ['Under 1.5MB Loops', 'Product Walkthroughs', 'Zero Audio Autoplay'],
-    href: '/work',
+    lines: ['Product & promo videos', 'Social reels & video editing', 'Smooth motion graphics'],
+    href: '/motion',
     image: '/images/workshops/motion-bay.jpg',
     alt: 'Motion Bay — dark studio cinema camera and lighting rig'
   },
   {
-    num: '4',
+    num: '04',
+    headline: 'Contribute',
     pill: 'OPEN FORGE',
-    lines: ['MIT & OFL Tooling', 'Public RFCs & Docs', 'Curated Good First Issues'],
+    lines: ['Open-source repositories', 'Easy starter issues', 'Build & learn with us'],
     href: '/contributors',
     image: '/images/workshops/open-forge.jpg',
     alt: 'Open Forge — precision engineering tools and hardware craft'
@@ -80,9 +85,10 @@ const workshops: WorkshopCol[] = [
           <div class="col-bg-scrim"></div>
         </div>
 
-        <!-- Giant Minimalist Numeral -->
+        <!-- Subtle Index + Big Clear Headline -->
         <div class="col-numeral-wrap">
-          <span class="col-numeral">{w.num}</span>
+          <span class="col-index">{w.num}</span>
+          <span class="col-headline">{w.headline}</span>
         </div>
 
         <!-- Pill Category Tag -->
@@ -97,7 +103,12 @@ const workshops: WorkshopCol[] = [
               <li>{line}</li>
             ))}
           </ul>
-          <span class="col-arrow-circle" aria-hidden="true">→</span>
+          <span class="col-arrow-circle" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 8H12.5" />
+              <path d="M8.5 4L12.5 8L8.5 12" />
+            </svg>
+          </span>
         </div>
       </a>
     ))}
@@ -256,28 +267,39 @@ const workshops: WorkshopCol[] = [
     transform: scale(1);
   }
 
-  /* Giant Numeral */
+  /* Big Clear Headline */
   .col-numeral-wrap {
     position: relative;
     z-index: 1;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
+    gap: 12px;
     flex-grow: 1;
     padding: var(--space-l) 0;
   }
 
-  .col-numeral {
+  .col-index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--text-accent);
+    opacity: 0.85;
+  }
+
+  .col-headline {
     font-family: var(--font-display);
-    font-size: clamp(6rem, 11vw, 10.5rem);
-    font-weight: 300;
-    line-height: 0.85;
-    letter-spacing: -0.06em;
+    font-size: clamp(2.25rem, 3.4vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     color: var(--text-primary);
     transition: color 200ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .swiss-col:hover .col-numeral {
+  .swiss-col:hover .col-headline {
     color: var(--text-accent);
     transform: translateY(-4px);
   }

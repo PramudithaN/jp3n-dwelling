@@ -16,6 +16,7 @@ const serializedTeam = JSON.stringify(
     genre: m.music.genre,
     progress: m.music.progress,
     cover: m.music.cover,
+    previewUrl: m.music.previewUrl,
     spotifyUrl: `https://open.spotify.com/search/${encodeURIComponent(`${m.music.track} ${m.music.artist}`)}`
   }))
 );
@@ -26,7 +27,7 @@ const serializedTeam = JSON.stringify(
     <div class="section-title-wrap">
       <span class="section-kicker">TEAM MEMBER PREFERENCES</span>
       <h2 id="preferences-heading" class="section-heading">On Rotation While Building</h2>
-      <p class="section-sub">Select any developer to bring their favorite track to center stage.</p>
+      <p class="section-sub">Select any developer to bring their favorite track to center stage, and press play to listen.</p>
     </div>
 
     <!-- Developer Selector Pills -->
@@ -46,7 +47,8 @@ const serializedTeam = JSON.stringify(
     </div>
 
     <!-- Ambient Coverflow Stage -->
-    <div class="coverflow-stage" id="coverflowStage" data-playing="true">
+    <div class="coverflow-stage" id="coverflowStage" data-playing="false">
+      <audio id="rotationAudio" preload="none"></audio>
       <div class="stage-ambient-glow" aria-hidden="true"></div>
 
       <!-- Top Spotify Brand Header -->
@@ -126,8 +128,8 @@ const serializedTeam = JSON.stringify(
           <div class="np-info">
             <span class="np-artist" id="npArtist">{team[2].music.artist}</span>
             <span class="np-track" id="npTrack">{team[2].music.track}</span>
-            <div class="np-progress-track">
-              <div class="np-progress-fill" id="npProgress" style={`width: ${team[2].music.progress}%;`}></div>
+            <div class="np-progress-track" id="npProgressTrack" role="slider" aria-label="Track playback progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+              <div class="np-progress-fill" id="npProgress" style="width: 0%;"></div>
             </div>
           </div>
           <div class="np-eq" aria-hidden="true">
@@ -136,19 +138,24 @@ const serializedTeam = JSON.stringify(
         </div>
 
         <div class="pill-right-controls">
-          <!-- AirPlay / Cast & Volume icons matching reference -->
+          <!-- AirPlay / Cast & Mute toggle -->
           <span class="pill-static-icon" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1" />
               <polygon points="12 15 17 21 7 21 12 15" fill="currentColor" />
             </svg>
           </span>
-          <span class="pill-static-icon" aria-hidden="true">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <button type="button" class="pill-mute-btn" id="cfMuteBtn" aria-label="Mute or unmute audio" aria-pressed="false" title="Mute / Unmute">
+            <svg class="svg-vol-on" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
               <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
             </svg>
-          </span>
+            <svg class="svg-vol-muted" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+              <line x1="22" y1="9" x2="16" y2="15" />
+              <line x1="16" y1="9" x2="22" y2="15" />
+            </svg>
+          </button>
           <a
             href={`https://open.spotify.com/search/${encodeURIComponent(`${team[2].music.track} ${team[2].music.artist}`)}`}
             target="_blank"
@@ -174,22 +181,80 @@ const serializedTeam = JSON.stringify(
 <script define:vars={{ serializedTeam }}>
   const tracks = JSON.parse(serializedTeam);
   let activeIdx = 2;
+  let loadedTrackIdx = -1;
+  let retriedFreshUrl = false;
 
   const stage = document.getElementById('coverflowStage');
+  const audio = document.getElementById('rotationAudio');
   const devPills = document.querySelectorAll('.dev-pill');
   const cards = document.querySelectorAll('.cf-card');
   const prevBtn = document.getElementById('cfPrevBtn');
   const nextBtn = document.getElementById('cfNextBtn');
   const playBtn = document.getElementById('cfPlayBtn');
+  const muteBtn = document.getElementById('cfMuteBtn');
 
   const npThumbImg = document.getElementById('npThumbImg');
   const npArtist = document.getElementById('npArtist');
   const npTrack = document.getElementById('npTrack');
   const npProgress = document.getElementById('npProgress');
+  const npProgressTrack = document.getElementById('npProgressTrack');
   const npSpotifyLink = document.getElementById('npSpotifyLink');
   const cfFooterNote = document.getElementById('cfFooterNote');
 
+  function setPlayingState(isPlaying) {
+    if (stage) stage.setAttribute('data-playing', isPlaying ? 'true' : 'false');
+    if (playBtn) {
+      playBtn.setAttribute('aria-label', isPlaying ? 'Pause track' : 'Play track');
+    }
+  }
+
+  function setProgressPct(pct) {
+    const clamped = Math.max(0, Math.min(100, pct));
+    if (npProgress) npProgress.style.width = `${clamped}%`;
+    if (npProgressTrack) npProgressTrack.setAttribute('aria-valuenow', String(Math.round(clamped)));
+  }
+
+  async function fetchFreshPreviewUrl(track, artist) {
+    try {
+      const q = encodeURIComponent(`${track} ${artist}`);
+      const res = await fetch(`https://itunes.apple.com/search?term=${q}&entity=song&limit=1`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data?.results?.[0]?.previewUrl || null;
+    } catch {
+      return null;
+    }
+  }
+
+  async function playActiveTrack() {
+    if (!(audio instanceof HTMLAudioElement)) return;
+    const item = tracks[activeIdx];
+    if (!item) return;
+
+    if (loadedTrackIdx !== activeIdx) {
+      retriedFreshUrl = false;
+      loadedTrackIdx = activeIdx;
+      audio.src = item.previewUrl;
+      audio.load();
+    }
+
+    try {
+      await audio.play();
+      setPlayingState(true);
+    } catch {
+      setPlayingState(false);
+    }
+  }
+
+  function pauseActiveTrack() {
+    if (audio instanceof HTMLAudioElement && !audio.paused) {
+      audio.pause();
+    }
+    setPlayingState(false);
+  }
+
   function updateCoverflow(newIdx) {
+    const wasPlaying = audio instanceof HTMLAudioElement && !audio.paused;
     activeIdx = (newIdx + tracks.length) % tracks.length;
     const item = tracks[activeIdx];
 
@@ -215,10 +280,20 @@ const serializedTeam = JSON.stringify(
     }
     if (npArtist) npArtist.textContent = item.artist;
     if (npTrack) npTrack.textContent = item.track;
-    if (npProgress) npProgress.style.width = `${item.progress}%`;
     if (npSpotifyLink) npSpotifyLink.setAttribute('href', item.spotifyUrl);
     if (cfFooterNote) {
       cfFooterNote.textContent = `© ${new Date().getFullYear()} · JP3N Collective / ${item.firstName}'s Rotation (${item.genre})`;
+    }
+
+    setProgressPct(0);
+    if (audio instanceof HTMLAudioElement) {
+      audio.pause();
+      loadedTrackIdx = -1;
+      if (wasPlaying) {
+        playActiveTrack();
+      } else {
+        setPlayingState(false);
+      }
     }
   }
 
@@ -240,10 +315,64 @@ const serializedTeam = JSON.stringify(
   nextBtn?.addEventListener('click', () => updateCoverflow(activeIdx + 1));
 
   playBtn?.addEventListener('click', () => {
-    if (!stage) return;
-    const isPlaying = stage.getAttribute('data-playing') === 'true';
-    stage.setAttribute('data-playing', isPlaying ? 'false' : 'true');
+    if (!(audio instanceof HTMLAudioElement)) return;
+    if (audio.paused) {
+      playActiveTrack();
+    } else {
+      pauseActiveTrack();
+    }
   });
+
+  muteBtn?.addEventListener('click', () => {
+    if (!(audio instanceof HTMLAudioElement)) return;
+    audio.muted = !audio.muted;
+    muteBtn.classList.toggle('is-muted', audio.muted);
+    muteBtn.setAttribute('aria-pressed', audio.muted ? 'true' : 'false');
+  });
+
+  npProgressTrack?.addEventListener('click', (e) => {
+    if (!(audio instanceof HTMLAudioElement) || !audio.duration) return;
+    const rect = npProgressTrack.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = ratio * audio.duration;
+    setProgressPct(ratio * 100);
+  });
+
+  if (audio instanceof HTMLAudioElement) {
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration > 0) {
+        setProgressPct((audio.currentTime / audio.duration) * 100);
+      }
+    });
+
+    audio.addEventListener('ended', () => {
+      setPlayingState(false);
+      setProgressPct(0);
+    });
+
+    audio.addEventListener('error', async () => {
+      if (retriedFreshUrl) {
+        setPlayingState(false);
+        return;
+      }
+      retriedFreshUrl = true;
+      const item = tracks[activeIdx];
+      const freshUrl = await fetchFreshPreviewUrl(item.track, item.artist);
+      if (freshUrl) {
+        item.previewUrl = freshUrl;
+        audio.src = freshUrl;
+        audio.load();
+        try {
+          await audio.play();
+          setPlayingState(true);
+        } catch {
+          setPlayingState(false);
+        }
+      } else {
+        setPlayingState(false);
+      }
+    });
+  }
 </script>
 
 <style>
@@ -580,17 +709,18 @@ const serializedTeam = JSON.stringify(
 
   .np-progress-track {
     width: 100%;
-    height: 2px;
+    height: 4px;
     background: var(--border-hairline);
     border-radius: 2px;
-    margin-top: 3px;
+    margin-top: 4px;
     overflow: hidden;
+    cursor: pointer;
   }
 
   .np-progress-fill {
     height: 100%;
     background: var(--text-accent);
-    transition: width 260ms ease;
+    transition: width 120ms linear;
   }
 
   .np-eq {
@@ -635,6 +765,37 @@ const serializedTeam = JSON.stringify(
     color: var(--text-secondary);
     display: inline-flex;
     align-items: center;
+  }
+
+  .pill-mute-btn {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+
+  .pill-mute-btn:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .pill-mute-btn .svg-vol-muted {
+    display: none;
+  }
+
+  .pill-mute-btn.is-muted .svg-vol-on {
+    display: none;
+  }
+
+  .pill-mute-btn.is-muted .svg-vol-muted {
+    display: inline;
+    color: var(--text-accent);
   }
 
   .pill-open-link {

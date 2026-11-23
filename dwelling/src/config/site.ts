@@ -34,6 +34,7 @@ export interface SiteConfig {
       remaining: string;
       progress: number;
       cover: string;
+      previewUrl: string;
       motif: 'cinema' | 'synth' | 'orbit' | 'floppy' | 'flora';
     };
     githubHandle: string;
@@ -96,6 +97,7 @@ export const siteConfig: SiteConfig = {
         remaining: '-2:49',
         progress: 38,
         cover: '/images/music/jude-time.jpg',
+        previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e0/1d/a4/e01da4a2-a75f-7ebf-9971-3d49e17efc57/mzaf_10500078769097048384.plus.aac.p.m4a',
         motif: 'cinema'
       },
       githubHandle: 'judebevan',
@@ -116,6 +118,7 @@ export const siteConfig: SiteConfig = {
         remaining: '-2:14',
         progress: 37,
         cover: '/images/music/peenaka-resonance.jpg',
+        previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/33/bb/1a/33bb1a1a-1448-3118-6891-639e61784145/mzaf_3810752549913623044.plus.aac.p.m4a',
         motif: 'synth'
       },
       githubHandle: 'peenaka',
@@ -136,6 +139,7 @@ export const siteConfig: SiteConfig = {
         remaining: '-1:58',
         progress: 51,
         cover: '/images/music/pathum-midnight-city.jpg',
+        previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/74/a2/d3/74a2d361-c6bb-9880-a8d1-d999833d2891/mzaf_15783493292556356203.plus.aac.p.m4a',
         motif: 'orbit'
       },
       githubHandle: 'pathumsandeepa',
@@ -156,6 +160,7 @@ export const siteConfig: SiteConfig = {
         remaining: '-2:21',
         progress: 28,
         cover: '/images/music/pramuditha-notion.jpg',
+        previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/56/83/b1/5683b146-1bda-0f16-cce0-f71ee177ed92/mzaf_14341814493413112868.plus.aac.p.m4a',
         motif: 'floppy'
       },
       githubHandle: 'PramudithaN',
@@ -176,6 +181,7 @@ export const siteConfig: SiteConfig = {
         remaining: '-1:26',
         progress: 45,
         cover: '/images/music/nipun-sunflower.jpg',
+        previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/98/f0/d6/98f0d67e-f8bf-762d-cac7-1c6b3b6b35dd/mzaf_4543283896248560946.plus.aac.p.m4a',
         motif: 'flora'
       },
       githubHandle: 'sanszerif',
