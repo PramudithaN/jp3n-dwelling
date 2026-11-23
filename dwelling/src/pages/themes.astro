@@ -1,0 +1,592 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const themes = [
+  {
+    id: 'tech-innovation',
+    name: 'Tech Innovation',
+    category: 'Cyber & Modern Tech',
+    description: 'High-contrast electric palette designed for cutting-edge software, developer tooling, and systems engineering.',
+    recommendedFor: 'Interactive Workbench, Hardware Telemetry (Battery), Systems Showcase',
+    colors: [
+      { name: 'Electric Blue', hex: '#0066ff', role: 'Primary Accent' },
+      { name: 'Neon Cyan', hex: '#00ffff', role: 'Bright Highlight' },
+      { name: 'Dark Gray', hex: '#1e1e1e', role: 'Deep Base' },
+      { name: 'Pure White', hex: '#ffffff', role: 'Text & Contrast' }
+    ],
+    typography: { header: 'Space Grotesk / Sans Bold', body: 'Inter / System Sans' },
+    previewBg: '#12161f',
+    previewCard: '#1a2233',
+    previewBorder: 'rgba(0, 255, 255, 0.25)',
+    previewAccent: '#0066ff',
+    previewHighlight: '#00ffff',
+    previewText: '#ffffff'
+  },
+  {
+    id: 'modern-minimalist',
+    name: 'Modern Minimalist',
+    category: 'Architectural Monolith',
+    description: 'Clean, disciplined grayscale palette emphasizing architectural precision, hairline borders, and pure typography.',
+    recommendedFor: 'The Philosophy Manifesto, Technical Spec Sheets, ByteSift Inspector',
+    colors: [
+      { name: 'Charcoal', hex: '#36454f', role: 'Primary Dark' },
+      { name: 'Slate Gray', hex: '#708090', role: 'Midtone Accent' },
+      { name: 'Light Gray', hex: '#d3d3d3', role: 'Dividers & Subdued' },
+      { name: 'Pure White', hex: '#ffffff', role: 'Text & Canvas' }
+    ],
+    typography: { header: 'Space Grotesk Light', body: 'JetBrains Mono' },
+    previewBg: '#181a1c',
+    previewCard: '#24272b',
+    previewBorder: 'rgba(211, 211, 211, 0.2)',
+    previewAccent: '#708090',
+    previewHighlight: '#ffffff',
+    previewText: '#e5e7eb'
+  },
+  {
+    id: 'midnight-galaxy',
+    name: 'Midnight Galaxy',
+    category: 'Cosmic & Deep Atmosphere',
+    description: 'Deep cosmic purples and soft lavender accents for dramatic narrative, motion design, and audio-visual media.',
+    recommendedFor: 'Motion Bay Workshop, Video Showcase, Media Streaming',
+    colors: [
+      { name: 'Deep Purple', hex: '#2b1e3e', role: 'Dark Base' },
+      { name: 'Cosmic Blue', hex: '#4a4e8f', role: 'Midtone' },
+      { name: 'Lavender', hex: '#a490c2', role: 'Soft Accent' },
+      { name: 'Silver Lavender', hex: '#e6e6fa', role: 'Highlights' }
+    ],
+    typography: { header: 'Space Grotesk Bold', body: 'Inter / Sans' },
+    previewBg: '#140e1f',
+    previewCard: '#201633',
+    previewBorder: 'rgba(164, 144, 194, 0.25)',
+    previewAccent: '#4a4e8f',
+    previewHighlight: '#a490c2',
+    previewText: '#e6e6fa'
+  },
+  {
+    id: 'golden-hour',
+    name: 'Golden Hour (Atelier Amber)',
+    category: 'Warm Craft & Raw Hardware',
+    description: 'Rich autumnal amber tones and terracotta warmth evoking bespoke architectural craft, raw copper, and timber.',
+    recommendedFor: 'Current Atelier Brand, Hero Section, Craftspeople Roster',
+    colors: [
+      { name: 'Mustard Amber', hex: '#f4a900', role: 'Primary Accent' },
+      { name: 'Terracotta', hex: '#c1666b', role: 'Secondary Warm' },
+      { name: 'Warm Beige', hex: '#d4b896', role: 'Muted Neutral' },
+      { name: 'Chocolate Espresso', hex: '#4a403a', role: 'Dark Anchor' }
+    ],
+    typography: { header: 'Space Grotesk Light', body: 'Sora / Mono' },
+    previewBg: '#120d09',
+    previewCard: '#1f1610',
+    previewBorder: 'rgba(244, 169, 0, 0.25)',
+    previewAccent: '#f4a900',
+    previewHighlight: '#d4b896',
+    previewText: '#faf6ee'
+  },
+  {
+    id: 'ocean-depths',
+    name: 'Ocean Depths',
+    category: 'Deep Maritime & Telemetry',
+    description: 'Serene maritime navy and teal tones signaling security, trust, stability, and zero-compromise engineering.',
+    recommendedFor: 'Web Laboratory Workshop, Security Policy, Intake Unit',
+    colors: [
+      { name: 'Deep Navy', hex: '#1a2332', role: 'Dark Base' },
+      { name: 'Teal', hex: '#2d8b8b', role: 'Primary Accent' },
+      { name: 'Seafoam', hex: '#a8dadc', role: 'Secondary Accent' },
+      { name: 'Cream White', hex: '#f1faee', role: 'Clean Text' }
+    ],
+    typography: { header: 'Space Grotesk Medium', body: 'Inter / Sans' },
+    previewBg: '#0f1722',
+    previewCard: '#1a2638',
+    previewBorder: 'rgba(45, 139, 139, 0.3)',
+    previewAccent: '#2d8b8b',
+    previewHighlight: '#a8dadc',
+    previewText: '#f1faee'
+  },
+  {
+    id: 'arctic-frost',
+    name: 'Arctic Frost',
+    category: 'Crisp & Precision Clean',
+    description: 'Cool glacial blue and metallic steel accents that convey high-clarity diagnostics, sub-second latency, and chill.',
+    recommendedFor: 'Zero Cookie Architecture Journal, Metrics Bar, Client Diagnostics',
+    colors: [
+      { name: 'Steel Blue', hex: '#4a6fa5', role: 'Primary Accent' },
+      { name: 'Ice Blue', hex: '#d4e4f7', role: 'Soft Highlight' },
+      { name: 'Silver Metallic', hex: '#c0c0c0', role: 'Dividers' },
+      { name: 'Crisp White', hex: '#fafafa', role: 'Clean Text' }
+    ],
+    typography: { header: 'Space Grotesk Bold', body: 'JetBrains Mono' },
+    previewBg: '#0e151f',
+    previewCard: '#162232',
+    previewBorder: 'rgba(74, 111, 165, 0.35)',
+    previewAccent: '#4a6fa5',
+    previewHighlight: '#d4e4f7',
+    previewText: '#fafafa'
+  },
+  {
+    id: 'sunset-boulevard',
+    name: 'Sunset Boulevard',
+    category: 'High Energy & Vibrant',
+    description: 'Warm burnt orange, coral, and deep purple contrast engineered for bold marketing, launch events, and high visual impact.',
+    recommendedFor: 'Selected Systems Grid, Meri Clothing Case Study',
+    colors: [
+      { name: 'Burnt Orange', hex: '#e76f51', role: 'Primary Accent' },
+      { name: 'Coral', hex: '#f4a261', role: 'Warm Secondary' },
+      { name: 'Warm Sand', hex: '#e9c46a', role: 'Highlight' },
+      { name: 'Deep Violet', hex: '#264653', role: 'Dark Anchor' }
+    ],
+    typography: { header: 'Space Grotesk / Serif', body: 'Inter / Sans' },
+    previewBg: '#181216',
+    previewCard: '#271b23',
+    previewBorder: 'rgba(231, 111, 81, 0.3)',
+    previewAccent: '#e76f51',
+    previewHighlight: '#f4a261',
+    previewText: '#fdf6f0'
+  },
+  {
+    id: 'forest-canopy',
+    name: 'Forest Canopy',
+    category: 'Organic & Grounded Earth',
+    description: 'Deep forest green, sage, and ivory tones evoking sustainable systems, zero environmental waste, and longevity.',
+    recommendedFor: 'Open Forge Workshop, Open Source Philosophy, Ethical Tech',
+    colors: [
+      { name: 'Forest Green', hex: '#2d4a2b', role: 'Dark Base' },
+      { name: 'Sage', hex: '#7d8471', role: 'Muted Accent' },
+      { name: 'Olive', hex: '#a4ac86', role: 'Soft Highlight' },
+      { name: 'Ivory White', hex: '#faf9f6', role: 'Clean Text' }
+    ],
+    typography: { header: 'Space Grotesk / Serif', body: 'JetBrains Mono' },
+    previewBg: '#101710',
+    previewCard: '#1a241a',
+    previewBorder: 'rgba(125, 132, 113, 0.3)',
+    previewAccent: '#2d4a2b',
+    previewHighlight: '#a4ac86',
+    previewText: '#faf9f6'
+  },
+  {
+    id: 'botanical-garden',
+    name: 'Botanical Garden',
+    category: 'Lively & Flora Rich',
+    description: 'Fern green paired with bright marigold yellow and terracotta for warm human-centric software and creative tools.',
+    recommendedFor: 'Graphics Studio, Theme Changer Engine, Creative Software',
+    colors: [
+      { name: 'Fern Green', hex: '#4a7c59', role: 'Rich Green' },
+      { name: 'Marigold', hex: '#f9a620', role: 'Floral Gold' },
+      { name: 'Terracotta', hex: '#b7472a', role: 'Earthy Warm' },
+      { name: 'Cream', hex: '#f5f3ed', role: 'Soft Neutral' }
+    ],
+    typography: { header: 'Space Grotesk / Serif', body: 'Inter' },
+    previewBg: '#101612',
+    previewCard: '#1b241e',
+    previewBorder: 'rgba(249, 166, 32, 0.25)',
+    previewAccent: '#f9a620',
+    previewHighlight: '#4a7c59',
+    previewText: '#f5f3ed'
+  },
+  {
+    id: 'desert-rose',
+    name: 'Desert Rose',
+    category: 'Soft Dusty & Editorial',
+    description: 'Dusty rose, clay, and deep burgundy contrast creating an intimate editorial aesthetic for boutique and luxury design.',
+    recommendedFor: 'Intake Unit, Atelier Story & Journey, Editorial Journal',
+    colors: [
+      { name: 'Dusty Rose', hex: '#d4a5a5', role: 'Soft Primary' },
+      { name: 'Warm Clay', hex: '#b87d6d', role: 'Earthy Accent' },
+      { name: 'Desert Sand', hex: '#e8d5c4', role: 'Neutral' },
+      { name: 'Deep Burgundy', hex: '#5d2e46', role: 'Rich Contrast' }
+    ],
+    typography: { header: 'Space Grotesk / Editorial', body: 'Inter' },
+    previewBg: '#181214',
+    previewCard: '#261b1e',
+    previewBorder: 'rgba(212, 165, 165, 0.25)',
+    previewAccent: '#b87d6d',
+    previewHighlight: '#d4a5a5',
+    previewText: '#f8f1f1'
+  }
+];
+---
+
+<BaseLayout 
+  title="Theme Factory Visual Catalog / JP3N"
+  description="Visual showcase of the 10 curated Theme Factory palettes for JP3N Tech Dwelling."
+>
+  <div class="themes-catalog-page">
+    <div class="site-container">
+      <!-- Header -->
+      <header class="catalog-header">
+        <a href="/" class="back-link">← Return to Atelier</a>
+        <div class="catalog-badge">THEME FACTORY SHOWCASE</div>
+        <h1 class="catalog-title">10 Curated Atelier Themes</h1>
+        <p class="catalog-lead">
+          Explore each theme's cohesive color palette, real component rendering, and architectural fit across the atelier website.
+        </p>
+      </header>
+
+      <!-- Theme Grid -->
+      <div class="themes-grid">
+        {themes.map((theme, index) => (
+          <article class="theme-card" id={theme.id} style={`--theme-bg: ${theme.previewBg}; --theme-surface: ${theme.previewCard}; --theme-border: ${theme.previewBorder}; --theme-accent: ${theme.previewAccent}; --theme-highlight: ${theme.previewHighlight}; --theme-text: ${theme.previewText};`}>
+            <!-- Theme Top Header -->
+            <div class="theme-card-header">
+              <div class="theme-meta">
+                <span class="theme-index">[{String(index + 1).padStart(2, '0')}]</span>
+                <span class="theme-category">{theme.category}</span>
+              </div>
+              <h2 class="theme-name">{theme.name}</h2>
+              <p class="theme-description">{theme.description}</p>
+            </div>
+
+            <!-- Palette Swatches -->
+            <div class="palette-strip">
+              {theme.colors.map((c) => (
+                <div class="color-swatch-item">
+                  <div class="swatch-color-box" style={`background-color: ${c.hex};`} title={`${c.name}: ${c.hex}`}></div>
+                  <div class="swatch-details">
+                    <span class="swatch-name">{c.name}</span>
+                    <span class="swatch-hex">{c.hex}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- Live Component Mockup Preview -->
+            <div class="theme-live-preview">
+              <div class="preview-mini-browser">
+                <div class="preview-header">
+                  <div class="preview-dots">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <span class="preview-domain">{theme.id}.jp3n.dev</span>
+                  <span class="preview-badge">LIVE DEMO</span>
+                </div>
+                <div class="preview-body">
+                  <span class="preview-kicker">SELECTED CAPABILITY</span>
+                  <h3 class="preview-title">Bespoke Architectural Engineering</h3>
+                  <p class="preview-lead">
+                    Fast, zero-telemetry software built from fundamental principles.
+                  </p>
+                  <div class="preview-action-row">
+                    <button type="button" class="preview-btn-primary">
+                      <span>Launch System</span>
+                      <span aria-hidden="true">→</span>
+                    </button>
+                    <button type="button" class="preview-btn-secondary">
+                      <span>Inspect Spec</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recommended Atelier Section -->
+            <div class="theme-recommendation">
+              <span class="rec-label">BEST SUITED FOR:</span>
+              <span class="rec-value">{theme.recommendedFor}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .themes-catalog-page {
+    padding: calc(var(--nav-height) + var(--space-3xl)) 0 var(--space-4xl);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+  }
+
+  .catalog-header {
+    max-width: 800px;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-raw-amber-sand);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    text-decoration: none;
+    margin-bottom: var(--space-l);
+    transition: color 150ms ease;
+  }
+
+  .back-link:hover {
+    color: var(--color-raw-amber-vivid);
+  }
+
+  .catalog-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-raw-amber-vivid);
+    background: rgba(255, 157, 0, 0.1);
+    border: 1px solid rgba(255, 157, 0, 0.25);
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-m);
+  }
+
+  .catalog-title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+
+  .catalog-lead {
+    font-size: var(--step-0);
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Themes Grid */
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2xl);
+  }
+
+  @media (max-width: 1024px) {
+    .themes-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .theme-card {
+    background-color: var(--surface-base);
+    border: 1px solid var(--border-hairline);
+    border-radius: 8px;
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+    transition: transform 200ms ease, border-color 200ms ease;
+  }
+
+  .theme-card:hover {
+    border-color: var(--border-hairline-bright);
+    transform: translateY(-2px);
+  }
+
+  .theme-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .theme-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .theme-index {
+    color: var(--color-raw-amber-vivid);
+  }
+
+  .theme-category {
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .theme-name {
+    font-size: var(--step-2);
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .theme-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Palette Strip */
+  .palette-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border-hairline);
+  }
+
+  .color-swatch-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .swatch-color-box {
+    width: 100%;
+    height: 36px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .swatch-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .swatch-name {
+    font-size: 0.6875rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .swatch-hex {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+  }
+
+  /* Live Component Preview */
+  .theme-live-preview {
+    background: var(--theme-bg);
+    border: 1px solid var(--theme-border);
+    border-radius: 6px;
+    padding: 12px;
+  }
+
+  .preview-mini-browser {
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid var(--theme-border);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+  }
+
+  .preview-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .preview-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .preview-domain {
+    color: var(--theme-highlight);
+    opacity: 0.85;
+  }
+
+  .preview-badge {
+    color: var(--theme-highlight);
+    font-size: 0.5625rem;
+    border: 1px solid var(--theme-border);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+
+  .preview-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .preview-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--theme-highlight);
+    letter-spacing: 0.05em;
+  }
+
+  .preview-title {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--theme-text);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .preview-lead {
+    font-size: 0.8125rem;
+    color: var(--theme-text);
+    opacity: 0.75;
+    line-height: 1.4;
+  }
+
+  .preview-action-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .preview-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--theme-highlight);
+    color: #080503;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .preview-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    background: transparent;
+    color: var(--theme-text);
+    border: 1px solid var(--theme-border);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  /* Recommendation */
+  .theme-recommendation {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--border-hairline);
+    font-size: 0.75rem;
+  }
+
+  .rec-label {
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+  }
+
+  .rec-value {
+    color: var(--color-raw-amber-sand);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+</style>

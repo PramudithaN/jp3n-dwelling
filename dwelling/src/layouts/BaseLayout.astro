@@ -1,0 +1,80 @@
+---
+import '../styles/tokens.css';
+import NavHeader from '../components/NavHeader.astro';
+import Footer from '../components/Footer.astro';
+import ThemeEngine from '../components/ThemeEngine.astro';
+import { activeTheme } from '../config/theme';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const { 
+  title, 
+  description = 'JP3N Tech Dwelling / Independent digital engineering atelier in Sri Lanka.',
+  canonicalPath = '/'
+} = Astro.props;
+
+const siteUrl = 'https://jp3n-dwelling.pages.dev';
+const fullCanonicalUrl = new URL(canonicalPath, siteUrl).toString();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content={activeTheme.colors.bgCanvas} />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={fullCanonicalUrl} />
+
+  <!-- Critical Font Preloading -->
+  <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff" as="font" type="font/woff" crossorigin />
+  <link rel="preload" href="/fonts/Sora-Regular.woff" as="font" type="font/woff" crossorigin />
+  <link rel="preload" href="/fonts/JetBrainsMono.woff" as="font" type="font/woff" crossorigin />
+
+  <!-- Zero Tracking & Security Meta -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <title>{title} / JP3N</title>
+
+  <!-- Global Dynamic Theme Provider -->
+  <ThemeEngine />
+</head>
+<body>
+  <!-- Keyboard Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <NavHeader currentPath={canonicalPath} />
+
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <Footer />
+</body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -999px;
+    left: 20px;
+    z-index: 1000;
+    padding: 8px 16px;
+    background-color: var(--color-raw-amber-vivid);
+    color: #080503;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    top: 20px;
+  }
+</style>

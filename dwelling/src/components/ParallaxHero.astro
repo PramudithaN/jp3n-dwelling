@@ -1,0 +1,411 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = "JP3N DWELLING",
+  subtitle = "SOFTWARE & DESIGN ATELIER"
+} = Astro.props;
+---
+
+<section class="jp3n-parallax-hero" id="jp3nHero" aria-label="JP3N Dwelling Hero">
+  <div class="parallax-stage" id="parallaxStage">
+    
+    <!-- Layer 0: Clean Frosted Background & Dynamic Backlight -->
+    <div class="parallax-layer layer-bg" id="layerBg" aria-hidden="true">
+      <img 
+        src="/images/hero/hero-bg-2x.jpg" 
+        alt="" 
+        class="bg-image" 
+        draggable="false"
+        loading="eager"
+        decoding="async"
+      />
+      <div class="ambient-spotlight" id="ambientSpotlight"></div>
+    </div>
+
+    <!-- Layer 1: Subtle Top Contour Lines -->
+    <div class="parallax-layer layer-waves" id="layerWaves" aria-hidden="true">
+      <img 
+        src="/images/hero/hero-waves-2x.png" 
+        alt="" 
+        class="waves-image" 
+        draggable="false"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Layer 2: Character Silhouette - Left Hand Pressed Against Screen -->
+    <div class="parallax-layer layer-hand-left" id="layerHandLeft" aria-hidden="true">
+      <img 
+        src="/images/hero/hero-hand-left-2x.png" 
+        alt="" 
+        class="hand-left-img" 
+        draggable="false"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Layer 3: Character Silhouette - Right Arm & Stylus -->
+    <div class="parallax-layer layer-hand-right" id="layerHandRight" aria-hidden="true">
+      <img 
+        src="/images/hero/hero-hand-right-2x.png" 
+        alt="" 
+        class="hand-right-img" 
+        draggable="false"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Layer 4: Subtle Optical Vignette -->
+    <div class="frosted-glass-overlay" aria-hidden="true"></div>
+
+    <!-- Layer 5: Minimalist Editorial Typography -->
+    <div class="parallax-layer layer-content" id="layerContent">
+      <div class="hero-brand-lockup">
+        <h1 class="hero-main-title" id="heroTitle">{title}</h1>
+        <p class="hero-subtitle">{subtitle}</p>
+      </div>
+    </div>
+
+    <!-- Subtle Bottom Scroll Cue -->
+    <a href="#work" class="hero-scroll-indicator" aria-label="Scroll to selected work">
+      <svg class="scroll-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 2V14M8 14L3 9M8 14L13 9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .jp3n-parallax-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    min-height: 600px;
+    background-color: #d8d3ca;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+
+  .parallax-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    perspective: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .parallax-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* --- Layer 0: Background --- */
+  .layer-bg {
+    z-index: 1;
+  }
+
+  .bg-image {
+    position: absolute;
+    width: 112%;
+    height: 112%;
+    left: -6%;
+    top: -6%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .ambient-spotlight {
+    position: absolute;
+    width: 55vw;
+    height: 55vw;
+    max-width: 720px;
+    max-height: 720px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 253, 248, 0.35) 0%, rgba(255, 250, 240, 0.1) 45%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    left: var(--spot-x, 50%);
+    top: var(--spot-y, 45%);
+    mix-blend-mode: soft-light;
+  }
+
+  /* --- Layer 1: Top Contour Waves --- */
+  .layer-waves {
+    z-index: 2;
+  }
+
+  .waves-image {
+    position: absolute;
+    left: 2%;
+    top: 4%;
+    width: 68%;
+    height: auto;
+    opacity: 0.75;
+    mix-blend-mode: multiply;
+  }
+
+  /* --- Layer 2: Left Hand Silhouette --- */
+  .layer-hand-left {
+    z-index: 3;
+  }
+
+  .hand-left-img {
+    position: absolute;
+    left: 4%;
+    bottom: 6%;
+    width: clamp(180px, 27vw, 400px);
+    height: auto;
+    object-fit: contain;
+    transform-origin: 35% 75%;
+  }
+
+  /* --- Layer 3: Right Hand & Stylus Silhouette --- */
+  .layer-hand-right {
+    z-index: 4;
+  }
+
+  .hand-right-img {
+    position: absolute;
+    right: 12%;
+    top: 8%;
+    width: clamp(160px, 22vw, 330px);
+    height: auto;
+    object-fit: contain;
+    transform-origin: 70% 25%;
+  }
+
+  /* --- Layer 4: Subtle Vignette --- */
+  .frosted-glass-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    box-shadow: inset 0 0 110px rgba(30, 28, 25, 0.14);
+  }
+
+  /* --- Layer 5: Center Typography --- */
+  .layer-content {
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
+
+  .hero-brand-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 1.5rem;
+  }
+
+  .hero-main-title {
+    font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+    font-size: clamp(2rem, 4.4vw, 3.6rem);
+    font-weight: 300;
+    letter-spacing: 0.24em;
+    line-height: 1.15;
+    color: #171513;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+    font-size: clamp(0.68rem, 0.62rem + 0.25vw, 0.88rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: #36322d;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  /* Scroll Indicator */
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #3a3631;
+    opacity: 0.65;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .hero-scroll-indicator:hover {
+    opacity: 1;
+    transform: translateX(-50%) translateY(3px);
+  }
+
+  .scroll-arrow {
+    animation: gentleBounce 2.6s infinite ease-in-out;
+  }
+
+  @keyframes gentleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  @media (max-width: 768px) {
+    .hand-left-img {
+      width: clamp(140px, 34vw, 220px);
+      left: 2%;
+      bottom: 8%;
+    }
+
+    .hand-right-img {
+      width: clamp(130px, 30vw, 200px);
+      right: 4%;
+      top: 12%;
+    }
+
+    .hero-main-title {
+      font-size: clamp(1.6rem, 7vw, 2.4rem);
+      letter-spacing: 0.18em;
+    }
+
+    .hero-subtitle {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parallax-layer {
+      transform: none !important;
+    }
+    .scroll-arrow {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initParallaxEngine() {
+    const stage = document.getElementById('parallaxStage');
+    const heroSection = document.getElementById('jp3nHero');
+    if (!stage || !heroSection) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const layerBg = document.getElementById('layerBg');
+    const layerWaves = document.getElementById('layerWaves');
+    const layerLeftHand = document.getElementById('layerHandLeft');
+    const layerRightHand = document.getElementById('layerHandRight');
+    const layerContent = document.getElementById('layerContent');
+    const spotlight = document.getElementById('ambientSpotlight');
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let isMouseInside = false;
+    let animationFrameId: number | null = null;
+
+    const LERP_FACTOR = 0.075;
+
+    const DEPTH = {
+      bg:        { x: -14, y: -9,  rot: -0.3 },
+      waves:     { x: -22, y: -14 },
+      handLeft:  { x: 30,  y: 22, rot: 1.8 },
+      handRight: { x: 42,  y: 30, rot: -2.2 },
+      content:   { x: 14,  y: 10 }
+    };
+
+    function updateParallaxMotion() {
+      currentX += (targetX - currentX) * LERP_FACTOR;
+      currentY += (targetY - currentY) * LERP_FACTOR;
+
+      if (layerBg) {
+        layerBg.style.transform = `translate3d(${(currentX * DEPTH.bg.x).toFixed(2)}px, ${(currentY * DEPTH.bg.y).toFixed(2)}px, 0) rotate(${(currentX * DEPTH.bg.rot).toFixed(2)}deg)`;
+      }
+
+      if (layerWaves) {
+        layerWaves.style.transform = `translate3d(${(currentX * DEPTH.waves.x).toFixed(2)}px, ${(currentY * DEPTH.waves.y).toFixed(2)}px, 0)`;
+      }
+
+      if (layerLeftHand) {
+        const x = currentX * DEPTH.handLeft.x;
+        const y = currentY * DEPTH.handLeft.y;
+        const r = currentX * DEPTH.handLeft.rot;
+        layerLeftHand.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotateZ(${r.toFixed(2)}deg)`;
+      }
+
+      if (layerRightHand) {
+        const x = currentX * DEPTH.handRight.x;
+        const y = currentY * DEPTH.handRight.y;
+        const r = currentX * DEPTH.handRight.rot;
+        layerRightHand.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotateZ(${r.toFixed(2)}deg)`;
+      }
+
+      if (layerContent) {
+        layerContent.style.transform = `translate3d(${(currentX * DEPTH.content.x).toFixed(2)}px, ${(currentY * DEPTH.content.y).toFixed(2)}px, 0)`;
+      }
+
+      if (spotlight) {
+        spotlight.style.left = `${(50 + currentX * 16).toFixed(1)}%`;
+        spotlight.style.top = `${(45 + currentY * 16).toFixed(1)}%`;
+      }
+
+      const diff = Math.abs(targetX - currentX) + Math.abs(targetY - currentY);
+      if (diff > 0.001 || isMouseInside) {
+        animationFrameId = requestAnimationFrame(updateParallaxMotion);
+      } else {
+        animationFrameId = null;
+      }
+    }
+
+    function onPointerMove(e: PointerEvent) {
+      isMouseInside = true;
+      const rect = stage!.getBoundingClientRect();
+      targetX = Math.max(-1, Math.min(1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
+      targetY = Math.max(-1, Math.min(1, ((e.clientY - rect.top) / rect.height) * 2 - 1));
+      if (!animationFrameId) {
+        animationFrameId = requestAnimationFrame(updateParallaxMotion);
+      }
+    }
+
+    function onPointerLeave() {
+      isMouseInside = false;
+      targetX = 0;
+      targetY = 0;
+      if (!animationFrameId) {
+        animationFrameId = requestAnimationFrame(updateParallaxMotion);
+      }
+    }
+
+    heroSection.addEventListener('pointermove', onPointerMove, { passive: true });
+    heroSection.addEventListener('pointerleave', onPointerLeave, { passive: true });
+
+    animationFrameId = requestAnimationFrame(updateParallaxMotion);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initParallaxEngine);
+  } else {
+    initParallaxEngine();
+  }
+  document.addEventListener('astro:page-load', initParallaxEngine);
+</script>

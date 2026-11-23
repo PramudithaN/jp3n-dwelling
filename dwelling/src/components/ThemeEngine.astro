@@ -1,0 +1,138 @@
+---
+/**
+ * ============================================================================
+ * THEME ENGINE COMPONENT (JP3N ATELIER)
+ * ============================================================================
+ * Central theme provider component.
+ * Modifying `activeTheme` in `src/config/theme.ts` immediately updates
+ * the typography, colors, borders, and visual atmosphere across the entire site.
+ */
+import { activeTheme } from '../config/theme';
+const { colors } = activeTheme;
+---
+
+<style is:global set:html={`
+  :root {
+    --theme-accent: ${colors.accent};
+    --theme-accent-soft: ${colors.accentSoft};
+    --theme-accent-glow: ${colors.accentGlow};
+    --theme-accent-muted: ${colors.accentMuted};
+    --theme-bg-canvas: ${colors.bgCanvas};
+    --theme-bg-surface: ${colors.bgSurface};
+    --theme-bg-elevated: ${colors.bgElevated};
+    --theme-bg-scrim: ${colors.bgScrim};
+    --theme-text-primary: ${colors.textPrimary};
+    --theme-text-secondary: ${colors.textSecondary};
+    --theme-text-muted: ${colors.textMuted};
+    --theme-border-hairline: ${colors.borderHairline};
+    --theme-border-bright: ${colors.borderBright};
+    --theme-border-focus: ${colors.borderFocus};
+
+    /* Primary backward-compatible & dynamic tokens */
+    --color-raw-amber-vivid: ${colors.accent};
+    --color-raw-amber-sand: ${colors.accentSoft};
+    --color-accent-glow: ${colors.accentGlow};
+    --color-accent-muted: ${colors.accentMuted};
+
+    --bg-canvas: ${colors.bgCanvas};
+    --bg-surface: ${colors.bgSurface};
+    --bg-elevated: ${colors.bgElevated};
+
+    --text-primary: ${colors.textPrimary};
+    --text-secondary: ${colors.textSecondary};
+    --text-muted: ${colors.textMuted};
+    --text-accent: ${colors.accent};
+    --text-accent-soft: ${colors.accentSoft};
+
+    --border-hairline: ${colors.borderHairline};
+    --border-hairline-bright: ${colors.borderBright};
+    --border-focus: ${colors.borderFocus};
+  }
+
+  /* Universal component theme hooks */
+  html, body {
+    background-color: var(--bg-canvas) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .site-header:not(.is-hero-light) {
+    background-color: rgba(9, 16, 11, 0.85) !important;
+    border-bottom: 1px solid var(--border-hairline) !important;
+  }
+
+  .btn-action-primary {
+    background: var(--color-accent-muted) !important;
+    border: 1px solid var(--theme-accent) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 0 20px var(--color-accent-glow) !important;
+  }
+
+  .btn-action-primary:hover {
+    background: var(--theme-accent) !important;
+    border-color: var(--theme-accent) !important;
+    color: var(--bg-canvas) !important;
+    box-shadow: 0 0 30px var(--color-accent-glow) !important;
+  }
+
+  .btn-action-secondary {
+    background: rgba(250, 249, 246, 0.03) !important;
+    border: 1px solid var(--border-hairline) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .btn-action-secondary:hover {
+    border-color: var(--border-hairline-bright) !important;
+    background: rgba(250, 249, 246, 0.08) !important;
+  }
+
+  .atelier-console,
+  .system-card,
+  .workshop-card,
+  .contributor-card,
+  .intake-card {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-hairline) !important;
+  }
+
+  .atelier-console:hover,
+  .system-card:hover,
+  .workshop-card:hover,
+  .contributor-card:hover {
+    border-color: var(--border-hairline-bright) !important;
+  }
+
+  .live-dot,
+  .status-pulse-dot {
+    background-color: var(--theme-accent) !important;
+    box-shadow: 0 0 8px var(--theme-accent) !important;
+  }
+
+  .meter-bar-fill {
+    background-color: var(--theme-accent) !important;
+  }
+
+  /* Kicker / Subheadings / Titles */
+  .section-kicker,
+  .atelier-tag,
+  .system-category,
+  .workshop-tag {
+    color: var(--theme-accent) !important;
+  }
+
+  .section-heading,
+  .manifesto-title,
+  .hero-title,
+  .system-name,
+  .workshop-title,
+  .contributor-name {
+    color: var(--text-primary) !important;
+  }
+
+  .hero-lead,
+  .manifesto-text,
+  .system-desc,
+  .workshop-desc,
+  .contributor-role {
+    color: var(--text-secondary) !important;
+  }
+`} />

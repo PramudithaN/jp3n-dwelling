@@ -1,45 +1,28 @@
-# merci (merci.clothing_) — Earthy Elegance & Timeless Silhouettes
+# JP3N Dwelling — GitHub Pages Showcase & Engineering Collective
 
-> A self-contained, luxury editorial clothing brand website and atelier management application engineered for **merci** (`@merci.clothing_`, Sri Lanka).
-> Faithfully inspired by the authentic visual identity, typography, and collections of the brand: high-contrast **Bodoni Moda** Didone wordmark, delicate **Pinyon Script** cursive signatures, warm limestone architecture, and natural fiber essentials.
+> **A modern, modular software application and codebase.**  
+> Featuring **JP3N Dwelling**'s official GitHub Pages interface (`index.html`) faithfully styled after GitHub organization profiles (such as `crafter-station`), complete with GitHub Dark Mode, pinned repository cards, interactive tab views, team directories, and zero-tracking privacy architecture.
 
 ---
 
-## 1. Brand Identity & Architectural Highlights
+## 1. Architectural Highlights & Features
 
-**merci** is a single self-contained application (`index.html`) featuring:
-
-- **Exact Instagram Brand Typography:**
-  - **Logo Wordmark:** Upright, high-contrast Didone serif (`Bodoni Moda`) as printed on tags and watermarks (`merci`), with title case (`Merci`) on mailer bags.
-  - **Cursive Script Accents:** Flowing calligraphy (`Pinyon Script`) for signature drop accents (e.g., *"effortlessly"*, *"Sleeveless Top"*).
-  - **Editorial Display & Body:** Refined pairing of `Playfair Display` and `Satoshi` / `Plus Jakarta Sans`.
-- **Terra Muse Collection Spotlight:**
-  - Stacked large display typography (`AU` / `BER` / `GINE`) with rotated cursive script overlay (`Sleeveless Top`).
-  - Verbatim brand manifesto: *"Inspired by the beauty of nature’s palette, Terra Muse celebrates understated sophistication through timeless silhouettes and effortless craftsmanship..."*
-- **Authentic Collections & Wardrobe Archive:**
-  - *Aubergine Sleeveless Top* (Terra Muse Collection)
-  - *The Olive Green Balloon Sleeve Top* (*"The colour of calm. The feeling of effortless beauty."*)
-  - *Signature Linen Wide-Leg Pant — Soft Sage*
-  - *Signature Linen Wide-Leg Pant — Charcoal Blue*
-  - *Terra Muse Halter Neck Top — Pure Chalk*
-  - *High-Waisted Flared Linen Skirt — Earth Clay*
-  - *Textured Strapless Bandeau Top — Raw Sand*
-  - *Vintage Floral Slip Maxi Skirt*
-  - *Pure Linen Relaxed Trouser — Warm Oat*
-- **"Let's Pack Orders" Packaging Story:**
-  - Modeled after the official Instagram stories with matte white mailer bags stamped with `Merci` and *"Embrace your style journey with us"*.
-  - Documents Islandwide Sri Lanka delivery (2–4 business days) and Worldwide Express via DHL.
-- **Dual Currency Engine (LKR & USD):**
-  - Seamless toggle between Sri Lankan Rupees (`Rs. 8,500`) and US Dollars (`$28`) across hero cards, catalog items, and shopping bag totals.
-- **WhatsApp Concierge Ordering:**
-  - Direct *"Order via WhatsApp"* integration on all preview modals and the shopping bag drawer with pre-filled item, size, and pricing details.
-- **Shop Owner / Atelier Studio (PIN Protected):**
-  - Discreet management portal accessible via the footer trigger, secured by a 4-digit PIN (`1234`).
-  - Full capability to add, edit, or delete items, update pricing in LKR/USD, and modify descriptions.
-- **Zero-Overflow Mobile-First Architecture:**
-  - Tested and verified on 390px mobile viewports with zero horizontal overflow, thumb-friendly navigation, and touch-optimized touch targets.
-- **Smooth Motion & Fabric Simulation:**
-  - Buttery Lenis smooth scrolling with scroll-scrub parallax on editorial plates and generative sinusoidal silk waves on an HTML5 canvas.
+- **GitHub Dark Mode UI Design System:**
+  - Styled with authentic GitHub Primer tokens (`#0d1117` default canvas, `#161b22` subtle canvas, `#30363d` borders, `#2f81f7` accent links).
+  - Exact layout parity with GitHub Organization pages (Crafter Station reference): Octocat navigation bar, subnav tabs (`Overview`, `Repositories [18]`, `Projects [3]`, `Packages [2]`, `People [5]`), and dual-column grid.
+- **Interactive State & Actions:**
+  - **Live Follower Toggle:** Interactive "Follow" / "Following" button with reactive counter updates and toast notifications.
+  - **Interactive Stars:** Toggleable repo star buttons with live count updates.
+  - **Subnav Tab Views:** Seamless client-side tab switching across Overview, Full Repositories with multi-filter search, Project Sprint Kanban boards, Packages, and People directories.
+  - **Global & In-Page Search:** Filter repositories in real-time by keyword, language, or topic tag with keyboard shortcut `/`.
+- **JP3N Core Repositories & Systems:**
+  - `battery-telemetry`: Hardware battery monitoring utility using Web APIs.
+  - `theme-changer`: Zero-layout-shift CSS token switcher (CLS 0.00).
+  - `bytesift`: Client-side binary chunk parser using Web Workers.
+  - `dwelling`: Architectural progression website built with Astro SSG.
+  - `motion.eng`: Advanced After Effects scripting bridge & UI physics engine.
+- **Strict Zero-Cookie Compliance:**
+  - Compliant with EU GDPR and Sri Lanka PDPA No. 9 of 2022: zero cookies, zero third-party tracking scripts, zero surveillance.
 
 ---
 
@@ -47,13 +30,24 @@
 
 ```text
 lively-babbage/
-├── index.html                    # Complete self-contained single-page application
-├── scripts/
-│   └── build_site.py             # Generator script for compiling index.html
+├── .github/
+│   ├── profile/
+│   │   └── README.md             # Official GitHub Organization profile README
+│   └── workflows/
+│       └── deploy.yml            # GitHub Pages static deployment action
+├── dwelling/                     # JP3N Tech Dwelling (Astro SSG, TypeScript, Content Layer)
+│   ├── public/fonts/             # Self-hosted WOFF/TTF typefaces (Modera, Ithaca, Sora)
+│   ├── src/components/           # Structural components (DwellingScene, Peak, FourDoors, etc.)
+│   ├── src/content/              # Case studies, journal essays, and contributor spaces
+│   ├── src/pages/                # Static routes (Home, Work, Journey, Process, Contributors, Contact)
+│   ├── src/styles/tokens.css     # Verified flat chromatic tokens & fluid clamp() scale
+│   └── README.md                 # Dedicated documentation for JP3N dwelling
+├── index.html                    # JP3N Dwelling GitHub Pages application
 ├── AGENTS.md                     # Engineering & security guidelines
 ├── GEMINI.md                     # Development rules & guidelines
+└── README.md
 ├── LICENSE                       # Project license
-└── README.md                     # Architectural documentation
+└── README.md                     # Workspace architectural documentation
 ```
 
 ---

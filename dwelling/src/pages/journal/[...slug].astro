@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const journalEntries = await getCollection('journal');
+  return journalEntries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} canonicalPath={`/journal/${entry.id}`}>
+  <article class="journal-article">
+    <div class="site-container">
+      <div class="article-header">
+        <a href="/journal" class="back-link">← Back to All Entries</a>
+        <div class="meta-row">
+          <span class="type-badge">{entry.data.type}</span>
+          <time datetime={entry.data.publishedDate.toISOString()}>
+            {entry.data.publishedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          <span>{entry.data.readingTimeMinutes} min read</span>
+        </div>
+        <h1 class="article-title">{entry.data.title}</h1>
+        <p class="article-lead">{entry.data.description}</p>
+      </div>
+
+      <div class="article-body">
+        <Content />
+      </div>
+
+      <div class="article-footer-box">
+        <span class="footer-note">Have questions or want to discuss this architecture?</span>
+        <a href="/contact" class="discuss-link">Reach out through the Four Doors →</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .site-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .journal-article {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .back-link {
+    font-family: var(--font-spec);
+    font-size: var(--step--1);
+    color: var(--color-raw-amber-sand);
+    display: inline-block;
+    margin-bottom: var(--space-m);
+  }
+
+  .meta-row {
+    display: flex;
+    gap: var(--space-m);
+    font-family: var(--font-spec);
+    font-size: 0.75rem;
+    color: var(--color-raw-ash);
+    margin-bottom: var(--space-xs);
+    text-transform: uppercase;
+  }
+
+  .type-badge {
+    color: var(--color-raw-amber-vivid);
+    font-weight: bold;
+  }
+
+  .article-title {
+    font-size: var(--step-4);
+    color: var(--color-raw-parchment);
+    margin-bottom: var(--space-xs);
+  }
+
+  .article-lead {
+    font-size: var(--step-1);
+    color: var(--text-secondary);
+    max-width: var(--reading-max-width);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .article-body {
+    max-width: var(--reading-max-width);
+    font-size: var(--step-0);
+    line-height: var(--lh-relaxed);
+  }
+
+  .article-body h2 {
+    font-size: var(--step-2);
+    color: var(--color-raw-parchment);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-s);
+  }
+
+  .article-body h3 {
+    font-size: var(--step-1);
+    color: var(--color-raw-amber-sand);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-xs);
+  }
+
+  .article-body ul {
+    margin-left: var(--space-l);
+    margin-bottom: var(--space-m);
+  }
+
+  .article-body li {
+    margin-bottom: var(--space-2xs);
+    color: var(--text-secondary);
+  }
+
+  .article-footer-box {
+    margin-top: var(--space-4xl);
+    padding: var(--space-l);
+    background-color: var(--surface-elevated);
+    border: 1px dashed var(--border-timber);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    max-width: var(--reading-max-width);
+  }
+
+  .footer-note {
+    font-family: var(--font-spec);
+    font-size: var(--step--1);
+    color: var(--color-raw-ash);
+  }
+
+  .discuss-link {
+    font-family: var(--font-spec);
+    font-size: var(--step--1);
+    color: var(--color-raw-amber-vivid);
+    font-weight: 700;
+  }
+</style>

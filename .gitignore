@@ -18,3 +18,10 @@ $RECYCLE.BIN/
 AGENTS.md
 GEMINI.md
 templates/
+tools/
+
+# Dependencies and build outputs
+node_modules/
+dist/
+.astro/
+

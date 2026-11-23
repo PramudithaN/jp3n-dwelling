@@ -1,0 +1,330 @@
+---
+interface Props {
+  activeRoom?: string;
+}
+
+const { activeRoom = '' } = Astro.props;
+---
+
+<div class="dwelling-companion-card" id="dwellingCompanion">
+  <div class="companion-top-bar">
+    <div class="bar-left">
+      <span class="status-indicator-live"></span>
+      <span class="bar-label">ARCHITECTURAL CUTAWAY</span>
+    </div>
+    <span class="bar-coords">COORD: 06°55'N 79°53'E</span>
+  </div>
+
+  <div class="svg-stage">
+    <svg 
+      class="dwelling-elevation-svg" 
+      viewBox="0 0 760 520" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="JP3N Tech Dwelling Production Architectural Elevation"
+    >
+      <defs>
+        <!-- Structural Wood Grain Hatch Pattern -->
+        <pattern id="timberHatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#5F3F21" stroke-width="1.5" />
+        </pattern>
+        <!-- Blueprint Plot Grid -->
+        <pattern id="archGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(250, 246, 238, 0.04)" stroke-width="1" />
+        </pattern>
+      </defs>
+
+      <!-- Background Grid -->
+      <rect width="760" height="520" fill="url(#archGrid)" />
+
+      <!-- 1. Deep Sub-Foundation Bedrock (Solid Stone) -->
+      <g class="sub-foundation">
+        <rect x="50" y="460" width="660" height="30" fill="#180F09" stroke="#7B542F" stroke-width="2" />
+        <!-- Foundation Slabs -->
+        <rect x="70" y="435" width="145" height="25" fill="#24170E" stroke="#7B542F" stroke-width="1.5" />
+        <rect x="230" y="435" width="145" height="25" fill="#24170E" stroke="#7B542F" stroke-width="1.5" />
+        <rect x="390" y="435" width="145" height="25" fill="#24170E" stroke="#7B542F" stroke-width="1.5" />
+        <rect x="550" y="435" width="145" height="25" fill="#24170E" stroke="#7B542F" stroke-width="1.5" />
+        <!-- Structural Anchors -->
+        <line x1="50" y1="460" x2="710" y2="460" stroke="#B6771D" stroke-width="2" />
+      </g>
+
+      <!-- 2. Solid Timber Frame & Beams -->
+      <g class="timber-framing">
+        <!-- Heavy Outer Columns -->
+        <rect x="70" y="160" width="18" height="275" fill="#5F3F21" stroke="#7B542F" stroke-width="2" />
+        <rect x="672" y="160" width="18" height="275" fill="#5F3F21" stroke="#7B542F" stroke-width="2" />
+        <rect x="371" y="70" width="18" height="365" fill="#5F3F21" stroke="#7B542F" stroke-width="2" />
+
+        <!-- Heavy Horizontal Girders (Floor 1, Floor 2, Roof Plates) -->
+        <rect x="70" y="425" width="620" height="12" fill="#7B542F" stroke="#B6771D" stroke-width="1.5" />
+        <rect x="70" y="285" width="620" height="14" fill="#7B542F" stroke="#B6771D" stroke-width="1.5" />
+        <rect x="70" y="155" width="620" height="14" fill="#7B542F" stroke="#B6771D" stroke-width="1.5" />
+
+        <!-- Pitch Roof Trusses -->
+        <polygon points="70,160 380,45 690,160" fill="none" stroke="#7B542F" stroke-width="6" />
+        <line x1="220" y1="105" x2="220" y2="155" stroke="#7B542F" stroke-width="4" />
+        <line x1="540" y1="105" x2="540" y2="155" stroke="#7B542F" stroke-width="4" />
+        <!-- Roof Ridge Beam -->
+        <circle cx="380" cy="45" r="8" fill="#B6771D" stroke="#FF9D00" stroke-width="2" />
+      </g>
+
+      <!-- 3. The Four Solid Workshop Wings -->
+      
+      <!-- WING 01: THE WEB LABORATORY (Lower Left) -->
+      <g class="wing-slot" id="visual-room-web" data-target="web">
+        <rect x="98" y="305" width="265" height="114" fill="#1E120A" stroke="#7B542F" stroke-width="2" rx="2" />
+        <!-- Header Tag -->
+        <rect x="98" y="305" width="265" height="24" fill="#2E1B0F" stroke="#7B542F" stroke-width="1" />
+        <text x="110" y="321" fill="#FFCF71" font-family="var(--font-spec)" font-size="10" font-weight="700">01 / WEB LABORATORY</text>
+        
+        <!-- Large Illuminated Window -->
+        <rect class="room-window" x="112" y="337" width="130" height="70" fill="#100A06" stroke="#B6771D" stroke-width="2" rx="2" />
+        <!-- Window Mullions -->
+        <line x1="177" y1="337" x2="177" y2="407" stroke="#7B542F" stroke-width="1.5" />
+        <line x1="112" y1="372" x2="242" y2="372" stroke="#7B542F" stroke-width="1.5" />
+        <!-- Glow Core -->
+        <rect class="window-glow" x="116" y="341" width="57" height="27" fill="#FF9D00" opacity="0.15" />
+        <rect class="window-glow" x="181" y="341" width="57" height="27" fill="#FF9D00" opacity="0.15" />
+
+        <!-- Schematic Rack Visual -->
+        <g transform="translate(254, 340)">
+          <rect width="98" height="66" fill="#140B06" stroke="#7B542F" stroke-width="1" />
+          <line x1="8" y1="16" x2="90" y2="16" stroke="#FF9D00" stroke-width="2" />
+          <line x1="8" y1="28" x2="70" y2="28" stroke="#FAF6EE" stroke-width="1.5" />
+          <line x1="8" y1="40" x2="80" y2="40" stroke="#B8A795" stroke-width="1.5" />
+          <circle cx="85" cy="52" r="4" fill="#FF9D00" />
+        </g>
+      </g>
+
+      <!-- WING 02: THE GRAPHICS STUDIO (Lower Right) -->
+      <g class="wing-slot" id="visual-room-graphics" data-target="graphics">
+        <rect x="397" y="305" width="265" height="114" fill="#1E120A" stroke="#7B542F" stroke-width="2" rx="2" />
+        <!-- Header Tag -->
+        <rect x="397" y="305" width="265" height="24" fill="#2E1B0F" stroke="#7B542F" stroke-width="1" />
+        <text x="410" y="321" fill="#FFCF71" font-family="var(--font-spec)" font-size="10" font-weight="700">02 / GRAPHICS STUDIO</text>
+        
+        <!-- Palette Drafting Board Visual -->
+        <g transform="translate(410, 340)">
+          <rect width="110" height="66" fill="#140B06" stroke="#7B542F" stroke-width="1" />
+          <rect x="10" y="12" width="24" height="24" fill="#7B542F" />
+          <rect x="42" y="12" width="24" height="24" fill="#B6771D" />
+          <rect x="74" y="12" width="24" height="24" fill="#FF9D00" />
+          <line x1="10" y1="48" x2="100" y2="48" stroke="#B8A795" stroke-width="1.5" stroke-dasharray="4 2" />
+        </g>
+
+        <!-- Large Illuminated Window -->
+        <rect class="room-window" x="532" y="337" width="118" height="70" fill="#100A06" stroke="#B6771D" stroke-width="2" rx="2" />
+        <line x1="591" y1="337" x2="591" y2="407" stroke="#7B542F" stroke-width="1.5" />
+        <line x1="532" y1="372" x2="650" y2="372" stroke="#7B542F" stroke-width="1.5" />
+        <!-- Glow Core -->
+        <rect class="window-glow" x="536" y="341" width="51" height="27" fill="#FF9D00" opacity="0.15" />
+        <rect class="window-glow" x="595" y="341" width="51" height="27" fill="#FF9D00" opacity="0.15" />
+      </g>
+
+      <!-- WING 03: THE MOTION BAY (Upper Left) -->
+      <g class="wing-slot" id="visual-room-motion" data-target="motion">
+        <rect x="98" y="176" width="265" height="102" fill="#1E120A" stroke="#7B542F" stroke-width="2" rx="2" />
+        <!-- Header Tag -->
+        <rect x="98" y="176" width="265" height="22" fill="#2E1B0F" stroke="#7B542F" stroke-width="1" />
+        <text x="110" y="191" fill="#FFCF71" font-family="var(--font-spec)" font-size="10" font-weight="700">03 / MOTION BAY</text>
+        
+        <!-- Video Sequence Tracks Visual -->
+        <g transform="translate(112, 206)">
+          <rect width="130" height="60" fill="#140B06" stroke="#7B542F" stroke-width="1" />
+          <!-- Film Strip perforations -->
+          <rect x="8" y="8" width="114" height="12" fill="#24170E" />
+          <line x1="12" y1="28" x2="118" y2="28" stroke="#B6771D" stroke-width="2" />
+          <polygon points="60,38 72,45 60,52" fill="#FF9D00" />
+        </g>
+
+        <!-- Window -->
+        <rect class="room-window" x="254" y="206" width="98" height="60" fill="#100A06" stroke="#B6771D" stroke-width="2" rx="2" />
+        <line x1="303" y1="206" x2="303" y2="266" stroke="#7B542F" stroke-width="1.5" />
+        <rect class="window-glow" x="258" y="210" width="41" height="52" fill="#FF9D00" opacity="0.15" />
+      </g>
+
+      <!-- WING 04: THE OPEN FORGE (Upper Right) -->
+      <g class="wing-slot" id="visual-room-forge" data-target="forge">
+        <rect x="397" y="176" width="265" height="102" fill="#1E120A" stroke="#7B542F" stroke-width="2" rx="2" />
+        <!-- Header Tag -->
+        <rect x="397" y="176" width="265" height="22" fill="#2E1B0F" stroke="#7B542F" stroke-width="1" />
+        <text x="410" y="191" fill="#FFCF71" font-family="var(--font-spec)" font-size="10" font-weight="700">04 / OPEN FORGE</text>
+        
+        <!-- Window -->
+        <rect class="room-window" x="410" y="206" width="98" height="60" fill="#100A06" stroke="#B6771D" stroke-width="2" rx="2" />
+        <line x1="459" y1="206" x2="459" y2="266" stroke="#7B542F" stroke-width="1.5" />
+        <rect class="window-glow" x="463" y="210" width="41" height="52" fill="#FF9D00" opacity="0.15" />
+
+        <!-- Git Commits Visual -->
+        <g transform="translate(520, 206)">
+          <rect width="130" height="60" fill="#140B06" stroke="#7B542F" stroke-width="1" />
+          <circle cx="20" cy="20" r="5" fill="#FFCF71" />
+          <line x1="20" y1="20" x2="60" y2="40" stroke="#7B542F" stroke-width="2" />
+          <circle cx="60" cy="40" r="5" fill="#FF9D00" />
+          <line x1="60" y1="40" x2="105" y2="40" stroke="#7B542F" stroke-width="2" />
+          <circle cx="105" cy="40" r="5" fill="#FAF6EE" />
+        </g>
+      </g>
+
+      <!-- 4. APEX ILLUMINATION BEACON -->
+      <g class="apex-beacon" id="apexBeacon">
+        <polygon points="380,50 330,120 430,120" fill="#FF9D00" opacity="0.25" />
+        <circle cx="380" cy="95" r="14" fill="#FFCF71" stroke="#FF9D00" stroke-width="3" />
+        <circle cx="380" cy="95" r="24" fill="none" stroke="#FF9D00" stroke-width="1.5" stroke-dasharray="4 2" />
+        <!-- Plaque -->
+        <rect x="305" y="126" width="150" height="22" fill="#100A06" stroke="#FF9D00" stroke-width="1.5" rx="2" />
+        <text x="380" y="141" fill="#FF9D00" font-family="var(--font-spec)" font-size="10" font-weight="bold" text-anchor="middle">APEX ILLUMINATION</text>
+      </g>
+
+      <!-- Dimension Lines & Survey Benchmarks -->
+      <g stroke="#7B542F" stroke-width="1" stroke-dasharray="2 2" opacity="0.5">
+        <line x1="30" y1="490" x2="730" y2="490" />
+        <line x1="30" y1="480" x2="30" y2="500" />
+        <line x1="730" y1="480" x2="730" y2="500" />
+        <text x="380" y="508" fill="#B8A795" font-family="var(--font-spec)" font-size="9" text-anchor="middle">SPAN: 24.8m // TIMBER & STONE</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="companion-footer">
+    <span class="active-focus-label">ACTIVE WING:</span>
+    <span class="active-focus-val" id="activeWingLabel">ALL WORKSHOPS POWERED</span>
+  </div>
+</div>
+
+<script>
+  const label = document.getElementById('activeWingLabel');
+  const slots = document.querySelectorAll('.wing-slot');
+  const cards = document.querySelectorAll('.workshop-item');
+
+  const wingNames: Record<string, string> = {
+    web: '01 / WEB LABORATORY',
+    graphics: '02 / GRAPHICS STUDIO',
+    motion: '03 / MOTION BAY',
+    forge: '04 / OPEN FORGE'
+  };
+
+  slots.forEach(slot => {
+    slot.addEventListener('mouseenter', () => {
+      const target = slot.getAttribute('data-target');
+      if (target && label && wingNames[target]) {
+        label.textContent = wingNames[target];
+        label.style.color = 'var(--color-raw-amber-vivid)';
+      }
+    });
+    slot.addEventListener('mouseleave', () => {
+      if (label) {
+        label.textContent = 'ALL WORKSHOPS POWERED';
+        label.style.color = 'var(--color-raw-amber-sand)';
+      }
+    });
+  });
+
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const room = card.getAttribute('data-room');
+      if (room && label && wingNames[room]) {
+        label.textContent = wingNames[room];
+        label.style.color = 'var(--color-raw-amber-vivid)';
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      if (label) {
+        label.textContent = 'ALL WORKSHOPS POWERED';
+        label.style.color = 'var(--color-raw-amber-sand)';
+      }
+    });
+  });
+</script>
+
+<style>
+  .dwelling-companion-card {
+    background-color: var(--surface-card);
+    border: 2px solid var(--border-timber);
+    box-shadow: var(--shadow-flat-hard);
+    overflow: hidden;
+  }
+
+  .companion-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-xs) var(--space-m);
+    background-color: #160D07;
+    border-bottom: 2px solid var(--border-timber);
+    font-family: var(--font-spec);
+    font-size: 0.75rem;
+  }
+
+  .bar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-indicator-live {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-raw-amber-vivid);
+    display: inline-block;
+  }
+
+  .bar-label {
+    color: var(--color-raw-amber-sand);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .bar-coords {
+    color: var(--color-raw-ash);
+  }
+
+  .svg-stage {
+    padding: var(--space-s);
+    background-color: #0E0704;
+  }
+
+  .dwelling-elevation-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .wing-slot {
+    transition: transform 200ms ease, opacity 200ms ease;
+    cursor: pointer;
+  }
+
+  .wing-slot:hover {
+    transform: translateY(-2px);
+  }
+
+  .wing-slot:hover .room-window {
+    stroke: var(--color-raw-amber-vivid);
+  }
+
+  .wing-slot:hover .window-glow {
+    opacity: 0.6;
+  }
+
+  .companion-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-xs) var(--space-m);
+    background-color: #160D07;
+    border-top: 1px solid var(--border-timber);
+    font-family: var(--font-spec);
+    font-size: 0.75rem;
+  }
+
+  .active-focus-label {
+    color: var(--color-raw-ochre);
+    font-weight: 700;
+  }
+
+  .active-focus-val {
+    color: var(--color-raw-amber-sand);
+  }
+</style>
