@@ -2,6 +2,7 @@
 import { siteConfig } from '../config/site';
 
 const team = siteConfig.team;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="team-gallery-section" id="team" aria-labelledby="team-heading">
@@ -30,7 +31,7 @@ const team = siteConfig.team;
             >
               {[1, 2, 3, 4].map((frameIdx) => (
                 <img
-                  src={`${portraitBase}-f${frameIdx}.jpg`}
+                  src={`${base}${portraitBase}-f${frameIdx}.jpg`}
                   alt={frameIdx === 1 ? `${member.name} monochrome silhouette portrait` : ''}
                   aria-hidden={frameIdx !== 1 ? 'true' : undefined}
                   class={`portrait-img ${frameIdx === 1 ? 'is-active' : ''}`}
@@ -77,9 +78,15 @@ const team = siteConfig.team;
 </section>
 
 <style>
+  .site-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
   .team-gallery-section {
     padding: clamp(2.75rem, 5vw, 4rem) 0;
-    background-color: #141414;
+    background-color: var(--bg-surface);
     border-top: 1px solid var(--border-hairline);
     border-bottom: 1px solid var(--border-hairline);
   }
@@ -257,24 +264,34 @@ const team = siteConfig.team;
       flex-direction: column;
       align-items: flex-start;
       gap: 0.5rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
     .team-portrait-strip {
-      display: grid;
-      grid-template-columns: none;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(215px, 68vw);
-      gap: 12px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 10px;
-      scrollbar-width: thin;
+      grid-template-columns: 1fr;
+      gap: 14px;
     }
 
     .team-card {
-      scroll-snap-align: start;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-canvas);
+      border-radius: 8px;
+    }
+
+    .portrait-frame {
+      width: 92px;
+      height: 122px;
+      aspect-ratio: 3 / 4;
+      border-radius: 4px;
+    }
+
+    .member-bio {
+      -webkit-line-clamp: 4;
     }
   }
 
