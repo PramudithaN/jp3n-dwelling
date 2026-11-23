@@ -215,7 +215,9 @@ const serializedMembers = "[{\"shortName\":\"Jude\",\"fullName\":\"Jude Maria Be
   let currentMonth = now.getMonth(); // Automatically matches current real-world month
   let activeMember = 'all';
 
-  // Remove duplicate pad() since it is now defined above
+  function pad(n) {
+    return n < 10 ? `0${n}` : `${n}`;
+  }
 
   const todayStr = `${currentYear}-${pad(currentMonth + 1)}-${pad(now.getDate())}`;
   let selectedDate = contributionsByDate[todayStr]
@@ -230,8 +232,6 @@ const serializedMembers = "[{\"shortName\":\"Jude\",\"fullName\":\"Jude Maria Be
   const filterBtns = document.querySelectorAll('.member-filter-btn');
   const inspectorDateEl = document.getElementById('inspectorDateLabel');
   const inspectorEntriesEl = document.getElementById('inspectorEntries');
-
-  // Remove duplicate pad() since it is now defined above
 
   function pickDefaultDateForMonth(year, month) {
     const prefix = `${year}-${pad(month + 1)}-`;
