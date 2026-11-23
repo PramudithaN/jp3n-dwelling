@@ -26,6 +26,16 @@ export interface SiteConfig {
     bio: string;
     afk: string;
     afkNote: string;
+    music: {
+      track: string;
+      artist: string;
+      genre: string;
+      elapsed: string;
+      remaining: string;
+      progress: number;
+      cover: string;
+      motif: 'cinema' | 'synth' | 'orbit' | 'floppy' | 'flora';
+    };
     githubHandle: string;
     portrait: string;
     stack: string[];
@@ -78,6 +88,16 @@ export const siteConfig: SiteConfig = {
       bio: 'Bridges Java/Spring Boot backends, Flutter mobile apps, and containerized CI/CD pipelines with Docker, Minikube, and Jenkins.',
       afk: 'Lights, Camera, Relax',
       afkNote: 'Trading code for credits, with one more movie before bed.',
+      music: {
+        track: 'Time',
+        artist: 'Hans Zimmer',
+        genre: 'Film Score',
+        elapsed: '1:46',
+        remaining: '-2:49',
+        progress: 38,
+        cover: '/images/music/jude-time.jpg',
+        motif: 'cinema'
+      },
       githubHandle: 'judebevan',
       portrait: '/images/team/member-3-f1.jpg',
       stack: ['Java', 'C++', 'Flutter', 'Docker']
@@ -88,6 +108,16 @@ export const siteConfig: SiteConfig = {
       bio: 'Develops AI-powered coding-agent CLIs, enterprise Espresso/BrowserStack mobile test frameworks, and real-time Java/Angular systems (ContexaForge).',
       afk: 'Leading with Heart',
       afkNote: 'Turning good intentions into action, one service project at a time.',
+      music: {
+        track: 'Resonance',
+        artist: 'HOME',
+        genre: 'Synthwave',
+        elapsed: '1:18',
+        remaining: '-2:14',
+        progress: 37,
+        cover: '/images/music/peenaka-resonance.jpg',
+        motif: 'synth'
+      },
       githubHandle: 'peenaka',
       portrait: '/images/team/member-4-f1.jpg',
       stack: ['JavaScript', 'Java', 'Angular', 'C#']
@@ -98,6 +128,16 @@ export const siteConfig: SiteConfig = {
       bio: 'Architects Go control planes, Kubernetes operators, multi-tenant TypeScript platforms, and interactive 3D web experiences (iconfigly, Three-JS-3D-Earth).',
       afk: 'Live from the Dev World',
       afkNote: 'Following live coding sessions, tech talks, and builds as they happen.',
+      music: {
+        track: 'Midnight City',
+        artist: 'M83',
+        genre: 'Electronic',
+        elapsed: '2:05',
+        remaining: '-1:58',
+        progress: 51,
+        cover: '/images/music/pathum-midnight-city.jpg',
+        motif: 'orbit'
+      },
       githubHandle: 'pathumsandeepa',
       portrait: '/images/team/member-2-f1.jpg',
       stack: ['Go', 'TypeScript', 'Kubernetes', 'PHP']
@@ -108,6 +148,16 @@ export const siteConfig: SiteConfig = {
       bio: 'Builds offline-first utilities, GPU-accelerated web engines, and procedural developer tools across TypeScript, Rust, C#, and Python (Filee, git-tulkun, bytesift).',
       afk: 'Recharging the Dev Battery',
       afkNote: 'Logged off and recharging for the next big commit.',
+      music: {
+        track: 'Notion',
+        artist: 'The Rare Occasions',
+        genre: 'Indie Rock',
+        elapsed: '0:54',
+        remaining: '-2:21',
+        progress: 28,
+        cover: '/images/music/pramuditha-notion.jpg',
+        motif: 'floppy'
+      },
       githubHandle: 'PramudithaN',
       portrait: '/images/team/member-1-f1.jpg',
       stack: ['TypeScript', 'Rust', 'C#', 'Python']
@@ -118,6 +168,16 @@ export const siteConfig: SiteConfig = {
       bio: 'Crafts zero-bloat Astro interfaces and TypeScript hardware utilities alongside CNN 3D gaze estimation and Unity AI research (pregnantbattery, synth-gaze-fyp).',
       afk: 'On a Leo Mission',
       afkNote: 'Giving back through volunteering, community drives, and Leo teamwork.',
+      music: {
+        track: 'Sunflower',
+        artist: 'Post Malone, Swae Lee',
+        genre: 'Alt Hip-Hop',
+        elapsed: '1:12',
+        remaining: '-1:26',
+        progress: 45,
+        cover: '/images/music/nipun-sunflower.jpg',
+        motif: 'flora'
+      },
       githubHandle: 'sanszerif',
       portrait: '/images/team/member-5-f1.jpg',
       stack: ['Astro', 'TypeScript', 'Python', 'Dart']

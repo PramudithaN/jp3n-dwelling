@@ -10,214 +10,164 @@ interface Props {
 
 const {
   brand = 'JP3N',
-  headlineTop = 'First-Principles',
-  headlineHighlight = 'Software &',
-  headlineBottom = 'Design Atelier',
-  badge = '0KB BLOAT',
-  caption = 'PURE STATIC HTML · CSS TOKENS'
+  caption = 'DIRECT SENIOR INVOLVEMENT'
 } = Astro.props;
 ---
 
 <div class="retro-workstation" data-power="on">
   <div class="workstation-stage">
-    <!-- =========================================================
-         CRT MONITOR
-         ========================================================= -->
-    <div class="crt-monitor">
-      <div class="crt-casing">
-        <div class="crt-bezel">
-          <div class="crt-screen" id="crtScreen">
-            <!-- Subtle CRT scanlines & phosphor vignette -->
-            <div class="crt-scanlines" aria-hidden="true"></div>
-            <div class="crt-glare" aria-hidden="true"></div>
-
-            <!-- Screen UI Content -->
-            <div class="crt-ui">
-              <div class="crt-topbar">
-                <span class="crt-logo-mark">{brand}</span>
-                <span class="crt-topbar-center">JP3N DWELLING</span>
-                <span class="crt-topbar-status">
-                  <span class="crt-status-dot"></span>
-                  LIVE
-                </span>
-              </div>
-
-              <div class="crt-hero-copy">
-                <div class="crt-headline">
-                  <span class="crt-line">{headlineTop}</span>
-                  <span class="crt-line">
-                    <span class="crt-highlight">{headlineHighlight}</span> {headlineBottom}
-                  </span>
-                </div>
-
-                <div class="crt-badge" aria-label={badge}>{badge}</div>
-
-                <div class="crt-arrow" aria-hidden="true">↓</div>
-                <p class="crt-caption">{caption}</p>
-              </div>
-            </div>
-
-            <!-- Standby / Powered-off overlay -->
-            <div class="crt-off-overlay" aria-hidden="true">
-              <span class="crt-off-text">STANDBY</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Monitor front-bezel controls -->
-        <div class="crt-bezel-controls" aria-hidden="true">
-          <span class="bezel-btn"></span>
-          <span class="bezel-led"></span>
-        </div>
-      </div>
-
-      <!-- Monitor Stand / Neck -->
-      <div class="crt-stand" aria-hidden="true">
-        <div class="crt-stand-neck"></div>
-        <div class="crt-stand-foot"></div>
-      </div>
+    <!-- Stack of Disks on top of Monitor -->
+    <div class="top-disk-stack" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
     </div>
 
     <!-- =========================================================
-         DESKTOP CPU / BASE UNIT
+         IBM-STYLE CRT MONITOR
          ========================================================= -->
-    <div class="desktop-unit">
-      <div class="desktop-chassis">
-        <div class="desktop-top-lip" aria-hidden="true"></div>
+    <div class="ibm-monitor">
+      <div class="monitor-3d-shell">
+        <div class="monitor-front">
+          <div class="monitor-recess">
+            <div class="crt-screen" id="crtScreen">
+              <div class="crt-scanlines" aria-hidden="true"></div>
+              <div class="crt-glare" aria-hidden="true"></div>
 
-        <div class="desktop-front-panel">
-          <!-- Left Rotary Knobs (Power toggle + Reset) -->
-          <div class="desktop-knobs">
+              <!-- Faint background terminal dump -->
+              <pre class="crt-bg-dump" aria-hidden="true">0x004A  INIT ATELIER_CORE
+0x0052  ALLOC STATIC_HTML
+0x0060  ZERO_TRACKERS = 1
+0x0074  WCAG_AA = PASS
+0x0088  LCP_TARGET &lt; 800ms</pre>
+
+              <!-- Centered Pixel Emblem + Brand -->
+              <div class="crt-center-lockup">
+                <svg class="pixel-trophy" viewBox="0 0 18 16" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true">
+                  <!-- Pixel Trophy / Crest -->
+                  <rect x="4" y="1" width="10" height="2" />
+                  <rect x="1" y="2" width="3" height="4" />
+                  <rect x="14" y="2" width="3" height="4" />
+                  <rect x="2" y="6" width="2" height="1" />
+                  <rect x="14" y="6" width="2" height="1" />
+                  <rect x="4" y="3" width="10" height="5" />
+                  <rect x="6" y="8" width="6" height="2" />
+                  <rect x="8" y="10" width="2" height="3" />
+                  <rect x="5" y="13" width="8" height="2" />
+                </svg>
+                <span class="pixel-brand">{brand}</span>
+              </div>
+
+              <span class="crt-sub-caption">{caption}</span>
+
+              <!-- Standby overlay -->
+              <div class="crt-off-overlay" aria-hidden="true">
+                <span class="crt-off-text">STANDBY</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monitor Lower Chin (Vents + Badge + Dial Icons + Square Power Button) -->
+          <div class="monitor-chin">
+            <div class="chin-vents" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span>
+            </div>
+
+            <div class="chin-badge" aria-hidden="true">{brand}</div>
+
+            <div class="chin-dials" aria-hidden="true">
+              <span class="dial-tri"></span>
+              <span class="dial-dot"></span>
+              <span class="dial-sun"></span>
+            </div>
+
             <button
               type="button"
-              class="rotary-knob knob-power"
+              class="chin-power-btn"
               id="crtPowerToggle"
               aria-label="Toggle CRT workstation power"
               title="Power"
             >
-              <span class="knob-cap"></span>
+              <span class="power-inner-sq"></span>
             </button>
-            <span class="rotary-knob knob-tune" aria-hidden="true">
-              <span class="knob-cap"></span>
-            </span>
-          </div>
-
-          <!-- Center Disk / Vent Slot -->
-          <div class="desktop-center-slot" aria-hidden="true">
-            <div class="slot-recess"></div>
-          </div>
-
-          <!-- Right 3.5" Floppy Drive Bay -->
-          <div class="desktop-floppy-bay" aria-hidden="true">
-            <div class="floppy-slot">
-              <div class="floppy-eject-notch"></div>
-            </div>
-            <div class="floppy-controls">
-              <span class="floppy-led"></span>
-              <span class="floppy-button"></span>
-            </div>
           </div>
         </div>
 
-        <div class="desktop-base-skirt" aria-hidden="true"></div>
+        <!-- Subtle 3D Right Side Depth -->
+        <div class="monitor-side-depth" aria-hidden="true"></div>
       </div>
 
-      <!-- Side Cable Port & Curved Mouse Cord (SVG) -->
-      <div class="mouse-cable-anchor" aria-hidden="true">
-        <span class="side-port-jack"></span>
-        <svg class="mouse-cord-svg" viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M 4 10 C 48 10, 74 28, 74 62 C 74 88, 56 96, 56 108"
-            class="mouse-cord-shadow"
-          />
-          <path
-            d="M 4 8 C 48 8, 74 26, 74 60 C 74 86, 56 94, 56 106"
-            class="mouse-cord-wire"
-          />
-        </svg>
-      </div>
+      <!-- Thin Swivel Neck -->
+      <div class="monitor-neck" aria-hidden="true"></div>
     </div>
 
     <!-- =========================================================
-         PERIPHERALS: MECHANICAL KEYBOARD & CORDED MOUSE
+         DESKTOP CPU / BASE UNIT (Vents + 5.25" Drive Bay)
          ========================================================= -->
-    <div class="peripherals-row" aria-hidden="true">
-      <!-- Mechanical Keyboard -->
-      <div class="retro-keyboard">
-        <div class="keyboard-tray">
-          <div class="key-grid">
-            <!-- Row 1: Function / Esc -->
-            <div class="key-row row-fn">
-              <span class="keycap k-sm k-accent"></span>
-              <span class="key-gap"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-              <span class="key-gap"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-              <span class="key-gap"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-              <span class="keycap k-sm"></span>
-            </div>
+    <div class="ibm-desktop">
+      <div class="desktop-front">
+        <!-- Left Cooling Vents -->
+        <div class="desktop-vents-area" aria-hidden="true">
+          <div class="desktop-vents">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <span class="desktop-keylock"></span>
+        </div>
 
-            <!-- Row 2: Number Row -->
-            <div class="key-row">
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap k-wide"></span>
-              <span class="key-gap"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-            </div>
-
-            <!-- Row 3: QWERTY + Home Row -->
-            <div class="key-row">
-              <span class="keycap k-med"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap"></span><span class="keycap"></span>
-              <span class="keycap k-med"></span>
-              <span class="key-gap"></span>
-              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
-            </div>
-
-            <!-- Row 4: Spacebar Row -->
-            <div class="key-row">
-              <span class="keycap k-med"></span>
-              <span class="keycap"></span>
-              <span class="keycap k-space"></span>
-              <span class="keycap"></span>
-              <span class="keycap k-med"></span>
-              <span class="key-gap"></span>
-              <span class="keycap"></span>
-              <span class="keycap"></span>
-              <span class="keycap"></span>
-            </div>
+        <!-- Right 5.25" Floppy Drive Bay + Lower Slot -->
+        <div class="desktop-drive-area" aria-hidden="true">
+          <div class="drive-bay-525">
+            <span class="drive-slot-bar"></span>
+            <span class="drive-latch"></span>
+          </div>
+          <div class="drive-bay-lower">
+            <span class="lower-slot"></span>
           </div>
         </div>
       </div>
 
-      <!-- Corded Two-Button Mouse -->
-      <div class="retro-mouse">
-        <div class="mouse-body">
-          <div class="mouse-buttons">
-            <span class="mouse-btn mouse-btn-left"></span>
-            <span class="mouse-btn mouse-btn-right"></span>
-          </div>
-          <div class="mouse-palm"></div>
-        </div>
-      </div>
+      <div class="desktop-side-depth" aria-hidden="true"></div>
     </div>
 
-    <!-- Ground Contact Shadow -->
-    <div class="workstation-floor-shadow" aria-hidden="true"></div>
+    <!-- =========================================================
+         KEYBOARD, MOUSE & PANELLED DESK EDGE
+         ========================================================= -->
+    <div class="ibm-desk-surface" aria-hidden="true">
+      <div class="peripherals-deck">
+        <!-- Angled Low-Profile Keyboard -->
+        <div class="ibm-keyboard">
+          <div class="kb-keys">
+            <div class="kb-row">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="kb-row">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+            </div>
+            <div class="kb-row">
+              <span></span><span></span><span></span>
+              <span class="kb-space"></span>
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sculpted Boxy Mouse -->
+        <div class="ibm-mouse">
+          <div class="mouse-top-bevel"></div>
+        </div>
+      </div>
+
+      <!-- Vertical-panelled Desk Edge -->
+      <div class="desk-edge">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -235,21 +185,17 @@ const {
 
 <style>
   .retro-workstation {
-    /* Hardware palette dynamically derived from active theme tokens */
-    --hw-shell-light: color-mix(in srgb, var(--text-secondary) 24%, var(--bg-elevated) 76%);
-    --hw-shell-mid: color-mix(in srgb, var(--text-secondary) 14%, var(--bg-elevated) 86%);
-    --hw-shell-dark: color-mix(in srgb, var(--bg-canvas) 65%, var(--bg-elevated) 35%);
-    --hw-shell-deep: color-mix(in srgb, var(--bg-canvas) 88%, #000000 12%);
-    --hw-bevel-highlight: color-mix(in srgb, var(--text-primary) 16%, transparent);
-    --hw-bevel-shadow: rgba(0, 0, 0, 0.55);
-    --hw-keycap: color-mix(in srgb, var(--bg-canvas) 45%, var(--bg-elevated) 55%);
-    --hw-keycap-top: color-mix(in srgb, var(--text-secondary) 16%, var(--bg-elevated) 84%);
+    /* Theme-derived classic hardware tones */
+    --pc-light: color-mix(in srgb, var(--text-primary) 26%, var(--bg-elevated) 74%);
+    --pc-mid: color-mix(in srgb, var(--text-secondary) 20%, var(--bg-elevated) 80%);
+    --pc-dark: color-mix(in srgb, var(--bg-canvas) 62%, var(--bg-elevated) 38%);
+    --pc-deep: #050806;
+    --pc-highlight: color-mix(in srgb, var(--text-primary) 18%, transparent);
 
     width: 100%;
-    max-width: 520px;
+    max-width: 470px;
     margin: 0 auto;
-    padding: 12px 18px 18px;
-    position: relative;
+    padding: 8px 10px 0;
     user-select: none;
   }
 
@@ -260,68 +206,90 @@ const {
     align-items: center;
   }
 
+  /* Top Disk Stack */
+  .top-disk-stack {
+    align-self: flex-start;
+    margin-left: 18%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+    width: 34%;
+    margin-bottom: -1px;
+    z-index: 4;
+  }
+
+  .top-disk-stack span {
+    display: block;
+    height: 2.5px;
+    background: linear-gradient(90deg, #070a08 0%, var(--pc-mid) 50%, #070a08 100%);
+    border-radius: 1px;
+  }
+
+  .top-disk-stack span:nth-child(2) { width: 96%; margin-left: 2%; }
+  .top-disk-stack span:nth-child(3) { width: 92%; margin-left: 4%; }
+
   /* =========================================================
-     1. CRT MONITOR
+     1. IBM-STYLE CRT MONITOR
      ========================================================= */
-  .crt-monitor {
-    width: 72%;
-    max-width: 356px;
+  .ibm-monitor {
+    width: 78%;
+    max-width: 348px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
     z-index: 3;
   }
 
-  .crt-casing {
+  .monitor-3d-shell {
     width: 100%;
-    padding: 16px 16px 12px;
-    border-radius: 14px;
-    background: linear-gradient(
-      165deg,
-      var(--hw-shell-light) 0%,
-      var(--hw-shell-mid) 48%,
-      var(--hw-shell-dark) 100%
-    );
-    border: 1px solid var(--border-hairline-bright);
-    box-shadow:
-      inset 0 2px 3px var(--hw-bevel-highlight),
-      inset 0 -4px 8px var(--hw-bevel-shadow),
-      0 14px 28px -8px rgba(0, 0, 0, 0.72);
-    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 18px;
   }
 
-  .crt-bezel {
-    padding: 8px;
-    border-radius: 10px;
-    background: linear-gradient(180deg, var(--hw-shell-deep) 0%, var(--hw-shell-dark) 100%);
-    box-shadow:
-      inset 0 3px 8px rgba(0, 0, 0, 0.8),
-      0 1px 0 var(--hw-bevel-highlight);
+  .monitor-front {
+    background: linear-gradient(168deg, var(--pc-light) 0%, var(--pc-mid) 65%, var(--pc-dark) 100%);
+    border: 1px solid var(--border-hairline-bright);
+    border-radius: 6px 2px 2px 6px;
+    padding: 14px 14px 10px;
+    box-shadow: inset 0 2px 2px var(--pc-highlight);
+  }
+
+  .monitor-side-depth {
+    background: linear-gradient(180deg, var(--pc-dark) 0%, var(--pc-deep) 100%);
+    border-top: 1px solid var(--border-hairline);
+    border-right: 1px solid var(--border-hairline);
+    border-bottom: 1px solid var(--border-hairline);
+    border-radius: 0 6px 6px 0;
+    transform: skewY(-6deg) translateY(1px);
+    transform-origin: left center;
+  }
+
+  .monitor-recess {
+    padding: 7px;
+    background: var(--pc-deep);
+    border-radius: 5px;
+    box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.95);
+    margin-bottom: 10px;
   }
 
   .crt-screen {
     position: relative;
-    aspect-ratio: 4 / 3.15;
+    aspect-ratio: 4 / 3.1;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
-    background:
-      radial-gradient(
-        circle at 50% 45%,
-        color-mix(in srgb, var(--text-accent) 16%, var(--bg-canvas) 84%) 0%,
-        var(--bg-canvas) 78%,
-        #030504 100%
-      );
-    box-shadow:
-      inset 0 0 22px rgba(0, 0, 0, 0.9),
-      0 0 18px -6px var(--theme-accent-glow);
+    background: radial-gradient(
+      circle at 50% 48%,
+      color-mix(in srgb, var(--text-accent) 12%, #0c100d 88%) 0%,
+      #040605 88%
+    );
     display: flex;
     flex-direction: column;
-    transition: filter 250ms ease, box-shadow 250ms ease;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.95);
   }
 
-  /* Scanlines */
   .crt-scanlines {
     position: absolute;
     inset: 0;
@@ -329,137 +297,75 @@ const {
       to bottom,
       rgba(255, 255, 255, 0) 0px,
       rgba(255, 255, 255, 0) 2px,
-      rgba(0, 0, 0, 0.22) 3px,
-      rgba(0, 0, 0, 0.22) 4px
+      rgba(0, 0, 0, 0.28) 3px,
+      rgba(0, 0, 0, 0.28) 4px
     );
     pointer-events: none;
     z-index: 4;
   }
 
-  /* Curved Glass Glare */
   .crt-glare {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      130deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.02) 26%,
-      transparent 52%
-    );
+    background: linear-gradient(125deg, rgba(255, 255, 255, 0.06) 0%, transparent 45%);
     pointer-events: none;
     z-index: 5;
   }
 
-  .crt-ui {
+  .crt-bg-dump {
+    position: absolute;
+    inset: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.45rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    opacity: 0.16;
+    margin: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .crt-center-lockup {
     position: relative;
     z-index: 2;
-    height: 100%;
-    padding: 10px 14px 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: opacity 220ms ease, transform 220ms ease;
-  }
-
-  .crt-topbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.5625rem;
-    letter-spacing: 0.08em;
-    color: var(--text-secondary);
-    border-bottom: 1px solid var(--border-hairline);
-    padding-bottom: 6px;
-  }
-
-  .crt-logo-mark {
+    gap: 10px;
     color: var(--text-accent);
-    font-weight: 600;
+    filter: drop-shadow(0 0 10px var(--theme-accent-glow));
+    transition: opacity 200ms ease;
   }
 
-  .crt-topbar-center {
-    color: var(--text-primary);
-    opacity: 0.85;
+  .pixel-trophy {
+    width: 34px;
+    height: 30px;
   }
 
-  .crt-topbar-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--text-accent-soft);
-  }
-
-  .crt-status-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--text-accent);
-    box-shadow: 0 0 6px var(--text-accent);
-  }
-
-  .crt-hero-copy {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto 0;
-    padding: 6px 4px;
-  }
-
-  .crt-headline {
-    font-family: var(--font-display);
-    font-size: clamp(0.95rem, 1.8vw, 1.25rem);
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
-    color: var(--text-primary);
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  .crt-highlight {
-    color: var(--text-accent);
-    text-shadow: 0 0 12px var(--theme-accent-glow);
-  }
-
-  .crt-badge {
-    margin-top: 8px;
-    padding: 2px 7px;
-    border-radius: 999px;
-    background: var(--theme-accent-muted);
-    border: 1px solid var(--border-hairline-bright);
+  .pixel-brand {
     font-family: var(--font-mono);
-    font-size: 0.5rem;
-    font-weight: 600;
+    font-size: 1.55rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
-    color: var(--text-accent-soft);
-  }
-
-  .crt-arrow {
-    margin-top: 6px;
-    font-size: 0.75rem;
     line-height: 1;
-    color: var(--text-accent);
   }
 
-  .crt-caption {
-    margin-top: 4px;
+  .crt-sub-caption {
+    position: relative;
+    z-index: 2;
+    margin-top: 8px;
     font-family: var(--font-mono);
     font-size: 0.48rem;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
+    letter-spacing: 0.14em;
+    color: var(--text-accent-soft);
+    opacity: 0.78;
+    transition: opacity 200ms ease;
   }
 
-  /* Power-off standby overlay */
   .crt-off-overlay {
     position: absolute;
     inset: 0;
     z-index: 6;
-    background: #040705;
+    background: #030504;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -475,445 +381,308 @@ const {
     color: var(--text-muted);
   }
 
-  .retro-workstation[data-power="off"] .crt-ui {
+  .retro-workstation[data-power="off"] .crt-center-lockup,
+  .retro-workstation[data-power="off"] .crt-sub-caption {
     opacity: 0;
-    transform: scaleY(0.92);
   }
 
   .retro-workstation[data-power="off"] .crt-off-overlay {
     opacity: 1;
   }
 
-  .retro-workstation[data-power="off"] .crt-screen {
-    box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.95);
-  }
-
-  .retro-workstation[data-power="off"] .bezel-led {
-    background: var(--text-muted);
-    box-shadow: none;
-  }
-
-  /* Monitor Bezel Controls */
-  .crt-bezel-controls {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 6px;
-    margin-top: 8px;
-    padding-right: 4px;
-  }
-
-  .bezel-btn {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--hw-shell-deep);
-    border: 1px solid var(--border-hairline);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
-  }
-
-  .bezel-led {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--text-accent);
-    box-shadow: 0 0 6px var(--text-accent);
-    transition: background 200ms ease, box-shadow 200ms ease;
-  }
-
-  /* Monitor Stand */
-  .crt-stand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 46%;
-  }
-
-  .crt-stand-neck {
-    width: 78%;
-    height: 12px;
-    background: linear-gradient(180deg, #050806 0%, var(--hw-shell-deep) 100%);
-    clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);
-  }
-
-  .crt-stand-foot {
-    width: 100%;
-    height: 6px;
-    background: var(--hw-shell-dark);
-    border-top: 1px solid var(--border-hairline);
-    border-radius: 3px 3px 0 0;
-  }
-
-  /* =========================================================
-     2. DESKTOP CPU / BASE UNIT
-     ========================================================= */
-  .desktop-unit {
-    position: relative;
-    width: 86%;
-    max-width: 428px;
-    z-index: 2;
-  }
-
-  .desktop-chassis {
-    width: 100%;
-    border-radius: 10px 10px 6px 6px;
-    background: linear-gradient(
-      175deg,
-      var(--hw-shell-light) 0%,
-      var(--hw-shell-mid) 52%,
-      var(--hw-shell-dark) 100%
-    );
-    border: 1px solid var(--border-hairline-bright);
-    box-shadow:
-      inset 0 2px 3px var(--hw-bevel-highlight),
-      0 14px 26px -8px rgba(0, 0, 0, 0.78);
-    overflow: hidden;
-  }
-
-  .desktop-top-lip {
-    height: 7px;
-    background: linear-gradient(180deg, var(--hw-bevel-highlight), transparent);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  }
-
-  .desktop-front-panel {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 16px;
-    padding: 12px 18px;
-  }
-
-  /* Rotary Knobs */
-  .desktop-knobs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .rotary-knob {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--hw-shell-deep);
-    border: 1px solid var(--border-hairline-bright);
-    box-shadow:
-      0 3px 4px rgba(0, 0, 0, 0.6),
-      inset 0 1px 1px var(--hw-bevel-highlight);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .knob-power {
-    cursor: pointer;
-    transition: transform 150ms ease, border-color 150ms ease;
-  }
-
-  .knob-power:hover {
-    border-color: var(--text-accent);
-    transform: scale(1.08);
-  }
-
-  .knob-power:active {
-    transform: scale(0.95);
-  }
-
-  .knob-cap {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--hw-shell-light);
-  }
-
-  .knob-power .knob-cap {
-    background: var(--text-accent);
-    box-shadow: 0 0 6px var(--theme-accent-glow);
-  }
-
-  .retro-workstation[data-power="off"] .knob-power .knob-cap {
-    background: var(--text-muted);
-    box-shadow: none;
-  }
-
-  /* Center Slot */
-  .desktop-center-slot {
-    display: flex;
-    justify-content: center;
-  }
-
-  .slot-recess {
-    width: 68%;
-    max-width: 92px;
-    height: 5px;
-    border-radius: 3px;
-    background: #040705;
-    box-shadow:
-      inset 0 2px 3px rgba(0, 0, 0, 0.9),
-      0 1px 0 var(--hw-bevel-highlight);
-  }
-
-  /* 3.5" Floppy Drive Bay */
-  .desktop-floppy-bay {
-    width: 112px;
-    padding: 6px 8px;
-    border-radius: 5px;
-    background: var(--hw-shell-dark);
-    border: 1px solid var(--border-hairline);
-    box-shadow:
-      inset 0 1px 2px var(--hw-bevel-highlight),
-      0 2px 4px rgba(0, 0, 0, 0.45);
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .floppy-slot {
-    position: relative;
-    width: 100%;
-    height: 5px;
-    border-radius: 2px;
-    background: #030504;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.95);
-  }
-
-  .floppy-eject-notch {
-    position: absolute;
-    left: 50%;
-    top: -1px;
-    transform: translateX(-50%);
-    width: 24px;
-    height: 7px;
-    border-radius: 1px;
-    background: #050806;
-  }
-
-  .floppy-controls {
+  /* Monitor Chin Controls */
+  .monitor-chin {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
+    padding-top: 2px;
   }
 
-  .floppy-led {
-    width: 10px;
-    height: 3px;
-    border-radius: 1px;
-    background: var(--text-accent-soft);
-    opacity: 0.7;
+  .chin-vents {
+    display: flex;
+    gap: 3px;
+    height: 16px;
   }
 
-  .floppy-button {
-    width: 16px;
-    height: 4px;
-    border-radius: 1px;
-    background: var(--hw-shell-light);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  .chin-vents span {
+    width: 2px;
+    height: 100%;
+    background: var(--pc-deep);
+    opacity: 0.75;
   }
 
-  .desktop-base-skirt {
-    height: 9px;
-    background: var(--hw-shell-deep);
-    border-top: 1px solid rgba(0, 0, 0, 0.5);
+  .chin-badge {
+    padding: 2px 6px;
+    background: var(--pc-deep);
+    color: var(--text-accent-soft);
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--border-hairline);
   }
 
-  /* Side Mouse Cord */
-  .mouse-cable-anchor {
-    position: absolute;
-    right: -40px;
-    top: 22px;
-    width: 56px;
-    height: 90px;
-    pointer-events: none;
-    z-index: 1;
+  .chin-dials {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.55;
   }
 
-  .side-port-jack {
-    position: absolute;
-    left: 12px;
-    top: 4px;
-    width: 7px;
-    height: 9px;
-    border-radius: 2px;
-    background: var(--hw-shell-light);
+  .dial-tri {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 6px solid var(--pc-deep);
+  }
+
+  .dial-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--pc-deep);
+  }
+
+  .dial-sun {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pc-deep);
+  }
+
+  .chin-power-btn {
+    width: 20px;
+    height: 18px;
+    background: var(--pc-mid);
     border: 1px solid var(--border-hairline-bright);
+    box-shadow: inset 0 1px 1px var(--pc-highlight), 0 1px 2px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
   }
 
-  .mouse-cord-svg {
-    position: absolute;
-    left: 16px;
-    top: 0;
-    width: 64px;
-    height: 88px;
-    overflow: visible;
+  .chin-power-btn:hover {
+    border-color: var(--text-accent);
   }
 
-  .mouse-cord-shadow {
-    stroke: rgba(0, 0, 0, 0.45);
-    stroke-width: 3.5;
-    stroke-linecap: round;
+  .power-inner-sq {
+    width: 7px;
+    height: 7px;
+    border: 1.5px solid var(--text-accent);
   }
 
-  .mouse-cord-wire {
-    stroke: var(--hw-shell-dark);
-    stroke-width: 2.5;
-    stroke-linecap: round;
+  .retro-workstation[data-power="off"] .power-inner-sq {
+    border-color: var(--text-muted);
+  }
+
+  .monitor-neck {
+    width: 62%;
+    height: 7px;
+    background: var(--pc-deep);
+    border-left: 1px solid var(--border-hairline);
+    border-right: 1px solid var(--border-hairline);
   }
 
   /* =========================================================
-     3. MECHANICAL KEYBOARD & CORDED MOUSE
+     2. DESKTOP BASE UNIT
      ========================================================= */
-  .peripherals-row {
-    width: 96%;
-    max-width: 472px;
-    margin-top: 10px;
+  .ibm-desktop {
+    width: 88%;
+    max-width: 400px;
+    display: grid;
+    grid-template-columns: 1fr 16px;
+    z-index: 2;
+  }
+
+  .desktop-front {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 14px;
+    padding: 12px 14px;
+    background: linear-gradient(175deg, var(--pc-light) 0%, var(--pc-mid) 65%, var(--pc-dark) 100%);
+    border: 1px solid var(--border-hairline-bright);
+    border-radius: 4px 2px 2px 4px;
+    box-shadow: inset 0 2px 2px var(--pc-highlight);
+  }
+
+  .desktop-side-depth {
+    background: linear-gradient(180deg, var(--pc-dark) 0%, var(--pc-deep) 100%);
+    border-top: 1px solid var(--border-hairline);
+    border-right: 1px solid var(--border-hairline);
+    border-bottom: 1px solid var(--border-hairline);
+    border-radius: 0 4px 4px 0;
+    transform: skewY(-5deg) translateY(1px);
+    transform-origin: left center;
+  }
+
+  .desktop-vents-area {
     display: flex;
     align-items: flex-end;
-    justify-content: center;
-    gap: 14px;
-    position: relative;
-    z-index: 3;
+    justify-content: space-between;
+    gap: 8px;
   }
 
-  .retro-keyboard {
-    flex: 1;
-    max-width: 356px;
-    perspective: 480px;
-  }
-
-  .keyboard-tray {
-    padding: 7px 9px 9px;
-    border-radius: 6px;
-    background: linear-gradient(180deg, var(--hw-shell-light) 0%, var(--hw-shell-dark) 100%);
-    border: 1px solid var(--border-hairline-bright);
-    box-shadow:
-      inset 0 1px 2px var(--hw-bevel-highlight),
-      0 8px 16px -4px rgba(0, 0, 0, 0.72);
-    transform: rotateX(14deg);
-    transform-origin: bottom center;
-  }
-
-  .key-grid {
+  .desktop-vents {
     display: flex;
-    flex-direction: column;
     gap: 3px;
-    padding: 4px;
-    border-radius: 4px;
-    background: var(--hw-shell-deep);
+    height: 46px;
   }
 
-  .key-row {
-    display: flex;
-    align-items: center;
-    gap: 2.5px;
-  }
-
-  .row-fn {
-    margin-bottom: 2px;
-  }
-
-  .key-gap {
-    width: 5px;
-    flex-shrink: 0;
-  }
-
-  .keycap {
-    flex: 1;
-    height: 7px;
-    border-radius: 1.5px;
-    background: linear-gradient(180deg, var(--hw-keycap-top) 0%, var(--hw-keycap) 100%);
-    box-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.85);
-  }
-
-  .keycap.k-sm {
-    height: 5px;
-  }
-
-  .keycap.k-accent {
-    background: var(--text-accent);
+  .desktop-vents span {
+    width: 2.5px;
+    height: 100%;
+    background: var(--pc-deep);
     opacity: 0.85;
   }
 
-  .keycap.k-med {
-    flex: 1.45;
+  .desktop-keylock {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pc-deep);
+    border: 1px solid var(--border-hairline);
   }
 
-  .keycap.k-wide {
-    flex: 1.8;
-  }
-
-  .keycap.k-space {
-    flex: 5.5;
-  }
-
-  /* Corded Mouse */
-  .retro-mouse {
-    width: 54px;
-    flex-shrink: 0;
-    margin-bottom: 2px;
-  }
-
-  .mouse-body {
-    width: 100%;
-    height: 36px;
-    border-radius: 8px 8px 10px 10px;
-    background: linear-gradient(170deg, var(--hw-shell-light) 0%, var(--hw-shell-dark) 100%);
-    border: 1px solid var(--border-hairline-bright);
-    box-shadow:
-      inset 0 1px 2px var(--hw-bevel-highlight),
-      0 7px 14px -3px rgba(0, 0, 0, 0.72);
-    padding: 3px;
+  .desktop-drive-area {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    transform: perspective(260px) rotateX(16deg);
-    transform-origin: bottom center;
+    gap: 6px;
   }
 
-  .mouse-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    height: 13px;
+  .drive-bay-525 {
+    position: relative;
+    height: 26px;
+    background: var(--pc-deep);
+    border: 1px solid var(--border-hairline);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
   }
 
-  .mouse-btn {
-    background: var(--hw-shell-mid);
-    border: 1px solid rgba(0, 0, 0, 0.35);
-    border-radius: 4px 4px 2px 2px;
+  .drive-slot-bar {
+    width: 100%;
+    height: 3px;
+    background: #020302;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .mouse-palm {
-    flex: 1;
-    border-radius: 2px 2px 6px 6px;
-    background: linear-gradient(180deg, var(--hw-shell-mid), var(--hw-shell-dark));
-  }
-
-  /* Ground Shadow */
-  .workstation-floor-shadow {
-    width: 88%;
+  .drive-latch {
+    position: absolute;
+    width: 8px;
     height: 16px;
-    margin-top: -6px;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, transparent 72%);
-    z-index: 1;
+    background: var(--pc-dark);
+    border: 1px solid var(--border-hairline-bright);
   }
 
-  @media (max-width: 640px) {
-    .retro-workstation {
-      padding: 8px 4px 12px;
-    }
+  .drive-bay-lower {
+    height: 14px;
+    background: var(--pc-dark);
+    border: 1px solid var(--border-hairline);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+  }
 
-    .desktop-floppy-bay {
-      width: 86px;
-    }
+  .lower-slot {
+    width: 100%;
+    height: 4px;
+    background: var(--pc-deep);
+  }
 
-    .mouse-cable-anchor {
-      right: -28px;
-    }
+  /* =========================================================
+     3. KEYBOARD, MOUSE & PANELLED DESK EDGE
+     ========================================================= */
+  .ibm-desk-surface {
+    width: 100%;
+    margin-top: -4px;
+    position: relative;
+    z-index: 4;
+  }
 
-    .retro-mouse {
-      width: 44px;
-    }
+  .peripherals-deck {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 0 8px;
+  }
+
+  .ibm-keyboard {
+    flex: 1;
+    max-width: 280px;
+    padding: 5px 8px 6px;
+    background: linear-gradient(180deg, var(--pc-light) 0%, var(--pc-dark) 100%);
+    border: 1px solid var(--border-hairline-bright);
+    border-radius: 3px 3px 2px 2px;
+    transform: perspective(360px) rotateX(20deg);
+    transform-origin: bottom center;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.75);
+  }
+
+  .kb-keys {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px;
+    padding: 3px;
+    background: var(--pc-deep);
+  }
+
+  .kb-row {
+    display: flex;
+    gap: 2px;
+  }
+
+  .kb-row span {
+    flex: 1;
+    height: 5px;
+    background: var(--pc-light);
+    border-radius: 1px;
+  }
+
+  .kb-row span.kb-space {
+    flex: 5;
+  }
+
+  .ibm-mouse {
+    width: 48px;
+    height: 24px;
+    background: linear-gradient(160deg, var(--pc-light) 0%, var(--pc-dark) 100%);
+    border: 1px solid var(--border-hairline-bright);
+    border-radius: 8px 8px 3px 3px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.75);
+    padding: 3px;
+  }
+
+  .mouse-top-bevel {
+    width: 100%;
+    height: 10px;
+    border-bottom: 1px solid var(--pc-deep);
+  }
+
+  .desk-edge {
+    width: 100%;
+    height: 22px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--text-accent) 22%, var(--bg-elevated) 78%) 0%,
+      color-mix(in srgb, var(--text-accent) 12%, var(--bg-canvas) 88%) 100%
+    );
+    border-top: 2px solid color-mix(in srgb, var(--text-accent) 40%, var(--border-hairline-bright) 60%);
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .desk-edge span {
+    border-right: 1px solid rgba(0, 0, 0, 0.35);
+    height: 100%;
+  }
+
+  .desk-edge span:last-child {
+    border-right: none;
   }
 </style>

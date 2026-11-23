@@ -11,6 +11,7 @@ import ProjectsFolderStack from '../components/ProjectsFolderStack.astro';
 import TeamCalendar from '../components/TeamCalendar.astro';
 import WorkshopsFolders from '../components/WorkshopsFolders.astro';
 import AfkSection from '../components/AfkSection.astro';
+import TeamPreferences from '../components/TeamPreferences.astro';
 import { siteConfig } from '../config/site';
 
 const team = siteConfig.team;
@@ -80,6 +81,11 @@ const { email, github, linkedin } = siteConfig.contact;
        SECTION 5C: AFK (Time Off the Keyboard)
        ========================================================================= -->
   <AfkSection id="afk" />
+
+  <!-- =========================================================================
+       SECTION 5D: TEAM MEMBER PREFERENCES (Music Rotation)
+       ========================================================================= -->
+  <TeamPreferences id="preferences" />
 
   <!-- =========================================================================
        SECTION 6: THOUGHTS & SIGNAL NOISE
