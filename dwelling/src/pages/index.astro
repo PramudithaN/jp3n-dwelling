@@ -31,7 +31,24 @@ const { email, github, linkedin } = siteConfig.contact;
   <WhoWeAre id="about" />
 
   <!-- =========================================================================
-       SECTION 2: SELECTED SYSTEMS (Editorial Grid of All Projects)
+       SECTION 2: THE FOUR WORKSHOPS (Services & Contribution Gateway)
+       ========================================================================= -->
+  <section class="workshops-section" id="workshops" aria-labelledby="workshops-heading">
+    <div class="site-container">
+      <div class="section-title-wrap">
+        <span class="section-kicker">DISCIPLINES</span>
+        <h2 id="workshops-heading" class="section-heading">Four In-House Workshops</h2>
+        <p class="section-sub">Zero outsourcing. Pick what you need—websites, design, video, or open source.</p>
+      </div>
+    </div>
+
+    <div class="workshops-full-bleed">
+      <WorkshopsFolders />
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 3: SELECTED SYSTEMS (Editorial Stack of Production Projects)
        ========================================================================= -->
   <section class="work-section" id="work" aria-labelledby="work-heading">
     <div class="site-container">
@@ -46,64 +63,46 @@ const { email, github, linkedin } = siteConfig.contact;
   </section>
 
   <!-- =========================================================================
-       SECTION 3: THE FOUR WORKSHOPS (Capabilities)
-       ========================================================================= -->
-  <section class="workshops-section" id="workshops" aria-labelledby="workshops-heading">
-    <div class="site-container">
-      <div class="section-title-wrap">
-        <span class="section-kicker">DISCIPLINES</span>
-        <h2 id="workshops-heading" class="section-heading">Four In-House Workshops</h2>
-        <p class="section-sub">Zero outsourcing. Every craft executed by senior specialists.</p>
-      </div>
-    </div>
-
-    <div class="workshops-full-bleed">
-      <WorkshopsFolders />
-    </div>
-  </section>
-
-  <!-- =========================================================================
        SECTION 4: THE PROCESS (Non-Linear Creative Loop)
        ========================================================================= -->
   <CreativeProcess id="process" />
 
   <!-- =========================================================================
-       SECTION 5: THE COLLECTIVE (Meet the Team)
+       SECTION 5: THOUGHTS & SIGNAL NOISE (Engineering Mindset)
+       ========================================================================= -->
+  <ThoughtsNoise id="thoughts" />
+
+  <!-- =========================================================================
+       SECTION 6: EDITORIAL CLARITY CALLOUT (Shipping Cadence)
+       ========================================================================= -->
+  <EditorialCanvasCallout id="clarity" />
+
+  <!-- =========================================================================
+       SECTION 7: THE COLLECTIVE (Meet the Team)
        ========================================================================= -->
   <TeamSection />
 
   <!-- =========================================================================
-       SECTION 5B: BUILD CALENDAR (Daily GitHub Contributions)
+       SECTION 7B: BUILD CALENDAR (Daily GitHub Contributions)
        ========================================================================= -->
   <TeamCalendar id="calendar" />
 
   <!-- =========================================================================
-       SECTION 5C: AFK (Time Off the Keyboard)
-       ========================================================================= -->
-  <AfkSection id="afk" />
-
-  <!-- =========================================================================
-       SECTION 5D: TEAM MEMBER PREFERENCES (Music Rotation)
+       SECTION 7C: TEAM MEMBER PREFERENCES (Music Rotation)
        ========================================================================= -->
   <TeamPreferences id="preferences" />
 
   <!-- =========================================================================
-       SECTION 6: THOUGHTS & SIGNAL NOISE
+       SECTION 7D: AFK (Time Off the Keyboard)
        ========================================================================= -->
-  <ThoughtsNoise />
-
-  <!-- =========================================================================
-       SECTION 7: EDITORIAL CLARITY CALLOUT
-       ========================================================================= -->
-  <EditorialCanvasCallout />
+  <AfkSection id="afk" />
 
   <!-- =========================================================================
        SECTION 7: DIRECT ENGAGEMENT (Intake Unit + Retro Workstation)
        ========================================================================= -->
   <section class="intake-section" id="contact" aria-labelledby="intake-heading">
     <div class="site-container">
-      <div class="intake-card">
-        <div class="intake-grid">
+      <div class="intake-grid">
           <div class="intake-copy">
             <span class="section-kicker">WORK WITH US</span>
             <h2 id="intake-heading" class="intake-title">Start a Project Inquiry</h2>
@@ -131,7 +130,6 @@ const { email, github, linkedin } = siteConfig.contact;
               caption="DIRECT SENIOR INVOLVEMENT"
             />
           </div>
-        </div>
       </div>
     </div>
   </section>
@@ -225,6 +223,14 @@ const { email, github, linkedin } = siteConfig.contact;
 </script>
 
 <style>
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(section[id]) {
+    scroll-margin-top: 84px;
+  }
+
   .site-container {
     max-width: var(--content-max-width);
     margin: 0 auto;
@@ -235,14 +241,14 @@ const { email, github, linkedin } = siteConfig.contact;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     font-weight: 600;
-    color: var(--color-raw-amber-vivid);
+    color: var(--text-accent);
     letter-spacing: 0.08em;
     display: block;
     margin-bottom: var(--space-xs);
   }
 
   .section-title-wrap {
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
   }
 
   .section-heading {
@@ -885,7 +891,7 @@ const { email, github, linkedin } = siteConfig.contact;
 
   /* --- 3. SYSTEMS GRID --- */
   .work-section {
-    padding: var(--space-4xl) 0;
+    padding: var(--space-3xl) 0;
     border-bottom: 1px solid var(--border-hairline);
   }
 
@@ -1179,7 +1185,7 @@ const { email, github, linkedin } = siteConfig.contact;
   }
 
   .workshops-section {
-    padding: var(--space-4xl) 0;
+    padding: var(--space-3xl) 0;
     border-bottom: 1px solid var(--border-hairline);
   }
 
@@ -1320,15 +1326,7 @@ const { email, github, linkedin } = siteConfig.contact;
 
   /* --- 6. INTAKE UNIT --- */
   .intake-section {
-    padding: var(--space-4xl) 0;
-  }
-
-  .intake-card {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-hairline);
-    padding: var(--space-3xl) var(--space-2xl);
-    max-width: 1120px;
-    margin: 0 auto;
+    padding: var(--space-3xl) 0;
   }
 
   .intake-grid {
@@ -1480,8 +1478,10 @@ const { email, github, linkedin } = siteConfig.contact;
     .team-cards-row {
       grid-template-columns: 1fr;
     }
-    .intake-card {
-      padding: var(--space-xl) var(--space-m);
+  }
+  @media (max-width: 640px) {
+    .intake-title {
+      font-size: var(--step-2);
     }
   }
 </style>

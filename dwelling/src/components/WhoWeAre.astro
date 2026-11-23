@@ -109,7 +109,7 @@ const { id = 'about' } = Astro.props;
     width: 360px;
     height: 360px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(82, 164, 104, 0.16) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--text-accent) 16%, transparent) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -120,7 +120,7 @@ const { id = 'about' } = Astro.props;
     width: 340px;
     height: 340px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(164, 172, 134, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--text-accent-soft) 12%, transparent) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -177,13 +177,13 @@ const { id = 'about' } = Astro.props;
     position: relative;
     display: inline-block;
     padding: 0.02em 0.16em;
-    background: rgba(82, 164, 104, 0.22);
-    border: 1px solid rgba(82, 164, 104, 0.65);
-    color: #faf9f6;
+    background: color-mix(in srgb, var(--text-accent) 22%, transparent);
+    border: 1px solid color-mix(in srgb, var(--text-accent) 65%, transparent);
+    color: var(--text-primary);
   }
 
   .selection-highlight em {
-    color: #a4ac86;
+    color: var(--text-accent-soft);
   }
 
   .handle-tl,
@@ -228,8 +228,8 @@ const { id = 'about' } = Astro.props;
     padding: 0.45em 0.9em;
     border-radius: 9999px;
     background-color: var(--theme-accent, #52a468);
-    color: #09100b;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), 0 0 14px rgba(82, 164, 104, 0.28);
+    color: var(--bg-canvas);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), 0 0 14px color-mix(in srgb, var(--text-accent) 28%, transparent);
     white-space: nowrap;
   }
 

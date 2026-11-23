@@ -282,13 +282,21 @@ const { id = 'process' } = Astro.props;
       const scale = 0.92 + 0.12 * active;
       ctx.scale(scale, scale);
 
+      // Helper to read live CSS --text-accent as hex + rgb
+      const accentHex = (getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468').trim();
+      const hexClean = accentHex.startsWith('#') ? accentHex.slice(1) : '52a468';
+      const fullHex = hexClean.length === 3 ? hexClean.split('').map(c => c + c).join('') : hexClean;
+      const ar = parseInt(fullHex.slice(0, 2), 16) || 82;
+      const ag = parseInt(fullHex.slice(2, 4), 16) || 164;
+      const ab = parseInt(fullHex.slice(4, 6), 16) || 104;
+
       // Circle
       ctx.beginPath();
       ctx.arc(0, 0, 10, 0, Math.PI * 2);
-      ctx.fillStyle = active > 0.3 ? `rgba(82, 164, 104, ${0.25 + 0.75 * active})` : 'rgba(250, 249, 246, 0.08)';
+      ctx.fillStyle = active > 0.3 ? `rgba(${ar}, ${ag}, ${ab}, ${0.25 + 0.75 * active})` : 'rgba(250, 249, 246, 0.08)';
       ctx.fill();
       ctx.lineWidth = 1.4;
-      ctx.strokeStyle = active > 0.3 ? '#52a468' : 'rgba(250, 249, 246, 0.32)';
+      ctx.strokeStyle = active > 0.3 ? accentHex : 'rgba(250, 249, 246, 0.32)';
       ctx.stroke();
 
       // Checkmark
@@ -410,7 +418,8 @@ const { id = 'process' } = Astro.props;
       ctx.lineWidth = 2.4;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
-      ctx.shadowColor = 'rgba(82, 164, 104, 0.55)';
+      const accentHexLoop = (getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468').trim();
+      ctx.shadowColor = accentHexLoop;
       ctx.shadowBlur = 10;
       ctx.beginPath();
       for (let i = 0; i <= runnerIdx; i++) {

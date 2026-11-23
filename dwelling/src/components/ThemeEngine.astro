@@ -7,8 +7,10 @@
  * Modifying `activeTheme` in `src/config/theme.ts` immediately updates
  * the typography, colors, borders, and visual atmosphere across the entire site.
  */
-import { activeTheme } from '../config/theme';
+import { activeTheme, themes } from '../config/theme';
 const { colors } = activeTheme;
+const serializedThemes = JSON.stringify(themes);
+const defaultThemeId = activeTheme.id;
 ---
 
 <style is:global set:html={`
@@ -56,7 +58,7 @@ const { colors } = activeTheme;
   }
 
   .site-header:not(.is-hero-light) {
-    background-color: rgba(9, 16, 11, 0.85) !important;
+    background-color: color-mix(in srgb, var(--bg-canvas) 88%, transparent) !important;
     border-bottom: 1px solid var(--border-hairline) !important;
   }
 
@@ -136,3 +138,78 @@ const { colors } = activeTheme;
     color: var(--text-secondary) !important;
   }
 `} />
+
+<script is:inline define:vars={{ serializedThemes, defaultThemeId }}>
+  (function () {
+    const allThemes = JSON.parse(serializedThemes);
+    window.__JP3N_THEMES__ = allThemes;
+
+    window.__applyJp3nTheme__ = function (themeId) {
+      const def = allThemes[themeId] || allThemes[defaultThemeId];
+      if (!def) return;
+      const c = def.colors;
+      const root = document.documentElement.style;
+      const map = {
+        '--theme-accent': c.accent,
+        '--theme-accent-soft': c.accentSoft,
+        '--theme-accent-glow': c.accentGlow,
+        '--theme-accent-muted': c.accentMuted,
+        '--theme-bg-canvas': c.bgCanvas,
+        '--theme-bg-surface': c.bgSurface,
+        '--theme-bg-elevated': c.bgElevated,
+        '--theme-bg-scrim': c.bgScrim,
+        '--theme-text-primary': c.textPrimary,
+        '--theme-text-secondary': c.textSecondary,
+        '--theme-text-muted': c.textMuted,
+        '--theme-border-hairline': c.borderHairline,
+        '--theme-border-bright': c.borderBright,
+        '--theme-border-focus': c.borderFocus,
+        '--color-forest-dark': c.bgCanvas,
+        '--color-forest-obsidian': c.bgSurface,
+        '--color-forest-elevated': c.bgElevated,
+        '--color-forest-accent': c.accent,
+        '--color-forest-olive': c.accentSoft,
+        '--color-forest-ivory': c.textPrimary,
+        '--color-forest-stone': c.textSecondary,
+        '--color-forest-ash': c.textMuted,
+        '--color-raw-amber-vivid': c.accent,
+        '--color-raw-amber-sand': c.accentSoft,
+        '--color-raw-parchment': c.textPrimary,
+        '--color-raw-stone': c.textSecondary,
+        '--color-raw-ash': c.textMuted,
+        '--color-accent-glow': c.accentGlow,
+        '--color-accent-muted': c.accentMuted,
+        '--bg-canvas': c.bgCanvas,
+        '--bg-surface': c.bgSurface,
+        '--bg-elevated': c.bgElevated,
+        '--text-primary': c.textPrimary,
+        '--text-secondary': c.textSecondary,
+        '--text-muted': c.textMuted,
+        '--text-accent': c.accent,
+        '--text-accent-soft': c.accentSoft,
+        '--border-hairline': c.borderHairline,
+        '--border-hairline-bright': c.borderBright,
+        '--border-focus': c.borderFocus
+      };
+      for (const [k, v] of Object.entries(map)) {
+        root.setProperty(k, v);
+      }
+      document.documentElement.setAttribute('data-theme', def.id);
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', c.bgCanvas);
+      try {
+        localStorage.setItem('jp3n-theme', def.id);
+      } catch {}
+      window.dispatchEvent(new CustomEvent('jp3n:theme-change', { detail: { id: def.id, colors: c } }));
+    };
+
+    try {
+      const saved = localStorage.getItem('jp3n-theme');
+      if (saved && allThemes[saved]) {
+        window.__applyJp3nTheme__(saved);
+      } else {
+        document.documentElement.setAttribute('data-theme', defaultThemeId);
+      }
+    } catch {}
+  })();
+</script>
