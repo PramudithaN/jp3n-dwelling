@@ -1,0 +1,919 @@
+---
+interface Props {
+  brand?: string;
+  headlineTop?: string;
+  headlineHighlight?: string;
+  headlineBottom?: string;
+  badge?: string;
+  caption?: string;
+}
+
+const {
+  brand = 'JP3N',
+  headlineTop = 'First-Principles',
+  headlineHighlight = 'Software &',
+  headlineBottom = 'Design Atelier',
+  badge = '0KB BLOAT',
+  caption = 'PURE STATIC HTML · CSS TOKENS'
+} = Astro.props;
+---
+
+<div class="retro-workstation" data-power="on">
+  <div class="workstation-stage">
+    <!-- =========================================================
+         CRT MONITOR
+         ========================================================= -->
+    <div class="crt-monitor">
+      <div class="crt-casing">
+        <div class="crt-bezel">
+          <div class="crt-screen" id="crtScreen">
+            <!-- Subtle CRT scanlines & phosphor vignette -->
+            <div class="crt-scanlines" aria-hidden="true"></div>
+            <div class="crt-glare" aria-hidden="true"></div>
+
+            <!-- Screen UI Content -->
+            <div class="crt-ui">
+              <div class="crt-topbar">
+                <span class="crt-logo-mark">{brand}</span>
+                <span class="crt-topbar-center">JP3N DWELLING</span>
+                <span class="crt-topbar-status">
+                  <span class="crt-status-dot"></span>
+                  LIVE
+                </span>
+              </div>
+
+              <div class="crt-hero-copy">
+                <div class="crt-headline">
+                  <span class="crt-line">{headlineTop}</span>
+                  <span class="crt-line">
+                    <span class="crt-highlight">{headlineHighlight}</span> {headlineBottom}
+                  </span>
+                </div>
+
+                <div class="crt-badge" aria-label={badge}>{badge}</div>
+
+                <div class="crt-arrow" aria-hidden="true">↓</div>
+                <p class="crt-caption">{caption}</p>
+              </div>
+            </div>
+
+            <!-- Standby / Powered-off overlay -->
+            <div class="crt-off-overlay" aria-hidden="true">
+              <span class="crt-off-text">STANDBY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monitor front-bezel controls -->
+        <div class="crt-bezel-controls" aria-hidden="true">
+          <span class="bezel-btn"></span>
+          <span class="bezel-led"></span>
+        </div>
+      </div>
+
+      <!-- Monitor Stand / Neck -->
+      <div class="crt-stand" aria-hidden="true">
+        <div class="crt-stand-neck"></div>
+        <div class="crt-stand-foot"></div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         DESKTOP CPU / BASE UNIT
+         ========================================================= -->
+    <div class="desktop-unit">
+      <div class="desktop-chassis">
+        <div class="desktop-top-lip" aria-hidden="true"></div>
+
+        <div class="desktop-front-panel">
+          <!-- Left Rotary Knobs (Power toggle + Reset) -->
+          <div class="desktop-knobs">
+            <button
+              type="button"
+              class="rotary-knob knob-power"
+              id="crtPowerToggle"
+              aria-label="Toggle CRT workstation power"
+              title="Power"
+            >
+              <span class="knob-cap"></span>
+            </button>
+            <span class="rotary-knob knob-tune" aria-hidden="true">
+              <span class="knob-cap"></span>
+            </span>
+          </div>
+
+          <!-- Center Disk / Vent Slot -->
+          <div class="desktop-center-slot" aria-hidden="true">
+            <div class="slot-recess"></div>
+          </div>
+
+          <!-- Right 3.5" Floppy Drive Bay -->
+          <div class="desktop-floppy-bay" aria-hidden="true">
+            <div class="floppy-slot">
+              <div class="floppy-eject-notch"></div>
+            </div>
+            <div class="floppy-controls">
+              <span class="floppy-led"></span>
+              <span class="floppy-button"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="desktop-base-skirt" aria-hidden="true"></div>
+      </div>
+
+      <!-- Side Cable Port & Curved Mouse Cord (SVG) -->
+      <div class="mouse-cable-anchor" aria-hidden="true">
+        <span class="side-port-jack"></span>
+        <svg class="mouse-cord-svg" viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M 4 10 C 48 10, 74 28, 74 62 C 74 88, 56 96, 56 108"
+            class="mouse-cord-shadow"
+          />
+          <path
+            d="M 4 8 C 48 8, 74 26, 74 60 C 74 86, 56 94, 56 106"
+            class="mouse-cord-wire"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         PERIPHERALS: MECHANICAL KEYBOARD & CORDED MOUSE
+         ========================================================= -->
+    <div class="peripherals-row" aria-hidden="true">
+      <!-- Mechanical Keyboard -->
+      <div class="retro-keyboard">
+        <div class="keyboard-tray">
+          <div class="key-grid">
+            <!-- Row 1: Function / Esc -->
+            <div class="key-row row-fn">
+              <span class="keycap k-sm k-accent"></span>
+              <span class="key-gap"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+              <span class="key-gap"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+              <span class="key-gap"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+              <span class="keycap k-sm"></span>
+            </div>
+
+            <!-- Row 2: Number Row -->
+            <div class="key-row">
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap k-wide"></span>
+              <span class="key-gap"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+            </div>
+
+            <!-- Row 3: QWERTY + Home Row -->
+            <div class="key-row">
+              <span class="keycap k-med"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap"></span><span class="keycap"></span>
+              <span class="keycap k-med"></span>
+              <span class="key-gap"></span>
+              <span class="keycap"></span><span class="keycap"></span><span class="keycap"></span>
+            </div>
+
+            <!-- Row 4: Spacebar Row -->
+            <div class="key-row">
+              <span class="keycap k-med"></span>
+              <span class="keycap"></span>
+              <span class="keycap k-space"></span>
+              <span class="keycap"></span>
+              <span class="keycap k-med"></span>
+              <span class="key-gap"></span>
+              <span class="keycap"></span>
+              <span class="keycap"></span>
+              <span class="keycap"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Corded Two-Button Mouse -->
+      <div class="retro-mouse">
+        <div class="mouse-body">
+          <div class="mouse-buttons">
+            <span class="mouse-btn mouse-btn-left"></span>
+            <span class="mouse-btn mouse-btn-right"></span>
+          </div>
+          <div class="mouse-palm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ground Contact Shadow -->
+    <div class="workstation-floor-shadow" aria-hidden="true"></div>
+  </div>
+</div>
+
+<script>
+  const powerBtn = document.getElementById('crtPowerToggle');
+  const workstation = powerBtn?.closest('.retro-workstation');
+
+  if (powerBtn && workstation) {
+    powerBtn.addEventListener('click', () => {
+      const isOn = workstation.getAttribute('data-power') === 'on';
+      workstation.setAttribute('data-power', isOn ? 'off' : 'on');
+    });
+  }
+</script>
+
+<style>
+  .retro-workstation {
+    /* Hardware palette dynamically derived from active theme tokens */
+    --hw-shell-light: color-mix(in srgb, var(--text-secondary) 24%, var(--bg-elevated) 76%);
+    --hw-shell-mid: color-mix(in srgb, var(--text-secondary) 14%, var(--bg-elevated) 86%);
+    --hw-shell-dark: color-mix(in srgb, var(--bg-canvas) 65%, var(--bg-elevated) 35%);
+    --hw-shell-deep: color-mix(in srgb, var(--bg-canvas) 88%, #000000 12%);
+    --hw-bevel-highlight: color-mix(in srgb, var(--text-primary) 16%, transparent);
+    --hw-bevel-shadow: rgba(0, 0, 0, 0.55);
+    --hw-keycap: color-mix(in srgb, var(--bg-canvas) 45%, var(--bg-elevated) 55%);
+    --hw-keycap-top: color-mix(in srgb, var(--text-secondary) 16%, var(--bg-elevated) 84%);
+
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 12px 18px 18px;
+    position: relative;
+    user-select: none;
+  }
+
+  .workstation-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* =========================================================
+     1. CRT MONITOR
+     ========================================================= */
+  .crt-monitor {
+    width: 72%;
+    max-width: 356px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+  }
+
+  .crt-casing {
+    width: 100%;
+    padding: 16px 16px 12px;
+    border-radius: 14px;
+    background: linear-gradient(
+      165deg,
+      var(--hw-shell-light) 0%,
+      var(--hw-shell-mid) 48%,
+      var(--hw-shell-dark) 100%
+    );
+    border: 1px solid var(--border-hairline-bright);
+    box-shadow:
+      inset 0 2px 3px var(--hw-bevel-highlight),
+      inset 0 -4px 8px var(--hw-bevel-shadow),
+      0 14px 28px -8px rgba(0, 0, 0, 0.72);
+    position: relative;
+  }
+
+  .crt-bezel {
+    padding: 8px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--hw-shell-deep) 0%, var(--hw-shell-dark) 100%);
+    box-shadow:
+      inset 0 3px 8px rgba(0, 0, 0, 0.8),
+      0 1px 0 var(--hw-bevel-highlight);
+  }
+
+  .crt-screen {
+    position: relative;
+    aspect-ratio: 4 / 3.15;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background:
+      radial-gradient(
+        circle at 50% 45%,
+        color-mix(in srgb, var(--text-accent) 16%, var(--bg-canvas) 84%) 0%,
+        var(--bg-canvas) 78%,
+        #030504 100%
+      );
+    box-shadow:
+      inset 0 0 22px rgba(0, 0, 0, 0.9),
+      0 0 18px -6px var(--theme-accent-glow);
+    display: flex;
+    flex-direction: column;
+    transition: filter 250ms ease, box-shadow 250ms ease;
+  }
+
+  /* Scanlines */
+  .crt-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 2px,
+      rgba(0, 0, 0, 0.22) 3px,
+      rgba(0, 0, 0, 0.22) 4px
+    );
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  /* Curved Glass Glare */
+  .crt-glare {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      130deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 26%,
+      transparent 52%
+    );
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .crt-ui {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 10px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+
+  .crt-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-hairline);
+    padding-bottom: 6px;
+  }
+
+  .crt-logo-mark {
+    color: var(--text-accent);
+    font-weight: 600;
+  }
+
+  .crt-topbar-center {
+    color: var(--text-primary);
+    opacity: 0.85;
+  }
+
+  .crt-topbar-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-accent-soft);
+  }
+
+  .crt-status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-accent);
+    box-shadow: 0 0 6px var(--text-accent);
+  }
+
+  .crt-hero-copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto 0;
+    padding: 6px 4px;
+  }
+
+  .crt-headline {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .crt-highlight {
+    color: var(--text-accent);
+    text-shadow: 0 0 12px var(--theme-accent-glow);
+  }
+
+  .crt-badge {
+    margin-top: 8px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--theme-accent-muted);
+    border: 1px solid var(--border-hairline-bright);
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-accent-soft);
+  }
+
+  .crt-arrow {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--text-accent);
+  }
+
+  .crt-caption {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  /* Power-off standby overlay */
+  .crt-off-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    background: #040705;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .crt-off-text {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+  }
+
+  .retro-workstation[data-power="off"] .crt-ui {
+    opacity: 0;
+    transform: scaleY(0.92);
+  }
+
+  .retro-workstation[data-power="off"] .crt-off-overlay {
+    opacity: 1;
+  }
+
+  .retro-workstation[data-power="off"] .crt-screen {
+    box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.95);
+  }
+
+  .retro-workstation[data-power="off"] .bezel-led {
+    background: var(--text-muted);
+    box-shadow: none;
+  }
+
+  /* Monitor Bezel Controls */
+  .crt-bezel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 8px;
+    padding-right: 4px;
+  }
+
+  .bezel-btn {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--hw-shell-deep);
+    border: 1px solid var(--border-hairline);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
+
+  .bezel-led {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-accent);
+    box-shadow: 0 0 6px var(--text-accent);
+    transition: background 200ms ease, box-shadow 200ms ease;
+  }
+
+  /* Monitor Stand */
+  .crt-stand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 46%;
+  }
+
+  .crt-stand-neck {
+    width: 78%;
+    height: 12px;
+    background: linear-gradient(180deg, #050806 0%, var(--hw-shell-deep) 100%);
+    clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);
+  }
+
+  .crt-stand-foot {
+    width: 100%;
+    height: 6px;
+    background: var(--hw-shell-dark);
+    border-top: 1px solid var(--border-hairline);
+    border-radius: 3px 3px 0 0;
+  }
+
+  /* =========================================================
+     2. DESKTOP CPU / BASE UNIT
+     ========================================================= */
+  .desktop-unit {
+    position: relative;
+    width: 86%;
+    max-width: 428px;
+    z-index: 2;
+  }
+
+  .desktop-chassis {
+    width: 100%;
+    border-radius: 10px 10px 6px 6px;
+    background: linear-gradient(
+      175deg,
+      var(--hw-shell-light) 0%,
+      var(--hw-shell-mid) 52%,
+      var(--hw-shell-dark) 100%
+    );
+    border: 1px solid var(--border-hairline-bright);
+    box-shadow:
+      inset 0 2px 3px var(--hw-bevel-highlight),
+      0 14px 26px -8px rgba(0, 0, 0, 0.78);
+    overflow: hidden;
+  }
+
+  .desktop-top-lip {
+    height: 7px;
+    background: linear-gradient(180deg, var(--hw-bevel-highlight), transparent);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .desktop-front-panel {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 18px;
+  }
+
+  /* Rotary Knobs */
+  .desktop-knobs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .rotary-knob {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--hw-shell-deep);
+    border: 1px solid var(--border-hairline-bright);
+    box-shadow:
+      0 3px 4px rgba(0, 0, 0, 0.6),
+      inset 0 1px 1px var(--hw-bevel-highlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .knob-power {
+    cursor: pointer;
+    transition: transform 150ms ease, border-color 150ms ease;
+  }
+
+  .knob-power:hover {
+    border-color: var(--text-accent);
+    transform: scale(1.08);
+  }
+
+  .knob-power:active {
+    transform: scale(0.95);
+  }
+
+  .knob-cap {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--hw-shell-light);
+  }
+
+  .knob-power .knob-cap {
+    background: var(--text-accent);
+    box-shadow: 0 0 6px var(--theme-accent-glow);
+  }
+
+  .retro-workstation[data-power="off"] .knob-power .knob-cap {
+    background: var(--text-muted);
+    box-shadow: none;
+  }
+
+  /* Center Slot */
+  .desktop-center-slot {
+    display: flex;
+    justify-content: center;
+  }
+
+  .slot-recess {
+    width: 68%;
+    max-width: 92px;
+    height: 5px;
+    border-radius: 3px;
+    background: #040705;
+    box-shadow:
+      inset 0 2px 3px rgba(0, 0, 0, 0.9),
+      0 1px 0 var(--hw-bevel-highlight);
+  }
+
+  /* 3.5" Floppy Drive Bay */
+  .desktop-floppy-bay {
+    width: 112px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    background: var(--hw-shell-dark);
+    border: 1px solid var(--border-hairline);
+    box-shadow:
+      inset 0 1px 2px var(--hw-bevel-highlight),
+      0 2px 4px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .floppy-slot {
+    position: relative;
+    width: 100%;
+    height: 5px;
+    border-radius: 2px;
+    background: #030504;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.95);
+  }
+
+  .floppy-eject-notch {
+    position: absolute;
+    left: 50%;
+    top: -1px;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 7px;
+    border-radius: 1px;
+    background: #050806;
+  }
+
+  .floppy-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .floppy-led {
+    width: 10px;
+    height: 3px;
+    border-radius: 1px;
+    background: var(--text-accent-soft);
+    opacity: 0.7;
+  }
+
+  .floppy-button {
+    width: 16px;
+    height: 4px;
+    border-radius: 1px;
+    background: var(--hw-shell-light);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  }
+
+  .desktop-base-skirt {
+    height: 9px;
+    background: var(--hw-shell-deep);
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+  }
+
+  /* Side Mouse Cord */
+  .mouse-cable-anchor {
+    position: absolute;
+    right: -40px;
+    top: 22px;
+    width: 56px;
+    height: 90px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .side-port-jack {
+    position: absolute;
+    left: 12px;
+    top: 4px;
+    width: 7px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--hw-shell-light);
+    border: 1px solid var(--border-hairline-bright);
+  }
+
+  .mouse-cord-svg {
+    position: absolute;
+    left: 16px;
+    top: 0;
+    width: 64px;
+    height: 88px;
+    overflow: visible;
+  }
+
+  .mouse-cord-shadow {
+    stroke: rgba(0, 0, 0, 0.45);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+  }
+
+  .mouse-cord-wire {
+    stroke: var(--hw-shell-dark);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+
+  /* =========================================================
+     3. MECHANICAL KEYBOARD & CORDED MOUSE
+     ========================================================= */
+  .peripherals-row {
+    width: 96%;
+    max-width: 472px;
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 14px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .retro-keyboard {
+    flex: 1;
+    max-width: 356px;
+    perspective: 480px;
+  }
+
+  .keyboard-tray {
+    padding: 7px 9px 9px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, var(--hw-shell-light) 0%, var(--hw-shell-dark) 100%);
+    border: 1px solid var(--border-hairline-bright);
+    box-shadow:
+      inset 0 1px 2px var(--hw-bevel-highlight),
+      0 8px 16px -4px rgba(0, 0, 0, 0.72);
+    transform: rotateX(14deg);
+    transform-origin: bottom center;
+  }
+
+  .key-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 4px;
+    border-radius: 4px;
+    background: var(--hw-shell-deep);
+  }
+
+  .key-row {
+    display: flex;
+    align-items: center;
+    gap: 2.5px;
+  }
+
+  .row-fn {
+    margin-bottom: 2px;
+  }
+
+  .key-gap {
+    width: 5px;
+    flex-shrink: 0;
+  }
+
+  .keycap {
+    flex: 1;
+    height: 7px;
+    border-radius: 1.5px;
+    background: linear-gradient(180deg, var(--hw-keycap-top) 0%, var(--hw-keycap) 100%);
+    box-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.85);
+  }
+
+  .keycap.k-sm {
+    height: 5px;
+  }
+
+  .keycap.k-accent {
+    background: var(--text-accent);
+    opacity: 0.85;
+  }
+
+  .keycap.k-med {
+    flex: 1.45;
+  }
+
+  .keycap.k-wide {
+    flex: 1.8;
+  }
+
+  .keycap.k-space {
+    flex: 5.5;
+  }
+
+  /* Corded Mouse */
+  .retro-mouse {
+    width: 54px;
+    flex-shrink: 0;
+    margin-bottom: 2px;
+  }
+
+  .mouse-body {
+    width: 100%;
+    height: 36px;
+    border-radius: 8px 8px 10px 10px;
+    background: linear-gradient(170deg, var(--hw-shell-light) 0%, var(--hw-shell-dark) 100%);
+    border: 1px solid var(--border-hairline-bright);
+    box-shadow:
+      inset 0 1px 2px var(--hw-bevel-highlight),
+      0 7px 14px -3px rgba(0, 0, 0, 0.72);
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transform: perspective(260px) rotateX(16deg);
+    transform-origin: bottom center;
+  }
+
+  .mouse-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    height: 13px;
+  }
+
+  .mouse-btn {
+    background: var(--hw-shell-mid);
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    border-radius: 4px 4px 2px 2px;
+  }
+
+  .mouse-palm {
+    flex: 1;
+    border-radius: 2px 2px 6px 6px;
+    background: linear-gradient(180deg, var(--hw-shell-mid), var(--hw-shell-dark));
+  }
+
+  /* Ground Shadow */
+  .workstation-floor-shadow {
+    width: 88%;
+    height: 16px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, transparent 72%);
+    z-index: 1;
+  }
+
+  @media (max-width: 640px) {
+    .retro-workstation {
+      padding: 8px 4px 12px;
+    }
+
+    .desktop-floppy-bay {
+      width: 86px;
+    }
+
+    .mouse-cable-anchor {
+      right: -28px;
+    }
+
+    .retro-mouse {
+      width: 44px;
+    }
+  }
+</style>

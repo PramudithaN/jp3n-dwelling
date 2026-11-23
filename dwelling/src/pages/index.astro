@@ -6,6 +6,7 @@ import CreativeProcess from '../components/CreativeProcess.astro';
 import TeamSection from '../components/TeamSection.astro';
 import ThoughtsNoise from '../components/ThoughtsNoise.astro';
 import EditorialCanvasCallout from '../components/EditorialCanvasCallout.astro';
+import RetroWorkstation from '../components/RetroWorkstation.astro';
 import { siteConfig } from '../config/site';
 
 const team = siteConfig.team;
@@ -302,24 +303,39 @@ const { email, github, linkedin } = siteConfig.contact;
   <EditorialCanvasCallout />
 
   <!-- =========================================================================
-       SECTION 7: DIRECT ENGAGEMENT (Intake Unit)
+       SECTION 7: DIRECT ENGAGEMENT (Intake Unit + Retro Workstation)
        ========================================================================= -->
   <section class="intake-section" id="contact" aria-labelledby="intake-heading">
     <div class="site-container">
       <div class="intake-card">
-        <span class="section-kicker">WORK WITH US</span>
-        <h2 id="intake-heading" class="intake-title">Start a Project Inquiry</h2>
-        <p class="intake-text">
-          We accept 3 select client projects per quarter to guarantee direct senior involvement from initial spec to final deployment.
-        </p>
+        <div class="intake-grid">
+          <div class="intake-copy">
+            <span class="section-kicker">WORK WITH US</span>
+            <h2 id="intake-heading" class="intake-title">Start a Project Inquiry</h2>
+            <p class="intake-text">
+              We accept 3 select client projects per quarter to guarantee direct senior involvement from initial spec to final deployment.
+            </p>
 
-        <div class="intake-actions">
-          <a href={`mailto:${email}?subject=Project%20Inquiry%20JP3N`} class="btn-intake-primary">
-            Send Project Brief
-          </a>
-          <button type="button" class="btn-intake-copy" id="copyEmailTrigger" data-email={email}>
-            <span id="copyFeedback">Copy {email}</span>
-          </button>
+            <div class="intake-actions">
+              <a href={`mailto:${email}?subject=Project%20Inquiry%20JP3N`} class="btn-intake-primary">
+                Send Project Brief
+              </a>
+              <button type="button" class="btn-intake-copy" id="copyEmailTrigger" data-email={email}>
+                <span id="copyFeedback">Copy {email}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="intake-visual">
+            <RetroWorkstation
+              brand="JP3N"
+              headlineTop="We're Live."
+              headlineHighlight="Software &"
+              headlineBottom="Design Atelier"
+              badge="3 SLOTS / QTR"
+              caption="DIRECT SENIOR INVOLVEMENT"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -1511,9 +1527,32 @@ const { email, github, linkedin } = siteConfig.contact;
     background-color: var(--bg-surface);
     border: 1px solid var(--border-hairline);
     padding: var(--space-3xl) var(--space-2xl);
-    text-align: center;
-    max-width: 760px;
+    max-width: 1120px;
     margin: 0 auto;
+  }
+
+  .intake-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .intake-grid {
+      grid-template-columns: 1fr 1.05fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  .intake-copy {
+    text-align: left;
+  }
+
+  .intake-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .intake-title {
@@ -1528,15 +1567,29 @@ const { email, github, linkedin } = siteConfig.contact;
     font-size: 1rem;
     color: var(--text-secondary);
     line-height: var(--lh-body);
-    max-width: 50ch;
-    margin: 0 auto var(--space-2xl);
+    max-width: 48ch;
+    margin: 0 0 var(--space-2xl);
   }
 
   .intake-actions {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--space-m);
     flex-wrap: wrap;
+  }
+
+  @media (max-width: 959px) {
+    .intake-copy {
+      text-align: center;
+    }
+
+    .intake-text {
+      margin: 0 auto var(--space-2xl);
+    }
+
+    .intake-actions {
+      justify-content: center;
+    }
   }
 
   .btn-intake-primary {
