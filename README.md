@@ -1,102 +1,84 @@
 # JP3N Tech Dwelling
 
-> **An independent craft & engineering dwelling.**  
-> Built with static-first architecture, CSS scroll-driven animations, zero tracking cookies, and WCAG AA flat design tokens.
+> **An independent software, design, motion, and open-source collective based in Colombo, Sri Lanka.**  
+> Built with static-first Astro architecture, zero tracking cookies, self-hosted fonts, and a live 8-palette global theme engine.
+
+**Live Site (GitHub Pages):** https://pramudithan.github.io/jp3n-dwelling/
 
 ---
 
-## 1. Architectural Overview & Philosophy
+## 1. Architecture & One-Page Flow
 
-JP3N Tech Dwelling is designed as an architectural progression rather than an off-the-shelf agency template:
-- **Blueprint:** How we plan, audit, and de-risk software.
-- **Foundation:** Non-negotiables (zero cookies, self-hosted fonts, verifiable code).
-- **The Four Rooms:** Specialized workshops for Web Engineering, Graphic Systems, Motion Craft, and Open Source.
-- **The Peak (Illumination):** The house illuminates in warm amber (`#FF9D00`, `#FFCF71`), framing live product viewports.
-- **The Front Porch (The Four Doors):** Four distinct entrances with zero friction (Clients, Contributors, Partners, Community).
+The homepage (`dwelling/src/pages/index.astro`) is organized as a single cohesive narrative scroll:
 
----
-
-## 2. Technical Stack & Standards
-
-* **Framework:** [Astro](https://astro.build/) (Static Site Generation / Content Layer)
-* **Language:** Strict TypeScript
-* **Styling:** Hand-crafted CSS custom properties (Tokens in `src/styles/tokens.css`)
-* **Motion:** CSS Scroll-Driven Animations (`animation-timeline: view()`) with progressive enhancement fallback
-* **Typography:** Self-hosted WOFF/TTF:
-  * **Modera:** Display & Brand Header
-  * **Ithaca:** Technical Specs, Coordinates, and Tally Meter
-  * **Sora:** Clean Body & Reading Copy
-* **Cookies & Surveillance:** **Strictly ZERO cookies, zero tracking storage, zero third-party scripts.**
+1. **Spatial Parallax Hero (`ParallaxHero.astro`)** — Multi-depth hardware-accelerated arrival canvas.
+2. **Who We Are (`WhoWeAre.astro`, `#about`)** — Brand and engineering manifesto.
+3. **Four In-House Workshops (`WorkshopsFolders.astro`, `#workshops`)** — Clear entry points into JP3N's four disciplines:
+   - **01 · Websites (`/process`)** — `WebsiteShowcase.astro` (Web Laboratory)
+   - **02 · Graphic Design (`/themes`)** — `GraphicsStudioShowcase.astro` (Flyers, marketing posters, social media posters & brand identity)
+   - **03 · Videos & Motion (`/motion`)** — `MotionBayShowcase.astro` (Motion Bay, 2-axis matrix & 4-stage pipeline)
+   - **04 · Contribute (`/contributors`)** — `OpenForgeShowcase.astro` (Open Forge contribution guide & repositories)
+4. **Selected Software & Tooling (`ProjectsFolderStack.astro`, `#work`)** — Production case studies & open repositories.
+5. **The Process (`CreativeProcess.astro`, `#process`)** — Interactive non-linear creative & engineering loop.
+6. **Mindset & Clarity (`ThoughtsNoise.astro`, `EditorialCanvasCallout.astro`)** — Filtering signal from noise and shipping with clarity.
+7. **The Collective (`TeamSection.astro`, `TeamCalendar.astro`, `TeamPreferences.astro`, `AfkSection.astro`)** — Meet the 5 engineers, daily GitHub contributions, playable studio music rotation (manual play, zero autoplay), and AFK life.
+8. **Direct Engagement (`#contact`, `RetroWorkstation.astro`)** — Direct project inquiry without sales funnels.
 
 ---
 
-## 3. Project Structure
+## 2. Dynamic Global Theme Switcher
+
+A floating theme switcher (`ThemeSwitcher.astro` + `ThemeEngine.astro`) is available on every page, backed by 8 curated palettes in `dwelling/src/config/theme.ts`:
+
+- **Forest Canopy** *(default)*
+- **Golden Hour**
+- **Tech Innovation**
+- **Modern Minimalist**
+- **Midnight Galaxy**
+- **Crimson Noir**
+- **Oceanic Teal**
+- **Nordic Cobalt**
+
+Selecting any theme updates all CSS custom properties, canvas drawings, and `<meta name="theme-color">` immediately and persists the choice in `localStorage`.
+
+---
+
+## 3. Repository Structure
 
 ```text
-dwelling/
-├── public/
-│   ├── favicon.svg
-│   └── fonts/
-│       ├── MODERA.woff (22KB)
-│       ├── Ithaca.woff (26KB)
-│       └── Sora-Regular.woff (60KB)
-├── src/
-│   ├── components/
-│   │   ├── CapacityBadge.astro   # Option A honest urgency meter [ ■ ■ □ ]
-│   │   ├── DwellingScene.astro   # Signature inline SVG scroll scene
-│   │   ├── Footer.astro          # Compliance & zero-cookie notice
-│   │   ├── NavHeader.astro       # Persistent minimal navigation
-│   │   ├── ParallaxHero.astro    # Hardware-accelerated multi-depth spatial parallax hero
-│   │   ├── PeakShowcase.astro    # The Peak illumination & demo viewports
-│   │   ├── TeamSection.astro     # 5-column monochrome portrait collective showcase
-│   │   └── TheFourDoors.astro    # The 4 deliberate CTAs
-│   ├── config/
-│   │   └── site.ts               # Single source of truth (Capacity, Team, Demos)
-│   ├── content/
-│   │   ├── contributors/         # Open source projects & contribution guides
-│   │   ├── journal/              # Unified blog essays and engineering docs
-│   │   └── work/                 # Case studies and production systems
-│   ├── content.config.ts         # Astro Content Layer schemas (Zod validated)
-│   ├── layouts/
-│   │   └── BaseLayout.astro      # Accessible base document with preload tags
-│   ├── pages/
-│   │   ├── contact.astro         # Direct channels & four doors
-│   │   ├── contributors.astro    # Dedicated contributor forge
-│   │   ├── index.astro           # The dwelling story scroll experience
-│   │   ├── journey.astro         # Origin story & chronology
-│   │   ├── privacy.astro         # Zero-cookie technical declaration (PDPA/GDPR)
-│   │   ├── process.astro         # 4-stage architectural methodology
-│   │   ├── journal/              # Journal list & detail routes
-│   │   └── work/                 # Work portfolio & detail routes
-│   └── styles/
-│       └── tokens.css            # Complete design tokens (WCAG AA audited)
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+jp3n-dwelling/
+├── docs/                                # Static production build served by GitHub Pages (main -> /docs)
+│   ├── .nojekyll
+│   └── ...
+├── dwelling/                            # Astro application source
+│   ├── astro.config.mjs                 # Configured with base: '/jp3n-dwelling' and outDir: '../docs'
+│   ├── package.json
+│   ├── public/
+│   │   ├── fonts/                       # Self-hosted Space Grotesk, Sora, JetBrains Mono, etc.
+│   │   ├── images/                      # Hero, team portraits, music covers, workshop visuals
+│   │   └── videos/
+│   ├── scripts/
+│   │   └── prepare-gh-pages.mjs         # Post-build path prefixer & .nojekyll generator
+│   └── src/
+│       ├── components/                  # Modular Astro UI & interactive canvas components
+│       ├── config/
+│       │   ├── site.ts                  # Team profiles, capacity, contact info & music preview URLs
+│       │   └── theme.ts                 # 8 global theme definitions
+│       ├── content/                     # Zod-validated Markdown collections (work, journal, contributors)
+│       ├── data/                        # Team build calendar dataset
+│       ├── layouts/
+│       │   └── BaseLayout.astro         # Shared document shell, NavHeader, Footer & ThemeSwitcher
+│       ├── pages/                       # Static routes (/, /process, /themes, /motion, /contributors, /work, /journal, /contact, /privacy)
+│       └── styles/
+│           └── tokens.css               # Base CSS custom properties & typography scale
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-## 4. Honest Urgency & Capacity Management
-
-To update the monthly intake slots, edit **exactly one file**:  
-`src/config/site.ts`:
-
-```typescript
-export const siteConfig = {
-  // ...
-  capacity: {
-    totalSlots: 3,
-    openSlots: 2,          // Change to 1, 0, etc.
-    month: 'December 2026' // Target month
-  }
-};
-```
-The Option A meter `[ ■ ■ □ ]` updates automatically across the entire site without code edits.
-
----
-
-## 5. Development & Deployment
+## 4. Development & Deployment
 
 ### Local Development
 ```bash
@@ -105,29 +87,14 @@ npm install
 npm run dev
 ```
 
-### Production Build
+### Build for GitHub Pages (`docs/` on `main`)
 ```bash
+cd dwelling
 npm run build
 ```
-The static output will be generated in `dwelling/dist/` ready for edge deployment.
+This runs `astro build` into `../docs` and executes `scripts/prepare-gh-pages.mjs` to prefix root-relative paths for `/jp3n-dwelling` and generate `docs/.nojekyll`.
 
-### Cloudflare Pages Deployment (Primary)
-1. Link your repository in Cloudflare Pages dashboard.
-2. Build command: `npm run build`
-3. Build output directory: `dwelling/dist`
-4. Root directory: `dwelling`
-
-### Netlify Deployment (Backup)
-1. Base directory: `dwelling`
-2. Build command: `npm run build`
-3. Publish directory: `dwelling/dist`
-
----
-
-## 6. Performance & Compliance Verification
-
-* **LCP:** $\le 1.0\text{s}$ on throttled 4G (Single static HTML payload).
-* **CLS:** $0.00$ (All fonts preloaded with matched metric fallbacks).
-* **Home Page JS:** $0\text{KB}$ external bundles ($< 0.5\text{KB}$ inlined accessible drawer script).
-* **Total First Load:** $\approx 125\text{KB}$ (HTML + CSS + all 3 self-hosted WOFF fonts combined).
-* **Compliance:** Strictly zero cookies. Zero tracking storage. Full alignment with Sri Lanka PDPA No. 9 of 2022 and EU GDPR.
+### GitHub Pages Setup (Deploy from Branch)
+1. Push changes (including `docs/`) to the `main` branch.
+2. In GitHub **Settings → Pages → Build and deployment**, set **Source** to **Deploy from a branch**.
+3. Select branch **`main`** and folder **`/docs`**, then click **Save**.

@@ -1,8 +1,0 @@
-{
-  "prompt": "create a square morph it into a triangle then spin in several times and then morph it again into a square. add motion blur and the morph should be so smooth",
-  "vision": false,
-  "compWidth": 1920,
-  "compHeight": 1080,
-  "snapshotPath": null,
-  "timestamp": 1793714879756
-}
