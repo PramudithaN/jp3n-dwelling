@@ -55,7 +55,7 @@ export const siteConfig: SiteConfig = {
       role: 'Systems & Tooling Architect',
       bio: 'Builds offline-first utilities, GPU-accelerated web engines, and procedural developer tools across TypeScript, Rust, C#, and Python (Filee, git-tulkun, bytesift).',
       githubHandle: 'PramudithaN',
-      portrait: '/images/team/member-1.jpg',
+      portrait: '/images/team/member-1-f1.jpg',
       stack: ['TypeScript', 'Rust', 'C#', 'Python']
     },
     {
@@ -63,7 +63,7 @@ export const siteConfig: SiteConfig = {
       role: 'Platform & Cloud Engineer',
       bio: 'Architects Go control planes, Kubernetes operators, multi-tenant TypeScript platforms, and interactive 3D web experiences (iconfigly, Three-JS-3D-Earth).',
       githubHandle: 'pathumsandeepa',
-      portrait: '/images/team/member-2.jpg',
+      portrait: '/images/team/member-2-f1.jpg',
       stack: ['Go', 'TypeScript', 'Kubernetes', 'PHP']
     },
     {
@@ -71,7 +71,7 @@ export const siteConfig: SiteConfig = {
       role: 'Full-Stack & DevOps Engineer',
       bio: 'Bridges Java/Spring Boot backends, Flutter mobile apps, and containerized CI/CD pipelines with Docker, Minikube, and Jenkins.',
       githubHandle: 'judebevan',
-      portrait: '/images/team/member-3.jpg',
+      portrait: '/images/team/member-3-f1.jpg',
       stack: ['Java', 'C++', 'Flutter', 'Docker']
     },
     {
@@ -79,7 +79,7 @@ export const siteConfig: SiteConfig = {
       role: 'AI Tooling & QA Automation Engineer',
       bio: 'Develops AI-powered coding-agent CLIs, enterprise Espresso/BrowserStack mobile test frameworks, and real-time Java/Angular systems (ContexaForge).',
       githubHandle: 'peenaka',
-      portrait: '/images/team/member-4.jpg',
+      portrait: '/images/team/member-4-f1.jpg',
       stack: ['JavaScript', 'Java', 'Angular', 'C#']
     },
     {
@@ -87,7 +87,7 @@ export const siteConfig: SiteConfig = {
       role: 'Frontend, Astro & AI Researcher',
       bio: 'Crafts zero-bloat Astro interfaces and TypeScript hardware utilities alongside CNN 3D gaze estimation and Unity AI research (pregnantbattery, synth-gaze-fyp).',
       githubHandle: 'sanszerif',
-      portrait: '/images/team/member-5.jpg',
+      portrait: '/images/team/member-5-f1.jpg',
       stack: ['Astro', 'TypeScript', 'Python', 'Dart']
     }
   ],

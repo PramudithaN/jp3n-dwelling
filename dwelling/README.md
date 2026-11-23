@@ -43,13 +43,17 @@ dwelling/
 ├── src/
 │   ├── components/
 │   │   ├── CapacityBadge.astro   # Option A honest urgency meter [ ■ ■ □ ]
+│   │   ├── CreativeProcess.astro # Native 60fps non-linear process loop animation
 │   │   ├── DwellingScene.astro   # Signature inline SVG scroll scene
+│   │   ├── EditorialCanvasCallout.astro # Design-editor typography callout before CTA
 │   │   ├── Footer.astro          # Compliance & zero-cookie notice
 │   │   ├── NavHeader.astro       # Persistent minimal navigation
 │   │   ├── ParallaxHero.astro    # Hardware-accelerated multi-depth spatial parallax hero
 │   │   ├── PeakShowcase.astro    # The Peak illumination & demo viewports
 │   │   ├── TeamSection.astro     # 5-column monochrome portrait collective showcase
-│   │   └── TheFourDoors.astro    # The 4 deliberate CTAs
+│   │   ├── TheFourDoors.astro    # The 4 deliberate CTAs
+│   │   ├── ThoughtsNoise.astro   # Native SVG & UI-pill profile sculpture
+│   │   └── WhoWeAre.astro        # Theme-matched "Who We Are" manifesto section
 │   ├── config/
 │   │   └── site.ts               # Single source of truth (Capacity, Team, Demos)
 │   ├── content/

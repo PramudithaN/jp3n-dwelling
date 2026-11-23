@@ -1,7 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ParallaxHero from '../components/ParallaxHero.astro';
+import WhoWeAre from '../components/WhoWeAre.astro';
+import CreativeProcess from '../components/CreativeProcess.astro';
 import TeamSection from '../components/TeamSection.astro';
+import ThoughtsNoise from '../components/ThoughtsNoise.astro';
+import EditorialCanvasCallout from '../components/EditorialCanvasCallout.astro';
 import { siteConfig } from '../config/site';
 
 const team = siteConfig.team;
@@ -16,21 +20,9 @@ const { email, github, linkedin } = siteConfig.contact;
   <ParallaxHero />
 
   <!-- =========================================================================
-       SECTION 1: THE MANIFESTO (Clean Editorial Prose)
+       SECTION 1: WHO WE ARE (Intentional Brand & Systems Manifesto)
        ========================================================================= -->
-  <section class="manifesto-section" id="about" aria-labelledby="about-heading">
-    <div class="site-container">
-      <div class="manifesto-inner">
-        <span class="section-kicker">THE PHILOSOPHY</span>
-        <h2 id="about-heading" class="manifesto-title">
-          We reject web bloat and fragile frameworks.
-        </h2>
-        <p class="manifesto-text">
-          Modern web platforms have become bloated with megabytes of JavaScript, invasive telemetry, and brittle dependencies. We build from first principles: pure static HTML paint, design systems defined in clean CSS custom properties, and client-only utilities that respect privacy.
-        </p>
-      </div>
-    </div>
-  </section>
+  <WhoWeAre id="about" />
 
   <!-- =========================================================================
        SECTION 2: SELECTED SYSTEMS (Tactile Technical Showcase)
@@ -290,15 +282,27 @@ const { email, github, linkedin } = siteConfig.contact;
   </section>
 
   <!-- =========================================================================
-       SECTION 4: THE BUILDERS (The 5 Engineers)
+       SECTION 4: THE PROCESS (Non-Linear Creative Loop)
        ========================================================================= -->
+  <CreativeProcess id="process" />
+
   <!-- =========================================================================
-       SECTION 4: THE COLLECTIVE (Meet the Team)
+       SECTION 5: THE COLLECTIVE (Meet the Team)
        ========================================================================= -->
   <TeamSection />
 
   <!-- =========================================================================
-       SECTION 5: DIRECT ENGAGEMENT (Intake Unit)
+       SECTION 6: THOUGHTS & SIGNAL NOISE
+       ========================================================================= -->
+  <ThoughtsNoise />
+
+  <!-- =========================================================================
+       SECTION 7: EDITORIAL CLARITY CALLOUT
+       ========================================================================= -->
+  <EditorialCanvasCallout />
+
+  <!-- =========================================================================
+       SECTION 7: DIRECT ENGAGEMENT (Intake Unit)
        ========================================================================= -->
   <section class="intake-section" id="contact" aria-labelledby="intake-heading">
     <div class="site-container">
