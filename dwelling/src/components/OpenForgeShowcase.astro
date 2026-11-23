@@ -1,0 +1,1119 @@
+---
+import { siteConfig } from '../config/site';
+
+interface OpenRepo {
+  id: string;
+  tabLabel: string;
+  name: string;
+  owner: string;
+  ownerHandle: string;
+  language: string;
+  stars: number;
+  forks: number;
+  tagline: string;
+  goodFirstAreas: string[];
+  repoUrl: string;
+  issuesUrl: string;
+  liveUrl?: string;
+}
+
+const openRepos: OpenRepo[] = [
+  {
+    id: 'git-tulkun',
+    tabLabel: 'GIT-TULKUN',
+    name: 'PramudithaN/git-tulkun',
+    owner: 'Pramuditha Nadun',
+    ownerHandle: 'PramudithaN',
+    language: 'Rust · Python',
+    stars: 27,
+    forks: 2,
+    tagline:
+      'Procedural pixel-art Tulkun whale generated from your GitHub contributions and language colors as a looping GIF.',
+    goodFirstAreas: ['Pixel palette themes', 'SVG/GIF frame optimizations', 'CLI flags & docs'],
+    repoUrl: 'https://github.com/PramudithaN/git-tulkun',
+    issuesUrl: 'https://github.com/PramudithaN/git-tulkun/issues',
+    liveUrl: 'https://pramudithan.github.io/git-tulkun/'
+  },
+  {
+    id: 'pregnantbattery',
+    tabLabel: 'PREGNANTBATTERY',
+    name: 'sanszerif/pregnantbattery',
+    owner: 'Nipun Kariyawasam',
+    ownerHandle: 'sanszerif',
+    language: 'TypeScript · CSS',
+    stars: 2,
+    forks: 0,
+    tagline:
+      "Your phone's battery isn't optimizing. It's dying. Real-time browser hardware battery autopsy.",
+    goodFirstAreas: ['Web Battery API edge cases', 'Accessibility & contrast', 'UI telemetry cards'],
+    repoUrl: 'https://github.com/sanszerif/pregnantbattery',
+    issuesUrl: 'https://github.com/sanszerif/pregnantbattery/issues',
+    liveUrl: 'https://battery.nipun.is-a.dev/'
+  },
+  {
+    id: 'bytesift',
+    tabLabel: 'BYTESIFT',
+    name: 'PramudithaN/bytesift',
+    owner: 'Pramuditha Nadun',
+    ownerHandle: 'PramudithaN',
+    language: 'Python',
+    stars: 3,
+    forks: 0,
+    tagline:
+      'Lightweight, 100% offline file organizer that inspects file contents directly instead of extensions. Zero AI, zero cloud, instant undo.',
+    goodFirstAreas: ['Magic-byte signatures', 'Undo transaction tests', 'Cross-platform CLI polish'],
+    repoUrl: 'https://github.com/PramudithaN/bytesift',
+    issuesUrl: 'https://github.com/PramudithaN/bytesift/issues',
+    liveUrl: 'https://pramudithan.github.io/bytesift'
+  },
+  {
+    id: 'dynamic-readme-creature',
+    tabLabel: 'README CREATURE',
+    name: 'PathumSandeepa/dynamic-readme-creature',
+    owner: 'Pathum Sandeepa',
+    ownerHandle: 'PathumSandeepa',
+    language: 'TypeScript',
+    stars: 3,
+    forks: 0,
+    tagline:
+      'Interactive SVG creature for GitHub READMEs that evolves based on real-time coding activity, with GitHub Actions automation.',
+    goodFirstAreas: ['New creature evolutions', 'SVG animation states', 'GitHub Action presets'],
+    repoUrl: 'https://github.com/PathumSandeepa/dynamic-readme-creature',
+    issuesUrl: 'https://github.com/PathumSandeepa/dynamic-readme-creature/issues',
+    liveUrl: 'https://pathumsandeepa.github.io/dynamic-readme-creature/'
+  }
+];
+
+const processSteps = [
+  {
+    title: '01. Fork & Clone',
+    desc: 'Fork any of our open repositories on GitHub and clone it locally to explore the codebase.'
+  },
+  {
+    title: '02. Pick an Issue',
+    desc: 'Browse open issues labeled good first issue or open a focused RFC before large refactors.'
+  },
+  {
+    title: '03. Branch Cleanly',
+    desc: 'Create a descriptive branch (feat/... or fix/...) from main with small, atomic commits.'
+  },
+  {
+    title: '04. Build & Verify',
+    desc: 'Keep dependencies minimal, follow the existing style, and verify builds/tests pass locally.'
+  },
+  {
+    title: '05. Open a Pull Request',
+    desc: 'Link the issue in your PR description, explain the intent clearly, and keep diffs focused.'
+  },
+  {
+    title: '06. 48h Core Review',
+    desc: 'A JP3N maintainer reviews every PR within 48 hours with constructive, zero-gatekeeping feedback.'
+  }
+];
+
+const serializedRepos = JSON.stringify(openRepos);
+---
+
+<div class="open-forge-page">
+  <!-- =========================================================
+       BEAT 1: GIANT GEOMETRIC ARROW HERO (Image 1)
+       ========================================================= -->
+  <section class="forge-hero" aria-label="Open Source Contributions">
+    <div class="forge-hero-top">
+      <div class="hero-left-meta">
+        <span>2026</span>
+        <span>OPEN SOURCE</span>
+        <span>CONTRIBUTIONS</span>
+      </div>
+
+      <h1 class="hero-title-lockup">
+        <span class="title-serif">Open</span>
+        <span class="title-on-row">
+          <span class="live-pill">LIVE</span>
+          <span class="title-serif">Forge</span>
+        </span>
+      </h1>
+    </div>
+
+    <!-- Giant Faceted Geometric Arrow SVG -->
+    <div class="hero-arrow-wrap" aria-hidden="true">
+      <svg class="mosaic-arrow-svg" viewBox="0 0 900 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="arrowClip">
+            <path d="M0 165 H560 L405 22 L475 -15 L770 210 L475 435 L405 398 L560 255 H0 Z" />
+          </clipPath>
+        </defs>
+        <g clip-path="url(#arrowClip)">
+          <rect width="900" height="420" fill="var(--text-accent)" />
+          <polygon points="0,160 210,160 150,260 0,260" fill="color-mix(in srgb, var(--text-accent) 70%, #ffffff 30%)" />
+          <polygon points="150,260 210,160 360,260 260,260" fill="var(--bg-canvas)" opacity="0.85" />
+          <polygon points="210,160 440,160 360,260" fill="color-mix(in srgb, var(--text-accent-soft) 75%, var(--text-primary) 25%)" />
+          <polygon points="440,160 590,160 520,260 360,260" fill="var(--bg-elevated)" />
+          <polygon points="405,22 540,80 480,190 560,165" fill="color-mix(in srgb, var(--text-primary) 80%, var(--text-accent) 20%)" opacity="0.7" />
+          <polygon points="560,255 680,210 530,360 430,380" fill="var(--bg-canvas)" opacity="0.6" />
+          <polygon points="620,110 770,210 610,290 550,210" fill="var(--text-accent)" opacity="0.9" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="forge-hero-bottom">
+      <span class="hero-brand-stamp">{siteConfig.name}</span>
+      <a href="#open-repos" class="hero-jump-link">Explore Repositories ↓</a>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 2: COLLECTIVE SILHOUETTE WITH LONG SHADOWS (Image 5)
+       ========================================================= -->
+  <section class="forge-collective-art" aria-label="Community Builders">
+    <svg class="collective-svg" viewBox="0 0 800 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Long Converging Shadows -->
+      <polygon points="310,188 332,188 180,320 90,320" fill="var(--bg-canvas)" opacity="0.45" />
+      <polygon points="355,190 382,190 310,320 220,320" fill="var(--bg-canvas)" opacity="0.55" />
+      <polygon points="396,192 420,192 425,320 345,320" fill="var(--bg-canvas)" opacity="0.65" />
+      <polygon points="436,190 460,190 555,320 465,320" fill="var(--bg-canvas)" opacity="0.55" />
+      <polygon points="476,188 498,188 700,320 605,320" fill="var(--bg-canvas)" opacity="0.45" />
+
+      <!-- Horizon Lines -->
+      <line x1="0" y1="186" x2="310" y2="188" stroke="var(--border-hairline)" stroke-width="1.5" />
+      <line x1="500" y1="188" x2="800" y2="186" stroke="var(--border-hairline)" stroke-width="1.5" />
+
+      <!-- 5 Builders Standing Shoulder-to-Shoulder -->
+      <g fill="var(--text-primary)">
+        <!-- Figure 1 -->
+        <circle cx="322" cy="112" r="10" opacity="0.72" />
+        <path d="M312 126 C312 122, 332 122, 332 126 L336 160 L328 190 L320 190 L320 162 L314 190 L306 190 L310 158 Z" opacity="0.72" />
+        <!-- Figure 2 -->
+        <circle cx="368" cy="104" r="11" opacity="0.88" />
+        <path d="M356 120 C356 115, 380 115, 380 120 L384 156 L378 192 L370 192 L368 160 L362 192 L354 192 L354 156 Z" opacity="0.88" />
+        <!-- Figure 3 (Center) -->
+        <circle cx="408" cy="100" r="11.5" />
+        <path d="M394 116 C394 111, 422 111, 422 116 L426 154 L420 194 L411 194 L408 160 L404 194 L395 194 L392 154 Z" />
+        <!-- Figure 4 -->
+        <circle cx="448" cy="106" r="10.5" opacity="0.88" />
+        <path d="M437 121 C437 116, 459 116, 459 121 L462 156 L456 192 L448 192 L446 160 L442 192 L434 192 L435 156 Z" opacity="0.88" />
+        <!-- Figure 5 -->
+        <circle cx="486" cy="114" r="9.5" opacity="0.72" />
+        <path d="M476 127 C476 123, 496 123, 496 127 L498 158 L492 190 L485 190 L484 162 L479 190 L472 190 L474 158 Z" opacity="0.72" />
+      </g>
+    </svg>
+    <p class="collective-caption">
+      BUILT TOGETHER · OPEN SOURCE UNDER MIT &amp; OFL LICENSES
+    </p>
+  </section>
+
+  <!-- =========================================================
+       BEAT 3: TAKE IT EASY / SHIP CLEAN PRS + PEEKING MASCOT (Image 2)
+       ========================================================= -->
+  <section class="forge-typo-poster" aria-label="Contribution Mindset">
+    <div class="typo-poster-inner">
+      <div class="typo-stack">
+        <div class="typo-row-1">
+          <span>Ship</span><span class="hl-block">clean</span>
+        </div>
+        <div class="typo-row-2">
+          <span class="big-it">PR</span>
+          <span class="vertical-easy">
+            <span>e</span><span>a</span><span>s</span><span>y</span>
+          </span>
+        </div>
+        <div class="typo-row-3">
+          <span>on </span><span class="hl-block">every repo</span>
+        </div>
+
+        <div class="typo-blocks-row" aria-hidden="true">
+          <span class="blk-arrows">&gt; &gt; &gt; &gt; &gt;</span>
+          <span class="blk-logo">JP3N</span>
+        </div>
+      </div>
+
+      <!-- Peeking Rounded Mascot -->
+      <div class="peeking-bot" aria-hidden="true">
+        <div class="bot-head">
+          <span class="bot-eye"></span>
+        </div>
+        <div class="bot-shoulder"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 4: CONTRIBUTION PROCESS 6-CELL GRID (Image 4)
+       ========================================================= -->
+  <section class="forge-process-grid-section" id="process-steps" aria-labelledby="contrib-process-heading">
+    <div class="process-container">
+      <div class="process-top-bar">
+        <span class="p-brand">JP3N Forge.</span>
+        <a href={siteConfig.contact.github} target="_blank" rel="noopener noreferrer" class="p-gh-link">
+          GitHub Organization ↗
+        </a>
+      </div>
+
+      <div class="process-headline-area">
+        <div class="p-kicker-row">
+          <span class="p-rule" aria-hidden="true"></span>
+          <span>How to Contribute</span>
+        </div>
+        <h2 id="contrib-process-heading" class="p-giant-title">
+          WE<br />
+          REVIEW<br />
+          EVERY PR.
+        </h2>
+        <span class="p-bg-watermark" aria-hidden="true">PR</span>
+      </div>
+
+      <!-- 3x2 Hairline Contribution Process Grid -->
+      <div class="process-6-grid">
+        {processSteps.map((step) => (
+          <article class="p-cell">
+            <h3 class="p-cell-title">{step.title}</h3>
+            <p class="p-cell-desc">{step.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 5: DAY 02 QUOTE + OPEN REPOSITORIES FOLDER ARCHIVE (Images 3 & 6)
+       ========================================================= -->
+  <section class="forge-repos-section" id="open-repos" aria-labelledby="open-repos-heading">
+    <!-- Day 02 Selection Quote -->
+    <div class="day02-quote">
+      <span class="d02-tag tl">FORGE / 04</span>
+      <span class="d02-tag br">PR / 48H</span>
+      <div class="d02-center">
+        <span class="d02-lead">Small PRs create</span>
+        <div class="d02-bar">
+          <span class="d02-pin left" aria-hidden="true"></span>
+          <span class="d02-word">momentum.</span>
+          <span class="d02-pin right" aria-hidden="true"></span>
+          <span class="d02-star" aria-hidden="true">✦</span>
+        </div>
+        <span class="d02-sub">Not friction.</span>
+      </div>
+    </div>
+
+    <!-- Layered Repo Folder Archive (Image 3 style) -->
+    <div class="repos-folder-stage" id="reposFolderStage">
+      <!-- Top Decorative Accent Ribbon -->
+      <svg class="repos-wave-svg" viewBox="0 0 900 110" fill="none" aria-hidden="true">
+        <path
+          d="M-20 75 C 80 -15, 190 -15, 210 65 C 230 130, 340 -10, 420 55 C 500 120, 620 -20, 740 45 C 820 90, 880 30, 930 10"
+          stroke="var(--text-accent)"
+          stroke-width="26"
+          stroke-linecap="round"
+          opacity="0.24"
+        />
+      </svg>
+
+      <div class="repos-header">
+        <h2 id="open-repos-heading" class="repos-title">OPEN REPOS</h2>
+        <p class="repos-sub">
+          Select a repository tab below to inspect good first areas and start contributing on GitHub.
+        </p>
+      </div>
+
+      <!-- Staggered Interactive Repo Folder Tabs -->
+      <div class="repo-tabs-stack">
+        {openRepos.map((repo, idx) => (
+          <button
+            type="button"
+            class={`repo-tab-layer ${idx % 2 === 0 ? 'is-dark' : 'is-accent'} ${idx === 0 ? 'is-active' : ''}`}
+            data-repo-idx={idx}
+          >
+            <span class="rt-tab">{repo.tabLabel}</span>
+            <span class="rt-bar"></span>
+          </button>
+        ))}
+
+        <!-- Active Repository Front Folder Pocket -->
+        <div class="repo-front-pocket" id="repoFrontPocket">
+          <div class="pocket-top-row">
+            <div>
+              <span class="pocket-owner" id="pocketOwner">
+                {openRepos[0].owner} (@{openRepos[0].ownerHandle})
+              </span>
+              <h3 class="pocket-repo-name" id="pocketRepoName">{openRepos[0].name}</h3>
+            </div>
+            <div class="pocket-badges">
+              <span class="pocket-lang" id="pocketLang">{openRepos[0].language}</span>
+              <span class="pocket-stars" id="pocketStars">
+                ★ {openRepos[0].stars}{openRepos[0].forks > 0 ? ` · ⑂ ${openRepos[0].forks}` : ''}
+              </span>
+            </div>
+          </div>
+
+          <p class="pocket-tagline" id="pocketTagline">{openRepos[0].tagline}</p>
+
+          <div class="pocket-areas">
+            <span class="areas-label">GOOD FIRST CONTRIBUTION AREAS:</span>
+            <ul class="areas-list" id="pocketAreas">
+              {openRepos[0].goodFirstAreas.map((area) => (
+                <li>▪ {area}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="pocket-actions">
+            <a
+              href={openRepos[0].repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pocket-btn is-primary"
+              id="pocketRepoBtn"
+            >
+              View Repository ↗
+            </a>
+            <a
+              href={openRepos[0].issuesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pocket-btn"
+              id="pocketIssuesBtn"
+            >
+              Browse Issues ↗
+            </a>
+            <a
+              href={openRepos[0].liveUrl || openRepos[0].repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pocket-btn"
+              id="pocketLiveBtn"
+            >
+              Live Tool ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script define:vars={{ serializedRepos }}>
+  const repos = JSON.parse(serializedRepos);
+  const tabBtns = document.querySelectorAll('.repo-tab-layer');
+
+  const ownerEl = document.getElementById('pocketOwner');
+  const nameEl = document.getElementById('pocketRepoName');
+  const langEl = document.getElementById('pocketLang');
+  const starsEl = document.getElementById('pocketStars');
+  const taglineEl = document.getElementById('pocketTagline');
+  const areasEl = document.getElementById('pocketAreas');
+  const repoBtn = document.getElementById('pocketRepoBtn');
+  const issuesBtn = document.getElementById('pocketIssuesBtn');
+  const liveBtn = document.getElementById('pocketLiveBtn');
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.getAttribute('data-repo-idx'));
+      const repo = repos[idx];
+      if (!repo) return;
+
+      tabBtns.forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      if (ownerEl) ownerEl.textContent = `${repo.owner} (@${repo.ownerHandle})`;
+      if (nameEl) nameEl.textContent = repo.name;
+      if (langEl) langEl.textContent = repo.language;
+      if (starsEl) {
+        starsEl.textContent = `★ ${repo.stars}${repo.forks > 0 ? ` · ⑂ ${repo.forks}` : ''}`;
+      }
+      if (taglineEl) taglineEl.textContent = repo.tagline;
+      if (areasEl) {
+        areasEl.innerHTML = repo.goodFirstAreas.map((a) => `<li>▪ ${a}</li>`).join('');
+      }
+      if (repoBtn) repoBtn.setAttribute('href', repo.repoUrl);
+      if (issuesBtn) issuesBtn.setAttribute('href', repo.issuesUrl);
+      if (liveBtn) liveBtn.setAttribute('href', repo.liveUrl || repo.repoUrl);
+    });
+  });
+</script>
+
+<style>
+  .open-forge-page {
+    width: 100%;
+    padding-top: var(--nav-height, 76px);
+    background-color: var(--bg-canvas);
+  }
+
+  /* =========================================================
+     BEAT 1: GIANT ARROW HERO
+     ========================================================= */
+  .forge-hero {
+    position: relative;
+    padding: clamp(2.5rem, 5vw, 4rem) var(--gutter) clamp(2rem, 4vw, 3rem);
+    max-width: 1120px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border-hairline);
+    overflow: hidden;
+  }
+
+  .forge-hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: var(--space-l);
+  }
+
+  .hero-left-meta {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.8vw, 1.35rem);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--text-secondary);
+    padding-top: 24px;
+  }
+
+  .hero-title-lockup {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(3.2rem, 8vw, 6.2rem);
+    font-weight: 400;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .title-on-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .live-pill {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+  }
+
+  .hero-arrow-wrap {
+    width: 100%;
+    margin: -10px 0 12px -4%;
+  }
+
+  .mosaic-arrow-svg {
+    width: 100%;
+    max-width: 820px;
+    height: auto;
+    display: block;
+  }
+
+  .forge-hero-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-m);
+  }
+
+  .hero-brand-stamp {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .hero-jump-link {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  /* =========================================================
+     BEAT 2: COLLECTIVE SILHOUETTE
+     ========================================================= */
+  .forge-collective-art {
+    padding: var(--space-3xl) var(--gutter);
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-hairline);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .collective-svg {
+    width: 100%;
+    max-width: 760px;
+    height: auto;
+    margin-bottom: var(--space-m);
+  }
+
+  .collective-caption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    color: var(--text-accent-soft);
+  }
+
+  /* =========================================================
+     BEAT 3: TAKE IT EASY / SHIP CLEAN PRS
+     ========================================================= */
+  .forge-typo-poster {
+    position: relative;
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter);
+    border-bottom: 1px solid var(--border-hairline);
+    overflow: hidden;
+  }
+
+  .typo-poster-inner {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .typo-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .typo-row-1,
+  .typo-row-3 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hl-block {
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+    padding: 2px 12px;
+  }
+
+  .typo-row-2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .big-it {
+    font-family: var(--font-display);
+    font-size: clamp(4.5rem, 11vw, 8.5rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    color: var(--text-primary);
+  }
+
+  .vertical-easy {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+    padding: 6px 12px;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+    font-weight: 700;
+    line-height: 0.95;
+  }
+
+  .typo-blocks-row {
+    display: flex;
+    gap: 8px;
+    margin-top: var(--space-m);
+  }
+
+  .blk-arrows,
+  .blk-logo {
+    padding: 12px 18px;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-hairline-bright);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-accent);
+    letter-spacing: 0.14em;
+  }
+
+  .peeking-bot {
+    position: relative;
+    width: 170px;
+    height: 180px;
+    flex-shrink: 0;
+  }
+
+  .bot-head {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-hairline-bright);
+    position: relative;
+    margin-left: auto;
+  }
+
+  .bot-eye {
+    position: absolute;
+    left: 28px;
+    top: 48px;
+    width: 24px;
+    height: 12px;
+    border-radius: 12px 12px 0 0;
+    background: var(--text-accent);
+  }
+
+  .bot-shoulder {
+    width: 160px;
+    height: 60px;
+    border-radius: 80px 80px 0 0;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-hairline-bright);
+    border-bottom: none;
+    margin-top: 8px;
+  }
+
+  /* =========================================================
+     BEAT 4: CONTRIBUTION PROCESS 6-CELL GRID
+     ========================================================= */
+  .forge-process-grid-section {
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter);
+  }
+
+  .process-container {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .process-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2xl);
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+
+  .p-brand {
+    font-size: 1.25rem;
+  }
+
+  .p-gh-link {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--bg-canvas);
+    border: 1px solid rgba(9, 16, 11, 0.35);
+    padding: 5px 12px;
+    text-decoration: none;
+  }
+
+  .process-headline-area {
+    position: relative;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .p-kicker-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .p-rule {
+    width: 48px;
+    height: 2px;
+    background-color: var(--bg-canvas);
+  }
+
+  .p-giant-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6.5vw, 5rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--bg-canvas);
+  }
+
+  .p-bg-watermark {
+    position: absolute;
+    right: 0;
+    top: -10px;
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 16vw, 13rem);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--bg-canvas);
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .process-6-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid rgba(9, 16, 11, 0.25);
+  }
+
+  .p-cell {
+    padding: var(--space-l) var(--space-m);
+    border-right: 1px solid rgba(9, 16, 11, 0.2);
+    border-bottom: 1px solid rgba(9, 16, 11, 0.2);
+  }
+
+  .p-cell:nth-child(3n) {
+    border-right: none;
+  }
+
+  .p-cell-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--bg-canvas);
+    margin-bottom: 6px;
+  }
+
+  .p-cell-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(9, 16, 11, 0.85);
+    margin: 0;
+  }
+
+  /* =========================================================
+     BEAT 5: DAY 02 QUOTE + OPEN REPOS FOLDER STACK
+     ========================================================= */
+  .forge-repos-section {
+    background-color: var(--bg-surface);
+  }
+
+  .day02-quote {
+    position: relative;
+    padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter);
+    border-bottom: 1px solid var(--border-hairline);
+    display: flex;
+    justify-content: center;
+  }
+
+  .d02-tag {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .d02-tag.tl { top: 20px; left: 24px; }
+  .d02-tag.br { bottom: 20px; right: 24px; }
+
+  .d02-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .d02-lead {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .d02-bar {
+    position: relative;
+    padding: 4px 18px;
+    background: var(--theme-accent-muted);
+    margin-bottom: 6px;
+  }
+
+  .d02-word {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+  }
+
+  .d02-pin {
+    position: absolute;
+    width: 2px;
+    height: 115%;
+    background: var(--text-accent);
+  }
+
+  .d02-pin.left { left: 0; bottom: 0; }
+  .d02-pin.right { right: 0; top: 0; }
+
+  .d02-star {
+    position: absolute;
+    right: -16px;
+    bottom: -8px;
+    color: var(--text-accent-soft);
+    font-size: 1.3rem;
+  }
+
+  .d02-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  /* Open Repos Folder Stage */
+  .repos-folder-stage {
+    position: relative;
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter) 0;
+    max-width: 980px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .repos-wave-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+  }
+
+  .repos-header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .repos-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .repos-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 52ch;
+    margin: 0 auto;
+  }
+
+  .repo-tabs-stack {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .repo-tab-layer {
+    position: relative;
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: -10px;
+    transition: transform 180ms ease;
+  }
+
+  .repo-tab-layer:hover,
+  .repo-tab-layer.is-active {
+    transform: translateY(-6px);
+  }
+
+  .rt-tab {
+    display: inline-block;
+    padding: 8px 20px 6px;
+    border-radius: 10px 10px 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .rt-bar {
+    display: block;
+    width: 100%;
+    height: 22px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .repo-tab-layer:nth-child(1) .rt-tab { margin-left: 4%; }
+  .repo-tab-layer:nth-child(2) .rt-tab { margin-left: 52%; }
+  .repo-tab-layer:nth-child(3) .rt-tab { margin-left: 18%; }
+  .repo-tab-layer:nth-child(4) .rt-tab { margin-left: 62%; }
+
+  .repo-tab-layer.is-dark .rt-tab,
+  .repo-tab-layer.is-dark .rt-bar {
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+    border-top: 1px solid var(--border-hairline-bright);
+  }
+
+  .repo-tab-layer.is-accent .rt-tab,
+  .repo-tab-layer.is-accent .rt-bar {
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+  }
+
+  /* Front Pocket Details */
+  .repo-front-pocket {
+    position: relative;
+    z-index: 5;
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-hairline-bright);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    padding: clamp(1.5rem, 3.5vw, 2.5rem);
+    box-shadow: 0 -14px 36px rgba(0, 0, 0, 0.7);
+  }
+
+  .pocket-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: var(--space-m);
+  }
+
+  .pocket-owner {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-accent);
+    margin-bottom: 4px;
+  }
+
+  .pocket-repo-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .pocket-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pocket-lang,
+  .pocket-stars {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-hairline-bright);
+    color: var(--text-primary);
+  }
+
+  .pocket-tagline {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 66ch;
+    margin-bottom: var(--space-l);
+  }
+
+  .pocket-areas {
+    margin-bottom: var(--space-xl);
+  }
+
+  .areas-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .areas-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-accent-soft);
+  }
+
+  .pocket-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pocket-btn {
+    padding: 10px 18px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--border-hairline-bright);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 150ms ease;
+  }
+
+  .pocket-btn:hover {
+    border-color: var(--text-accent);
+    color: var(--text-accent);
+  }
+
+  .pocket-btn.is-primary {
+    background: var(--text-accent);
+    border-color: var(--text-accent);
+    color: var(--bg-canvas);
+  }
+
+  .pocket-btn.is-primary:hover {
+    opacity: 0.9;
+    color: var(--bg-canvas);
+  }
+
+  @media (max-width: 820px) {
+    .process-6-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .p-cell {
+      border-right: none;
+    }
+
+    .typo-poster-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .peeking-bot {
+      align-self: flex-end;
+    }
+
+    .repo-tab-layer:nth-child(n) .rt-tab {
+      margin-left: 4%;
+    }
+  }
+</style>
