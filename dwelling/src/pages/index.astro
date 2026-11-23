@@ -7,6 +7,7 @@ import TeamSection from '../components/TeamSection.astro';
 import ThoughtsNoise from '../components/ThoughtsNoise.astro';
 import EditorialCanvasCallout from '../components/EditorialCanvasCallout.astro';
 import RetroWorkstation from '../components/RetroWorkstation.astro';
+import ProjectsFolderStack from '../components/ProjectsFolderStack.astro';
 import { siteConfig } from '../config/site';
 
 const team = siteConfig.team;
@@ -26,7 +27,7 @@ const { email, github, linkedin } = siteConfig.contact;
   <WhoWeAre id="about" />
 
   <!-- =========================================================================
-       SECTION 2: SELECTED SYSTEMS (Tactile Technical Showcase)
+       SECTION 2: SELECTED SYSTEMS (Editorial Grid of All Projects)
        ========================================================================= -->
   <section class="work-section" id="work" aria-labelledby="work-heading">
     <div class="site-container">
@@ -36,182 +37,7 @@ const { email, github, linkedin } = siteConfig.contact;
         <p class="section-sub">Production systems running live on the global web.</p>
       </div>
 
-      <div class="systems-grid">
-        <!-- 01: Battery Telemetry -->
-        <article class="system-card">
-          <div class="system-window-header">
-            <div class="window-controls" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-            <span class="window-title">battery.nipun.is-a.dev</span>
-            <span class="status-online">ONLINE</span>
-          </div>
-          <div class="system-card-body">
-            <div class="system-visual-panel">
-              <div class="telemetry-display">
-                <div class="battery-indicator">
-                  <div class="battery-bar" style="width: 84%;"></div>
-                </div>
-                <div class="telemetry-readouts">
-                  <span class="readout-item">DISCHARGING 84%</span>
-                  <span class="readout-item">RATE: 12.8W</span>
-                  <span class="readout-item">4H 12M REMAINING</span>
-                </div>
-              </div>
-            </div>
-            <div class="system-meta-panel">
-              <span class="system-category">HARDWARE TELEMETRY</span>
-              <h3 class="system-name">Battery Diagnostics</h3>
-              <p class="system-desc">
-                Real-time hardware battery telemetry and discharge analytics via Web Battery API with zero server calls.
-              </p>
-              <div class="system-tags">
-                <span>Vanilla JS</span>
-                <span>Web API</span>
-                <span>Zero Telemetry</span>
-              </div>
-              <div class="system-actions">
-                <a href="https://battery.nipun.is-a.dev/" target="_blank" rel="noopener noreferrer" class="btn-system-launch">
-                  Launch Live Tool
-                </a>
-                <a href="/work/battery-telemetry" class="btn-system-subtle">
-                  Case Spec
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 02: Theme Changer -->
-        <article class="system-card">
-          <div class="system-window-header">
-            <div class="window-controls" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-            <span class="window-title">pramudithan.github.io/theme.changer</span>
-            <span class="status-online">ONLINE</span>
-          </div>
-          <div class="system-card-body">
-            <div class="system-visual-panel">
-              <div class="theme-palette-preview">
-                <div class="palette-swatch swatch-timber">#7B542F</div>
-                <div class="palette-swatch swatch-amber">#FF9D00</div>
-                <div class="palette-swatch swatch-espresso">#080503</div>
-              </div>
-              <code class="token-code">:root &#123; --contrast: 14.2:1; &#125;</code>
-            </div>
-            <div class="system-meta-panel">
-              <span class="system-category">DEVELOPER EXTENSION</span>
-              <h3 class="system-name">Theme Changer Extension</h3>
-              <p class="system-desc">
-                Instant client-side CSS variable runtime for instant palette swaps and automated WCAG AA contrast audits.
-              </p>
-              <div class="system-tags">
-                <span>CSS Variables</span>
-                <span>Web Extension</span>
-                <span>WCAG AA</span>
-              </div>
-              <div class="system-actions">
-                <a href="https://pramudithan.github.io/theme.changer/" target="_blank" rel="noopener noreferrer" class="btn-system-launch">
-                  Launch Live Tool
-                </a>
-                <a href="/work/theme-changer" class="btn-system-subtle">
-                  Case Spec
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 03: ByteSift Inspector -->
-        <article class="system-card">
-          <div class="system-window-header">
-            <div class="window-controls" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-            <span class="window-title">pramudithan.github.io/bytesift</span>
-            <span class="status-online">ONLINE</span>
-          </div>
-          <div class="system-card-body">
-            <div class="system-visual-panel">
-              <div class="hex-dump-preview">
-                <div class="hex-row">
-                  <span class="hex-addr">00000000:</span>
-                  <span class="hex-data">4a50 334e 2054 6563</span>
-                  <span class="hex-txt">JP3N Tec</span>
-                </div>
-                <div class="hex-row">
-                  <span class="hex-addr">00000008:</span>
-                  <span class="hex-data">6820 4477 656c 6c69</span>
-                  <span class="hex-txt">h Dwelli</span>
-                </div>
-              </div>
-              <span class="bytesift-stat">BUFFER: 4.8MB / FILTER: 0.12ms</span>
-            </div>
-            <div class="system-meta-panel">
-              <span class="system-category">BINARY ENGINE</span>
-              <h3 class="system-name">ByteSift Inspector</h3>
-              <p class="system-desc">
-                Client-side binary, hex, and byte-array inspection engine. Analyzes local files without network uploads.
-              </p>
-              <div class="system-tags">
-                <span>ArrayBuffer</span>
-                <span>Web Streams</span>
-                <span>Client-Only</span>
-              </div>
-              <div class="system-actions">
-                <a href="https://pramudithan.github.io/bytesift" target="_blank" rel="noopener noreferrer" class="btn-system-launch">
-                  Launch Live Tool
-                </a>
-                <a href="/work/bytesift" class="btn-system-subtle">
-                  Case Spec
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 04: Meri Clothing -->
-        <article class="system-card">
-          <div class="system-window-header">
-            <div class="window-controls" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-            <span class="window-title">github.com/PramudithaN/meri.clothing</span>
-            <span class="status-source">SOURCE REPO</span>
-          </div>
-          <div class="system-card-body">
-            <div class="system-visual-panel">
-              <div class="lookbook-spec">
-                <span class="brand-badge">MERI / FLAGSHIP</span>
-                <span class="item-line">Oversized Linen Tunic</span>
-                <span class="price-line">LKR 8,400</span>
-              </div>
-              <span class="commerce-stat">ASTRO SSG / LCP &lt; 0.8S</span>
-            </div>
-            <div class="system-meta-panel">
-              <span class="system-category">COMMERCE ARCHITECTURE</span>
-              <h3 class="system-name">Meri Clothing Architecture</h3>
-              <p class="system-desc">
-                High-performance modular e-commerce storefront engineered for sub-second static paint on mobile 3G.
-              </p>
-              <div class="system-tags">
-                <span>Astro SSG</span>
-                <span>Sub-Second</span>
-                <span>Edge Cache</span>
-              </div>
-              <div class="system-actions">
-                <a href="https://github.com/PramudithaN/meri.clothing" target="_blank" rel="noopener noreferrer" class="btn-system-launch">
-                  Inspect Source
-                </a>
-                <a href="/work/meri-clothing" class="btn-system-subtle">
-                  Case Spec
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
+      <ProjectsFolderStack />
     </div>
   </section>
 

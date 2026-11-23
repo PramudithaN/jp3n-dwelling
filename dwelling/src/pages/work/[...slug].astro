@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectDetailCanvas from '../../components/ProjectDetailCanvas.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -19,44 +20,16 @@ const { Content } = await render(entry);
     <div class="site-container">
       <div class="case-header">
         <a href="/work" class="back-link">← Back to All Work</a>
-        <div class="meta-tags-row">
-          <span class="category-badge">{entry.data.category}</span>
-          <span class="status-badge">{entry.data.status}</span>
-        </div>
-        <h1 class="case-title">{entry.data.title}</h1>
-        <p class="case-tagline">{entry.data.tagline}</p>
-
-        <div class="case-specs-card">
-          <div class="spec-col">
-            <span class="spec-label">Tech Stack</span>
-            <div class="spec-pills">
-              {entry.data.techStack.map(tech => (
-                <span class="pill">{tech}</span>
-              ))}
-            </div>
-          </div>
-          {entry.data.metrics && (
-            <div class="spec-col">
-              <span class="spec-label">Verified Metrics</span>
-              <ul class="metrics-list">
-                {Object.entries(entry.data.metrics).map(([k, v]) => (
-                  <li><strong>{k}:</strong> {v}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <div class="spec-col">
-            <span class="spec-label">Inspection Links</span>
-            <div class="links-col">
-              {entry.data.liveUrl && (
-                <a href={entry.data.liveUrl} target="_blank" rel="noopener noreferrer" class="link-btn">Launch Live App ↗</a>
-              )}
-              {entry.data.repoUrl && (
-                <a href={entry.data.repoUrl} target="_blank" rel="noopener noreferrer" class="link-btn">View Repository ↗</a>
-              )}
-            </div>
-          </div>
-        </div>
+        <ProjectDetailCanvas
+          title={entry.data.title}
+          tagline={entry.data.tagline}
+          category={entry.data.category}
+          status={entry.data.status}
+          techStack={entry.data.techStack}
+          metrics={entry.data.metrics}
+          liveUrl={entry.data.liveUrl}
+          repoUrl={entry.data.repoUrl}
+        />
       </div>
 
       <div class="markdown-content">

@@ -1,0 +1,396 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  showIntroCard?: boolean;
+  showClosingCard?: boolean;
+}
+
+const { showIntroCard = true, showClosingCard = true } = Astro.props;
+
+const workItems = await getCollection('work');
+workItems.sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
+---
+
+<div class="editorial-projects-grid">
+  {showIntroCard && (
+    <article class="ed-card ed-card-intro">
+      <div class="ed-card-top">
+        <span class="ed-kicker">JP3N DWELLING</span>
+      </div>
+      <div class="ed-card-body">
+        <h3 class="ed-intro-title">
+          Selected<br />Software &amp;<br />Tooling
+        </h3>
+        <p class="ed-intro-sub">
+          Production systems running live on the global web. Zero bloat, zero tracking.
+        </p>
+      </div>
+      <div class="ed-card-footer">
+        <span class="ed-footer-domain">JP3N.DEV / WORK</span>
+        <span class="ed-footer-accent-line" aria-hidden="true"></span>
+      </div>
+    </article>
+  )}
+
+  {workItems.map((item, idx) => {
+    const num = idx + 1;
+    const isEvenFlow = num === 1 || num === 3;
+    return (
+      <article class="ed-card ed-card-project">
+        <div class="ed-card-top">
+          <span class="ed-kicker">{item.data.category.toUpperCase()}</span>
+          <span class={`ed-status ${item.data.status === 'production' ? 'is-live' : ''}`}>
+            {item.data.status.toUpperCase()}
+          </span>
+        </div>
+
+        <div class="ed-card-body">
+          <span class="ed-index">{num}</span>
+          <h3 class="ed-project-title">
+            <a href={`/work/${item.id}`} class="ed-title-link">{item.data.title}</a>
+          </h3>
+          <p class="ed-project-desc">{item.data.tagline}</p>
+
+          <ul class="ed-bullet-list">
+            {item.data.techStack.slice(0, 3).map((tech) => (
+              <li>{tech}</li>
+            ))}
+          </ul>
+        </div>
+
+        {isEvenFlow && (
+          <svg class="ed-flow-arrow" viewBox="0 0 64 24" fill="none" aria-hidden="true">
+            <path
+              d="M2 14 C 14 24, 24 4, 34 14 C 40 20, 48 12, 60 12"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+            />
+            <path
+              d="M55 8 L61 12 L55 16"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        )}
+
+        <div class="ed-card-footer">
+          <a href={`/work/${item.id}`} class="ed-inspect-link">
+            Inspect Project →
+          </a>
+          {item.data.liveUrl ? (
+            <a href={item.data.liveUrl} target="_blank" rel="noopener noreferrer" class="ed-ext-link">
+              Live ↗
+            </a>
+          ) : item.data.repoUrl ? (
+            <a href={item.data.repoUrl} target="_blank" rel="noopener noreferrer" class="ed-ext-link">
+              Repo ↗
+            </a>
+          ) : null}
+        </div>
+      </article>
+    );
+  })}
+
+  {showClosingCard && (
+    <article class="ed-card ed-card-closing">
+      <div class="ed-card-top">
+        <span class="ed-kicker">OPEN ARCHIVE</span>
+        <span class="ed-footer-domain">JP3N.DEV</span>
+      </div>
+
+      <div class="ed-card-body ed-closing-center">
+        <div class="ed-bulb-icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 18H15M10 21H14M12 3C8.686 3 6 5.686 6 9C6 11.22 7.206 13.157 9 14.197V15.5C9 16.052 9.448 16.5 10 16.5H14C14.552 16.5 15 16.052 15 15.5V14.197C16.794 13.157 18 11.22 18 9C18 5.686 15.314 3 12 3Z"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M12 1V2M4.5 4.5L5.5 5.5M19.5 4.5L18.5 5.5M2 10H3M21 10H22" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <h3 class="ed-closing-title">
+          Built with<br />First Principles
+        </h3>
+        <p class="ed-closing-desc">
+          Select any card to inspect its architecture, verified metrics, and live deployment.
+        </p>
+      </div>
+
+      <div class="ed-card-footer">
+        <a href="/work" class="ed-inspect-link">
+          All Case Studies →
+        </a>
+        <a href="/#contact" class="ed-ext-link">
+          Start Inquiry
+        </a>
+      </div>
+    </article>
+  )}
+</div>
+
+<style>
+  .editorial-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .ed-card {
+    position: relative;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-hairline);
+    padding: var(--space-xl) var(--space-l);
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
+  }
+
+  .ed-card-project:hover {
+    border-color: var(--border-hairline-bright);
+    background-color: var(--bg-elevated);
+    transform: translateY(-3px);
+  }
+
+  .ed-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: var(--space-l);
+  }
+
+  .ed-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-accent-soft);
+    line-height: 1.3;
+  }
+
+  .ed-status {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    padding: 2px 6px;
+    border: 1px solid var(--border-hairline);
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .ed-status.is-live {
+    color: var(--text-accent);
+    border-color: var(--border-hairline-bright);
+    background: var(--theme-accent-muted);
+  }
+
+  .ed-card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .ed-intro-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 2.5vw, 2.35rem);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+
+  .ed-intro-sub {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 28ch;
+  }
+
+  .ed-index {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .ed-project-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.8vw, 1.65rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  .ed-title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ed-title-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .ed-project-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: var(--space-m);
+  }
+
+  .ed-bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .ed-bullet-list li {
+    position: relative;
+    padding-left: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .ed-bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    background-color: var(--text-accent);
+  }
+
+  /* Connecting Flow Arrow between cards (inspired by Image 2) */
+  .ed-flow-arrow {
+    position: absolute;
+    right: -28px;
+    bottom: 64px;
+    width: 48px;
+    height: 20px;
+    color: var(--text-accent-soft);
+    opacity: 0.65;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Closing Card */
+  .ed-closing-center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .ed-bulb-icon {
+    color: var(--text-accent);
+    margin-bottom: var(--space-m);
+  }
+
+  .ed-closing-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.8vw, 1.65rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  .ed-closing-desc {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    max-width: 26ch;
+    line-height: 1.5;
+  }
+
+  /* Card Footer */
+  .ed-card-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: var(--space-l);
+    padding-top: var(--space-s);
+    border-top: 1px dashed var(--border-hairline);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .ed-footer-domain {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .ed-footer-accent-line {
+    width: 36px;
+    height: 2px;
+    background-color: var(--text-accent);
+  }
+
+  .ed-inspect-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .ed-card-project:hover .ed-inspect-link,
+  .ed-inspect-link:hover {
+    color: var(--text-accent);
+  }
+
+  .ed-ext-link {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-accent-soft);
+    text-decoration: none;
+  }
+
+  .ed-ext-link:hover {
+    color: var(--text-accent);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 1024px) {
+    .editorial-projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ed-flow-arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .editorial-projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ed-card {
+      min-height: 280px;
+    }
+  }
+</style>

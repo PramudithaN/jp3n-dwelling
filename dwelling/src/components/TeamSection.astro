@@ -18,6 +18,7 @@ const team = siteConfig.team;
     <div class="team-portrait-strip" id="teamPortraitStrip">
       {team.map((member, index) => {
         const memberNum = index + 1;
+        const portraitBase = member.portrait.replace(/-f\d+\.jpg$/, '');
         return (
           <article class="team-card" data-member-num={memberNum}>
             <a
@@ -29,7 +30,7 @@ const team = siteConfig.team;
             >
               {[1, 2, 3, 4].map((frameIdx) => (
                 <img
-                  src={`/images/team/member-${memberNum}-f${frameIdx}.jpg`}
+                  src={`${portraitBase}-f${frameIdx}.jpg`}
                   alt={frameIdx === 1 ? `${member.name} monochrome silhouette portrait` : ''}
                   aria-hidden={frameIdx !== 1 ? 'true' : undefined}
                   class={`portrait-img ${frameIdx === 1 ? 'is-active' : ''}`}

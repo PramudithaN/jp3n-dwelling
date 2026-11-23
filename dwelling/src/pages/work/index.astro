@@ -1,9 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-
-const workItems = await getCollection('work');
-workItems.sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
+import ProjectsFolderStack from '../../components/ProjectsFolderStack.astro';
 ---
 
 <BaseLayout title="Work & Production Systems" description="Case studies and production systems built by JP3N Tech Dwelling." canonicalPath="/work">
@@ -16,48 +13,7 @@ workItems.sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
         </p>
       </div>
 
-      <div class="work-cards-grid">
-        {workItems.map(item => (
-          <article class="work-card">
-            <div class="card-top-bar">
-              <span class="category-tag">{item.data.category}</span>
-              <span class="status-indicator">{item.data.status}</span>
-            </div>
-
-            <div class="card-body">
-              <h2 class="work-title">
-                <a href={`/work/${item.id}`}>{item.data.title}</a>
-              </h2>
-              <p class="work-tagline">{item.data.tagline}</p>
-
-              <div class="metrics-block">
-                {item.data.metrics && Object.entries(item.data.metrics).map(([key, val]) => (
-                  <div class="metric-row">
-                    <span class="metric-key">{key}:</span>
-                    <span class="metric-val">{val}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div class="stack-list">
-                {item.data.techStack.map(tech => (
-                  <span class="stack-pill">{tech}</span>
-                ))}
-              </div>
-
-              <div class="card-links">
-                <a href={`/work/${item.id}`} class="btn-inspect">Case Details</a>
-                {item.data.liveUrl && (
-                  <a href={item.data.liveUrl} target="_blank" rel="noopener noreferrer" class="btn-live">Launch Live</a>
-                )}
-                {item.data.repoUrl && (
-                  <a href={item.data.repoUrl} target="_blank" rel="noopener noreferrer" class="btn-repo">Source</a>
-                )}
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+      <ProjectsFolderStack />
     </div>
   </section>
 </BaseLayout>

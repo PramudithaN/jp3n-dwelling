@@ -3,6 +3,13 @@ export interface SiteConfig {
   tagline: string;
   description: string;
   url: string;
+  maintenance: {
+    enabled: boolean;
+    kicker: string;
+    headline: string;
+    message: string;
+    code: string;
+  };
   capacity: {
     totalSlots: number;
     openSlots: number;
@@ -39,6 +46,19 @@ export const siteConfig: SiteConfig = {
   tagline: 'Tech Dwelling',
   description: 'An independent engineering and craft collective. Web engineering, graphic systems, motion design, and open source tooling.',
   url: 'https://jp3n-dwelling.pages.dev',
+  /**
+   * MAINTENANCE / REPAIR MODE:
+   * Set `enabled: true` (or set env `PUBLIC_MAINTENANCE_MODE=true`) and deploy
+   * to display the red-signal repair screen across all routes.
+   * When `false` (default), the maintenance screen is never rendered.
+   */
+  maintenance: {
+    enabled: false,
+    kicker: 'UNDER REPAIR / SYSTEM BUILD',
+    headline: 'In Repair.',
+    message: 'We are currently tuning and deploying updates to the dwelling.\nEverything will be back online shortly.',
+    code: 'STATUS 503'
+  },
   capacity: {
     totalSlots: 3,
     openSlots: 2,
@@ -50,22 +70,6 @@ export const siteConfig: SiteConfig = {
     linkedin: 'https://linkedin.com/in/pramuditha-nadun-612b1b204'
   },
   team: [
-    {
-      name: 'Pramuditha Nadun',
-      role: 'Systems & Tooling Architect',
-      bio: 'Builds offline-first utilities, GPU-accelerated web engines, and procedural developer tools across TypeScript, Rust, C#, and Python (Filee, git-tulkun, bytesift).',
-      githubHandle: 'PramudithaN',
-      portrait: '/images/team/member-1-f1.jpg',
-      stack: ['TypeScript', 'Rust', 'C#', 'Python']
-    },
-    {
-      name: 'Pathum Sandeepa',
-      role: 'Platform & Cloud Engineer',
-      bio: 'Architects Go control planes, Kubernetes operators, multi-tenant TypeScript platforms, and interactive 3D web experiences (iconfigly, Three-JS-3D-Earth).',
-      githubHandle: 'pathumsandeepa',
-      portrait: '/images/team/member-2-f1.jpg',
-      stack: ['Go', 'TypeScript', 'Kubernetes', 'PHP']
-    },
     {
       name: 'Jude Maria Bevan',
       role: 'Full-Stack & DevOps Engineer',
@@ -81,6 +85,22 @@ export const siteConfig: SiteConfig = {
       githubHandle: 'peenaka',
       portrait: '/images/team/member-4-f1.jpg',
       stack: ['JavaScript', 'Java', 'Angular', 'C#']
+    },
+    {
+      name: 'Pathum Sandeepa',
+      role: 'Platform & Cloud Engineer',
+      bio: 'Architects Go control planes, Kubernetes operators, multi-tenant TypeScript platforms, and interactive 3D web experiences (iconfigly, Three-JS-3D-Earth).',
+      githubHandle: 'pathumsandeepa',
+      portrait: '/images/team/member-2-f1.jpg',
+      stack: ['Go', 'TypeScript', 'Kubernetes', 'PHP']
+    },
+    {
+      name: 'Pramuditha Nadun',
+      role: 'Systems & Tooling Architect',
+      bio: 'Builds offline-first utilities, GPU-accelerated web engines, and procedural developer tools across TypeScript, Rust, C#, and Python (Filee, git-tulkun, bytesift).',
+      githubHandle: 'PramudithaN',
+      portrait: '/images/team/member-1-f1.jpg',
+      stack: ['TypeScript', 'Rust', 'C#', 'Python']
     },
     {
       name: 'Nipun Kariyawasam',
