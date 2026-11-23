@@ -21,8 +21,9 @@ The homepage (`dwelling/src/pages/index.astro`) is organized as a single cohesiv
 4. **Selected Software & Tooling (`ProjectsFolderStack.astro`, `#work`)** — Production case studies & open repositories.
 5. **The Process (`CreativeProcess.astro`, `#process`)** — Interactive non-linear creative & engineering loop.
 6. **Mindset & Clarity (`ThoughtsNoise.astro`, `EditorialCanvasCallout.astro`)** — Filtering signal from noise and shipping with clarity.
-7. **The Collective (`TeamSection.astro`, `TeamCalendar.astro`, `TeamPreferences.astro`, `AfkSection.astro`)** — Meet the 5 engineers, daily GitHub contributions, playable studio music rotation (manual play, zero autoplay), and AFK life.
+7. **The Collective (`TeamSection.astro`, `TeamCalendar.astro`, `TeamPreferences.astro`, `AfkSection.astro`)** — Meet the 5 engineers, live current-month GitHub Build Calendar (auto-synced to `new Date()` + public GitHub events), playable studio music rotation (manual play, zero autoplay), and AFK life.
 8. **Direct Engagement (`#contact`, `RetroWorkstation.astro`)** — Direct project inquiry without sales funnels.
+9. **Maintenance / Repair Mode (`MaintenanceScreen.astro`)** — Toggle `maintenance.enabled: true` in `dwelling/src/config/site.ts` (or build with `PUBLIC_MAINTENANCE_MODE=true`) to display the suspended traffic-light repair screen across all routes.
 
 ---
 
