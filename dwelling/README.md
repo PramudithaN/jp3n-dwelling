@@ -48,6 +48,7 @@ dwelling/
 │   │   ├── NavHeader.astro       # Persistent minimal navigation
 │   │   ├── ParallaxHero.astro    # Hardware-accelerated multi-depth spatial parallax hero
 │   │   ├── PeakShowcase.astro    # The Peak illumination & demo viewports
+│   │   ├── TeamSection.astro     # 5-column monochrome portrait collective showcase
 │   │   └── TheFourDoors.astro    # The 4 deliberate CTAs
 │   ├── config/
 │   │   └── site.ts               # Single source of truth (Capacity, Team, Demos)

@@ -18,6 +18,8 @@ export interface SiteConfig {
     role: string;
     bio: string;
     githubHandle: string;
+    portrait: string;
+    stack: string[];
   }>;
   demos: Array<{
     id: string;
@@ -50,33 +52,43 @@ export const siteConfig: SiteConfig = {
   team: [
     {
       name: 'Pramuditha Nadun',
-      role: 'Software Engineer',
-      bio: 'Full-stack systems, performance engineering, and open source tooling architecture.',
-      githubHandle: 'PramudithaN'
+      role: 'Systems & Tooling Architect',
+      bio: 'Builds offline-first utilities, GPU-accelerated web engines, and procedural developer tools across TypeScript, Rust, C#, and Python (Filee, git-tulkun, bytesift).',
+      githubHandle: 'PramudithaN',
+      portrait: '/images/team/member-1.jpg',
+      stack: ['TypeScript', 'Rust', 'C#', 'Python']
     },
     {
       name: 'Pathum Sandeepa',
-      role: 'Interface & Brand Architect',
-      bio: 'Interface architecture, digital brand identity systems, and client software engineering.',
-      githubHandle: 'pathumsandeepa'
+      role: 'Platform & Cloud Engineer',
+      bio: 'Architects Go control planes, Kubernetes operators, multi-tenant TypeScript platforms, and interactive 3D web experiences (iconfigly, Three-JS-3D-Earth).',
+      githubHandle: 'pathumsandeepa',
+      portrait: '/images/team/member-2.jpg',
+      stack: ['Go', 'TypeScript', 'Kubernetes', 'PHP']
     },
     {
-      name: 'Jude Bevan',
-      role: 'Visual Systems & Motion Engineer',
-      bio: 'High-contrast graphic design systems, publication typography, and motion narrative.',
-      githubHandle: 'judebevan'
+      name: 'Jude Maria Bevan',
+      role: 'Full-Stack & DevOps Engineer',
+      bio: 'Bridges Java/Spring Boot backends, Flutter mobile apps, and containerized CI/CD pipelines with Docker, Minikube, and Jenkins.',
+      githubHandle: 'judebevan',
+      portrait: '/images/team/member-3.jpg',
+      stack: ['Java', 'C++', 'Flutter', 'Docker']
     },
     {
       name: 'Peenaka Wedamulla',
-      role: 'Media & Systems Developer',
-      bio: 'Audio-visual narrative production, media engineering, and performant web deployment.',
-      githubHandle: 'peenaka'
+      role: 'AI Tooling & QA Automation Engineer',
+      bio: 'Develops AI-powered coding-agent CLIs, enterprise Espresso/BrowserStack mobile test frameworks, and real-time Java/Angular systems (ContexaForge).',
+      githubHandle: 'peenaka',
+      portrait: '/images/team/member-4.jpg',
+      stack: ['JavaScript', 'Java', 'Angular', 'C#']
     },
     {
       name: 'Nipun Kariyawasam',
-      role: 'Core Systems Developer',
-      bio: 'Hardware utilities, browser Web API tooling, and open source systems engineering.',
-      githubHandle: 'sanszerif'
+      role: 'Frontend, Astro & AI Researcher',
+      bio: 'Crafts zero-bloat Astro interfaces and TypeScript hardware utilities alongside CNN 3D gaze estimation and Unity AI research (pregnantbattery, synth-gaze-fyp).',
+      githubHandle: 'sanszerif',
+      portrait: '/images/team/member-5.jpg',
+      stack: ['Astro', 'TypeScript', 'Python', 'Dart']
     }
   ],
   demos: [

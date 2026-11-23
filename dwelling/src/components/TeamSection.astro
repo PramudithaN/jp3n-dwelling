@@ -1,0 +1,252 @@
+---
+import { siteConfig } from '../config/site';
+
+const team = siteConfig.team;
+---
+
+<section class="team-gallery-section" id="team" aria-labelledby="team-heading">
+  <div class="site-container">
+    <div class="team-header">
+      <span class="section-kicker">THE COLLECTIVE</span>
+      <h2 id="team-heading" class="section-heading">Meet the Team</h2>
+      <p class="section-sub">Five specialized engineers. Analyzed directly from their open-source craft.</p>
+    </div>
+
+    <!-- 5-Column Editorial Portrait Strip -->
+    <div class="team-portrait-strip">
+      {team.map((member, index) => (
+        <article class="team-card" data-member-index={index}>
+          <a
+            href={`https://github.com/${member.githubHandle}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="portrait-frame"
+            aria-label={`${member.name} — ${member.role} on GitHub`}
+          >
+            <img
+              src={member.portrait}
+              alt={`${member.name} monochrome portrait`}
+              class="portrait-img"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="portrait-vignette" aria-hidden="true"></div>
+
+            <!-- Centered 6-Pointed White Star Emblem -->
+            <span class="portrait-star" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 1L14.2 8.2L21.5 6.5L16.4 12L21.5 17.5L14.2 15.8L12 23L9.8 15.8L2.5 17.5L7.6 12L2.5 6.5L9.8 8.2L12 1Z"
+                  fill="#FFFFFF"
+                />
+              </svg>
+            </span>
+          </a>
+
+          <!-- Member Details Below Portrait -->
+          <div class="member-details">
+            <div class="member-meta-top">
+              <h3 class="member-name">{member.name}</h3>
+              <span class="member-role">{member.role}</span>
+            </div>
+
+            <p class="member-bio">{member.bio}</p>
+
+            <div class="member-footer">
+              <div class="member-stack" aria-label="Primary technologies">
+                {member.stack.slice(0, 3).map((tech) => (
+                  <span class="stack-pill">{tech}</span>
+                ))}
+              </div>
+              <a
+                href={`https://github.com/${member.githubHandle}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="member-github-link"
+              >
+                @{member.githubHandle} ↗
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .team-gallery-section {
+    padding: var(--space-3xl, 5rem) 0;
+    background-color: #141414;
+    border-top: 1px solid var(--border-hairline);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .team-header {
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .team-portrait-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    align-items: start;
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Portrait Frame matching reference aspect ratio & monochrome look */
+  .portrait-frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 7 / 10;
+    overflow: hidden;
+    background-color: #1c1c1c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(100%) contrast(1.06);
+    transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.4s ease;
+  }
+
+  .portrait-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 45%, rgba(10, 10, 10, 0.35) 100%);
+    pointer-events: none;
+  }
+
+  /* Centered Crisp White 6-Point Star */
+  .portrait-star {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+    transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.3s ease;
+  }
+
+  .team-card:hover .portrait-img {
+    transform: scale(1.04);
+    filter: grayscale(100%) contrast(1.12) brightness(1.04);
+  }
+
+  .team-card:hover .portrait-star {
+    transform: translate(-50%, -50%) rotate(30deg) scale(1.16);
+  }
+
+  /* Editorial Info Block */
+  .member-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 2px;
+  }
+
+  .member-meta-top {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .member-name {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1rem;
+    font-weight: 500;
+    color: #faf9f6;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .member-role {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--theme-accent, #52a468);
+  }
+
+  .member-bio {
+    font-family: var(--font-body, 'Sora', sans-serif);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #a3ad9d;
+    margin: 2px 0 4px 0;
+  }
+
+  .member-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .member-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .stack-pill {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.62rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    color: #d0d4cc;
+  }
+
+  .member-github-link {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem;
+    color: #faf9f6;
+    text-decoration: none;
+    opacity: 0.72;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    width: fit-content;
+  }
+
+  .member-github-link:hover {
+    opacity: 1;
+    color: var(--theme-accent, #52a468);
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1024px) {
+    .team-portrait-strip {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .team-portrait-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .team-portrait-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

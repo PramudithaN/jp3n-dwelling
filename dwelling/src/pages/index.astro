@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ParallaxHero from '../components/ParallaxHero.astro';
+import TeamSection from '../components/TeamSection.astro';
 import { siteConfig } from '../config/site';
 
 const team = siteConfig.team;
@@ -291,37 +292,10 @@ const { email, github, linkedin } = siteConfig.contact;
   <!-- =========================================================================
        SECTION 4: THE BUILDERS (The 5 Engineers)
        ========================================================================= -->
-  <section class="team-section" id="team" aria-labelledby="team-heading">
-    <div class="site-container">
-      <div class="section-title-wrap">
-        <span class="section-kicker">THE COLLECTIVE</span>
-        <h2 id="team-heading" class="section-heading">The Craftspeople</h2>
-        <p class="section-sub">Direct collaboration with engineers. Zero account managers.</p>
-      </div>
-
-      <div class="team-cards-row">
-        {team.map((member) => (
-          <div class="member-card">
-            <div class="member-monogram" aria-hidden="true">
-              {member.name.split(' ').map(n => n[0]).join('')}
-            </div>
-            <h3 class="member-name">{member.name}</h3>
-            <span class="member-role">{member.role}</span>
-            <p class="member-focus">{member.bio.split('.')[0]}.</p>
-            <a 
-              href={`https://github.com/${member.githubHandle}`} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="member-github"
-              aria-label={`GitHub profile of ${member.name}`}
-            >
-              github.com/{member.githubHandle}
-            </a>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- =========================================================================
+       SECTION 4: THE COLLECTIVE (Meet the Team)
+       ========================================================================= -->
+  <TeamSection />
 
   <!-- =========================================================================
        SECTION 5: DIRECT ENGAGEMENT (Intake Unit)
