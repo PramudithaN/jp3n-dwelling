@@ -58,6 +58,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <ThemeEngine />
 </head>
 <body>
+  <!-- Minimal Theme-Matched Route & Load Progress Bar -->
+  <div class="jp3n-route-loader" id="jp3nRouteLoader" aria-hidden="true"></div>
   {isMaintenance ? (
     <main id="main-content">
       <MaintenanceScreen />
@@ -75,6 +77,55 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <Footer />
       <ThemeSwitcher />
+
+      <script is:inline>
+        (function () {
+          var bar = document.getElementById('jp3nRouteLoader');
+          if (!bar) return;
+
+          function finishBar() {
+            bar.classList.remove('is-loading');
+            bar.classList.add('is-done');
+            setTimeout(function () {
+              bar.classList.remove('is-done');
+            }, 320);
+          }
+
+          window.addEventListener('pageshow', finishBar);
+          if (document.readyState === 'complete') {
+            finishBar();
+          } else {
+            bar.classList.add('is-loading');
+            window.addEventListener('load', finishBar, { once: true });
+          }
+
+          document.addEventListener('click', function (e) {
+            var target = e.target instanceof Element ? e.target.closest('a[href]') : null;
+            if (!target) return;
+            var href = target.getAttribute('href') || '';
+            if (
+              !href ||
+              href.startsWith('#') ||
+              href.startsWith('mailto:') ||
+              target.getAttribute('target') === '_blank' ||
+              e.metaKey ||
+              e.ctrlKey ||
+              e.shiftKey ||
+              e.altKey
+            ) {
+              return;
+            }
+            // Only show bar on actual cross-page navigation (not same-page hash)
+            try {
+              var dest = new URL(target.href, window.location.href);
+              if (dest.origin === window.location.origin && dest.pathname !== window.location.pathname) {
+                bar.classList.remove('is-done');
+                bar.classList.add('is-loading');
+              }
+            } catch {}
+          });
+        })();
+      </script>
     </>
   )}
 </body>
@@ -97,5 +148,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .skip-link:focus {
     top: 20px;
+  }
+
+  .jp3n-route-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    z-index: 10050;
+    pointer-events: none;
+    background: linear-gradient(90deg, var(--text-accent-soft), var(--text-accent));
+    box-shadow: 0 0 10px var(--color-accent-glow, rgba(82, 164, 104, 0.45));
+    opacity: 0;
+    transition: width 320ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
+  }
+
+  .jp3n-route-loader.is-loading {
+    opacity: 1;
+    width: 72%;
+  }
+
+  .jp3n-route-loader.is-done {
+    opacity: 0;
+    width: 100%;
   }
 </style>

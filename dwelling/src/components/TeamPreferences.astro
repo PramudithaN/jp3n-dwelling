@@ -99,6 +99,7 @@ const serializedTeam = JSON.stringify(
           </button>
 
           <button type="button" class="pill-icon-btn is-play" id="cfPlayBtn" aria-label="Play or pause">
+            <span class="audio-spinner" aria-hidden="true"></span>
             <svg class="svg-pause" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <rect x="3.5" y="3" width="3" height="10" rx="0.8" />
               <rect x="9.5" y="3" width="3" height="10" rx="0.8" />
@@ -231,6 +232,7 @@ const serializedTeam = JSON.stringify(
     const item = tracks[activeIdx];
     if (!item) return;
 
+    if (stage) stage.setAttribute('data-loading', 'true');
     if (loadedTrackIdx !== activeIdx) {
       retriedFreshUrl = false;
       loadedTrackIdx = activeIdx;
@@ -243,6 +245,8 @@ const serializedTeam = JSON.stringify(
       setPlayingState(true);
     } catch {
       setPlayingState(false);
+    } finally {
+      if (stage) stage.setAttribute('data-loading', 'false');
     }
   }
 
@@ -339,6 +343,18 @@ const serializedTeam = JSON.stringify(
   });
 
   if (audio instanceof HTMLAudioElement) {
+    audio.addEventListener('waiting', () => {
+      if (stage) stage.setAttribute('data-loading', 'true');
+    });
+
+    audio.addEventListener('playing', () => {
+      if (stage) stage.setAttribute('data-loading', 'false');
+    });
+
+    audio.addEventListener('canplay', () => {
+      if (stage) stage.setAttribute('data-loading', 'false');
+    });
+
     audio.addEventListener('timeupdate', () => {
       if (audio.duration > 0) {
         setProgressPct((audio.currentTime / audio.duration) * 100);
@@ -747,6 +763,29 @@ const serializedTeam = JSON.stringify(
   .coverflow-stage[data-playing="false"] .np-eq span {
     animation-play-state: paused;
     transform: scaleY(0.3);
+  }
+
+  .audio-spinner {
+    display: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--bg-canvas) 25%, transparent);
+    border-top-color: var(--bg-canvas);
+    animation: audioSpin 0.7s linear infinite;
+  }
+
+  .coverflow-stage[data-loading="true"] .pill-icon-btn.is-play .audio-spinner {
+    display: inline-block;
+  }
+
+  .coverflow-stage[data-loading="true"] .pill-icon-btn.is-play .svg-play,
+  .coverflow-stage[data-loading="true"] .pill-icon-btn.is-play .svg-pause {
+    display: none;
+  }
+
+  @keyframes audioSpin {
+    to { transform: rotate(360deg); }
   }
 
   @keyframes eqBar {

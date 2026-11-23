@@ -92,6 +92,10 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
       <div class="cal-day-inspector" id="calDayInspector" aria-live="polite">
         <div class="inspector-top">
           <span class="inspector-date" id="inspectorDateLabel">2026-11-23</span>
+          <span class="cal-sync-badge" id="calSyncBadge">
+            <span class="cal-sync-spin" aria-hidden="true"></span>
+            <span>Syncing GitHub…</span>
+          </span>
           <span class="inspector-hint">Click any highlighted day to inspect repositories</span>
         </div>
         <div class="inspector-entries" id="inspectorEntries"></div>
@@ -296,56 +300,63 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
   renderCalendar();
   renderInspector(selectedDate);
 
+  const syncBadgeEl = document.getElementById('calSyncBadge');
+
   // Sync live public GitHub events for the current/recent months without blocking render
   async function syncLiveGithubEvents() {
+    if (syncBadgeEl) syncBadgeEl.classList.add('is-syncing');
     let updated = false;
-    await Promise.all(
-      membersList.map(async (m) => {
-        try {
-          const res = await fetch(`https://api.github.com/users/${encodeURIComponent(m.handle)}/events/public?per_page=30`);
-          if (!res.ok) return;
-          const events = await res.json();
-          if (!Array.isArray(events)) return;
+    try {
+      await Promise.all(
+        membersList.map(async (m) => {
+          try {
+            const res = await fetch(`https://api.github.com/users/${encodeURIComponent(m.handle)}/events/public?per_page=30`);
+            if (!res.ok) return;
+            const events = await res.json();
+            if (!Array.isArray(events)) return;
 
-          for (const ev of events) {
-            if (!ev?.created_at || !ev?.repo?.name) continue;
-            const dateStr = String(ev.created_at).slice(0, 10);
-            const repoShort = ev.repo.name.startsWith(`${m.handle}/`)
-              ? ev.repo.name.slice(m.handle.length + 1)
-              : ev.repo.name;
+            for (const ev of events) {
+              if (!ev?.created_at || !ev?.repo?.name) continue;
+              const dateStr = String(ev.created_at).slice(0, 10);
+              const repoShort = ev.repo.name.startsWith(`${m.handle}/`)
+                ? ev.repo.name.slice(m.handle.length + 1)
+                : ev.repo.name;
 
-            if (!contributionsByDate[dateStr]) {
-              contributionsByDate[dateStr] = { date: dateStr, contributions: [] };
+              if (!contributionsByDate[dateStr]) {
+                contributionsByDate[dateStr] = { date: dateStr, contributions: [] };
+              }
+              const day = contributionsByDate[dateStr];
+              let entry = day.contributions.find((c) => c.githubHandle === m.handle);
+              if (!entry) {
+                entry = {
+                  memberName: m.shortName,
+                  githubHandle: m.handle,
+                  repos: [repoShort],
+                  eventsCount: 1
+                };
+                day.contributions.push(entry);
+                updated = true;
+              } else if (!entry.repos.includes(repoShort)) {
+                entry.repos.push(repoShort);
+                entry.eventsCount += 1;
+                updated = true;
+              }
             }
-            const day = contributionsByDate[dateStr];
-            let entry = day.contributions.find((c) => c.githubHandle === m.handle);
-            if (!entry) {
-              entry = {
-                memberName: m.shortName,
-                githubHandle: m.handle,
-                repos: [repoShort],
-                eventsCount: 1
-              };
-              day.contributions.push(entry);
-              updated = true;
-            } else if (!entry.repos.includes(repoShort)) {
-              entry.repos.push(repoShort);
-              entry.eventsCount += 1;
-              updated = true;
-            }
+          } catch {
+            // Silently keep verified static data if offline or rate-limited
           }
-        } catch {
-          // Silently keep verified static data if offline or rate-limited
-        }
-      })
-    );
+        })
+      );
 
-    if (updated) {
-      if (!contributionsByDate[selectedDate]) {
-        selectedDate = pickDefaultDateForMonth(currentYear, currentMonth);
+      if (updated) {
+        if (!contributionsByDate[selectedDate]) {
+          selectedDate = pickDefaultDateForMonth(currentYear, currentMonth);
+        }
+        renderCalendar();
+        renderInspector(selectedDate);
       }
-      renderCalendar();
-      renderInspector(selectedDate);
+    } finally {
+      if (syncBadgeEl) syncBadgeEl.classList.remove('is-syncing');
     }
   }
 
@@ -357,6 +368,33 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
     max-width: 1040px;
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .cal-sync-badge {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-accent);
+    letter-spacing: 0.04em;
+  }
+
+  .cal-sync-badge.is-syncing {
+    display: inline-flex;
+  }
+
+  .cal-sync-spin {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid color-mix(in srgb, var(--text-accent) 25%, transparent);
+    border-top-color: var(--text-accent);
+    animation: calSpin 0.75s linear infinite;
+  }
+
+  @keyframes calSpin {
+    to { transform: rotate(360deg); }
   }
 
   .calendar-section {
