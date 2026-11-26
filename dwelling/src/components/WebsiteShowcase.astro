@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const { email } = siteConfig.contact;
 ---
@@ -125,7 +126,7 @@ const { email } = siteConfig.contact;
     <div class="cta-top-meta">
       <span>engineered by<br /><strong>Teqniqks</strong></span>
       <span>for projects<br /><a href={`mailto:${email}`}>{email}</a></span>
-      <span class="meta-right">work<br /><a href="/#work">teqniqks.dev/work</a></span>
+      <span class="meta-right">work<br /><a href={withBase('/#work')}>teqniqks.dev/work</a></span>
     </div>
 
     <div class="cta-center-block">
@@ -157,7 +158,7 @@ const { email } = siteConfig.contact;
           <small>Direct Senior Engineering</small>
         </span>
       </a>
-      <a href="/#contact" class="cta-swipe">start inquiry →</a>
+      <a href={withBase('/#contact')} class="cta-swipe">start inquiry →</a>
     </div>
 
     <!-- Bottom Ruler Scale -->

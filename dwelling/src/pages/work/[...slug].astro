@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectDossierBoard from '../../components/ProjectDossierBoard.astro';
 import ProjectEvidenceBoard from '../../components/ProjectEvidenceBoard.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const workEntries = await getCollection('work');
@@ -19,7 +20,7 @@ const { entry } = Astro.props;
   <article class="case-study-article">
     <div class="site-container">
       <div class="case-header">
-        <a href="/#work" class="back-link" id="projectBackLink">
+        <a href={withBase('/#work')} class="back-link" id="projectBackLink">
           <span class="back-arrow-circle" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12.5 8H3.5" />

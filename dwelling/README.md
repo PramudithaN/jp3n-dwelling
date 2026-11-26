@@ -1,106 +1,96 @@
-# Teqniqks
+# Teqniqks Astro Application
 
-> **An independent craft & engineering collective.**  
-> Built with static-first architecture, CSS scroll-driven animations, zero tracking cookies, and WCAG AA flat design tokens.
-
----
-
-## 1. Architectural Overview & Philosophy
-
-Teqniqks is designed as an architectural progression rather than an off-the-shelf agency template:
-- **Blueprint:** How we plan, audit, and de-risk software.
-- **Foundation:** Non-negotiables (zero cookies, self-hosted fonts, verifiable code).
-- **The Four Rooms:** Specialized workshops for Web Engineering, Graphic Systems, Motion Craft, and Open Source.
-- **The Peak (Illumination):** The house illuminates in warm amber (`#FF9D00`, `#FFCF71`), framing live product viewports.
-- **The Front Porch (The Four Doors):** Four distinct entrances with zero friction (Clients, Contributors, Partners, Community).
+> Static-first web application for **Teqniqks**, built with Astro, strict TypeScript, self-hosted fonts, and zero tracking cookies.
 
 ---
 
-## 2. Technical Stack & Standards
+## 1. Technical Stack & Standards
 
-* **Framework:** [Astro](https://astro.build/) (Static Site Generation / Content Layer)
-* **Language:** Strict TypeScript
-* **Styling:** Hand-crafted CSS custom properties (Tokens in `src/styles/tokens.css`)
-* **Motion:** CSS Scroll-Driven Animations (`animation-timeline: view()`) with progressive enhancement fallback
-* **Typography:** Self-hosted WOFF/TTF:
-  * **Modera:** Display & Brand Header
-  * **Ithaca:** Technical Specs, Coordinates, and Tally Meter
-  * **Sora:** Clean Body & Reading Copy
-* **Cookies & Surveillance:** **Strictly ZERO cookies, zero tracking storage, zero third-party scripts.**
+- **Framework:** [Astro](https://astro.build/) (Static Site Generation & Content Layer)
+- **Language:** Strict TypeScript
+- **Styling:** CSS custom properties in `src/styles/tokens.css` and `src/config/theme.ts`
+- **Typography:** Self-hosted WOFF/TTF fonts (`Space Grotesk`, `Sora`, `JetBrains Mono`, `Syne`, `Modera`, `Ithaca`)
+- **Privacy:** Zero cookies, zero third-party analytics, and full alignment with Sri Lanka PDPA No. 9 of 2022 and EU GDPR
 
 ---
 
-## 3. Project Structure
+## 2. Project Structure
 
 ```text
 dwelling/
 ├── public/
 │   ├── favicon.svg
-│   └── fonts/
-│       ├── MODERA.woff (22KB)
-│       ├── Ithaca.woff (26KB)
-│       └── Sora-Regular.woff (60KB)
+│   ├── fonts/                    # Self-hosted WOFF/TTF font files
+│   ├── images/                   # Hero layers, team portraits, music covers, workshops
+│   └── videos/
+├── scripts/
+│   └── prepare-gh-pages.mjs      # Rewrites root-relative paths for /teqniqks and writes docs/.nojekyll
 ├── src/
 │   ├── components/
-│   │   ├── CapacityBadge.astro   # Option A honest urgency meter [ ■ ■ □ ]
-│   │   ├── CreativeProcess.astro # Native 60fps non-linear process loop animation
-│   │   ├── DwellingScene.astro   # Signature inline SVG scroll scene
-│   │   ├── EditorialCanvasCallout.astro # Design-editor typography callout before CTA
-│   │   ├── Footer.astro          # Compliance & zero-cookie notice
-│   │   ├── NavHeader.astro       # Persistent minimal navigation
-│   │   ├── ParallaxHero.astro    # Hardware-accelerated multi-depth spatial parallax hero
-│   │   ├── PeakShowcase.astro    # The Peak illumination & demo viewports
-│   │   ├── TeamSection.astro     # 5-column monochrome portrait collective showcase
-│   │   ├── TheFourDoors.astro    # The 4 deliberate CTAs
-│   │   ├── ThoughtsNoise.astro   # Native SVG & UI-pill profile sculpture
-│   │   └── WhoWeAre.astro        # Theme-matched "Who We Are" manifesto section
+│   │   ├── AfkSection.astro      # Off-duty collective credits
+│   │   ├── CreativeProcess.astro # Non-linear engineering & design loop
+│   │   ├── EditorialCanvasCallout.astro
+│   │   ├── Footer.astro          # Monochrome portrait strip, navigation & legal notice
+│   │   ├── GraphicsStudioShowcase.astro
+│   │   ├── MaintenanceScreen.astro
+│   │   ├── MotionBayShowcase.astro
+│   │   ├── NavHeader.astro
+│   │   ├── OpenForgeShowcase.astro
+│   │   ├── ParallaxHero.astro    # Multi-depth spatial parallax hero
+│   │   ├── ProjectDossierBoard.astro
+│   │   ├── ProjectEvidenceBoard.astro
+│   │   ├── ProjectsFolderStack.astro
+│   │   ├── RetroWorkstation.astro
+│   │   ├── TeamCalendar.astro    # Interactive GitHub contribution calendar
+│   │   ├── TeamPreferences.astro # Studio music rotation player
+│   │   ├── TeamSection.astro     # 6-column silhouette portrait collective
+│   │   ├── TheFourDoors.astro
+│   │   ├── ThemeEngine.astro
+│   │   ├── ThemeSwitcher.astro
+│   │   ├── ThoughtsNoise.astro
+│   │   ├── WebsiteShowcase.astro
+│   │   ├── WhoWeAre.astro
+│   │   ├── WorkshopBackBar.astro
+│   │   └── WorkshopsFolders.astro
 │   ├── config/
-│   │   └── site.ts               # Single source of truth (Capacity, Team, Demos)
+│   │   ├── site.ts               # Single source of truth (Team, Capacity, Contact, Demos)
+│   │   └── theme.ts              # 8 curated color palettes
 │   ├── content/
-│   │   ├── contributors/         # Open source projects & contribution guides
-│   │   ├── journal/              # Unified blog essays and engineering docs
-│   │   └── work/                 # Case studies and production systems
-│   ├── content.config.ts         # Astro Content Layer schemas (Zod validated)
+│   │   ├── contributors/         # Open-source projects & contribution guides
+│   │   ├── journal/              # Engineering essays & technical docs
+│   │   └── work/                 # Production case studies
+│   ├── data/
+│   │   └── teamCalendar.ts       # Team GitHub activity dataset & member colors
 │   ├── layouts/
-│   │   └── BaseLayout.astro      # Accessible base document with preload tags
+│   │   └── BaseLayout.astro      # Document shell, preloads, loader & global scripts
 │   ├── pages/
-│   │   ├── contact.astro         # Direct channels & four doors
-│   │   ├── contributors.astro    # Dedicated contributor forge
-│   │   ├── index.astro           # The Teqniqks story scroll experience
-│   │   ├── journey.astro         # Origin story & chronology
-│   │   ├── privacy.astro         # Zero-cookie technical declaration (PDPA/GDPR)
-│   │   ├── process.astro         # 4-stage architectural methodology
-│   │   ├── journal/              # Journal list & detail routes
-│   │   └── work/                 # Work portfolio & detail routes
+│   │   ├── index.astro           # Homepage narrative scroll
+│   │   ├── process.astro         # Web Laboratory (/process)
+│   │   ├── themes.astro          # Graphics Studio (/themes)
+│   │   ├── motion.astro          # Motion Bay (/motion)
+│   │   ├── contributors.astro    # Open Forge (/contributors)
+│   │   ├── journey.astro         # Collective origin & chronology (/journey)
+│   │   ├── contact.astro         # Direct engagement channels (/contact)
+│   │   ├── privacy.astro         # Zero-cookie privacy policy (/privacy)
+│   │   ├── journal/              # Journal index & detail routes
+│   │   └── work/                 # Work index & case study detail routes
 │   └── styles/
-│       └── tokens.css            # Complete design tokens (WCAG AA audited)
-├── astro.config.mjs
+│       └── tokens.css            # Base CSS custom properties & typography scale
+├── astro.config.mjs              # Configured with site, base: '/teqniqks', outDir: '../docs'
+├── CONTRIBUTING.md
 ├── package.json
 └── tsconfig.json
 ```
 
 ---
 
-## 4. Honest Urgency & Capacity Management
+## 3. Configuration
 
-To update the monthly intake slots, edit **exactly one file**:  
-`src/config/site.ts`:
-
-```typescript
-export const siteConfig = {
-  // ...
-  capacity: {
-    totalSlots: 3,
-    openSlots: 2,          // Change to 1, 0, etc.
-    month: 'December 2026' // Target month
-  }
-};
-```
-The Option A meter `[ ■ ■ □ ]` updates automatically across the entire site without code edits.
+To update team members, intake capacity, maintenance mode, or contact info, edit `src/config/site.ts`.
 
 ---
 
-## 5. Development & Deployment
+## 4. Development & Build
 
 ### Local Development
 ```bash
@@ -109,29 +99,9 @@ npm install
 npm run dev
 ```
 
-### Production Build
+### Production Build (GitHub Pages)
 ```bash
+cd dwelling
 npm run build
 ```
-The static output will be generated in `../docs/` ready for GitHub Pages or edge deployment.
-
-### Cloudflare Pages Deployment (Primary)
-1. Link your repository in Cloudflare Pages dashboard.
-2. Build command: `npm run build`
-3. Build output directory: `docs`
-4. Root directory: `dwelling`
-
-### Netlify Deployment (Backup)
-1. Base directory: `dwelling`
-2. Build command: `npm run build`
-3. Publish directory: `docs`
-
----
-
-## 6. Performance & Compliance Verification
-
-* **LCP:** $\le 1.0\text{s}$ on throttled 4G (Single static HTML payload).
-* **CLS:** $0.00$ (All fonts preloaded with matched metric fallbacks).
-* **Home Page JS:** $0\text{KB}$ external bundles ($< 0.5\text{KB}$ inlined accessible drawer script).
-* **Total First Load:** $\approx 125\text{KB}$ (HTML + CSS + all 3 self-hosted WOFF fonts combined).
-* **Compliance:** Strictly zero cookies. Zero tracking storage. Full alignment with Sri Lanka PDPA No. 9 of 2022 and EU GDPR.
+Outputs the static build to `../docs` and runs `scripts/prepare-gh-pages.mjs` to rewrite root-relative URLs for `/teqniqks`.

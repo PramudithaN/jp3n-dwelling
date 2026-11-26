@@ -314,14 +314,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     const cards = Array.from(strip.querySelectorAll('.team-card'));
     // Staggered organic cadences (ms) per member so they feel independent
-    const cadences = [190, 225, 175, 240, 205];
+    const cadences = [190, 225, 175, 240, 205, 215];
     // Asymmetric frame sequences mimic authentic slow-shutter film bursts
     const sequences = [
       [0, 1, 0, 2, 3, 1],
       [1, 0, 2, 1, 3, 0],
       [0, 2, 3, 0, 1, 2],
       [2, 0, 1, 3, 0, 1],
-      [0, 3, 1, 2, 0, 1]
+      [0, 3, 1, 2, 0, 1],
+      [1, 2, 0, 3, 1, 0]
     ];
 
     const timers: number[] = [];

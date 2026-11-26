@@ -1,10 +1,11 @@
 ---
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const { email, github, linkedin } = siteConfig.contact;
 const teamPortraits = siteConfig.team.map((m) => ({
   name: m.name,
-  portrait: m.portrait
+  portrait: withBase(m.portrait)
 }));
 ---
 
@@ -56,28 +57,28 @@ const teamPortraits = siteConfig.team.map((m) => ({
         <div class="footer-col-nav">
           <span class="col-heading">NAVIGATION</span>
           <ul class="col-links">
-            <li><a href="/#about">About</a></li>
-            <li><a href="/#workshops">Workshops</a></li>
-            <li><a href="/#work">Selected Work</a></li>
-            <li><a href="/#process">Process</a></li>
-            <li><a href="/#team">Team</a></li>
-            <li><a href="/#calendar">Build Calendar</a></li>
-            <li><a href="/#preferences">On Rotation</a></li>
-            <li><a href="/#afk">AFK</a></li>
-            <li><a href="/journal">Journal</a></li>
+            <li><a href={withBase('/#about')}>About</a></li>
+            <li><a href={withBase('/#workshops')}>Workshops</a></li>
+            <li><a href={withBase('/#work')}>Selected Work</a></li>
+            <li><a href={withBase('/#process')}>Process</a></li>
+            <li><a href={withBase('/#team')}>Team</a></li>
+            <li><a href={withBase('/#calendar')}>Build Calendar</a></li>
+            <li><a href={withBase('/#preferences')}>On Rotation</a></li>
+            <li><a href={withBase('/#afk')}>AFK</a></li>
+            <li><a href={withBase('/journal')}>Journal</a></li>
           </ul>
         </div>
 
         <div class="footer-col-channels">
           <span class="col-heading">WORKSHOPS &amp; CONNECT</span>
           <ul class="col-links">
-            <li><a href="/process">Web Laboratory (Websites)</a></li>
-            <li><a href="/themes">Graphics Studio (Design)</a></li>
-            <li><a href="/motion">Motion Bay (Video &amp; Motion)</a></li>
-            <li><a href="/contributors">Open Forge (Contribute)</a></li>
+            <li><a href={withBase('/process')}>Web Laboratory (Websites)</a></li>
+            <li><a href={withBase('/themes')}>Graphics Studio (Design)</a></li>
+            <li><a href={withBase('/motion')}>Motion Bay (Video &amp; Motion)</a></li>
+            <li><a href={withBase('/contributors')}>Open Forge (Contribute)</a></li>
             <li><a href={github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
             <li><a href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-            <li><a href="/privacy">Privacy &amp; Zero-Cookie Policy</a></li>
+            <li><a href={withBase('/privacy')}>Privacy &amp; Zero-Cookie Policy</a></li>
           </ul>
         </div>
       </div>

@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/url';
+
 interface Props {
   currentPath?: string;
 }
@@ -6,18 +8,18 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navLinks = [
-  { href: '/#about', label: 'ABOUT', section: 'about' },
-  { href: '/#workshops', label: 'WORKSHOPS', section: 'workshops' },
-  { href: '/#work', label: 'WORK', section: 'work' },
-  { href: '/#process', label: 'PROCESS', section: 'process' },
-  { href: '/#team', label: 'TEAM', section: 'team' },
-  { href: '/#contact', label: 'CONTACT', section: 'contact' },
+  { href: withBase('/#about'), label: 'ABOUT', section: 'about' },
+  { href: withBase('/#workshops'), label: 'WORKSHOPS', section: 'workshops' },
+  { href: withBase('/#work'), label: 'WORK', section: 'work' },
+  { href: withBase('/#process'), label: 'PROCESS', section: 'process' },
+  { href: withBase('/#team'), label: 'TEAM', section: 'team' },
+  { href: withBase('/#contact'), label: 'CONTACT', section: 'contact' },
 ];
 ---
 
 <header class={`site-header ${currentPath === '/' ? 'is-hero-light' : ''}`} id="siteHeader">
   <div class="header-inner">
-    <a href="/" class="brand-link" aria-label="Teqniqks">
+    <a href={withBase('/')} class="brand-link" aria-label="Teqniqks">
       <span class="brand-title">Teqniqks</span>
     </a>
 

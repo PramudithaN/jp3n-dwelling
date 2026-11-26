@@ -4,6 +4,7 @@
  * Pure HTML/CSS/SVG recreation of the 5 graphic design poster/flyer/social concepts,
  * 100% integrated with Teqniqks's dynamic theme variables.
  */
+import { withBase } from '../utils/url';
 ---
 
 <div class="graphics-showcase">
@@ -120,7 +121,7 @@
 
           <p class="ed-sub">And <em>this</em> is where that begins.</p>
 
-          <a href="/#contact" class="ed-cta">
+          <a href={withBase('/#contact')} class="ed-cta">
             <span>let's chat</span>
             <span aria-hidden="true">▸</span>
           </a>

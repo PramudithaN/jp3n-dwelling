@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const journalEntries = await getCollection('journal');
@@ -18,7 +19,7 @@ const { Content } = await render(entry);
   <article class="journal-article">
     <div class="site-container">
       <div class="article-header">
-        <a href="/journal" class="back-link">← Back to All Entries</a>
+        <a href={withBase('/journal')} class="back-link">← Back to All Entries</a>
         <div class="meta-row">
           <span class="type-badge">{entry.data.type}</span>
           <time datetime={entry.data.publishedDate.toISOString()}>
@@ -36,7 +37,7 @@ const { Content } = await render(entry);
 
       <div class="article-footer-box">
         <span class="footer-note">Have questions or want to discuss this architecture?</span>
-        <a href="/contact" class="discuss-link">Reach out through the Four Doors →</a>
+        <a href={withBase('/contact')} class="discuss-link">Reach out through the Four Doors →</a>
       </div>
     </div>
   </article>

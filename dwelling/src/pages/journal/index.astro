@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../utils/url';
 
 const journalEntries = await getCollection('journal');
 journalEntries.sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime());
@@ -29,7 +30,7 @@ journalEntries.sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedD
 
             <div class="entry-main">
               <h2 class="entry-title">
-                <a href={`/journal/${entry.id}`}>{entry.data.title}</a>
+                <a href={withBase(`/journal/${entry.id}`)}>{entry.data.title}</a>
               </h2>
               <p class="entry-desc">{entry.data.description}</p>
               
@@ -41,7 +42,7 @@ journalEntries.sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedD
             </div>
 
             <div class="entry-action">
-              <a href={`/journal/${entry.id}`} class="btn-read-entry">Read Entry</a>
+              <a href={withBase(`/journal/${entry.id}`)} class="btn-read-entry">Read Entry</a>
             </div>
           </article>
         ))}

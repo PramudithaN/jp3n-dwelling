@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/url';
+
 interface WorkshopCol {
   num: string;
   headline: string;
@@ -15,8 +17,8 @@ const workshops: WorkshopCol[] = [
     headline: 'Websites',
     pill: 'WEB LABORATORY',
     lines: ['Custom websites & web apps', 'Fast on every screen', 'Built how you want it'],
-    href: '/process',
-    image: '/images/workshops/web-lab.jpg',
+    href: withBase('/process'),
+    image: withBase('/images/workshops/web-lab.jpg'),
     alt: 'Web Laboratory — minimalist engineering monitor and dark workspace'
   },
   {
@@ -24,8 +26,8 @@ const workshops: WorkshopCol[] = [
     headline: 'Graphic Design',
     pill: 'GRAPHICS STUDIO',
     lines: ['Logos & brand identity', 'Posters & visual kits', 'Clean colors & typography'],
-    href: '/themes',
-    image: '/images/workshops/graphics-studio.jpg',
+    href: withBase('/themes'),
+    image: withBase('/images/workshops/graphics-studio.jpg'),
     alt: 'Graphics Studio — monochrome brutalist architectural geometry'
   },
   {
@@ -33,8 +35,8 @@ const workshops: WorkshopCol[] = [
     headline: 'Videos & Motion',
     pill: 'MOTION BAY',
     lines: ['Product & promo videos', 'Social reels & video editing', 'Smooth motion graphics'],
-    href: '/motion',
-    image: '/images/workshops/motion-bay.jpg',
+    href: withBase('/motion'),
+    image: withBase('/images/workshops/motion-bay.jpg'),
     alt: 'Motion Bay — dark studio cinema camera and lighting rig'
   },
   {
@@ -42,8 +44,8 @@ const workshops: WorkshopCol[] = [
     headline: 'Contribute',
     pill: 'OPEN FORGE',
     lines: ['Open-source repositories', 'Easy starter issues', 'Build & learn with us'],
-    href: '/contributors',
-    image: '/images/workshops/open-forge.jpg',
+    href: withBase('/contributors'),
+    image: withBase('/images/workshops/open-forge.jpg'),
     alt: 'Open Forge — precision engineering tools and hardware craft'
   }
 ];
@@ -65,7 +67,7 @@ const workshops: WorkshopCol[] = [
 
     <div class="topbar-actions">
       <span class="topbar-chip">04 Craft Bays</span>
-      <a href="/#contact" class="topbar-chip is-cta">Start Inquiry →</a>
+      <a href={withBase('/#contact')} class="topbar-chip is-cta">Start Inquiry →</a>
     </div>
   </div>
 

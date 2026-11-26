@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const workItems = await getCollection('work');
 workItems.sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
@@ -26,7 +27,7 @@ const tabPositions = ['pos-right', 'pos-mid-left', 'pos-far-left', 'pos-mid-righ
       const shortName = item.data.title.split(' ')[0];
       return (
         <a
-          href={`/work/${item.id}`}
+          href={withBase(`/work/${item.id}`)}
           role="listitem"
           class={`folder-layer ${isLight ? 'is-light' : 'is-dark'} ${posClass}`}
           style={`--layer-idx: ${idx};`}
@@ -34,7 +35,7 @@ const tabPositions = ['pos-right', 'pos-mid-left', 'pos-far-left', 'pos-mid-righ
           data-project-full={item.data.title}
           data-project-vol={`VOL. 0${idx + 1}`}
           data-project-tagline={item.data.tagline}
-          data-project-url={`/work/${item.id}`}
+          data-project-url={withBase(`/work/${item.id}`)}
         >
           <span class="folder-tab">
             <span class="tab-label">({item.data.title.toUpperCase()})</span>
@@ -46,7 +47,7 @@ const tabPositions = ['pos-right', 'pos-mid-left', 'pos-far-left', 'pos-mid-righ
 
     <!-- Front-Most Cover Folder -->
     <a
-      href={workItems[0] ? `/work/${workItems[0].id}` : '/work'}
+      href={withBase(workItems[0] ? `/work/${workItems[0].id}` : '/work')}
       class="folder-front-cover"
       id="folderFrontCover"
     >

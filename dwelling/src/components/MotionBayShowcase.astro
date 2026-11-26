@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const { email } = siteConfig.contact;
 
@@ -208,7 +209,7 @@ const pipelineStages = [
 
             <div class="diag-parallelogram">
               <img
-                src="/images/workshops/motion-bay.jpg"
+                src={withBase('/images/workshops/motion-bay.jpg')}
                 alt=""
                 class="diag-img"
                 loading="lazy"

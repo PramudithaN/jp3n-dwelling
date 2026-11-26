@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const { email, github, linkedin } = siteConfig.contact;
 ---
@@ -46,7 +47,7 @@ const { email, github, linkedin } = siteConfig.contact;
         Explore public repositories, contribute to active open source utilities, or review our public architectural RFCs.
       </p>
       <div class="door-actions">
-        <a href="/contributors" class="door-btn-subtle">
+        <a href={withBase('/contributors')} class="door-btn-subtle">
           Contributor Space
         </a>
         <a href={github} target="_blank" rel="noopener noreferrer" class="door-btn-subtle">
@@ -77,7 +78,7 @@ const { email, github, linkedin } = siteConfig.contact;
         In-depth architectural breakdowns on zero-cookie privacy, Web APIs, sub-second 4G rendering, and design tokens.
       </p>
       <div class="door-actions">
-        <a href="/journal" class="door-btn-subtle">
+        <a href={withBase('/journal')} class="door-btn-subtle">
           Read Journal
         </a>
       </div>
