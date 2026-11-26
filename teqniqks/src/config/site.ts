@@ -58,7 +58,7 @@ export const siteConfig: SiteConfig = {
   name: 'Teqniqks',
   tagline: 'Software & Design Atelier',
   description: 'An independent engineering and craft collective. Web engineering, graphic systems, motion design, and open source tooling.',
-  url: 'https://teqniqks.pages.dev',
+  url: 'https://teqniqks.com',
   /**
    * MAINTENANCE / REPAIR MODE:
    * Set `enabled: true` (or set env `PUBLIC_MAINTENANCE_MODE=true`) and deploy

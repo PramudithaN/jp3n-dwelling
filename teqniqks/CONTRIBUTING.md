@@ -24,7 +24,7 @@ Check `src/content/contributors/` for our curated active repositories and good f
 1. Fork and clone the repository.
 2. Install dependencies:
    ```bash
-   cd dwelling
+   cd teqniqks
    npm install
    ```
 3. Run the development server:

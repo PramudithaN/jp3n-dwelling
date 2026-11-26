@@ -17,14 +17,15 @@
 ## 2. Project Structure
 
 ```text
-dwelling/
+teqniqks/
 ├── public/
+│   ├── CNAME
 │   ├── favicon.svg
 │   ├── fonts/                    # Self-hosted WOFF/TTF font files
 │   ├── images/                   # Hero layers, team portraits, music covers, workshops
 │   └── videos/
 ├── scripts/
-│   └── prepare-gh-pages.mjs      # Rewrites root-relative paths for /teqniqks and writes docs/.nojekyll
+│   └── prepare-gh-pages.mjs      # Writes docs/.nojekyll for GitHub Pages custom domain
 ├── src/
 │   ├── components/
 │   │   ├── AfkSection.astro      # Off-duty collective credits
@@ -76,7 +77,7 @@ dwelling/
 │   │   └── work/                 # Work index & case study detail routes
 │   └── styles/
 │       └── tokens.css            # Base CSS custom properties & typography scale
-├── astro.config.mjs              # Configured with site, base: '/teqniqks', outDir: '../docs'
+├── astro.config.mjs              # Configured with site: 'https://teqniqks.com', base: '/', outDir: '../docs'
 ├── CONTRIBUTING.md
 ├── package.json
 └── tsconfig.json
@@ -94,14 +95,14 @@ To update team members, intake capacity, maintenance mode, or contact info, edit
 
 ### Local Development
 ```bash
-cd dwelling
+cd teqniqks
 npm install
 npm run dev
 ```
 
 ### Production Build (GitHub Pages)
 ```bash
-cd dwelling
+cd teqniqks
 npm run build
 ```
-Outputs the static build to `../docs` and runs `scripts/prepare-gh-pages.mjs` to rewrite root-relative URLs for `/teqniqks`.
+Outputs the static build to `../docs` with `CNAME` (`teqniqks.com`) and `.nojekyll`.

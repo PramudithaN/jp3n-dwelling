@@ -3,7 +3,7 @@
 > **An independent software, design, motion, and open-source collective based in Colombo, Sri Lanka.**  
 > Built with static-first Astro architecture, zero tracking cookies, self-hosted typography, and an 8-palette global theme engine.
 
-- **Live Site (GitHub Pages):** https://teqniqks.github.io/teqniqks/
+- **Live Site:** https://teqniqks.com/
 - **Repository:** https://github.com/Teqniqks/teqniqks
 - **Contact:** teqniqks@gmail.com
 
@@ -11,7 +11,7 @@
 
 ## 1. Architecture & Page Flow
 
-The homepage (`dwelling/src/pages/index.astro`) is structured as a single cohesive narrative scroll:
+The homepage (`teqniqks/src/pages/index.astro`) is structured as a single cohesive narrative scroll:
 
 1. **Spatial Parallax Hero (`ParallaxHero.astro`)**: Multi-depth hardware-accelerated arrival canvas.
 2. **Who We Are (`WhoWeAre.astro`, `#about`)**: Engineering and craft manifesto.
@@ -25,13 +25,13 @@ The homepage (`dwelling/src/pages/index.astro`) is structured as a single cohesi
 6. **Mindset & Clarity (`ThoughtsNoise.astro`, `EditorialCanvasCallout.astro`)**: Filtering signal from noise and shipping with clarity.
 7. **The Collective (`TeamSection.astro`, `TeamCalendar.astro`, `TeamPreferences.astro`, `AfkSection.astro`)**: Six specialized engineers, live current-month GitHub Build Calendar, studio music rotation (manual playback, zero autoplay), and off-duty profiles.
 8. **Direct Engagement (`#contact`, `RetroWorkstation.astro`)**: Direct project inquiry without tracking forms or sales funnels.
-9. **Maintenance Mode (`MaintenanceScreen.astro`)**: Toggle `maintenance.enabled: true` in `dwelling/src/config/site.ts` (or build with `PUBLIC_MAINTENANCE_MODE=true`) to display a status screen across all routes.
+9. **Maintenance Mode (`MaintenanceScreen.astro`)**: Toggle `maintenance.enabled: true` in `teqniqks/src/config/site.ts` (or build with `PUBLIC_MAINTENANCE_MODE=true`) to display a status screen across all routes.
 
 ---
 
 ## 2. Dynamic Global Theme Engine
 
-A floating theme switcher (`ThemeSwitcher.astro` + `ThemeEngine.astro`) is available on every route, backed by 8 curated palettes in `dwelling/src/config/theme.ts`:
+A floating theme switcher (`ThemeSwitcher.astro` + `ThemeEngine.astro`) is available on every route, backed by 8 curated palettes in `teqniqks/src/config/theme.ts`:
 
 - **Forest Canopy** *(default)*
 - **Golden Hour**
@@ -58,16 +58,17 @@ teqniqks/
 ├── docs/                                # Static production build served by GitHub Pages
 │   ├── .nojekyll
 │   └── ...
-├── dwelling/                            # Astro application source
-│   ├── astro.config.mjs                 # Configured with base: '/teqniqks' and outDir: '../docs'
+├── teqniqks/                            # Astro application source
+│   ├── astro.config.mjs                 # Configured with site: 'https://teqniqks.com', base: '/', outDir: '../docs'
 │   ├── CONTRIBUTING.md                  # Contribution and commit guidelines
 │   ├── package.json
 │   ├── public/
+│   │   ├── CNAME                        # Custom domain (teqniqks.com)
 │   │   ├── fonts/                       # Self-hosted Space Grotesk, Sora, JetBrains Mono, etc.
 │   │   ├── images/                      # Hero layers, team silhouettes, music covers, workshops
 │   │   └── videos/
 │   ├── scripts/
-│   │   └── prepare-gh-pages.mjs         # Post-build /teqniqks path prefixer & .nojekyll generator
+│   │   └── prepare-gh-pages.mjs         # Generates docs/.nojekyll for GitHub Pages
 │   └── src/
 │       ├── components/                  # Modular Astro UI & interactive canvas components
 │       ├── config/
@@ -91,17 +92,17 @@ teqniqks/
 
 ### Local Development
 ```bash
-cd dwelling
+cd teqniqks
 npm install
 npm run dev
 ```
 
 ### Build for GitHub Pages (`docs/` on `main`)
 ```bash
-cd dwelling
+cd teqniqks
 npm run build
 ```
-This runs `astro build` into `../docs` and executes `scripts/prepare-gh-pages.mjs` to prefix root-relative paths for `/teqniqks` and generate `docs/.nojekyll`.
+This runs `astro build` into `../docs` and executes `scripts/prepare-gh-pages.mjs` to generate `docs/.nojekyll` (with `public/CNAME` copied for `teqniqks.com`).
 
 ### GitHub Pages Setup
 1. Push changes (including `docs/`) to the `main` branch.
@@ -112,4 +113,4 @@ This runs `astro build` into `../docs` and executes `scripts/prepare-gh-pages.mj
 
 ## 5. Commit Standards
 
-This repository enforces [Conventional Commits](https://www.conventionalcommits.org/) via `.githooks/commit-msg` (configured automatically on `npm install` inside `dwelling/`) and `.github/workflows/commit-rules.yml`. See [CONTRIBUTING.md](dwelling/CONTRIBUTING.md) for details.
+This repository enforces [Conventional Commits](https://www.conventionalcommits.org/) via `.githooks/commit-msg` (configured automatically on `npm install` inside `teqniqks/`) and `.github/workflows/commit-rules.yml`. See [CONTRIBUTING.md](teqniqks/CONTRIBUTING.md) for details.
