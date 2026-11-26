@@ -4,14 +4,14 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir = path.resolve(__dirname, '../../docs');
-const base = '/jp3n-dwelling';
+const base = '/teqniqks';
 const exts = new Set(['.html', '.css', '.js', '.json']);
 
 function rewriteContent(content) {
   let out = content;
-  out = out.replace(/(href|src)="\/(?!\/|jp3n-dwelling(?:\/|"))/g, `$1="${base}/`);
-  out = out.replace(/(href|src)='\/(?!\/|jp3n-dwelling(?:\/|'))/g, `$1='${base}/`);
-  out = out.replace(/url\((['"]?)\/(?!\/|jp3n-dwelling(?:\/|['"]|\)))/g, `url($1${base}/`);
+  out = out.replace(/(href|src)="\/(?!\/|teqniqks(?:\/|"))/g, `$1="${base}/`);
+  out = out.replace(/(href|src)='\/(?!\/|teqniqks(?:\/|'))/g, `$1='${base}/`);
+  out = out.replace(/url\((['"]?)\/(?!\/|teqniqks(?:\/|['"]|\)))/g, `url($1${base}/`);
   out = out.replace(/(["'])\/(images|fonts)\//g, `$1${base}/$2/`);
   return out;
 }
