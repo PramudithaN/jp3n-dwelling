@@ -66,7 +66,7 @@ dwelling/
 │   ├── pages/
 │   │   ├── contact.astro         # Direct channels & four doors
 │   │   ├── contributors.astro    # Dedicated contributor forge
-│   │   ├── index.astro           # The dwelling story scroll experience
+│   │   ├── index.astro           # The Teqniqks story scroll experience
 │   │   ├── journey.astro         # Origin story & chronology
 │   │   ├── privacy.astro         # Zero-cookie technical declaration (PDPA/GDPR)
 │   │   ├── process.astro         # 4-stage architectural methodology
@@ -113,18 +113,18 @@ npm run dev
 ```bash
 npm run build
 ```
-The static output will be generated in `dwelling/dist/` ready for edge deployment.
+The static output will be generated in `../docs/` ready for GitHub Pages or edge deployment.
 
 ### Cloudflare Pages Deployment (Primary)
 1. Link your repository in Cloudflare Pages dashboard.
 2. Build command: `npm run build`
-3. Build output directory: `dwelling/dist`
+3. Build output directory: `docs`
 4. Root directory: `dwelling`
 
 ### Netlify Deployment (Backup)
 1. Base directory: `dwelling`
 2. Build command: `npm run build`
-3. Publish directory: `dwelling/dist`
+3. Publish directory: `docs`
 
 ---
 
