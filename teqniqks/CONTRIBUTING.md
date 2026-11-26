@@ -43,7 +43,13 @@ Check `src/content/contributors/` for our curated active repositories and good f
 
 ---
 
-## Commit Ruleset (Conventional Commits)
+## Commit & Branch Ruleset
+Direct commits to `main` are blocked locally by `.githooks/pre-commit` and on GitHub via Pull Request rules:
+
+- **Branching:** Always create a branch (`git checkout -b feat/short-name`) and open a Pull Request into `main`.
+- **PR Approvals:** Requires at least **1 approving review** from a reviewer other than the PR author/last pusher, with all review threads resolved.
+- **Required CI Checks:** `Build & Verify Site` and `Validate Conventional Commits` must pass before merging.
+
 All commits must follow the [Conventional Commits](https://www.conventionalcommits.org/) specification, enforced locally by `.githooks/commit-msg` and in CI by `.github/workflows/commit-rules.yml`:
 
 - **Format:** `<type>(<optional-scope>): <lowercase summary>`

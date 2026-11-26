@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+import { execSync } from 'node:child_process';
+
+let branch = '';
+try {
+  branch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim();
+} catch {
+  process.exit(0);
+}
+
+if (branch === 'main' || branch === 'master') {
+  console.error('\n[branch-rules] Direct commits to "' + branch + '" are blocked.\n');
+  console.error('Create a feature or fix branch and open a Pull Request instead:');
+  console.error('  git checkout -b feat/your-change\n');
+  process.exit(1);
+}
