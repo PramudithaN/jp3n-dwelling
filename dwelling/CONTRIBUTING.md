@@ -35,4 +35,23 @@ Check `src/content/contributors/` for our curated active repositories and good f
    ```bash
    npm run build
    ```
-5. Submit your PR with a clear description of the problem solved.
+5. Enable the repository commit hook (automatically configured on `npm install`):
+   ```bash
+   git config core.hooksPath .githooks
+   ```
+6. Submit your PR with a clear description of the problem solved.
+
+---
+
+## Commit Ruleset (Conventional Commits)
+All commits must follow the [Conventional Commits](https://www.conventionalcommits.org/) specification, enforced locally by `.githooks/commit-msg` and in CI by `.github/workflows/commit-rules.yml`:
+
+- **Format:** `<type>(<optional-scope>): <lowercase summary>`
+- **Allowed types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
+- **Rules:**
+  - Subject line must be 72 characters or fewer and must not end with a period.
+  - Separate subject from body with a blank line.
+- **Examples:**
+  - `feat(team): add Gihan Pandula to collective`
+  - `fix(loader): resize spinner ring for Teqniqks brand`
+  - `docs(readme): update repository links`

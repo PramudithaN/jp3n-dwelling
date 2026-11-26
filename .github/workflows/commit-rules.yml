@@ -1,0 +1,49 @@
+name: Commit Rules
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate-commits:
+    name: Validate Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate commit messages
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+            HEAD_SHA="${{ github.sha }}"
+          fi
+
+          if [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ] || [ -z "$BASE_SHA" ]; then
+            COMMITS="$HEAD_SHA"
+          else
+            COMMITS=$(git rev-list "${BASE_SHA}..${HEAD_SHA}")
+          fi
+
+          TMP_MSG=$(mktemp)
+          trap 'rm -f "$TMP_MSG"' EXIT
+
+          for SHA in $COMMITS; do
+            echo "Checking commit $SHA"
+            git log -1 --format=%B "$SHA" > "$TMP_MSG"
+            node .githooks/commit-msg "$TMP_MSG"
+          done
