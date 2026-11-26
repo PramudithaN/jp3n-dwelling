@@ -1,4 +1,4 @@
-# Teqniqks Tech Dwelling
+# Teqniqks
 
 > **An independent software, design, motion, and open-source collective based in Colombo, Sri Lanka.**  
 > Built with static-first Astro architecture, zero tracking cookies, self-hosted fonts, and a live 8-palette global theme engine.

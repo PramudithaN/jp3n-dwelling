@@ -1,13 +1,13 @@
-# Teqniqks Tech Dwelling
+# Teqniqks
 
-> **An independent craft & engineering dwelling.**  
+> **An independent craft & engineering collective.**  
 > Built with static-first architecture, CSS scroll-driven animations, zero tracking cookies, and WCAG AA flat design tokens.
 
 ---
 
 ## 1. Architectural Overview & Philosophy
 
-Teqniqks Tech Dwelling is designed as an architectural progression rather than an off-the-shelf agency template:
+Teqniqks is designed as an architectural progression rather than an off-the-shelf agency template:
 - **Blueprint:** How we plan, audit, and de-risk software.
 - **Foundation:** Non-negotiables (zero cookies, self-hosted fonts, verifiable code).
 - **The Four Rooms:** Specialized workshops for Web Engineering, Graphic Systems, Motion Craft, and Open Source.

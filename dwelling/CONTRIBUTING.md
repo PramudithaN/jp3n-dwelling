@@ -1,6 +1,6 @@
-# Contributing to Teqniqks Tech Dwelling
+# Contributing to Teqniqks
 
-Thank you for your interest in contributing to Teqniqks Tech Dwelling! We welcome open-source contributions from developers, technical writers, and designers.
+Thank you for your interest in contributing to Teqniqks! We welcome open-source contributions from developers, technical writers, and designers.
 
 ---
 

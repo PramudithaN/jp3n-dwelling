@@ -56,7 +56,7 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   name: 'Teqniqks',
-  tagline: 'Tech Dwelling',
+  tagline: 'Software & Design Atelier',
   description: 'An independent engineering and craft collective. Web engineering, graphic systems, motion design, and open source tooling.',
   url: 'https://teqniqks.pages.dev',
   /**
@@ -69,7 +69,7 @@ export const siteConfig: SiteConfig = {
     enabled: false,
     kicker: 'UNDER REPAIR / SYSTEM BUILD',
     headline: 'In Repair.',
-    message: 'We are currently tuning and deploying updates to the dwelling.\nEverything will be back online shortly.',
+    message: 'We are currently tuning and deploying updates to Teqniqks.\nEverything will be back online shortly.',
     code: 'STATUS 503'
   },
   capacity: {
