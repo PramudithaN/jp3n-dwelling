@@ -187,6 +187,27 @@ export const siteConfig: SiteConfig = {
       githubHandle: 'sanszerif',
       portrait: '/images/team/member-5-f1.jpg',
       stack: ['Astro', 'TypeScript', 'Python', 'Dart']
+    },
+    {
+      name: 'Gihan Pandula',
+      role: 'DevOps Engineer',
+      bio: 'Automates cloud infrastructure, CI/CD delivery pipelines, container orchestration, and resilient production deployments.',
+      afk: 'After-Hours Booze',
+      afkNote: 'Swapping terminal logs for good booze, cold pours, and late-night company.',
+      music: {
+        track: 'Resonance',
+        artist: 'HOME',
+        genre: 'Synthwave',
+        elapsed: '1:18',
+        remaining: '-2:14',
+        progress: 37,
+        cover: '/images/music/peenaka-resonance.jpg',
+        previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/33/bb/1a/33bb1a1a-1448-3118-6891-639e61784145/mzaf_3810752549913623044.plus.aac.p.m4a',
+        motif: 'synth'
+      },
+      githubHandle: 'gihanpandula',
+      portrait: '/images/team/member-6-f1.jpg',
+      stack: ['Docker', 'Kubernetes', 'Terraform', 'Linux']
     }
   ],
   demos: [

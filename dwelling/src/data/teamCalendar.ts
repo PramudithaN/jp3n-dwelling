@@ -135,5 +135,6 @@ export const memberColors: Record<string, string> = {
   peenaka: '#f2cc8f',
   pathumsandeepa: '#64dfdf',
   PramudithaN: '#52a468',
-  sanszerif: '#c77dff'
+  sanszerif: '#c77dff',
+  gihanpandula: '#ff9f1c'
 };
