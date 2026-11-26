@@ -13,7 +13,7 @@ export interface CalendarDayData {
 }
 
 /**
- * Verified public GitHub activity for the 5 JP3N collective members
+ * Verified public GitHub activity for the 5 Teqniqks collective members
  * (Oct 2026 – Nov 2026), aggregated from GitHub public events & repo pushes.
  */
 export const teamContributions: Record<string, CalendarDayData> = {

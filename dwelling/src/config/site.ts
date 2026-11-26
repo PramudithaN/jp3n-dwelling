@@ -55,10 +55,10 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'JP3N',
+  name: 'Teqniqks',
   tagline: 'Tech Dwelling',
   description: 'An independent engineering and craft collective. Web engineering, graphic systems, motion design, and open source tooling.',
-  url: 'https://jp3n-dwelling.pages.dev',
+  url: 'https://teqniqks.pages.dev',
   /**
    * MAINTENANCE / REPAIR MODE:
    * Set `enabled: true` (or set env `PUBLIC_MAINTENANCE_MODE=true`) and deploy
@@ -78,7 +78,7 @@ export const siteConfig: SiteConfig = {
     month: 'December 2026'
   },
   contact: {
-    email: 'contact@jp3n.dev',
+    email: 'teqniqks@gmail.com',
     github: 'https://github.com/PramudithaN',
     linkedin: 'https://linkedin.com/in/pramuditha-nadun-612b1b204'
   },

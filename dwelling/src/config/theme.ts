@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * JP3N ATELIER / CENTRAL THEME CONFIGURATION
+ * Teqniqks ATELIER / CENTRAL THEME CONFIGURATION
  * ============================================================================
  * Modifying the activeTheme below dynamically restyles the entire website
  * across every section, component, card, button, and subpage.

@@ -173,7 +173,7 @@ const serializedTeam = JSON.stringify(
 
       <!-- Bottom Attribution -->
       <p class="stage-footer-note" id="cfFooterNote">
-        © {new Date().getFullYear()} · JP3N Collective / {team[2].name.split(' ')[0]}'s Rotation ({team[2].music.genre})
+        © {new Date().getFullYear()} · Teqniqks Collective / {team[2].name.split(' ')[0]}'s Rotation ({team[2].music.genre})
       </p>
     </div>
   </div>
@@ -286,7 +286,7 @@ const serializedTeam = JSON.stringify(
     if (npTrack) npTrack.textContent = item.track;
     if (npSpotifyLink) npSpotifyLink.setAttribute('href', item.spotifyUrl);
     if (cfFooterNote) {
-      cfFooterNote.textContent = `© ${new Date().getFullYear()} · JP3N Collective / ${item.firstName}'s Rotation (${item.genre})`;
+      cfFooterNote.textContent = `© ${new Date().getFullYear()} · Teqniqks Collective / ${item.firstName}'s Rotation (${item.genre})`;
     }
 
     setProgressPct(0);

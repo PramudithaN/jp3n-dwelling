@@ -1,4 +1,4 @@
-# JP3N Tech Dwelling
+# Teqniqks Tech Dwelling
 
 > **An independent software, design, motion, and open-source collective based in Colombo, Sri Lanka.**  
 > Built with static-first Astro architecture, zero tracking cookies, self-hosted fonts, and a live 8-palette global theme engine.
@@ -13,7 +13,7 @@ The homepage (`dwelling/src/pages/index.astro`) is organized as a single cohesiv
 
 1. **Spatial Parallax Hero (`ParallaxHero.astro`)** — Multi-depth hardware-accelerated arrival canvas.
 2. **Who We Are (`WhoWeAre.astro`, `#about`)** — Brand and engineering manifesto.
-3. **Four In-House Workshops (`WorkshopsFolders.astro`, `#workshops`)** — Clear entry points into JP3N's four disciplines:
+3. **Four In-House Workshops (`WorkshopsFolders.astro`, `#workshops`)** — Clear entry points into Teqniqks's four disciplines:
    - **01 · Websites (`/process`)** — `WebsiteShowcase.astro` (Web Laboratory)
    - **02 · Graphic Design (`/themes`)** — `GraphicsStudioShowcase.astro` (Flyers, marketing posters, social media posters & brand identity)
    - **03 · Videos & Motion (`/motion`)** — `MotionBayShowcase.astro` (Motion Bay, 2-axis matrix & 4-stage pipeline)

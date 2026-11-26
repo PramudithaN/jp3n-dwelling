@@ -5,12 +5,12 @@ interface Props {
 }
 
 const {
-  title = "JP3N DWELLING",
+  title = "TEQNIQKS DWELLING",
   subtitle = "SOFTWARE & DESIGN ATELIER"
 } = Astro.props;
 ---
 
-<section class="jp3n-parallax-hero" id="jp3nHero" aria-label="JP3N Dwelling Hero">
+<section class="teqniqks-parallax-hero" id="teqniqksHero" aria-label="Teqniqks Dwelling Hero">
   <div class="parallax-stage" id="parallaxStage">
     
     <!-- Layer 0: Clean Frosted Background & Dynamic Backlight -->
@@ -80,7 +80,7 @@ const {
 </section>
 
 <style>
-  .jp3n-parallax-hero {
+  .teqniqks-parallax-hero {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -305,7 +305,7 @@ const {
 <script>
   function initParallaxEngine() {
     const stage = document.getElementById('parallaxStage');
-    const heroSection = document.getElementById('jp3nHero');
+    const heroSection = document.getElementById('teqniqksHero');
     if (!stage || !heroSection) return;
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

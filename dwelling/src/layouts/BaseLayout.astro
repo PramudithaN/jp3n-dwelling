@@ -20,11 +20,11 @@ interface Props {
 
 const { 
   title, 
-  description = 'JP3N Tech Dwelling / Independent digital engineering atelier in Sri Lanka.',
+  description = 'Teqniqks Tech Dwelling / Independent digital engineering atelier in Sri Lanka.',
   canonicalPath = '/'
 } = Astro.props;
 
-const siteUrl = 'https://jp3n-dwelling.pages.dev';
+const siteUrl = 'https://teqniqks.pages.dev';
 const fullCanonicalUrl = new URL(canonicalPath, siteUrl).toString();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -51,23 +51,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <title>{title} / JP3N</title>
+  <title>{title} / Teqniqks</title>
 
   <!-- Global Dynamic Theme Provider -->
   <ThemeEngine />
 </head>
 <body>
   <!-- Theme-Matched Screen Content Loader -->
-  <div class="jp3n-screen-loader" id="jp3nScreenLoader" aria-hidden="true">
+  <div class="teqniqks-screen-loader" id="teqniqksScreenLoader" aria-hidden="true">
     <div class="loader-core">
       <div class="loader-ring"></div>
-      <span class="loader-brand">JP3N</span>
+      <span class="loader-brand">Teqniqks</span>
     </div>
     <span class="loader-status">LOADING CONTENT</span>
   </div>
 
   <!-- Minimal Theme-Matched Route & Load Progress Bar -->
-  <div class="jp3n-route-loader" id="jp3nRouteLoader" aria-hidden="true"></div>
+  <div class="teqniqks-route-loader" id="teqniqksRouteLoader" aria-hidden="true"></div>
   {isMaintenance ? (
     <main id="main-content">
       <MaintenanceScreen />
@@ -88,8 +88,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <script is:inline>
         (function () {
-          var bar = document.getElementById('jp3nRouteLoader');
-          var screen = document.getElementById('jp3nScreenLoader');
+          var bar = document.getElementById('teqniqksRouteLoader');
+          var screen = document.getElementById('teqniqksScreenLoader');
           if (!bar && !screen) return;
 
           function hideLoaders() {
@@ -174,7 +174,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     top: 20px;
   }
 
-  .jp3n-route-loader {
+  .teqniqks-route-loader {
     position: fixed;
     top: 0;
     left: 0;
@@ -188,18 +188,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: width 320ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
   }
 
-  .jp3n-route-loader.is-loading {
+  .teqniqks-route-loader.is-loading {
     opacity: 1;
     width: 72%;
   }
 
-  .jp3n-route-loader.is-done {
+  .teqniqks-route-loader.is-done {
     opacity: 0;
     width: 100%;
   }
 
   /* Theme-Matched Screen Content Loader */
-  .jp3n-screen-loader {
+  .teqniqks-screen-loader {
     position: fixed;
     inset: 0;
     z-index: 10040;
@@ -213,7 +213,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: opacity 280ms ease, visibility 280ms ease;
   }
 
-  .jp3n-screen-loader.is-hidden {
+  .teqniqks-screen-loader.is-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -235,7 +235,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     border: 2px solid var(--border-hairline);
     border-top-color: var(--text-accent);
     border-right-color: var(--text-accent-soft);
-    animation: jp3nLoaderSpin 0.85s linear infinite;
+    animation: teqniqksLoaderSpin 0.85s linear infinite;
   }
 
   .loader-brand {
@@ -253,7 +253,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: var(--text-accent);
   }
 
-  @keyframes jp3nLoaderSpin {
+  @keyframes teqniqksLoaderSpin {
     to { transform: rotate(360deg); }
   }
 </style>

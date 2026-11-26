@@ -1,7 +1,7 @@
 ---
 /**
  * ============================================================================
- * THEME ENGINE COMPONENT (JP3N ATELIER)
+ * THEME ENGINE COMPONENT (Teqniqks ATELIER)
  * ============================================================================
  * Central theme provider component.
  * Modifying `activeTheme` in `src/config/theme.ts` immediately updates
@@ -142,9 +142,9 @@ const defaultThemeId = activeTheme.id;
 <script is:inline define:vars={{ serializedThemes, defaultThemeId }}>
   (function () {
     const allThemes = JSON.parse(serializedThemes);
-    window.__JP3N_THEMES__ = allThemes;
+    window.__TEQNIQKS_THEMES__ = allThemes;
 
-    window.__applyJp3nTheme__ = function (themeId) {
+    window.__applyTeqniqksTheme__ = function (themeId) {
       const def = allThemes[themeId] || allThemes[defaultThemeId];
       if (!def) return;
       const c = def.colors;
@@ -198,15 +198,15 @@ const defaultThemeId = activeTheme.id;
       const meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', c.bgCanvas);
       try {
-        localStorage.setItem('jp3n-theme', def.id);
+        localStorage.setItem('teqniqks-theme', def.id);
       } catch {}
-      window.dispatchEvent(new CustomEvent('jp3n:theme-change', { detail: { id: def.id, colors: c } }));
+      window.dispatchEvent(new CustomEvent('teqniqks:theme-change', { detail: { id: def.id, colors: c } }));
     };
 
     try {
-      const saved = localStorage.getItem('jp3n-theme');
+      const saved = localStorage.getItem('teqniqks-theme');
       if (saved && allThemes[saved]) {
-        window.__applyJp3nTheme__(saved);
+        window.__applyTeqniqksTheme__(saved);
       } else {
         document.documentElement.setAttribute('data-theme', defaultThemeId);
       }

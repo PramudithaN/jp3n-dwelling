@@ -17,8 +17,8 @@ const navLinks = [
 
 <header class={`site-header ${currentPath === '/' ? 'is-hero-light' : ''}`} id="siteHeader">
   <div class="header-inner">
-    <a href="/" class="brand-link" aria-label="JP3N Tech Dwelling">
-      <span class="brand-title">JP3N</span>
+    <a href="/" class="brand-link" aria-label="Teqniqks Tech Dwelling">
+      <span class="brand-title">Teqniqks</span>
       <span class="brand-sub">dwelling</span>
     </a>
 
@@ -101,7 +101,7 @@ const navLinks = [
   // Adaptive navbar: match light frosted hero when at top of homepage
   function updateHeaderTheme() {
     if (!header) return;
-    const hero = document.getElementById('jp3nHero');
+    const hero = document.getElementById('teqniqksHero');
     if (!hero) {
       header.classList.remove('is-hero-light');
       return;
