@@ -10,11 +10,6 @@ export interface SiteConfig {
     message: string;
     code: string;
   };
-  capacity: {
-    totalSlots: number;
-    openSlots: number;
-    month: string;
-  };
   contact: {
     email: string;
     github: string;
@@ -41,17 +36,6 @@ export interface SiteConfig {
     portrait: string;
     stack: string[];
   }>;
-  demos: Array<{
-    id: string;
-    title: string;
-    subtitle: string;
-    category: 'hardware-telemetry' | 'system-engine' | 'binary-tooling' | 'ethical-commerce';
-    liveUrl?: string;
-    repoUrl?: string;
-    summary: string;
-    metricsNote: string;
-    techStack: string[];
-  }>;
 }
 
 export const siteConfig: SiteConfig = {
@@ -73,11 +57,6 @@ export const siteConfig: SiteConfig = {
     message:
       'We are currently tuning and deploying updates to Teqniqks.\nEverything will be back online shortly.',
     code: 'STATUS 503',
-  },
-  capacity: {
-    totalSlots: 3,
-    openSlots: 2,
-    month: 'December 2026',
   },
   contact: {
     email: 'teqniqks@gmail.com',
@@ -216,52 +195,6 @@ export const siteConfig: SiteConfig = {
       githubHandle: 'gihanpandula',
       portrait: '/images/team/member-6-f1.jpg',
       stack: ['Docker', 'Kubernetes', 'Terraform', 'Linux'],
-    },
-  ],
-  demos: [
-    {
-      id: 'battery-telemetry',
-      title: 'Battery Telemetry',
-      subtitle: 'Hardware battery monitoring utility',
-      category: 'hardware-telemetry',
-      liveUrl: 'https://battery.nipun.is-a.dev/',
-      summary:
-        'Minimal, zero-overhead browser utility for battery status, charging state telemetry, and discharge rate telemetry.',
-      metricsNote: 'Live verified client-side battery API inspector',
-      techStack: ['Web API', 'Lightweight Vanilla JS', 'Zero Tracker'],
-    },
-    {
-      id: 'theme-changer',
-      title: 'Theme Changer',
-      subtitle: 'Lightweight theme orchestration engine',
-      category: 'system-engine',
-      liveUrl: 'https://pramudithan.github.io/theme.changer/',
-      summary:
-        'High-speed CSS token switcher with instant DOM paint, zero flashing (FOUT/FOUC), and zero runtime library dependencies.',
-      metricsNote: 'Zero-layout-shift CSS token switcher',
-      techStack: ['CSS Variables', 'Vanilla JS', 'Local Scope Engine'],
-    },
-    {
-      id: 'bytesift',
-      title: 'ByteSift',
-      subtitle: 'High-efficiency binary & data filter',
-      category: 'binary-tooling',
-      liveUrl: 'https://pramudithan.github.io/bytesift',
-      summary:
-        'Direct in-browser binary chunk parsing and high-throughput data extraction for developer inspection.',
-      metricsNote: 'In-memory client-side data stream processing',
-      techStack: ['Web Workers', 'Binary Buffers', 'TypeScript'],
-    },
-    {
-      id: 'meri-clothing',
-      title: 'meri.clothing',
-      subtitle: 'Ethical apparel digital flagship',
-      category: 'ethical-commerce',
-      repoUrl: 'https://github.com/PramudithaN',
-      summary:
-        'High-performance static commerce architecture built for mobile speed, fluid typography, and zero-clutter catalog browsing.',
-      metricsNote: 'Source code in private staging; live URL pending launch',
-      techStack: ['Static Output', 'Tailored CSS', 'Astro Architecture'],
     },
   ],
 };

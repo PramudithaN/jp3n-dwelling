@@ -15,7 +15,7 @@
 - **Framework:** [Astro](https://astro.build/) (Static Site Generation & Content Layer)
 - **Language:** Strict TypeScript
 - **Styling:** CSS custom properties in `src/styles/tokens.css` and `src/config/theme.ts`
-- **Typography:** Self-hosted WOFF/TTF fonts (`Space Grotesk`, `Sora`, `JetBrains Mono`, `Syne`, `Modera`, `Ithaca`)
+- **Typography:** Self-hosted variable WOFF2 fonts (`Space Grotesk`, `Sora`, `JetBrains Mono`)
 - **Formatting:** Built-in `bun fmt` (with `.prettierrc` + `prettier-plugin-astro` for `.astro` components)
 - **Privacy:** Zero cookies, zero third-party analytics, and full alignment with Sri Lanka PDPA No. 9 of 2022 and EU GDPR
 
@@ -92,7 +92,7 @@ Selecting a palette updates CSS custom properties, canvas elements, and `<meta n
 │   ├── config/
 │   │   ├── site.ts                # Team profiles, capacity, contact info & demos
 │   │   └── theme.ts               # 8 global theme definitions
-│   ├── content/                   # Zod-validated Markdown collections (work, journal, contributors)
+│   ├── content/                   # Zod-validated Markdown collections (work, journal)
 │   ├── data/                      # Team build calendar dataset
 │   ├── layouts/
 │   │   └── BaseLayout.astro       # Shared document shell, NavHeader, Footer & ThemeSwitcher

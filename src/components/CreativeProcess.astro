@@ -506,16 +506,6 @@ const { id = 'process' } = Astro.props;
       { threshold: 0.1 },
     );
     observer.observe(stage);
-
-    document.addEventListener(
-      'astro:before-swap',
-      () => {
-        if (rafId) cancelAnimationFrame(rafId);
-        observer.disconnect();
-        window.removeEventListener('resize', resize);
-      },
-      { once: true },
-    );
   }
 
   if (document.readyState === 'loading') {
@@ -523,5 +513,4 @@ const { id = 'process' } = Astro.props;
   } else {
     initCreativeProcess();
   }
-  document.addEventListener('astro:page-load', initCreativeProcess);
 </script>

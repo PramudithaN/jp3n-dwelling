@@ -58,7 +58,7 @@ const briefingText = cleanLines.slice(0, 2).join(' ') || tagline;
   <div class="evidence-layout">
     <!-- LEFT: MISSION BRIEFING & ACTION BUTTONS -->
     <div class="evidence-briefing reveal-item" style="--delay: 0ms;">
-      <span class="briefing-kicker">EVIDENCE DOSSIER // @{ownerHandle.toUpperCase()}</span>
+      <span class="briefing-kicker">EVIDENCE DOSSIER · @{ownerHandle.toUpperCase()}</span>
       <h2 class="briefing-title">{title.toUpperCase()}</h2>
 
       <div class="briefing-actions">
@@ -78,7 +78,7 @@ const briefingText = cleanLines.slice(0, 2).join(' ') || tagline;
         {repoUrl && (
           <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="mission-btn">
             <span class="btn-dot" aria-hidden="true">
-              ●
+              &lt;/&gt;
             </span>
             <span>INSPECT SOURCE CODE</span>
           </a>

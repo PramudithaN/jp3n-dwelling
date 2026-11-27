@@ -15,11 +15,12 @@ Thank you for your interest in contributing to Teqniqks! We welcome open-source 
 
 ## Active Projects
 
-Check `src/content/contributors/` for our curated active repositories and good first issues:
+Explore our curated open-source repositories and good first issues on `/contributors` (`src/components/OpenForgeShowcase.astro`) and GitHub:
 
-- **Theme Changer Engine:** Color science, OKLCH space, zero-FOUC presets.
-- **ByteSift Binary Inspector:** WebAssembly stream parsing and high-throughput filters.
-- **Battery Telemetry:** Web API enhancements and cross-platform tests.
+- **git-tulkun:** Procedural pixel-art Tulkun whale generated from GitHub contributions.
+- **pregnantbattery:** Real-time browser hardware battery diagnostic utility.
+- **ByteSift:** Lightweight, offline file organizer using magic-byte inspection.
+- **Dynamic README Creature:** Interactive SVG creature for GitHub READMEs.
 
 ---
 

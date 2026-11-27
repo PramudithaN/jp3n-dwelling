@@ -86,25 +86,9 @@ const { email, github, linkedin } = siteConfig.contact;
 </section>
 
 <script>
-  const copyBtn = document.getElementById('copyEmailBtn');
-  const copyText = document.getElementById('copyBtnText');
+  import { bindCopyEmail } from '../utils/copyEmail';
 
-  if (copyBtn && copyText) {
-    copyBtn.addEventListener('click', async () => {
-      const email = copyBtn.getAttribute('data-email');
-      if (email) {
-        try {
-          await navigator.clipboard.writeText(email);
-          copyText.textContent = 'Email Copied!';
-          setTimeout(() => {
-            copyText.textContent = 'Copy Email';
-          }, 2000);
-        } catch {
-          window.location.href = `mailto:${email}`;
-        }
-      }
-    });
-  }
+  bindCopyEmail('copyEmailBtn', 'copyBtnText', 'Email Copied!', 'Copy Email');
 </script>
 
 <style>

@@ -131,14 +131,7 @@ const { email } = siteConfig.contact;
         </div>
 
         <div class="intake-visual">
-          <RetroWorkstation
-            brand="Teqniqks"
-            headlineTop="We're Live."
-            headlineHighlight="Software &"
-            headlineBottom="Design Atelier"
-            badge="3 SLOTS / QTR"
-            caption="DIRECT SENIOR INVOLVEMENT"
-          />
+          <RetroWorkstation brand="Teqniqks" caption="DIRECT SENIOR INVOLVEMENT" />
         </div>
       </div>
     </div>
@@ -146,26 +139,9 @@ const { email } = siteConfig.contact;
 </BaseLayout>
 
 <script>
-  // Copy Email Functionality
-  const copyBtn = document.getElementById('copyEmailTrigger');
-  const copyLabel = document.getElementById('copyFeedback');
+  import { bindCopyEmail } from '../utils/copyEmail';
 
-  if (copyBtn && copyLabel) {
-    copyBtn.addEventListener('click', async () => {
-      const email = copyBtn.getAttribute('data-email');
-      if (email) {
-        try {
-          await navigator.clipboard.writeText(email);
-          copyLabel.textContent = 'Copied to Clipboard!';
-          setTimeout(() => {
-            copyLabel.textContent = `Copy ${email}`;
-          }, 2000);
-        } catch {
-          window.location.href = `mailto:${email}`;
-        }
-      }
-    });
-  }
+  bindCopyEmail('copyEmailTrigger', 'copyFeedback', 'Copied to Clipboard!');
 </script>
 
 <style>
