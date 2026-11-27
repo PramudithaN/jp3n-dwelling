@@ -572,9 +572,18 @@ const serializedColors = "{\"judebevan\":\"#e07a5f\",\"peenaka\":\"#f2cc8f\",\"p
   });
 
   npProgressTrack?.addEventListener('keydown', (e) => {
+    const isSliderKey =
+      e.key === 'ArrowRight' ||
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowDown' ||
+      e.key === 'Home' ||
+      e.key === 'End';
+    if (!isSliderKey) return;
+    e.preventDefault();
     if (!(audio instanceof HTMLAudioElement) || !audio.duration) return;
     const stepSeconds = Math.max(2, audio.duration * 0.05);
-    let nextTime = null;
+    let nextTime = audio.currentTime;
     if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
       nextTime = Math.min(audio.duration, audio.currentTime + stepSeconds);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
@@ -584,11 +593,8 @@ const serializedColors = "{\"judebevan\":\"#e07a5f\",\"peenaka\":\"#f2cc8f\",\"p
     } else if (e.key === 'End') {
       nextTime = audio.duration;
     }
-    if (nextTime !== null) {
-      e.preventDefault();
-      audio.currentTime = nextTime;
-      setProgressPct((nextTime / audio.duration) * 100);
-    }
+    audio.currentTime = nextTime;
+    setProgressPct((nextTime / audio.duration) * 100);
   });
 
   if (audio instanceof HTMLAudioElement) {
