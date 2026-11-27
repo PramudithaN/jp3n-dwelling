@@ -17,7 +17,6 @@ const teamMembers = siteConfig.team.map((m) => ({
 
 const serializedData = JSON.stringify(teamContributions);
 const serializedColors = JSON.stringify(memberColors);
-const serializedMembers = JSON.stringify(teamMembers);
 
 const buildNow = new Date();
 const monthNamesSSR = [
@@ -37,6 +36,13 @@ const monthNamesSSR = [
 const initialMonthName = monthNamesSSR[buildNow.getMonth()];
 const initialYear = buildNow.getFullYear();
 const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padStart(2, '0')}`;
+const initialTodayStr = `${initialMonthAttr}-${String(buildNow.getDate()).padStart(2, '0')}`;
+const monthKeys = Object.keys(teamContributions)
+  .filter((d) => d.startsWith(`${initialMonthAttr}-`))
+  .sort();
+const initialInspectorDate = teamContributions[initialTodayStr]
+  ? initialTodayStr
+  : monthKeys[monthKeys.length - 1] || `${initialMonthAttr}-01`;
 ---
 
 <section class="calendar-section" id={id} aria-labelledby="calendar-heading">
@@ -128,11 +134,7 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
       <div class="cal-day-inspector" id="calDayInspector" aria-live="polite">
         <div class="inspector-top">
           <span class="inspector-date" id="inspectorDateLabel">
-            2026-11-23
-          </span>
-          <span class="cal-sync-badge" id="calSyncBadge">
-            <span class="cal-sync-spin" aria-hidden="true"></span>
-            <span>Syncing GitHub…</span>
+            {initialInspectorDate}
           </span>
           <span class="inspector-hint">Click any highlighted day to inspect repositories</span>
         </div>
@@ -142,10 +144,9 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
   </div>
 </section>
 
-<script define:vars={{ serializedData, serializedColors, serializedMembers }}>
+<script define:vars={{ serializedData, serializedColors }}>
   const contributionsByDate = JSON.parse(serializedData);
   const colorsMap = JSON.parse(serializedColors);
-  const membersList = JSON.parse(serializedMembers);
 
   const monthNames = [
     'JANUARY',
@@ -171,10 +172,12 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
     return n < 10 ? `0${n}` : `${n}`;
   }
 
+  const VALID_REPO_RE = /^[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+$/;
+
   const todayStr = `${currentYear}-${pad(currentMonth + 1)}-${pad(now.getDate())}`;
   let selectedDate = contributionsByDate[todayStr]
     ? todayStr
-    : `${currentYear}-${pad(currentMonth + 1)}-${pad(now.getDate())}`;
+    : pickDefaultDateForMonth(currentYear, currentMonth);
 
   const monthTitleEl = document.getElementById('calendar-heading');
   const yearSubEl = document.getElementById('calYearSub');
@@ -198,8 +201,10 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
     inspectorDateEl.textContent = dateStr;
     const dayData = contributionsByDate[dateStr];
     if (!dayData) {
-      inspectorEntriesEl.innerHTML =
-        '<p class="inspector-empty">No public repository pushes recorded on this date.</p>';
+      const emptyEl = document.createElement('p');
+      emptyEl.className = 'inspector-empty';
+      emptyEl.textContent = 'No public repository pushes recorded on this date.';
+      inspectorEntriesEl.replaceChildren(emptyEl);
       return;
     }
 
@@ -209,32 +214,55 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
         : dayData.contributions.filter((c) => c.githubHandle === activeMember);
 
     if (filtered.length === 0) {
-      inspectorEntriesEl.innerHTML =
-        '<p class="inspector-empty">No contributions for the selected builder on this date.</p>';
+      const emptyEl = document.createElement('p');
+      emptyEl.className = 'inspector-empty';
+      emptyEl.textContent = 'No contributions for the selected builder on this date.';
+      inspectorEntriesEl.replaceChildren(emptyEl);
       return;
     }
 
-    inspectorEntriesEl.innerHTML = filtered
-      .map((c) => {
-        const color = colorsMap[c.githubHandle] || 'var(--text-accent)';
-        const repoLinks = c.repos
-          .map((r) => {
-            const fullRepo = r.includes('/') ? r : `${c.githubHandle}/${r}`;
-            return `<a href="https://github.com/${fullRepo}" target="_blank" rel="noopener noreferrer" class="insp-repo-link">${r} ↗</a>`;
-          })
-          .join('');
-        return `
-          <div class="insp-row">
-            <span class="insp-member" style="--m-color: ${color};">
-              <span class="insp-dot"></span>
-              ${c.memberName}
-            </span>
-            <div class="insp-repos">${repoLinks}</div>
-            <span class="insp-count">${c.eventsCount} ${c.eventsCount === 1 ? 'push' : 'events'}</span>
-          </div>
-        `;
-      })
-      .join('');
+    const frag = document.createDocumentFragment();
+    for (const c of filtered) {
+      const color = colorsMap[c.githubHandle] || 'var(--text-accent)';
+      const row = document.createElement('div');
+      row.className = 'insp-row';
+
+      const memberSpan = document.createElement('span');
+      memberSpan.className = 'insp-member';
+      memberSpan.style.setProperty('--m-color', color);
+      const dot = document.createElement('span');
+      dot.className = 'insp-dot';
+      memberSpan.append(dot, document.createTextNode(c.memberName));
+
+      const reposWrap = document.createElement('div');
+      reposWrap.className = 'insp-repos';
+      for (const r of c.repos) {
+        const fullRepo = r.includes('/') ? r : `${c.githubHandle}/${r}`;
+        if (VALID_REPO_RE.test(fullRepo)) {
+          const link = document.createElement('a');
+          link.href = `https://github.com/${fullRepo}`;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.className = 'insp-repo-link';
+          link.textContent = `${r} ↗`;
+          reposWrap.appendChild(link);
+        } else {
+          const fallbackSpan = document.createElement('span');
+          fallbackSpan.className = 'insp-repo-link';
+          fallbackSpan.textContent = r;
+          reposWrap.appendChild(fallbackSpan);
+        }
+      }
+
+      const countSpan = document.createElement('span');
+      countSpan.className = 'insp-count';
+      countSpan.textContent = `${c.eventsCount} ${c.eventsCount === 1 ? 'push' : 'events'}`;
+
+      row.append(memberSpan, reposWrap, countSpan);
+      frag.appendChild(row);
+    }
+
+    inspectorEntriesEl.replaceChildren(frag);
   }
 
   function renderCalendar() {
@@ -249,11 +277,14 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
     const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay(); // 0=Sun
     const totalCells = Math.ceil((firstDayOfWeek + daysInMonth) / 7) * 7;
 
-    let html = '';
+    const frag = document.createDocumentFragment();
     for (let i = 0; i < totalCells; i++) {
       const dayNum = i - firstDayOfWeek + 1;
       if (dayNum < 1 || dayNum > daysInMonth) {
-        html += '<div class="cal-cell is-empty" aria-hidden="true"></div>';
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'cal-cell is-empty';
+        emptyCell.setAttribute('aria-hidden', 'true');
+        frag.appendChild(emptyCell);
         continue;
       }
 
@@ -269,49 +300,76 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
       const isSelected = dateStr === selectedDate;
       const hasNote = Boolean(dayData?.note && hasActivity);
 
-      let chipsHtml = '';
+      const cellBtn = document.createElement('button');
+      cellBtn.type = 'button';
+      cellBtn.className = `cal-cell${hasActivity ? ' has-activity' : ''}${isSelected ? ' is-selected' : ''}${hasNote ? ' has-note' : ''}`;
+      cellBtn.setAttribute('data-date', dateStr);
+
+      const dayNumSpan = document.createElement('span');
+      dayNumSpan.className = `cal-day-num${hasNote ? ' is-ringed' : ''}`;
+      dayNumSpan.textContent = String(dayNum);
+      cellBtn.appendChild(dayNumSpan);
+
+      if (hasNote && dayData?.note) {
+        const noteSpan = document.createElement('span');
+        noteSpan.className = 'cal-sticky-note';
+        noteSpan.textContent = dayData.note;
+        cellBtn.appendChild(noteSpan);
+      }
+
+      const chipsWrap = document.createElement('div');
+      chipsWrap.className = 'cal-chips';
       if (hasActivity) {
-        chipsHtml = filtered
-          .slice(0, 3)
-          .map((c) => {
-            const color = colorsMap[c.githubHandle] || 'var(--text-accent)';
-            const mainRepo = c.repos[0]?.split('/').pop() || '';
-            return `
-              <span class="cal-chip" style="--m-color: ${color};" title="${c.memberName}: ${c.repos.join(', ')}">
-                <span class="chip-dot"></span>
-                <span class="chip-text">${c.memberName} · ${mainRepo}</span>
-              </span>
-            `;
-          })
-          .join('');
+        for (const c of filtered.slice(0, 3)) {
+          const color = colorsMap[c.githubHandle] || 'var(--text-accent)';
+          const mainRepo = c.repos[0]?.split('/').pop() || '';
+
+          const chip = document.createElement('span');
+          chip.className = 'cal-chip';
+          chip.style.setProperty('--m-color', color);
+          chip.title = `${c.memberName}: ${c.repos.join(', ')}`;
+
+          const chipDot = document.createElement('span');
+          chipDot.className = 'chip-dot';
+
+          const chipText = document.createElement('span');
+          chipText.className = 'chip-text';
+          chipText.textContent = `${c.memberName} · ${mainRepo}`;
+
+          chip.append(chipDot, chipText);
+          chipsWrap.appendChild(chip);
+        }
         if (filtered.length > 3) {
-          chipsHtml += `<span class="cal-more">+${filtered.length - 3} more</span>`;
+          const moreSpan = document.createElement('span');
+          moreSpan.className = 'cal-more';
+          moreSpan.textContent = `+${filtered.length - 3} more`;
+          chipsWrap.appendChild(moreSpan);
         }
       }
 
-      html += `
-        <button
-          type="button"
-          class="cal-cell ${hasActivity ? 'has-activity' : ''} ${isSelected ? 'is-selected' : ''} ${hasNote ? 'has-note' : ''}"
-          data-date="${dateStr}"
-        >
-          <span class="cal-day-num ${hasNote ? 'is-ringed' : ''}">${dayNum}</span>
-          ${hasNote ? `<span class="cal-sticky-note">${dayData.note}</span>` : ''}
-          <div class="cal-chips">${chipsHtml}</div>
-        </button>
-      `;
+      cellBtn.appendChild(chipsWrap);
+      frag.appendChild(cellBtn);
     }
 
-    gridEl.innerHTML = html;
-
-    gridEl.querySelectorAll('.cal-cell[data-date]').forEach((cell) => {
-      cell.addEventListener('click', () => {
-        selectedDate = cell.getAttribute('data-date') || selectedDate;
-        renderCalendar();
-        renderInspector(selectedDate);
-      });
-    });
+    gridEl.replaceChildren(frag);
   }
+
+  gridEl?.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+    const cell = target.closest('button.cal-cell[data-date]');
+    if (!(cell instanceof HTMLElement)) return;
+    const nextDate = cell.getAttribute('data-date');
+    if (!nextDate) return;
+
+    const prevCell = gridEl.querySelector('.cal-cell.is-selected');
+    if (prevCell && prevCell !== cell) {
+      prevCell.classList.remove('is-selected');
+    }
+    cell.classList.add('is-selected');
+    selectedDate = nextDate;
+    renderInspector(selectedDate);
+  });
 
   prevBtn?.addEventListener('click', () => {
     currentMonth -= 1;
@@ -347,70 +405,6 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
 
   renderCalendar();
   renderInspector(selectedDate);
-
-  const syncBadgeEl = document.getElementById('calSyncBadge');
-
-  // Sync live public GitHub events for the current/recent months without blocking render
-  async function syncLiveGithubEvents() {
-    if (syncBadgeEl) syncBadgeEl.classList.add('is-syncing');
-    let updated = false;
-    try {
-      await Promise.all(
-        membersList.map(async (m) => {
-          try {
-            const res = await fetch(
-              `https://api.github.com/users/${encodeURIComponent(m.handle)}/events/public?per_page=30`,
-            );
-            if (!res.ok) return;
-            const events = await res.json();
-            if (!Array.isArray(events)) return;
-
-            for (const ev of events) {
-              if (!ev?.created_at || !ev?.repo?.name) continue;
-              const dateStr = String(ev.created_at).slice(0, 10);
-              const repoShort = ev.repo.name.startsWith(`${m.handle}/`)
-                ? ev.repo.name.slice(m.handle.length + 1)
-                : ev.repo.name;
-
-              if (!contributionsByDate[dateStr]) {
-                contributionsByDate[dateStr] = { date: dateStr, contributions: [] };
-              }
-              const day = contributionsByDate[dateStr];
-              let entry = day.contributions.find((c) => c.githubHandle === m.handle);
-              if (!entry) {
-                entry = {
-                  memberName: m.shortName,
-                  githubHandle: m.handle,
-                  repos: [repoShort],
-                  eventsCount: 1,
-                };
-                day.contributions.push(entry);
-                updated = true;
-              } else if (!entry.repos.includes(repoShort)) {
-                entry.repos.push(repoShort);
-                entry.eventsCount += 1;
-                updated = true;
-              }
-            }
-          } catch {
-            // Silently keep verified static data if offline or rate-limited
-          }
-        }),
-      );
-
-      if (updated) {
-        if (!contributionsByDate[selectedDate]) {
-          selectedDate = pickDefaultDateForMonth(currentYear, currentMonth);
-        }
-        renderCalendar();
-        renderInspector(selectedDate);
-      }
-    } finally {
-      if (syncBadgeEl) syncBadgeEl.classList.remove('is-syncing');
-    }
-  }
-
-  syncLiveGithubEvents();
 </script>
 
 <style>
@@ -418,35 +412,6 @@ const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padSt
     max-width: 1040px;
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 5vw, 4rem);
-  }
-
-  .cal-sync-badge {
-    display: none;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--text-accent);
-    letter-spacing: 0.04em;
-  }
-
-  .cal-sync-badge.is-syncing {
-    display: inline-flex;
-  }
-
-  .cal-sync-spin {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1.5px solid color-mix(in srgb, var(--text-accent) 25%, transparent);
-    border-top-color: var(--text-accent);
-    animation: calSpin 0.75s linear infinite;
-  }
-
-  @keyframes calSpin {
-    to {
-      transform: rotate(360deg);
-    }
   }
 
   .calendar-section {

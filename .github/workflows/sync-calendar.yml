@@ -1,0 +1,70 @@
+name: Sync Build Calendar
+
+on:
+  schedule:
+    # 00:00 Sri Lanka Standard Time (UTC+05:30) = 18:30 UTC daily
+    - cron: '30 18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-calendar:
+    name: Refresh Daily Build Calendar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.5'
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Sync last 2 months of GitHub contributions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run sync:calendar
+
+      - name: Build production site
+        run: bun run build
+
+      - name: Format generated files
+        run: bun fmt --no-script
+
+      - name: Open or update calendar refresh PR
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain src/data/teamCalendar.generated.json docs/)" ]; then
+            echo "Calendar snapshot and docs/ are already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -B housekeep/sync-calendar
+          git add src/data/teamCalendar.generated.json docs/
+          git commit -m "housekeep(calendar): refresh daily build calendar"
+          git push --force-with-lease origin housekeep/sync-calendar
+
+          OPEN_PR=$(gh pr list --head housekeep/sync-calendar --base main --state open --json number --jq '.[0].number // empty')
+          if [ -z "$OPEN_PR" ]; then
+            gh pr create \
+              --base main \
+              --head housekeep/sync-calendar \
+              --title "housekeep(calendar): refresh daily build calendar" \
+              --body "Automated daily 00:00 SLST refresh of the 2-month GitHub build calendar snapshot and static \`docs/\` build."
+          else
+            echo "Updated existing PR #${OPEN_PR}."
+          fi

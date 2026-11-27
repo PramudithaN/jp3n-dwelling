@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "sync:calendar": "bun scripts/sync-team-calendar.ts",
     "build": "astro build && bun scripts/prepare-gh-pages.mjs",
     "preview": "astro preview",
     "astro": "astro",

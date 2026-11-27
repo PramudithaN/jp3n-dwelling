@@ -35,7 +35,7 @@ The homepage (`src/pages/index.astro`) is structured as a single cohesive narrat
 4. **Selected Software & Tooling (`ProjectsFolderStack.astro`, `#work`)**: Production case studies and open-source repositories.
 5. **The Process (`CreativeProcess.astro`, `#process`)**: Interactive non-linear engineering and design loop.
 6. **Mindset & Clarity (`ThoughtsNoise.astro`, `EditorialCanvasCallout.astro`)**: Filtering signal from noise and shipping with clarity.
-7. **The Collective (`TeamSection.astro`, `TeamCalendar.astro`, `TeamPreferences.astro`, `AfkSection.astro`)**: Six specialized engineers, live current-month GitHub Build Calendar, studio music rotation (manual playback, zero autoplay), and off-duty profiles.
+7. **The Collective (`TeamSection.astro`, `TeamCalendar.astro`, `TeamPreferences.astro`, `AfkSection.astro`)**: Six specialized engineers, build-time 2-month GitHub Build Calendar (refreshed daily at 00:00 SLST via GitHub Actions), studio music rotation (manual playback, zero autoplay), and off-duty profiles.
 8. **Direct Engagement (`#contact`, `RetroWorkstation.astro`)**: Direct project inquiry without tracking forms or sales funnels.
 9. **Maintenance Mode (`MaintenanceScreen.astro`)**: Toggle `maintenance.enabled: true` in `src/config/site.ts` (or build with `PUBLIC_MAINTENANCE_MODE=true`) to display a status screen across all routes.
 
@@ -85,7 +85,8 @@ Selecting a palette updates CSS custom properties, canvas elements, and `<meta n
 │   ├── commitlint.ts              # Commit message validator (feat, fix, housekeep + mandatory scope)
 │   ├── commitlint.test.ts         # Unit tests for commitlint
 │   ├── pre-commit.ts              # Blocks main/master commits and formats staged files
-│   └── prepare-gh-pages.mjs       # Generates docs/.nojekyll for GitHub Pages
+│   ├── prepare-gh-pages.mjs       # Generates docs/.nojekyll for GitHub Pages
+│   └── sync-team-calendar.ts      # Fetches last 2 months of GitHub events at build time
 ├── src/
 │   ├── components/                # Modular Astro UI & interactive canvas components
 │   ├── config/
@@ -137,10 +138,11 @@ bun run test:e2e
 ### Build for GitHub Pages (`docs/` on `main`)
 
 ```bash
+bun run sync:calendar   # Optional: refresh 2-month GitHub contribution snapshot
 bun run build
 ```
 
-This runs `astro build` into `./docs` and executes `scripts/prepare-gh-pages.mjs` to generate `docs/.nojekyll` (with `public/CNAME` copied for `teqniqks.com`).
+`build` runs `astro build` into `./docs` and executes `scripts/prepare-gh-pages.mjs` to generate `docs/.nojekyll` (with `public/CNAME` copied for `teqniqks.com`). A scheduled workflow (`.github/workflows/sync-calendar.yml`) runs daily at 00:00 Sri Lanka Time to refresh `src/data/teamCalendar.generated.json` and `docs/` via Pull Request.
 
 ### GitHub Pages Setup
 
