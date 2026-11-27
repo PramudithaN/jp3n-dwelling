@@ -1,0 +1,1 @@
+import{t as e}from"./copyEmail.CaLe0MTh.js";e(`copyEmailBtn`,`copyBtnText`,`Email Copied!`,`Copy Email`);
