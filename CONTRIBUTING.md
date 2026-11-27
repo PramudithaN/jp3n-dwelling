@@ -54,7 +54,7 @@ All staged files are automatically formatted and re-staged on commit by `.githoo
 
 - JavaScript, TypeScript, CSS, JSON, YAML, and Markdown are formatted natively by `bun fmt` per `bunfig.toml`.
 - `.astro` components are formatted via `.prettierrc` + `prettier-plugin-astro`.
-- Built GitHub Pages assets in `docs/` are ignored by formatting.
+- Generated build and calendar snapshot artifacts (`dist/` and `src/data/teamCalendar.generated.json`) are gitignored and excluded from formatting.
 - If a file has both staged and unstaged changes and needs formatting, `bun fmt --staged` stops with exit code `2` — run `bun fmt` or stage the whole file and retry.
 
 ---

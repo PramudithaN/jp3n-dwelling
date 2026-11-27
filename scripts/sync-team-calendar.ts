@@ -66,6 +66,10 @@ export async function fetchMemberEvents(
 }
 
 async function syncTeamCalendar(): Promise<void> {
+  if (process.argv.includes('--if-missing') && existsSync(OUTPUT_PATH)) {
+    return;
+  }
+
   const cutoffDate = getTwoMonthCutoffUtc();
   const cutoffIso = cutoffDate.toISOString();
   const cutoffDateStr = cutoffIso.slice(0, 10);

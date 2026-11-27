@@ -7,9 +7,9 @@
     "bun": ">=1.4.5"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "bun scripts/sync-team-calendar.ts --if-missing && astro dev",
     "sync:calendar": "bun scripts/sync-team-calendar.ts",
-    "build": "astro build && bun scripts/prepare-gh-pages.mjs",
+    "build": "bun run sync:calendar && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "format": "bun fmt",

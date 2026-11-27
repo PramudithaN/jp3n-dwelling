@@ -8,4 +8,4 @@ useTabs = false
 semi = true
 singleQuote = true
 trailingComma = "all"
-ignorePatterns = ["docs/**"]
+ignorePatterns = ["dist/**", "src/data/teamCalendar.generated.json"]

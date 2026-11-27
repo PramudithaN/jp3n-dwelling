@@ -35,6 +35,7 @@ tools/
 node_modules/
 dist/
 .astro/
+src/data/teamCalendar.generated.json
 __pycache__/
 *.pyc
 

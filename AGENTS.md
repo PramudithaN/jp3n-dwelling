@@ -13,10 +13,10 @@ Guardrails, invariants, and engineering standards for AI coding agents working i
 
 ---
 
-## 2. Formatting & `docs/` Guardrails
+## 2. Formatting & Build Output Guardrails
 
-- **Never hand-edit files inside `docs/`.** `docs/` is the committed GitHub Pages build output and must always be regenerated via `bun run build`.
-- Keep `docs/` excluded from `bunfig.toml` (`[fmt] ignorePatterns`), `.prettierignore`, and `tsconfig.json` (`exclude`).
+- **Never hand-edit generated files.** `./dist` and `src/data/teamCalendar.generated.json` are gitignored build/sync artifacts generated via `bun run build` / `bun run sync:calendar`.
+- Keep `dist/` and `src/data/teamCalendar.generated.json` excluded from `bunfig.toml` (`[fmt] ignorePatterns`), `.prettierignore`, and `dist` excluded in `tsconfig.json` (`exclude`).
 - Keep formatting options identical between `bunfig.toml` (`[fmt]`) and `.prettierrc` (`bun fmt` formats native languages directly and delegates `.astro` files to Prettier via `prettier-plugin-astro`).
 - Pre-commit runs `bun fmt --no-script --staged`. Exit code `2` means a partially staged file needs formatting — stage the full file (`git add`) or run `bun fmt` and retry.
 
@@ -48,7 +48,7 @@ Guardrails, invariants, and engineering standards for AI coding agents working i
 ## 5. CI & Ruleset Invariants
 
 - **Never rename** the GitHub Actions job `name:` fields **`Build & Verify Site`** (`.github/workflows/ci-build.yml`) or **`Validate Conventional Commits`** (`.github/workflows/commit-rules.yml`) — both are pinned as required status checks in `.github/rulesets/protect-main.json`.
-- Ensure `docs/index.html`, `docs/CNAME`, and `docs/.nojekyll` exist after every production build.
+- Ensure `dist/index.html` and `dist/CNAME` exist after every production build (GitHub Pages is deployed directly from `./dist` via `.github/workflows/deploy-pages.yml`).
 
 ---
 
@@ -57,7 +57,7 @@ Guardrails, invariants, and engineering standards for AI coding agents working i
 1. Always run before concluding work:
    ```sh
    bun fmt --no-script --check
-   bun test scripts/commitlint.test.ts
+   bun test scripts/commitlint.test.ts scripts/sync-team-calendar.test.ts
    bun run build
    ```
 2. For UI, theme, or routing changes, verify via `bun run preview --host 127.0.0.1 --port 4321` (or `bun run test:e2e` once Chromium is installed via `bunx playwright install`): confirm HTTP `200` across routes, `#teqniqksScreenLoader` hides cleanly, zero console/page errors or 404 assets, Theme Switcher persistence, and mobile drawer behavior without horizontal overflow.

@@ -70,30 +70,27 @@ Selecting a palette updates CSS custom properties, canvas elements, and `<meta n
 ├── .github/
 │   ├── rulesets/protect-main.json
 │   └── workflows/
-│       ├── ci-build.yml           # Format check, commitlint tests, Astro build & docs/ verification
-│       └── commit-rules.yml       # CI commit message validation on main & PRs
+│       ├── ci-build.yml           # Format check, repo tests, Astro build & dist/ verification
+│       ├── commit-rules.yml       # CI commit message validation on main & PRs
+│       └── deploy-pages.yml       # Builds dist/ with fresh calendar & deploys to GitHub Pages
 ├── .vscode/
-├── docs/                          # Static production build served by GitHub Pages
-│   ├── .nojekyll
-│   └── ...
 ├── public/
 │   ├── CNAME                      # Custom domain (teqniqks.com)
-│   ├── fonts/                     # Self-hosted Space Grotesk, Sora, JetBrains Mono, etc.
-│   ├── images/                    # Hero layers, team silhouettes, music covers, workshops
-│   └── videos/
+│   ├── fonts/                     # Self-hosted variable Space Grotesk, Sora & JetBrains Mono (.woff2)
+│   └── images/                    # Hero layers, team silhouettes, music covers, workshops
 ├── scripts/
 │   ├── commitlint.ts              # Commit message validator (feat, fix, housekeep + mandatory scope)
 │   ├── commitlint.test.ts         # Unit tests for commitlint
 │   ├── pre-commit.ts              # Blocks main/master commits and formats staged files
-│   ├── prepare-gh-pages.mjs       # Generates docs/.nojekyll for GitHub Pages
-│   └── sync-team-calendar.ts      # Fetches last 2 months of GitHub events at build time
+│   ├── sync-team-calendar.ts      # Fetches last 2 months of GitHub events at build time
+│   └── sync-team-calendar.test.ts # Unit tests for calendar event pagination fallback
 ├── src/
 │   ├── components/                # Modular Astro UI & interactive canvas components
 │   ├── config/
-│   │   ├── site.ts                # Team profiles, capacity, contact info & demos
+│   │   ├── site.ts                # Team profiles & contact info
 │   │   └── theme.ts               # 8 global theme definitions
 │   ├── content/                   # Zod-validated Markdown collections (work, journal)
-│   ├── data/                      # Team build calendar dataset
+│   ├── data/                      # Build-time GitHub activity consumer & generated JSON snapshot
 │   ├── layouts/
 │   │   └── BaseLayout.astro       # Shared document shell, NavHeader, Footer & ThemeSwitcher
 │   ├── pages/                     # Static routes (/, /process, /themes, /motion, /contributors, /work, /journal, /journey, /contact, /privacy)
@@ -104,7 +101,7 @@ Selecting a palette updates CSS custom properties, canvas elements, and `<meta n
 ├── .gitignore
 ├── .prettierignore
 ├── .prettierrc
-├── astro.config.mjs               # Configured with site: 'https://teqniqks.com', base: '/', outDir: './docs'
+├── astro.config.mjs               # Configured with site: 'https://teqniqks.com', base: '/' (outputs ./dist)
 ├── bun.lock
 ├── bunfig.toml                    # Bun runtime & formatter configuration
 ├── CONTRIBUTING.md                # Contribution, formatting, and commit guidelines
@@ -126,29 +123,30 @@ bun install
 bun run dev
 ```
 
+`dev` automatically generates `src/data/teamCalendar.generated.json` if missing before starting the Astro dev server.
+
 ### Formatting & Tests
 
 ```bash
 bun run format          # Format repository with bun fmt
 bun run format:check    # Verify formatting without writing
-bun test scripts/commitlint.test.ts
+bun test scripts/commitlint.test.ts scripts/sync-team-calendar.test.ts
 bun run test:e2e
 ```
 
-### Build for GitHub Pages (`docs/` on `main`)
+### Build & Deploy via GitHub Actions
 
 ```bash
-bun run sync:calendar   # Optional: refresh 2-month GitHub contribution snapshot
-bun run build
+bun run sync:calendar   # Optional: manually refresh 2-month GitHub contribution snapshot
+bun run build           # Syncs calendar + builds static output into gitignored ./dist
 ```
 
-`build` runs `astro build` into `./docs` and executes `scripts/prepare-gh-pages.mjs` to generate `docs/.nojekyll` (with `public/CNAME` copied for `teqniqks.com`).
+Deployment runs via `.github/workflows/deploy-pages.yml` on every push to `main`, on a daily **00:00 Sri Lanka Standard Time** (`18:30 UTC`) schedule, and via manual `workflow_dispatch`. It builds `./dist` (including `CNAME` for `teqniqks.com`) with a fresh GitHub contribution snapshot and deploys directly with `actions/deploy-pages`.
 
 ### GitHub Pages Setup
 
-1. Push changes (including `docs/`) via a Pull Request into `main`.
-2. In GitHub **Settings -> Pages -> Build and deployment**, set **Source** to **Deploy from a branch**.
-3. Select branch **`main`** and folder **`/docs`**, then click **Save**.
+1. In GitHub **Settings -> Pages -> Build and deployment**, set **Source** to **GitHub Actions**.
+2. Merge changes via Pull Request into `main`; `.github/workflows/deploy-pages.yml` handles all builds and deployments without committing generated artifacts.
 
 ---
 

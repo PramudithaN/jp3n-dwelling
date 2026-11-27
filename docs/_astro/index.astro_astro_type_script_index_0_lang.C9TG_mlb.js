@@ -1,1 +1,0 @@
-import{t as e}from"./copyEmail.CaLe0MTh.js";e(`copyEmailTrigger`,`copyFeedback`,`Copied to Clipboard!`);

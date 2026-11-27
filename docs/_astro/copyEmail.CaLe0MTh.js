@@ -1,1 +1,0 @@
-function e(e,t,n,r){let i=document.getElementById(e),a=document.getElementById(t);i&&a&&i.addEventListener(`click`,async()=>{let e=i.getAttribute(`data-email`);if(!e)return;let t=r??`Copy ${e}`;try{await navigator.clipboard.writeText(e),a.textContent=n,window.setTimeout(()=>{a.textContent=t},2e3)}catch{window.location.href=`mailto:${e}`}})}export{e as t};
