@@ -1,5 +1,5 @@
-docs/
 dist/
+src/data/teamCalendar.generated.json
 .astro/
 node_modules/
 bun.lock

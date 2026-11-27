@@ -7,6 +7,7 @@ interface Props {
 
 const { id = 'afk' } = Astro.props;
 const team = siteConfig.team;
+const currentYear = new Date().getFullYear();
 ---
 
 <section class="afk-section" id={id} aria-labelledby="afk-heading">
@@ -35,11 +36,11 @@ const team = siteConfig.team;
       <div class="afk-meta-block">
         <p class="afk-meta-line">AWAY FROM KEYBOARD</p>
         <div class="afk-meta-split">
-          <span>©2026</span>
+          <span>©{currentYear}</span>
           <span>OFF-DUTY ①</span>
         </div>
         <p class="afk-meta-line">BY TEQNIQKS COLLECTIVE</p>
-        <p class="afk-meta-line is-accent">TEQNIQKS.DEV / AFK</p>
+        <p class="afk-meta-line is-accent">TEQNIQKS.COM / AFK</p>
       </div>
 
       <!-- 2-Column Aligned Credits Roster with Descriptions -->

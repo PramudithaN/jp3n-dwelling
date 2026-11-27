@@ -25,15 +25,16 @@ jobs:
       - name: Check formatting
         run: bun fmt --no-script --check
 
-      - name: Test commit rules
-        run: bun test scripts/commitlint.test.ts
+      - name: Test repo scripts
+        run: bun test scripts/commitlint.test.ts scripts/sync-team-calendar.test.ts
 
       - name: Build production site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bun run build
 
       - name: Verify build artifacts
         shell: bash
         run: |
-          test -f docs/index.html
-          test -f docs/CNAME
-          test -f docs/.nojekyll
+          test -f dist/index.html
+          test -f dist/CNAME

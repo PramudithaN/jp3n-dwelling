@@ -6,9 +6,7 @@
 
 @font-face {
   font-family: 'Space Grotesk';
-  src:
-    url('/fonts/SpaceGrotesk-Variable.woff') format('woff'),
-    url('/fonts/SpaceGrotesk-Variable.ttf') format('truetype');
+  src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
   font-weight: 300 700;
   font-style: normal;
   font-display: swap;
@@ -16,20 +14,16 @@
 
 @font-face {
   font-family: 'Sora';
-  src:
-    url('/fonts/Sora-Regular.woff') format('woff'),
-    url('/fonts/Sora-Regular.ttf') format('truetype');
-  font-weight: 300 600;
+  src: url('/fonts/Sora-Variable.woff2') format('woff2');
+  font-weight: 100 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src:
-    url('/fonts/JetBrainsMono.woff') format('woff'),
-    url('/fonts/JetBrainsMono.ttf') format('truetype');
-  font-weight: 400 600;
+  src: url('/fonts/JetBrainsMono-Variable.woff2') format('woff2');
+  font-weight: 100 800;
   font-style: normal;
   font-display: swap;
 }

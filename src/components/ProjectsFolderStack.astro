@@ -5,6 +5,7 @@ import { withBase } from '../utils/url';
 
 const workItems = await getCollection('work');
 workItems.sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
+const currentYear = new Date().getFullYear();
 
 // Tab horizontal offsets staggered like the reference folder stack
 const tabPositions = ['pos-right', 'pos-mid-left', 'pos-far-left', 'pos-mid-right'];
@@ -17,7 +18,7 @@ const tabPositions = ['pos-right', 'pos-mid-left', 'pos-far-left', 'pos-mid-righ
       <span class="greeting-main">Projects</span>
       <span class="greeting-bang">!</span>
     </div>
-    <span class="folder-year">©2026</span>
+    <span class="folder-year">©{currentYear}</span>
   </div>
 
   <!-- Stacked Interactive Manila/Index Folders -->

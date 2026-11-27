@@ -33,22 +33,7 @@ const journalCollection = defineCollection({
   }),
 });
 
-const contributorCollection = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/contributors' }),
-  schema: z.object({
-    projectName: z.string(),
-    tagline: z.string(),
-    repoUrl: z.string().url(),
-    primaryLanguage: z.string(),
-    goodFirstIssuesCount: z.number().int(),
-    contributionGuideUrl: z.string().url(),
-    difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
-    activeAreas: z.array(z.string()),
-  }),
-});
-
 export const collections = {
   work: workCollection,
   journal: journalCollection,
-  contributors: contributorCollection,
 };

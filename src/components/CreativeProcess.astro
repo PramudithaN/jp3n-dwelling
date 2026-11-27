@@ -106,6 +106,31 @@ const { id = 'process' } = Astro.props;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    let accentHex = '#52a468';
+    let accentR = 82;
+    let accentG = 164;
+    let accentB = 104;
+
+    function updateAccentCache() {
+      const raw = (
+        getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468'
+      ).trim();
+      const hexClean = raw.startsWith('#') ? raw.slice(1) : '52a468';
+      const fullHex =
+        hexClean.length === 3
+          ? hexClean
+              .split('')
+              .map((c) => c + c)
+              .join('')
+          : hexClean;
+      accentHex = raw.startsWith('#') ? raw : '#52a468';
+      accentR = parseInt(fullHex.slice(0, 2), 16) || 82;
+      accentG = parseInt(fullHex.slice(2, 4), 16) || 164;
+      accentB = parseInt(fullHex.slice(4, 6), 16) || 104;
+    }
+
+    updateAccentCache();
+
     let width = 680;
     let height = 220;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -288,28 +313,12 @@ const { id = 'process' } = Astro.props;
       const scale = 0.92 + 0.12 * active;
       ctx.scale(scale, scale);
 
-      // Helper to read live CSS --text-accent as hex + rgb
-      const accentHex = (
-        getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468'
-      ).trim();
-      const hexClean = accentHex.startsWith('#') ? accentHex.slice(1) : '52a468';
-      const fullHex =
-        hexClean.length === 3
-          ? hexClean
-              .split('')
-              .map((c) => c + c)
-              .join('')
-          : hexClean;
-      const ar = parseInt(fullHex.slice(0, 2), 16) || 82;
-      const ag = parseInt(fullHex.slice(2, 4), 16) || 164;
-      const ab = parseInt(fullHex.slice(4, 6), 16) || 104;
-
       // Circle
       ctx.beginPath();
       ctx.arc(0, 0, 10, 0, Math.PI * 2);
       ctx.fillStyle =
         active > 0.3
-          ? `rgba(${ar}, ${ag}, ${ab}, ${0.25 + 0.75 * active})`
+          ? `rgba(${accentR}, ${accentG}, ${accentB}, ${0.25 + 0.75 * active})`
           : 'rgba(250, 249, 246, 0.08)';
       ctx.fill();
       ctx.lineWidth = 1.4;
@@ -393,7 +402,7 @@ const { id = 'process' } = Astro.props;
     let startTime: number | null = null;
     const CYCLE_MS = 8600; // Smooth 8.6s full multi-obstacle loop
     let rafId: number | null = null;
-    let isVisible = true;
+    let isVisible = false;
 
     function renderFrame(progress: number) {
       if (!ctx || points.length === 0) return;
@@ -435,10 +444,7 @@ const { id = 'process' } = Astro.props;
       ctx.lineWidth = 2.4;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
-      const accentHexLoop = (
-        getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468'
-      ).trim();
-      ctx.shadowColor = accentHexLoop;
+      ctx.shadowColor = accentHex;
       ctx.shadowBlur = 10;
       ctx.beginPath();
       for (let i = 0; i <= runnerIdx; i++) {
@@ -475,6 +481,10 @@ const { id = 'process' } = Astro.props;
 
     resize();
     window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('teqniqks:theme-change', () => {
+      updateAccentCache();
+      if (prefersReducedMotion) renderFrame(0.36);
+    });
 
     if (prefersReducedMotion) {
       renderFrame(0.36); // Static mid-loop showcase
@@ -487,24 +497,15 @@ const { id = 'process' } = Astro.props;
           isVisible = entry.isIntersecting;
           if (isVisible && !rafId) {
             rafId = requestAnimationFrame(animate);
+          } else if (!isVisible && rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
           }
         });
       },
       { threshold: 0.1 },
     );
     observer.observe(stage);
-
-    rafId = requestAnimationFrame(animate);
-
-    document.addEventListener(
-      'astro:before-swap',
-      () => {
-        if (rafId) cancelAnimationFrame(rafId);
-        observer.disconnect();
-        window.removeEventListener('resize', resize);
-      },
-      { once: true },
-    );
   }
 
   if (document.readyState === 'loading') {
@@ -512,5 +513,4 @@ const { id = 'process' } = Astro.props;
   } else {
     initCreativeProcess();
   }
-  document.addEventListener('astro:page-load', initCreativeProcess);
 </script>

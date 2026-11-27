@@ -15,11 +15,12 @@ Thank you for your interest in contributing to Teqniqks! We welcome open-source 
 
 ## Active Projects
 
-Check `src/content/contributors/` for our curated active repositories and good first issues:
+Explore our curated open-source repositories and good first issues on `/contributors` (`src/components/OpenForgeShowcase.astro`) and GitHub:
 
-- **Theme Changer Engine:** Color science, OKLCH space, zero-FOUC presets.
-- **ByteSift Binary Inspector:** WebAssembly stream parsing and high-throughput filters.
-- **Battery Telemetry:** Web API enhancements and cross-platform tests.
+- **git-tulkun:** Procedural pixel-art Tulkun whale generated from GitHub contributions.
+- **pregnantbattery:** Real-time browser hardware battery diagnostic utility.
+- **ByteSift:** Lightweight, offline file organizer using magic-byte inspection.
+- **Dynamic README Creature:** Interactive SVG creature for GitHub READMEs.
 
 ---
 
@@ -53,7 +54,7 @@ All staged files are automatically formatted and re-staged on commit by `.githoo
 
 - JavaScript, TypeScript, CSS, JSON, YAML, and Markdown are formatted natively by `bun fmt` per `bunfig.toml`.
 - `.astro` components are formatted via `.prettierrc` + `prettier-plugin-astro`.
-- Built GitHub Pages assets in `docs/` are ignored by formatting.
+- Generated build and calendar snapshot artifacts (`dist/` and `src/data/teamCalendar.generated.json`) are gitignored and excluded from formatting.
 - If a file has both staged and unstaged changes and needs formatting, `bun fmt --staged` stops with exit code `2` — run `bun fmt` or stage the whole file and retry.
 
 ---

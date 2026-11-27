@@ -7,6 +7,7 @@ import ThemeSwitcher from '../components/ThemeSwitcher.astro';
 import MaintenanceScreen from '../components/MaintenanceScreen.astro';
 import { activeTheme } from '../config/theme';
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const isMaintenance =
   siteConfig.maintenance.enabled || import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
@@ -25,7 +26,6 @@ const {
 
 const siteUrl = 'https://teqniqks.com';
 const fullCanonicalUrl = new URL(canonicalPath, siteUrl).toString();
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -39,28 +39,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <link rel="canonical" href={fullCanonicalUrl} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg?v=2`} />
+    <link rel="icon" type="image/svg+xml" href={`${withBase('/favicon.svg')}?v=2`} />
 
     <!-- Critical Font Preloading -->
     <link
       rel="preload"
-      href={`${base}/fonts/SpaceGrotesk-Variable.woff`}
+      href={withBase('/fonts/SpaceGrotesk-Variable.woff2')}
       as="font"
-      type="font/woff"
+      type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href={`${base}/fonts/Sora-Regular.woff`}
+      href={withBase('/fonts/Sora-Variable.woff2')}
       as="font"
-      type="font/woff"
+      type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href={`${base}/fonts/JetBrainsMono.woff`}
+      href={withBase('/fonts/JetBrainsMono-Variable.woff2')}
       as="font"
-      type="font/woff"
+      type="font/woff2"
       crossorigin
     />
 
@@ -74,23 +74,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <ThemeEngine />
   </head>
   <body>
-    <!-- Theme-Matched Screen Content Loader -->
-    <div class="teqniqks-screen-loader" id="teqniqksScreenLoader" aria-hidden="true">
-      <div class="loader-core">
-        <div class="loader-ring"></div>
-        <span class="loader-brand">Teqniqks</span>
-      </div>
-      <span class="loader-status">LOADING CONTENT</span>
-    </div>
-
-    <!-- Minimal Theme-Matched Route & Load Progress Bar -->
-    <div class="teqniqks-route-loader" id="teqniqksRouteLoader" aria-hidden="true"></div>
     {isMaintenance ? (
       <main id="main-content">
         <MaintenanceScreen />
       </main>
     ) : (
       <>
+        <!-- Theme-Matched Screen Content Loader (kept hidden on initial static paint) -->
+        <div class="teqniqks-screen-loader is-hidden" id="teqniqksScreenLoader" aria-hidden="true">
+          <div class="loader-core">
+            <div class="loader-ring"></div>
+            <span class="loader-brand">Teqniqks</span>
+          </div>
+          <span class="loader-status">LOADING CONTENT</span>
+        </div>
+
+        <!-- Minimal Theme-Matched Route & Load Progress Bar -->
+        <div class="teqniqks-route-loader" id="teqniqksRouteLoader" aria-hidden="true"></div>
+
         <!-- Keyboard Accessibility Skip Link -->
         <a href="#main-content" class="skip-link">
           Skip to main content
@@ -108,41 +109,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <script is:inline>
           (function () {
             var bar = document.getElementById('teqniqksRouteLoader');
-            var screen = document.getElementById('teqniqksScreenLoader');
-            if (!bar && !screen) return;
+            if (!bar) return;
 
-            function hideLoaders() {
-              if (bar) {
-                bar.classList.remove('is-loading');
-                bar.classList.add('is-done');
-                setTimeout(function () {
-                  bar.classList.remove('is-done');
-                }, 320);
-              }
-              if (screen) {
-                screen.classList.add('is-hidden');
-              }
-            }
-
-            function showLoaders() {
-              if (bar) {
+            function hideRouteLoader() {
+              bar.classList.remove('is-loading');
+              bar.classList.add('is-done');
+              setTimeout(function () {
                 bar.classList.remove('is-done');
-                bar.classList.add('is-loading');
-              }
-              if (screen) {
-                screen.classList.remove('is-hidden');
-              }
+              }, 320);
             }
 
-            window.addEventListener('pageshow', hideLoaders);
-            if (document.readyState === 'complete') {
-              hideLoaders();
-            } else {
-              showLoaders();
-              window.addEventListener('load', hideLoaders, { once: true });
-              // Safety cap so slow third-party resources never block the screen
-              setTimeout(hideLoaders, 1800);
+            function showRouteLoader() {
+              bar.classList.remove('is-done');
+              bar.classList.add('is-loading');
             }
+
+            window.addEventListener('pageshow', hideRouteLoader);
 
             document.addEventListener('click', function (e) {
               var target = e.target instanceof Element ? e.target.closest('a[href]') : null;
@@ -166,7 +148,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                   dest.origin === window.location.origin &&
                   dest.pathname !== window.location.pathname
                 ) {
-                  showLoaders();
+                  showRouteLoader();
                 }
               } catch {}
             });

@@ -86,25 +86,9 @@ const { email, github, linkedin } = siteConfig.contact;
 </section>
 
 <script>
-  const copyBtn = document.getElementById('copyEmailBtn');
-  const copyText = document.getElementById('copyBtnText');
+  import { bindCopyEmail } from '../utils/copyEmail';
 
-  if (copyBtn && copyText) {
-    copyBtn.addEventListener('click', async () => {
-      const email = copyBtn.getAttribute('data-email');
-      if (email) {
-        try {
-          await navigator.clipboard.writeText(email);
-          copyText.textContent = 'Email Copied!';
-          setTimeout(() => {
-            copyText.textContent = 'Copy Email';
-          }, 2000);
-        } catch {
-          window.location.href = `mailto:${email}`;
-        }
-      }
-    });
-  }
+  bindCopyEmail('copyEmailBtn', 'copyBtnText', 'Email Copied!', 'Copy Email');
 </script>
 
 <style>
@@ -135,10 +119,9 @@ const { email, github, linkedin } = siteConfig.contact;
   }
 
   .door-card {
-    background-color: var(--surface-elevated);
-    border: 2px solid var(--border-timber);
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-hairline-bright);
     padding: var(--space-xl);
-    box-shadow: var(--shadow-flat);
     display: flex;
     flex-direction: column;
     transition:
@@ -207,7 +190,7 @@ const { email, github, linkedin } = siteConfig.contact;
     align-items: center;
     padding: 8px 14px;
     background-color: transparent;
-    border: 1px solid var(--border-timber);
+    border: 1px solid var(--border-hairline-bright);
     color: var(--color-raw-amber-sand);
     font-family: var(--font-body);
     font-size: 0.8125rem;
