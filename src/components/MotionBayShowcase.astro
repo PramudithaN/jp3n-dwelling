@@ -1,0 +1,1259 @@
+---
+import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
+
+const { email } = siteConfig.contact;
+
+const pipelineStages = [
+  {
+    code: 'STAGE 01',
+    title: 'Concept & Script',
+    desc: 'Hook-first storyboards, shot lists, and 15–60s narrative pacing before opening the timeline.',
+    pos: 'top',
+  },
+  {
+    code: 'STAGE 02',
+    title: 'Video Editing',
+    desc: 'Frame-accurate assembly, rhythm cuts, color grading, and seamless transitions.',
+    pos: 'bottom',
+  },
+  {
+    code: 'STAGE 03',
+    title: 'Motion & Product UI',
+    desc: 'Kinetic typography, 60fps keyframe easing, and crisp product walkthrough callouts.',
+    pos: 'top',
+  },
+  {
+    code: 'STAGE 04',
+    title: 'Social & Web Export',
+    desc: '9:16 Reels, 16:9 launches, and <1.5MB hardware-decoded loops with zero audio autoplay.',
+    pos: 'bottom',
+  },
+];
+---
+
+<div class="motion-bay-page">
+  <!-- =========================================================
+       BEAT 1: VERTICAL ACCENT SPINE + BARCODE (Image 6)
+       ========================================================= -->
+  <section class="mb-beat mb-hero" aria-label="Teqniqks Motion Bay">
+    <!-- Left Vertical Accent Spine -->
+    <div class="mb-left-spine" aria-hidden="true">
+      <div class="spine-chevrons"></div>
+      <div class="spine-vertical-text">
+        <span>STUDIO: TEQNIQKS MOTION BAY</span>
+        <span>CRAFT: MOTION · VIDEO · SOCIAL</span>
+        <span>TARGET: 60FPS · UNDER 1.5MB</span>
+        <span>ATELIER: {siteConfig.url}</span>
+      </div>
+      <div class="spine-barcode">
+        <span class="bc-url">teqniqks.dev/motion</span>
+        <div class="bc-bars"></div>
+      </div>
+    </div>
+
+    <div class="mb-hero-main">
+      <!-- Top-Right Geometric Emblem -->
+      <div class="mb-top-emblem" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="mb-hero-title-wrap">
+        <h1 class="mb-hero-title">
+          MOTION
+          <br />
+          BAY
+        </h1>
+        <p class="mb-hero-sub">
+          Motion design, video editing, product walkthroughs, and social media content engineered
+          for clarity.
+        </p>
+      </div>
+
+      <a href="#pipeline" class="mb-hand-arrow" aria-label="Scroll to production pipeline">
+        <svg width="64" height="24" viewBox="0 0 64 24" fill="none">
+          <path
+            d="M2 14 C18 12, 38 11, 58 12"
+            stroke="var(--text-accent)"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M48 6 L60 12 L49 19"
+            stroke="var(--text-accent)"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 2: GIANT WATERMARK MANIFESTO (Image 5)
+       ========================================================= -->
+  <section class="mb-beat mb-manifesto" aria-label="Motion Design Philosophy">
+    <div class="mm-top-bar">
+      <span>| Built for attention</span>
+      <span>Reel 01 →</span>
+    </div>
+
+    <div class="mm-watermark" aria-hidden="true">
+      Motion
+    </div>
+
+    <div class="mm-content">
+      <h2 class="mm-title">
+        Motion design
+        <br />
+        is clarity.
+      </h2>
+      <p class="mm-prose">
+        It turns complex software into intuitive product videos, sharpens raw footage through tight
+        editing, and gives social media content unmistakable rhythm—without losing your brand’s
+        essence.
+      </p>
+      <p class="mm-bold-line">Every frame earns its place.</p>
+    </div>
+
+    <div class="mm-bottom-bar">
+      <span class="mm-badge">Teqniqks Motion Bay</span>
+      <span class="mm-spec">60fps · Zero Audio Autoplay</span>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 3: 2-AXIS PRODUCTION MATRIX (Faithful Crosshair & Callouts)
+       ========================================================= -->
+  <section class="mb-beat mb-matrix" aria-label="Video & Motion Craft Spectrum">
+    <div class="matrix-stage">
+      <!-- Vertical Stem Callouts (Matching Reference) -->
+      <div class="stem-callout stem-bottom-left" aria-hidden="true">
+        <span class="sc-line"></span>
+        <span class="sc-year">STAGE 01</span>
+        <span class="sc-name">Script &amp; Hook</span>
+      </div>
+
+      <div class="stem-callout stem-top-right" aria-hidden="true">
+        <span class="sc-year">STAGE 04</span>
+        <span class="sc-name">9:16 Social &amp; 60fps Loops</span>
+        <span class="sc-line"></span>
+      </div>
+
+      <!-- Crosshair Axes with Arrowheads -->
+      <div class="axis-vertical" aria-hidden="true">
+        <span class="ax-arrow up">▲</span>
+        <span class="axis-lbl top">
+          High
+          <br />
+          Polish
+        </span>
+        <span class="axis-lbl bottom">
+          Lean &amp;
+          <br />
+          Fast
+        </span>
+        <span class="ax-arrow down">▼</span>
+      </div>
+      <div class="axis-horizontal" aria-hidden="true">
+        <span class="ax-arrow left">◀</span>
+        <span class="axis-lbl left">
+          Raw Cut &amp;
+          <br />
+          Timeline Edit
+        </span>
+        <span class="axis-lbl right">
+          Full Motion &amp;
+          <br />
+          Product 3D
+        </span>
+        <span class="ax-arrow right">▶</span>
+      </div>
+
+      <!-- Circular Nodes along the S-Curve -->
+      <div class="matrix-nodes">
+        <div class="m-node n-1">
+          <span class="node-circle">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M4 7h16M4 12h10M4 17h14" />
+            </svg>
+          </span>
+          <span class="node-cap">Storyboards</span>
+        </div>
+        <div class="m-node n-2 is-highlighted">
+          <span class="node-circle">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <circle cx="6" cy="6" r="3" />
+              <circle cx="6" cy="18" r="3" />
+              <path d="M20 4L8.12 15.88M14.47 14.48L20 20" />
+            </svg>
+          </span>
+          <span class="node-cap">Rhythm Edit</span>
+        </div>
+        <div class="m-node n-3">
+          <span class="node-circle">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <rect x="3" y="4" width="18" height="12" rx="2" />
+              <path d="M8 20h8M12 16v4" />
+            </svg>
+          </span>
+          <span class="node-cap">Product UI</span>
+        </div>
+        <div class="m-node n-4">
+          <span class="node-circle">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8" />
+            </svg>
+          </span>
+          <span class="node-cap">Keyframe Motion</span>
+        </div>
+        <div class="m-node n-5 is-highlighted">
+          <span class="node-circle">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+          </span>
+          <span class="node-cap">Social Reels</span>
+        </div>
+      </div>
+
+      <!-- Elliptical Callout Note -->
+      <div class="matrix-callout">
+        <p>
+          Every product video and social cut starts with a tight narrative edit—layered with 60fps
+          keyframed motion and exported under 1.5MB for instant playback across web, Reels, and
+          Shorts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 4: 4-CHOICE DIAGONAL PARALLELOGRAM PIPELINE (Image 3)
+       ========================================================= -->
+  <section class="mb-beat mb-diagonal" id="pipeline" aria-labelledby="pipeline-heading">
+    <div class="diag-header">
+      <div class="diag-skew-tags" aria-hidden="true">
+        <span class="skew-dark"></span>
+        <span class="skew-accent"></span>
+      </div>
+      <h2 id="pipeline-heading" class="diag-title">
+        4 DISCIPLINES
+      </h2>
+      <p class="diag-sub">
+        How motion design, video editing, product videos, and social media content are built at
+        Teqniqks.
+      </p>
+    </div>
+
+    <div class="diag-track-wrap">
+      <!-- Horizontal Accent Ribbon Behind Panels -->
+      <div class="diag-ribbon" aria-hidden="true"></div>
+
+      <div class="diag-panels-row">
+        {pipelineStages.map((st, idx) => (
+          <article class={`diag-card ${idx % 2 === 0 ? 'is-up' : 'is-down'}`}>
+            <div class="diag-copy-top">
+              <h3 class="diag-card-title">{st.title}</h3>
+              <p class="diag-card-desc">{st.desc}</p>
+            </div>
+
+            <div class="diag-parallelogram">
+              <img
+                src={withBase('/images/workshops/motion-bay.jpg')}
+                alt=""
+                class="diag-img"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="diag-img-tint" aria-hidden="true"></div>
+              <span class="diag-num-badge">0{idx + 1}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 5: PINNED MOODBOARD & DELIVERABLES (Image 2)
+       ========================================================= -->
+  <section class="mb-beat mb-moodboard" aria-label="Motion Bay Deliverables">
+    <div class="mood-tape" aria-hidden="true"></div>
+
+    <div class="mood-stage">
+      <div class="mood-brand-lockup">
+        <span class="mb-big">
+          MOTION
+          <br />
+          &amp; CUTS
+        </span>
+        <span class="mb-small">DESIGNING STORIES</span>
+      </div>
+
+      <!-- Connecting String SVG -->
+      <svg class="mood-strings" viewBox="0 0 800 340" fill="none" aria-hidden="true">
+        <path
+          d="M150 90 L380 140 L260 250 L620 200"
+          stroke="var(--text-accent)"
+          stroke-width="2.5"
+          stroke-linecap="round"
+        />
+      </svg>
+
+      <div class="mood-cards-grid">
+        <article class="mood-card c-1">
+          <span class="mood-pin" aria-hidden="true"></span>
+          <span class="mc-tag">01 / MOTION</span>
+          <h3>Motion Design</h3>
+          <p>Kinetic typography, UI micro-interactions, and custom brand stingers.</p>
+          <span class="mc-date">60fps Keyframed</span>
+        </article>
+
+        <article class="mood-card c-2">
+          <span class="mood-pin" aria-hidden="true"></span>
+          <span class="mc-tag">02 / EDITING</span>
+          <h3>Video Editing</h3>
+          <p>Tight narrative cuts, color grading, sound design, and pacing control.</p>
+          <span class="mc-date">Zero Dead Frames</span>
+        </article>
+
+        <article class="mood-card c-3">
+          <span class="mood-pin" aria-hidden="true"></span>
+          <span class="mc-tag">03 / PRODUCT</span>
+          <h3>Product Videos</h3>
+          <p>Feature walkthroughs and launch trailers compressed under 1.5MB.</p>
+          <span class="mc-date">Hardware Decoded</span>
+        </article>
+
+        <article class="mood-card c-4">
+          <span class="mood-pin" aria-hidden="true"></span>
+          <span class="mc-tag">04 / SOCIAL</span>
+          <h3>Social Media Content</h3>
+          <p>Scroll-stopping 9:16 Reels, Shorts, and square carousel motion cuts.</p>
+          <span class="mc-date">Multi-Format</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 6: SELECTION QUOTE + CTA (Image 1)
+       ========================================================= -->
+  <section class="mb-beat mb-quote" aria-label="Start a Motion Project">
+    <span class="mq-tag tl">REEL 03</span>
+    <span class="mq-tag br">MB / 60FPS</span>
+
+    <div class="mq-center">
+      <span class="mq-lead">Every frame</span>
+      <div class="mq-bar">
+        <span class="mq-pin left" aria-hidden="true"></span>
+        <span class="mq-word">tells a story.</span>
+        <span class="mq-pin right" aria-hidden="true"></span>
+        <span class="mq-star" aria-hidden="true">
+          ✦
+        </span>
+      </div>
+      <p class="mq-sub">Zero filler.</p>
+
+      <a href={`mailto:${email}?subject=Motion%20Bay%20Project%20Inquiry`} class="mq-cta">
+        Commission a Video or Motion Cut →
+      </a>
+    </div>
+  </section>
+</div>
+
+<style>
+  .motion-bay-page {
+    width: 100%;
+    padding-top: var(--nav-height, 76px);
+    background-color: var(--bg-canvas);
+  }
+
+  .mb-beat {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid var(--border-hairline);
+    overflow: hidden;
+  }
+
+  /* =========================================================
+     BEAT 1: VERTICAL SPINE HERO
+     ========================================================= */
+  .mb-hero {
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    min-height: 540px;
+    background-color: var(--bg-surface);
+  }
+
+  .mb-left-spine {
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 10px;
+    overflow: hidden;
+  }
+
+  .spine-chevrons {
+    height: 76px;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(9, 16, 11, 0.22) 0 2px,
+      transparent 2px 10px
+    );
+  }
+
+  .spine-vertical-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-self: center;
+  }
+
+  .spine-barcode {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .bc-url {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 700;
+  }
+
+  .bc-bars {
+    width: 72px;
+    height: 44px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--bg-canvas) 0 2px,
+      transparent 2px 4px,
+      var(--bg-canvas) 4px 7px,
+      transparent 7px 9px,
+      var(--bg-canvas) 9px 10px,
+      transparent 10px 13px
+    );
+  }
+
+  .mb-hero-main {
+    position: relative;
+    padding: clamp(2rem, 5vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .mb-top-emblem {
+    align-self: flex-end;
+    display: grid;
+    grid-template-columns: repeat(2, 16px);
+    gap: 2px;
+  }
+
+  .mb-top-emblem span {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--text-primary);
+  }
+
+  .mb-top-emblem span:nth-child(2) {
+    border-radius: 0 50% 50% 0;
+    background-color: var(--text-accent);
+  }
+
+  .mb-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+
+  .mb-hero-sub {
+    font-size: var(--step-1);
+    color: var(--text-secondary);
+    max-width: 48ch;
+  }
+
+  .mb-hand-arrow {
+    align-self: flex-end;
+    transition: transform 160ms ease;
+  }
+
+  .mb-hand-arrow:hover {
+    transform: translateX(4px);
+  }
+
+  /* =========================================================
+     BEAT 2: GIANT WATERMARK MANIFESTO
+     ========================================================= */
+  .mb-manifesto {
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter);
+    background-color: var(--bg-canvas);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 440px;
+  }
+
+  .mm-top-bar,
+  .mm-bottom-bar {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 2;
+  }
+
+  .mm-watermark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 22vw, 18rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--text-primary);
+    opacity: 0.035;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .mm-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: var(--space-2xl) auto;
+  }
+
+  .mm-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+
+  .mm-prose {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: var(--space-m);
+  }
+
+  .mm-bold-line {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-accent);
+  }
+
+  .mm-badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border-hairline-bright);
+    color: var(--text-primary);
+  }
+
+  /* =========================================================
+     BEAT 3: 2-AXIS PRODUCTION MATRIX
+     ========================================================= */
+  .mb-matrix {
+    padding: clamp(4rem, 7vw, 6.5rem) var(--gutter);
+    background-color: var(--bg-surface);
+  }
+
+  .matrix-stage {
+    position: relative;
+    max-width: 980px;
+    min-height: 430px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .stem-callout {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: var(--font-mono);
+    z-index: 3;
+  }
+
+  .stem-bottom-left {
+    left: 19%;
+    bottom: 12px;
+  }
+  .stem-top-right {
+    right: 12%;
+    top: 10px;
+  }
+
+  .sc-line {
+    width: 1.5px;
+    height: 48px;
+    background: var(--text-accent-soft);
+  }
+
+  .sc-year {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--text-accent-soft);
+    margin-top: 4px;
+  }
+
+  .sc-name {
+    font-size: 0.72rem;
+    color: var(--text-primary);
+  }
+
+  .axis-vertical {
+    position: absolute;
+    left: 50%;
+    top: 12px;
+    bottom: 12px;
+    width: 1px;
+    background: var(--border-hairline-bright);
+  }
+
+  .axis-horizontal {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-hairline-bright);
+  }
+
+  .ax-arrow {
+    position: absolute;
+    font-size: 0.55rem;
+    color: var(--text-secondary);
+  }
+
+  .ax-arrow.up {
+    top: -6px;
+    left: -4px;
+  }
+  .ax-arrow.down {
+    bottom: -6px;
+    left: -4px;
+  }
+  .ax-arrow.left {
+    left: -4px;
+    top: -6px;
+  }
+  .ax-arrow.right {
+    right: -4px;
+    top: -6px;
+  }
+
+  .axis-lbl {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+  }
+
+  .axis-lbl.top {
+    top: -4px;
+    left: 12px;
+  }
+  .axis-lbl.bottom {
+    bottom: -4px;
+    left: 12px;
+  }
+  .axis-lbl.left {
+    left: 10px;
+    top: -32px;
+  }
+  .axis-lbl.right {
+    right: 10px;
+    top: 10px;
+    text-align: right;
+  }
+
+  .matrix-nodes {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    align-items: center;
+    padding: 50px 24px;
+  }
+
+  .m-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .n-1 {
+    transform: translateY(58px);
+  }
+  .n-2 {
+    transform: translateY(22px);
+  }
+  .n-3 {
+    transform: translateY(-22px);
+  }
+  .n-4 {
+    transform: translateY(-48px);
+  }
+  .n-5 {
+    transform: translateY(-14px);
+  }
+
+  .node-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--bg-canvas);
+    border: 2px solid var(--border-hairline-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.65);
+  }
+
+  .m-node.is-highlighted .node-circle {
+    border-color: var(--text-accent);
+    background: var(--theme-accent-muted);
+    color: var(--text-accent);
+  }
+
+  .node-cap {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+  }
+
+  .matrix-callout {
+    position: relative;
+    z-index: 2;
+    align-self: flex-end;
+    max-width: 470px;
+    padding: 24px 36px;
+    border: 1.5px solid var(--text-accent-soft);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--bg-canvas) 88%, transparent);
+    margin-top: 12px;
+  }
+
+  .matrix-callout p {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 0;
+  }
+
+  /* =========================================================
+     BEAT 4: 4-CHOICE DIAGONAL PARALLELOGRAM PIPELINE
+     ========================================================= */
+  .mb-diagonal {
+    padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter);
+    background-color: var(--bg-canvas);
+  }
+
+  .diag-header {
+    max-width: 1120px;
+    margin: 0 auto var(--space-2xl);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .diag-skew-tags {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .skew-dark,
+  .skew-accent {
+    width: 28px;
+    height: 22px;
+    transform: skewX(-24deg);
+  }
+
+  .skew-dark {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-hairline-bright);
+  }
+  .skew-accent {
+    background: var(--text-accent);
+  }
+
+  .diag-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .diag-sub {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    max-width: 42ch;
+    margin: 0;
+  }
+
+  .diag-track-wrap {
+    position: relative;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 20px 0;
+  }
+
+  .diag-ribbon {
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    top: 54%;
+    height: 14px;
+    background: var(--text-accent);
+    opacity: 0.85;
+    z-index: 0;
+  }
+
+  .diag-panels-row {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    align-items: center;
+  }
+
+  .diag-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .diag-card.is-down {
+    flex-direction: column-reverse;
+  }
+
+  .diag-copy-top {
+    padding: 0 8px;
+  }
+
+  .diag-card-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .diag-card-desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .diag-parallelogram {
+    position: relative;
+    height: 190px;
+    transform: skewX(-18deg);
+    overflow: hidden;
+    border: 1px solid var(--border-hairline-bright);
+    background: var(--bg-surface);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.7);
+  }
+
+  .diag-img {
+    width: 130%;
+    height: 100%;
+    margin-left: -15%;
+    object-fit: cover;
+    transform: skewX(18deg);
+    filter: grayscale(100%) contrast(1.15) brightness(0.75);
+  }
+
+  .diag-img-tint {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 35%, rgba(9, 16, 11, 0.82) 100%);
+  }
+
+  .diag-num-badge {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    padding: 4px 12px;
+    background: var(--text-accent);
+    color: var(--bg-canvas);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    transform: skewX(18deg);
+  }
+
+  /* =========================================================
+     BEAT 5: PINNED MOODBOARD
+     ========================================================= */
+  .mb-moodboard {
+    padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter);
+    background-color: var(--bg-surface);
+  }
+
+  .mood-tape {
+    position: absolute;
+    top: -10px;
+    right: 60px;
+    width: 140px;
+    height: 36px;
+    background: var(--theme-accent-muted);
+    border: 1px dashed var(--border-hairline-bright);
+    transform: rotate(32deg);
+  }
+
+  .mood-stage {
+    position: relative;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .mood-brand-lockup {
+    margin-bottom: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mb-big {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+  }
+
+  .mb-small {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--text-accent-soft);
+    margin-top: 6px;
+  }
+
+  .mood-strings {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.65;
+  }
+
+  .mood-cards-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .mood-card {
+    position: relative;
+    background: color-mix(in srgb, var(--text-primary) 92%, var(--text-accent-soft) 8%);
+    color: var(--bg-canvas);
+    padding: 20px 16px 14px;
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mood-card.c-1 {
+    transform: rotate(-2deg);
+  }
+  .mood-card.c-2 {
+    transform: rotate(1.5deg) translateY(14px);
+  }
+  .mood-card.c-3 {
+    transform: rotate(-1.5deg);
+  }
+  .mood-card.c-4 {
+    transform: rotate(2deg) translateY(10px);
+  }
+
+  .mood-pin {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--text-accent);
+    border: 2px solid var(--bg-canvas);
+  }
+
+  .mc-tag {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    opacity: 0.7;
+  }
+
+  .mood-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--bg-canvas);
+    margin: 0;
+  }
+
+  .mood-card p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: rgba(9, 16, 11, 0.82);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .mc-date {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    border-top: 1px dashed rgba(9, 16, 11, 0.25);
+    padding-top: 6px;
+  }
+
+  /* =========================================================
+     BEAT 6: SELECTION QUOTE + CTA
+     ========================================================= */
+  .mb-quote {
+    padding: clamp(4rem, 8vw, 6.5rem) var(--gutter);
+    background-color: var(--bg-canvas);
+    display: flex;
+    justify-content: center;
+  }
+
+  .mq-tag {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .mq-tag.tl {
+    top: 20px;
+    left: 24px;
+  }
+  .mq-tag.br {
+    bottom: 20px;
+    right: 24px;
+  }
+
+  .mq-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mq-lead {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .mq-bar {
+    position: relative;
+    padding: 4px 18px;
+    background: var(--theme-accent-muted);
+    margin-bottom: 6px;
+  }
+
+  .mq-word {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+  }
+
+  .mq-pin {
+    position: absolute;
+    width: 2px;
+    height: 115%;
+    background: var(--text-accent);
+  }
+
+  .mq-pin.left {
+    left: 0;
+    bottom: 0;
+  }
+  .mq-pin.right {
+    right: 0;
+    top: 0;
+  }
+
+  .mq-star {
+    position: absolute;
+    right: -16px;
+    bottom: -8px;
+    color: var(--text-accent-soft);
+    font-size: 1.3rem;
+  }
+
+  .mq-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-l);
+  }
+
+  .mq-cta {
+    padding: 10px 22px;
+    background: var(--text-accent);
+    color: var(--bg-canvas);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  @media (max-width: 960px) {
+    .diag-panels-row,
+    .mood-cards-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .diag-ribbon,
+    .stem-callout {
+      display: none;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .mb-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .mb-left-spine {
+      display: none;
+    }
+
+    .matrix-nodes {
+      grid-template-columns: 1fr;
+      padding: 16px 0;
+    }
+
+    .n-1,
+    .n-2,
+    .n-3,
+    .n-4,
+    .n-5 {
+      transform: none;
+    }
+
+    .axis-vertical,
+    .axis-horizontal,
+    .mood-strings {
+      display: none;
+    }
+
+    .diag-panels-row,
+    .mood-cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .diag-parallelogram {
+      transform: none;
+    }
+
+    .diag-img {
+      width: 100%;
+      margin-left: 0;
+      transform: none;
+    }
+
+    .mood-card {
+      transform: none !important;
+    }
+  }
+</style>

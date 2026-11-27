@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy & Data Architecture"
+  description="Compliance disclosure and zero-cookie technical declaration for Teqniqks."
+  canonicalPath="/privacy"
+>
+  <section class="privacy-section">
+    <div class="site-container">
+      <div class="page-header">
+        <h1 class="page-title">Privacy & Compliance Declaration</h1>
+        <p class="page-lead">
+          We consider surveillance capitalism and dark patterns antithetical to good software
+          engineering. This site is engineered to collect zero personal surveillance data.
+        </p>
+      </div>
+
+      <div class="privacy-card-stack">
+        <!-- 1. Zero Cookies -->
+        <article class="privacy-block">
+          <h2 class="block-title">1. Zero Cookies & Zero Local Tracking Storage</h2>
+          <p>
+            This website stores <strong>strictly zero HTTP cookies</strong> on your device. We do
+            not use <code>localStorage</code>, <code>sessionStorage</code>, or IndexedDB for
+            behavioral tracking or device fingerprinting. You will never encounter a cookie consent
+            banner on this site because there are no cookies to consent to.
+          </p>
+        </article>
+
+        <!-- 2. Third-Party Scripts & Fonts -->
+        <article class="privacy-block">
+          <h2 class="block-title">2. Zero Third-Party Surveillance Scripts</h2>
+          <p>
+            All typefaces (Space Grotesk, Sora, and JetBrains Mono) are self-hosted directly from
+            our static edge origin. We make zero calls to Google Fonts, Adobe Typekit, Google Tag
+            Manager, Meta Pixel, or third-party advertising exchanges. Your IP address is never
+            leaked to foreign ad brokers when loading our pages.
+          </p>
+        </article>
+
+        <!-- 3. Formless Communications -->
+        <article class="privacy-block">
+          <h2 class="block-title">3. Contact Channels & Data Retention</h2>
+          <p>
+            We operate without online intake forms or customer relationship management (CRM)
+            database backends. When you contact us via email, your message arrives directly in our
+            secure email inbox. We do not sell, rent, or distribute your email address or project
+            details to any third party.
+          </p>
+        </article>
+
+        <!-- 4. Legal Frameworks -->
+        <article class="privacy-block">
+          <h2 class="block-title">4. Regulatory Applicability</h2>
+          <p>
+            Our infrastructure and data practices align with the highest standards of international
+            digital privacy:
+          </p>
+          <ul class="compliance-bullets">
+            <li>
+              <strong>Sri Lanka Personal Data Protection Act (PDPA No. 9 of 2022):</strong> We
+              uphold data minimization principles, processing no personal data without direct
+              communicative intent.
+            </li>
+            <li>
+              <strong>EU General Data Protection Regulation (GDPR):</strong> By storing zero
+              tracking cookies and making zero external tracking API calls, we respect the
+              fundamental privacy rights of visitors from the European Economic Area.
+            </li>
+          </ul>
+          <p class="legal-disclaimer">
+            <em>
+              Legal Notice: This disclosure represents our verifiable technical architecture and
+              does not constitute formal legal counsel. For contractual legal questions, please
+              consult a licensed attorney.
+            </em>
+          </p>
+        </article>
+
+        <!-- 5. Open Source Licenses -->
+        <article class="privacy-block">
+          <h2 class="block-title">5. Open Source Licensing</h2>
+          <p>
+            The software, architectural components, and open utilities authored by Teqniqks are
+            released under standard permissive open source licenses (MIT License / SIL Open Font
+            License). Please consult individual project repositories on GitHub for specific license
+            notices.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .site-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .privacy-section {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .page-title {
+    font-size: var(--step-5);
+    color: var(--color-raw-parchment);
+    margin-bottom: var(--space-xs);
+    letter-spacing: -0.035em;
+  }
+
+  .page-lead {
+    font-size: var(--step-1);
+    color: var(--text-secondary);
+    max-width: 52ch;
+    line-height: var(--lh-body);
+  }
+
+  .privacy-card-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .privacy-block {
+    background-color: var(--surface-elevated);
+    border: 2px solid var(--border-timber);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-flat);
+  }
+
+  .block-title {
+    font-size: var(--step-2);
+    color: var(--color-raw-parchment);
+    margin-bottom: var(--space-xs);
+  }
+
+  .privacy-block p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: var(--lh-body);
+    margin-bottom: var(--space-m);
+  }
+
+  .privacy-block p:last-child {
+    margin-bottom: 0;
+  }
+
+  .compliance-bullets {
+    margin: var(--space-m) 0 var(--space-l);
+    padding-left: var(--space-l);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .compliance-bullets li {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: var(--lh-body);
+  }
+
+  .compliance-bullets strong {
+    color: var(--color-raw-parchment);
+  }
+
+  .legal-disclaimer {
+    font-size: 0.8125rem !important;
+    color: var(--color-raw-ash) !important;
+    border-top: 1px dashed var(--border-timber);
+    padding-top: var(--space-m);
+    margin-top: var(--space-m);
+  }
+</style>

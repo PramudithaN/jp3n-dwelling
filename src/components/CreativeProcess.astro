@@ -1,0 +1,516 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id = 'process' } = Astro.props;
+---
+
+<section class="creative-process-section" id={id} aria-labelledby="process-heading">
+  <div class="site-container">
+    <div class="process-inner">
+      <span class="section-kicker">THE PROCESS</span>
+      <h2 id="process-heading" class="process-headline">
+        The creative process
+        <br />
+        isn’t linear.
+      </h2>
+
+      <!-- Native 60fps Canvas Path & Runner Simulation -->
+      <div class="process-stage" id="processStage">
+        <canvas
+          id="processCanvas"
+          aria-label="Animated runner navigating a looping non-linear path with idea and completion milestones"
+        ></canvas>
+      </div>
+
+      <p class="process-copy">
+        In your head, every idea is a perfectly straight line. Then the real work starts: you loop
+        back, lose the thread, hit a low, flip the whole thing upside down and climb out again. That
+        mess is not a sign you are failing. It is the process. Keep moving through it and you will
+        reach done, and then the next idea.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .creative-process-section {
+    padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+    background-color: var(--bg-canvas, #09100b);
+    border-bottom: 1px solid var(--border-hairline);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .process-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .process-headline {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2.1rem, 4.8vw, 3.4rem);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    color: var(--text-primary, #faf9f6);
+    margin: 0.4rem 0 1.5rem 0;
+  }
+
+  .process-stage {
+    width: 100%;
+    max-width: 680px;
+    height: 220px;
+    position: relative;
+    margin: 0.5rem 0 1.5rem 0;
+  }
+
+  #processCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .process-copy {
+    font-family: var(--font-body, 'Sora', sans-serif);
+    font-size: clamp(0.86rem, 0.82rem + 0.2vw, 0.96rem);
+    line-height: 1.65;
+    color: var(--text-secondary, #a3ad9d);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    .process-stage {
+      height: 185px;
+    }
+  }
+</style>
+
+<script>
+  // ==========================================================================
+  // NON-LINEAR CREATIVE PROCESS ANIMATION (60fps High-DPI Canvas)
+  // ==========================================================================
+  function initCreativeProcess() {
+    const canvas = document.getElementById('processCanvas') as HTMLCanvasElement | null;
+    const stage = document.getElementById('processStage');
+    if (!canvas || !stage) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let width = 680;
+    let height = 220;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    // Build a smooth parametric path with:
+    // 1. Straight entry
+    // 2. Full upward loop-de-loop (runner goes upside down)
+    // 3. Low dip / trough
+    // 4. Climb back up to straight exit
+    interface PathPoint {
+      x: number;
+      y: number;
+      angle: number;
+      dist: number;
+    }
+
+    let points: PathPoint[] = [];
+    let totalLength = 0;
+
+    function buildPath(w: number, h: number) {
+      const cy = h * 0.58; // Baseline Y
+      const padX = w * 0.05;
+      const spanW = w - padX * 2;
+      const loop1Cx = padX + spanW * 0.28;
+      const loop1R = Math.min(h * 0.25, spanW * 0.11);
+      const loop2Cx = padX + spanW * 0.64;
+      const loop2R = Math.min(h * 0.2, spanW * 0.085);
+
+      const raw: Array<{ x: number; y: number }> = [];
+
+      // Segment 1: Entry straight + slight initial bump (padX -> loop1Cx)
+      const seg1Steps = 45;
+      for (let i = 0; i <= seg1Steps; i++) {
+        const u = i / seg1Steps;
+        const x = padX + u * (loop1Cx - padX);
+        const bump = Math.sin(u * Math.PI * 2) * (h * 0.03) * Math.sin(u * Math.PI);
+        raw.push({ x, y: cy + bump });
+      }
+
+      // Segment 2: Obstacle 1 — Full upward loop-de-loop
+      const loop1Steps = 75;
+      const circle1Cy = cy - loop1R;
+      for (let i = 1; i <= loop1Steps; i++) {
+        const u = i / loop1Steps;
+        const theta = Math.PI / 2 - u * Math.PI * 2;
+        const x = loop1Cx + Math.cos(theta) * loop1R * 1.06;
+        const y = circle1Cy + Math.sin(theta) * loop1R;
+        raw.push({ x, y });
+      }
+
+      // Segment 3: Obstacle 2 — Sharp drop into a deep trough + hurdle bumps (loop1Cx -> loop2Cx)
+      const seg3Steps = 80;
+      for (let i = 1; i <= seg3Steps; i++) {
+        const u = i / seg3Steps;
+        const x = loop1Cx + u * (loop2Cx - loop1Cx);
+        // Deep dip down (+0.26*h), then a jagged/undulating climb up to loop 2
+        const dip = Math.sin(u * Math.PI) * (h * 0.25);
+        const hurdles = Math.sin(u * Math.PI * 4) * (h * 0.055) * Math.sin(u * Math.PI);
+        raw.push({ x, y: cy + dip + hurdles });
+      }
+
+      // Segment 4: Obstacle 3 — Second tighter loop-de-loop
+      const loop2Steps = 65;
+      const circle2Cy = cy - loop2R;
+      for (let i = 1; i <= loop2Steps; i++) {
+        const u = i / loop2Steps;
+        const theta = Math.PI / 2 - u * Math.PI * 2;
+        const x = loop2Cx + Math.cos(theta) * loop2R * 1.06;
+        const y = circle2Cy + Math.sin(theta) * loop2R;
+        raw.push({ x, y });
+      }
+
+      // Segment 5: Obstacle 4 — Winding uphill/downhill hurdles before reaching destination
+      const exitEndX = padX + spanW;
+      const seg5Steps = 75;
+      for (let i = 1; i <= seg5Steps; i++) {
+        const u = i / seg5Steps;
+        const x = loop2Cx + u * (exitEndX - loop2Cx);
+        const envelope = Math.pow(Math.sin(u * Math.PI), 0.85);
+        const wave = Math.sin(u * Math.PI * 3.1) * (h * 0.16) * envelope;
+        raw.push({ x, y: cy - wave });
+      }
+
+      // Compute cumulative arc length & smooth tangents
+      points = [];
+      let acc = 0;
+      for (let i = 0; i < raw.length; i++) {
+        if (i > 0) {
+          const dx = raw[i].x - raw[i - 1].x;
+          const dy = raw[i].y - raw[i - 1].y;
+          acc += Math.hypot(dx, dy);
+        }
+        const prev = raw[Math.max(0, i - 1)];
+        const next = raw[Math.min(raw.length - 1, i + 1)];
+        const angle = Math.atan2(next.y - prev.y, next.x - prev.x);
+        points.push({ x: raw[i].x, y: raw[i].y, angle, dist: acc });
+      }
+      totalLength = acc;
+    }
+
+    function resize() {
+      if (!stage || !canvas || !ctx) return;
+      const rect = stage.getBoundingClientRect();
+      width = rect.width || 680;
+      height = rect.height || 220;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      buildPath(width, height);
+    }
+
+    function sampleAtProgress(t: number): { pt: PathPoint; index: number } {
+      const targetDist = Math.max(0, Math.min(1, t)) * totalLength;
+      let lo = 0;
+      let hi = points.length - 1;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (points[mid].dist < targetDist) lo = mid + 1;
+        else hi = mid;
+      }
+      const idx = Math.max(0, Math.min(points.length - 1, lo));
+      return { pt: points[idx], index: idx };
+    }
+
+    function drawLightbulb(x: number, y: number, glow: number) {
+      if (!ctx) return;
+      ctx.save();
+      ctx.translate(x, y);
+
+      if (glow > 0.05) {
+        const grad = ctx.createRadialGradient(0, -2, 2, 0, -2, 22);
+        grad.addColorStop(0, `rgba(250, 249, 246, ${0.32 * glow})`);
+        grad.addColorStop(1, 'rgba(250, 249, 246, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(0, -2, 22, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const alpha = 0.35 + 0.65 * glow;
+      ctx.strokeStyle = `rgba(250, 249, 246, ${alpha})`;
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // Bulb outline
+      ctx.beginPath();
+      ctx.arc(0, -3, 6.5, Math.PI * 0.78, Math.PI * 2.22);
+      ctx.lineTo(2.8, 5);
+      ctx.lineTo(-2.8, 5);
+      ctx.closePath();
+      ctx.stroke();
+
+      // Base cap
+      ctx.beginPath();
+      ctx.moveTo(-2.2, 7.5);
+      ctx.lineTo(2.2, 7.5);
+      ctx.stroke();
+
+      // Rays when glowing
+      if (glow > 0.15) {
+        const rayAngles = [-Math.PI / 2, -Math.PI * 0.25, -Math.PI * 0.75, 0, Math.PI];
+        ctx.strokeStyle = `rgba(250, 249, 246, ${0.85 * glow})`;
+        rayAngles.forEach((a) => {
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a) * 9.5, -3 + Math.sin(a) * 9.5);
+          ctx.lineTo(Math.cos(a) * 12.5, -3 + Math.sin(a) * 12.5);
+          ctx.stroke();
+        });
+      }
+
+      ctx.restore();
+    }
+
+    function drawCheckBadge(x: number, y: number, active: number) {
+      if (!ctx) return;
+      ctx.save();
+      ctx.translate(x, y);
+      const scale = 0.92 + 0.12 * active;
+      ctx.scale(scale, scale);
+
+      // Helper to read live CSS --text-accent as hex + rgb
+      const accentHex = (
+        getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468'
+      ).trim();
+      const hexClean = accentHex.startsWith('#') ? accentHex.slice(1) : '52a468';
+      const fullHex =
+        hexClean.length === 3
+          ? hexClean
+              .split('')
+              .map((c) => c + c)
+              .join('')
+          : hexClean;
+      const ar = parseInt(fullHex.slice(0, 2), 16) || 82;
+      const ag = parseInt(fullHex.slice(2, 4), 16) || 164;
+      const ab = parseInt(fullHex.slice(4, 6), 16) || 104;
+
+      // Circle
+      ctx.beginPath();
+      ctx.arc(0, 0, 10, 0, Math.PI * 2);
+      ctx.fillStyle =
+        active > 0.3
+          ? `rgba(${ar}, ${ag}, ${ab}, ${0.25 + 0.75 * active})`
+          : 'rgba(250, 249, 246, 0.08)';
+      ctx.fill();
+      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = active > 0.3 ? accentHex : 'rgba(250, 249, 246, 0.32)';
+      ctx.stroke();
+
+      // Checkmark
+      ctx.beginPath();
+      ctx.moveTo(-4, 0.5);
+      ctx.lineTo(-1, 3.5);
+      ctx.lineTo(4.5, -3);
+      ctx.strokeStyle = active > 0.3 ? '#faf9f6' : 'rgba(250, 249, 246, 0.45)';
+      ctx.lineWidth = 1.7;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawRunner(x: number, y: number, angle: number, stride: number) {
+      if (!ctx) return;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+
+      // Subtle lean forward in direction of motion
+      ctx.translate(0, -13);
+      ctx.strokeStyle = '#faf9f6';
+      ctx.fillStyle = '#faf9f6';
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // Head
+      ctx.beginPath();
+      ctx.arc(2.5, -6, 2.7, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Torso (leaning slightly forward)
+      ctx.lineWidth = 2.1;
+      ctx.beginPath();
+      ctx.moveTo(1.5, -2.5);
+      ctx.lineTo(-0.5, 5);
+      ctx.stroke();
+
+      // Legs (animated running stride)
+      const legSwing = Math.sin(stride) * 6.5;
+      const kneeLift = Math.max(0, Math.cos(stride)) * 2.5;
+      ctx.lineWidth = 1.9;
+
+      // Front leg
+      ctx.beginPath();
+      ctx.moveTo(-0.5, 5);
+      ctx.lineTo(2 + legSwing * 0.65, 9 - kneeLift * 0.4);
+      ctx.lineTo(legSwing, 12.5 - kneeLift * 0.3);
+      ctx.stroke();
+
+      // Back leg
+      ctx.beginPath();
+      ctx.moveTo(-0.5, 5);
+      ctx.lineTo(-2 - legSwing * 0.6, 9.5);
+      ctx.lineTo(-legSwing * 0.9, 12.5);
+      ctx.stroke();
+
+      // Arms (counter-swing)
+      const armSwing = -Math.sin(stride) * 5;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(1, -1);
+      ctx.lineTo(armSwing * 0.8 + 2.5, 3);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(1, -1);
+      ctx.lineTo(-armSwing * 0.8 + 1, 3.5);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    let startTime: number | null = null;
+    const CYCLE_MS = 8600; // Smooth 8.6s full multi-obstacle loop
+    let rafId: number | null = null;
+    let isVisible = true;
+
+    function renderFrame(progress: number) {
+      if (!ctx || points.length === 0) return;
+      ctx.clearRect(0, 0, width, height);
+
+      const cy = height * 0.58;
+      const padX = width * 0.05;
+      const endX = width - padX;
+
+      // 1. Faint dashed "straight line in your head"
+      ctx.save();
+      ctx.setLineDash([4, 6]);
+      ctx.strokeStyle = 'rgba(250, 249, 246, 0.14)';
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.moveTo(padX, cy);
+      ctx.lineTo(endX, cy);
+      ctx.stroke();
+      ctx.restore();
+
+      // 2. Unvisited full non-linear path ahead
+      ctx.save();
+      ctx.strokeStyle = 'rgba(250, 249, 246, 0.16)';
+      ctx.lineWidth = 1.75;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      points.forEach((p, i) => {
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      });
+      ctx.stroke();
+      ctx.restore();
+
+      // 3. Illuminated active path up to runner
+      const { pt: runnerPt, index: runnerIdx } = sampleAtProgress(progress);
+      ctx.save();
+      ctx.strokeStyle = '#faf9f6';
+      ctx.lineWidth = 2.4;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      const accentHexLoop = (
+        getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468'
+      ).trim();
+      ctx.shadowColor = accentHexLoop;
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      for (let i = 0; i <= runnerIdx; i++) {
+        const p = points[i];
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // 4. Milestones: Idea Spark (near entry) & Done Check (near exit)
+      const ideaGlow = progress < 0.25 ? Math.max(0.35, 1 - Math.abs(progress - 0.1) * 4) : 0.35;
+      drawLightbulb(padX + (endX - padX) * 0.11, cy - 34, ideaGlow);
+
+      const doneActive = progress > 0.85 ? Math.min(1, (progress - 0.85) / 0.1) : 0;
+      drawCheckBadge(endX - (endX - padX) * 0.05, cy - 34, doneActive);
+
+      // 5. Running silhouette figure
+      const stride = progress * 64;
+      drawRunner(runnerPt.x, runnerPt.y, runnerPt.angle, stride);
+    }
+
+    function animate(ts: number) {
+      if (!isVisible) {
+        rafId = null;
+        return;
+      }
+      if (startTime === null) startTime = ts;
+      const elapsed = (ts - startTime) % CYCLE_MS;
+      const progress = elapsed / CYCLE_MS;
+      renderFrame(progress);
+      rafId = requestAnimationFrame(animate);
+    }
+
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    if (prefersReducedMotion) {
+      renderFrame(0.36); // Static mid-loop showcase
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+          if (isVisible && !rafId) {
+            rafId = requestAnimationFrame(animate);
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(stage);
+
+    rafId = requestAnimationFrame(animate);
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        observer.disconnect();
+        window.removeEventListener('resize', resize);
+      },
+      { once: true },
+    );
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCreativeProcess);
+  } else {
+    initCreativeProcess();
+  }
+  document.addEventListener('astro:page-load', initCreativeProcess);
+</script>

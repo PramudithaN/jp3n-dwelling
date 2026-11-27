@@ -1,0 +1,345 @@
+---
+import { siteConfig } from '../config/site';
+
+interface Props {
+  id?: string;
+}
+
+const { id = 'afk' } = Astro.props;
+const team = siteConfig.team;
+---
+
+<section class="afk-section" id={id} aria-labelledby="afk-heading">
+  <div class="afk-stage">
+    <!-- Subtle overhead radial spotlight -->
+    <div class="afk-spotlight" aria-hidden="true"></div>
+
+    <!-- Centered Editorial Credits Lockup -->
+    <div class="afk-credits-wrap">
+      <!-- 8-Point Star Asterisk -->
+      <div class="afk-star" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 2V22M2 12H22M4.93 4.93L19.07 19.07M19.07 4.93L4.93 19.07"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <h2 id="afk-heading" class="afk-title">
+        afk.
+      </h2>
+
+      <div class="afk-meta-block">
+        <p class="afk-meta-line">AWAY FROM KEYBOARD</p>
+        <div class="afk-meta-split">
+          <span>©2026</span>
+          <span>OFF-DUTY ①</span>
+        </div>
+        <p class="afk-meta-line">BY TEQNIQKS COLLECTIVE</p>
+        <p class="afk-meta-line is-accent">TEQNIQKS.DEV / AFK</p>
+      </div>
+
+      <!-- 2-Column Aligned Credits Roster with Descriptions -->
+      <dl class="afk-roster">
+        {team.map((member) => (
+          <div class="afk-row">
+            <dt class="afk-member-name">{member.name.split(' ')[0].toUpperCase()}</dt>
+            <dd class="afk-activity-col">
+              <span class="afk-activity-title">{member.afk}</span>
+              <span class="afk-activity-note">{member.afkNote}</span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <!-- Brand Stamp -->
+      <div class="afk-stamp" aria-hidden="true">
+        <span>teqniqks</span>
+      </div>
+    </div>
+
+    <!-- Empty Desk, Monitor & Office Chair Silhouette on Horizon -->
+    <div class="afk-silhouette-scene" aria-hidden="true">
+      <svg
+        class="afk-scene-svg"
+        viewBox="0 0 420 130"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Desk Legs & Tabletop -->
+        <rect x="64" y="68" width="108" height="5" fill="currentColor" />
+        <rect x="70" y="73" width="4" height="57" fill="currentColor" />
+        <rect x="162" y="73" width="4" height="57" fill="currentColor" />
+        <rect x="78" y="73" width="2.5" height="57" opacity="0.55" fill="currentColor" />
+        <rect x="154" y="73" width="2.5" height="57" opacity="0.55" fill="currentColor" />
+
+        <!-- Slim Display Monitor & Stand -->
+        <path d="M104 68 L112 52 L117 52 L110 68 Z" fill="currentColor" />
+        <rect x="98" y="66" width="20" height="2.5" fill="currentColor" />
+        <!-- Angled Monitor Panel -->
+        <path d="M98 18 L103 17 L116 53 L111 54 Z" fill="currentColor" />
+        <!-- Keyboard / Mouse on Desk -->
+        <rect x="128" y="65.5" width="16" height="2.5" rx="1" fill="currentColor" />
+        <!-- Power Cable -->
+        <path
+          d="M106 46 C90 48, 76 58, 70 72"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+
+        <!-- Empty Ergonomic Chair -->
+        <!-- Backrest -->
+        <path
+          d="M238 36 C240 31, 245 30, 260 31 C264 32, 266 36, 264 42 L255 82 C253 86, 249 87, 244 86 L232 84 C236 68, 237 50, 238 36 Z"
+          fill="currentColor"
+        />
+        <!-- Seat Cushion -->
+        <path
+          d="M196 81 C208 79, 236 80, 250 83 C253 84, 253 88, 248 89 L200 88 C195 88, 193 83, 196 81 Z"
+          fill="currentColor"
+        />
+        <!-- Armrest -->
+        <path
+          d="M206 66 C214 63, 228 65, 234 72 L232 82 M206 66 C204 66, 203 69, 206 70 C214 70, 224 72, 228 82"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <!-- Gas Lift & Base -->
+        <rect x="220" y="88" width="6" height="30" fill="currentColor" />
+        <path
+          d="M223 116 L196 125 M223 116 L250 125 M223 116 L223 126"
+          stroke="currentColor"
+          stroke-width="3.5"
+          stroke-linecap="round"
+        />
+        <circle cx="196" cy="127" r="2.5" fill="currentColor" />
+        <circle cx="223" cy="127" r="2.5" fill="currentColor" />
+        <circle cx="250" cy="127" r="2.5" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- Solid Horizon Floor -->
+    <div class="afk-floor" aria-hidden="true"></div>
+  </div>
+</section>
+
+<style>
+  .afk-section {
+    position: relative;
+    border-bottom: 1px solid var(--border-hairline);
+    background-color: var(--bg-surface);
+    overflow: hidden;
+  }
+
+  .afk-stage {
+    position: relative;
+    min-height: 620px;
+    padding-top: clamp(4rem, 7vw, 6rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .afk-spotlight {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 65% 42% at 50% 86%,
+        color-mix(in srgb, var(--text-accent-soft) 32%, var(--bg-elevated) 68%) 0%,
+        color-mix(in srgb, var(--text-accent) 14%, var(--bg-elevated) 86%) 38%,
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse at 50% 34%,
+        color-mix(in srgb, var(--text-accent-soft) 14%, var(--bg-elevated) 86%) 0%,
+        var(--bg-surface) 60%,
+        var(--bg-canvas) 100%
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .afk-credits-wrap {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 var(--gutter) var(--space-3xl);
+    max-width: 680px;
+    width: 100%;
+  }
+
+  .afk-star {
+    color: var(--text-accent);
+    margin-bottom: var(--space-l);
+    display: inline-flex;
+  }
+
+  .afk-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+    line-height: 1;
+  }
+
+  .afk-meta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .afk-meta-split {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 190px;
+    color: var(--text-muted);
+  }
+
+  .afk-meta-line.is-accent {
+    color: var(--text-accent-soft);
+  }
+
+  /* 2-Column Credits Roster */
+  .afk-roster {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 580px;
+    margin-bottom: var(--space-xl);
+    padding: 18px 22px;
+    background: color-mix(in srgb, var(--bg-canvas) 65%, transparent);
+    border: 1px solid var(--border-hairline);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+  }
+
+  .afk-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 18px;
+    align-items: baseline;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-hairline);
+  }
+
+  .afk-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .afk-member-name {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-accent);
+  }
+
+  .afk-activity-col {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .afk-activity-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .afk-activity-note {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+  }
+
+  /* Brand Stamp */
+  .afk-stamp {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 10px;
+    background-color: var(--text-primary);
+    color: var(--bg-canvas);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.06em;
+  }
+
+  /* Empty Desk & Chair Silhouette */
+  .afk-silhouette-scene {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto -2px;
+    color: #030604;
+    display: flex;
+    justify-content: center;
+    filter: drop-shadow(0 0 18px color-mix(in srgb, var(--text-accent-soft) 25%, transparent));
+  }
+
+  .afk-scene-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .afk-floor {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 26px;
+    background-color: #030604;
+    border-top: 1px solid color-mix(in srgb, var(--text-accent-soft) 28%, transparent);
+  }
+
+  @media (max-width: 560px) {
+    .afk-stage {
+      min-height: 540px;
+    }
+
+    .afk-roster {
+      padding: 14px 16px;
+    }
+
+    .afk-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .afk-member-name {
+      text-align: left;
+    }
+  }
+</style>

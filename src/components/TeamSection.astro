@@ -1,0 +1,400 @@
+---
+import { siteConfig } from '../config/site';
+
+const team = siteConfig.team;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="team-gallery-section" id="team" aria-labelledby="team-heading">
+  <div class="site-container">
+    <div class="team-header">
+      <div class="team-header-left">
+        <span class="section-kicker">THE COLLECTIVE</span>
+        <h2 id="team-heading" class="section-heading">
+          Meet the Team
+        </h2>
+      </div>
+      <p class="team-header-sub">
+        Six specialized engineers. Roles &amp; craft derived from their GitHub repositories.
+      </p>
+    </div>
+
+    <!-- Compact 5-Column Animated Portrait Strip -->
+    <div class="team-portrait-strip" id="teamPortraitStrip">
+      {team.map((member, index) => {
+        const memberNum = index + 1;
+        const portraitBase = member.portrait.replace(/-f\d+\.jpg$/, '');
+        return (
+          <article class="team-card" data-member-num={memberNum}>
+            <a
+              href={`https://github.com/${member.githubHandle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="portrait-frame"
+              aria-label={`${member.name} — ${member.role} on GitHub`}
+            >
+              {[1, 2, 3, 4].map((frameIdx) => (
+                <img
+                  src={`${base}${portraitBase}-f${frameIdx}.jpg`}
+                  alt={frameIdx === 1 ? `${member.name} monochrome silhouette portrait` : ''}
+                  aria-hidden={frameIdx !== 1 ? 'true' : undefined}
+                  class={`portrait-img ${frameIdx === 1 ? 'is-active' : ''}`}
+                  data-frame={frameIdx}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ))}
+
+              <div class="portrait-vignette" aria-hidden="true"></div>
+
+              <!-- Crisp White 6-Pointed Star Emblem -->
+              <span class="portrait-star" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 1L14.2 8.2L21.5 6.5L16.4 12L21.5 17.5L14.2 15.8L12 23L9.8 15.8L2.5 17.5L7.6 12L2.5 6.5L9.8 8.2L12 1Z"
+                    fill="#FFFFFF"
+                  />
+                </svg>
+              </span>
+            </a>
+
+            <!-- Compact Member Details -->
+            <div class="member-details">
+              <div class="member-title-row">
+                <h3 class="member-name">{member.name}</h3>
+                <a
+                  href={`https://github.com/${member.githubHandle}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="member-handle"
+                >
+                  @{member.githubHandle}
+                </a>
+              </div>
+              <span class="member-role">{member.role}</span>
+              <p class="member-bio">{member.bio}</p>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .site-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .team-gallery-section {
+    padding: clamp(2.75rem, 5vw, 4rem) 0;
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-hairline);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .team-header {
+    max-width: 1120px;
+    margin: 0 auto 1.75rem auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .team-header .section-heading {
+    margin-bottom: 0;
+  }
+
+  .team-header-sub {
+    font-family: var(--font-body, 'Sora', sans-serif);
+    font-size: 0.82rem;
+    color: #8f998a;
+    margin: 0;
+    max-width: 380px;
+  }
+
+  .team-portrait-strip {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Compact 3:4 Portrait Frame */
+  .portrait-frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: #1b1b1b;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+  }
+
+  .portrait-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(100%) contrast(1.08);
+    opacity: 0;
+    transition:
+      opacity 75ms linear,
+      transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .portrait-img.is-active {
+    opacity: 1;
+  }
+
+  .team-card:hover .portrait-img {
+    transform: scale(1.03);
+  }
+
+  .portrait-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 48%, rgba(10, 10, 10, 0.38) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Crisp White 6-Pointed Star */
+  .portrait-star {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 3;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+
+  .team-card:hover .portrait-star {
+    transform: translate(-50%, -50%) rotate(30deg) scale(1.15);
+  }
+
+  /* Compact Editorial Info Block */
+  .member-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0 2px;
+  }
+
+  .member-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .member-name {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #faf9f6;
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .member-handle {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.62rem;
+    color: #7d8471;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .member-handle:hover {
+    color: var(--theme-accent, #52a468);
+  }
+
+  .member-role {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--theme-accent, #52a468);
+    line-height: 1.3;
+  }
+
+  .member-bio {
+    font-family: var(--font-body, 'Sora', sans-serif);
+    font-size: 0.72rem;
+    line-height: 1.42;
+    color: #9ba595;
+    margin: 3px 0 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 960px) {
+    .team-portrait-strip {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .team-gallery-section {
+      padding: var(--space-2xl) 0;
+    }
+
+    .team-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .team-portrait-strip {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .team-card {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-canvas);
+      border-radius: 8px;
+    }
+
+    .portrait-frame {
+      width: 92px;
+      height: 122px;
+      aspect-ratio: 3 / 4;
+      border-radius: 4px;
+    }
+
+    .member-bio {
+      -webkit-line-clamp: 4;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portrait-img {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  // ==========================================================================
+  // SHUTTER-DRAG CINEMAGRAPH ANIMATION (Matches Reference Video Rhythm)
+  // ==========================================================================
+  function initTeamShutterAnimation() {
+    const strip = document.getElementById('teamPortraitStrip');
+    if (!strip) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const cards = Array.from(strip.querySelectorAll('.team-card'));
+    // Staggered organic cadences (ms) per member so they feel independent
+    const cadences = [190, 225, 175, 240, 205, 215];
+    // Asymmetric frame sequences mimic authentic slow-shutter film bursts
+    const sequences = [
+      [0, 1, 0, 2, 3, 1],
+      [1, 0, 2, 1, 3, 0],
+      [0, 2, 3, 0, 1, 2],
+      [2, 0, 1, 3, 0, 1],
+      [0, 3, 1, 2, 0, 1],
+      [1, 2, 0, 3, 1, 0],
+    ];
+
+    const timers: number[] = [];
+    let isVisible = false;
+
+    cards.forEach((card, idx) => {
+      const frames = Array.from(card.querySelectorAll('.portrait-img'));
+      if (frames.length < 2) return;
+
+      let step = 0;
+      let isHovered = false;
+
+      const setFrame = (frameIndex: number) => {
+        frames.forEach((img, fi) => {
+          img.classList.toggle('is-active', fi === frameIndex);
+        });
+      };
+
+      card.addEventListener('mouseenter', () => {
+        isHovered = true;
+        setFrame(0); // Focus on sharp base portrait on hover
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isHovered = false;
+      });
+
+      const timer = window.setInterval(
+        () => {
+          if (!isVisible || isHovered) return;
+          const seq = sequences[idx % sequences.length];
+          step = (step + 1) % seq.length;
+          setFrame(seq[step]);
+        },
+        cadences[idx % cadences.length],
+      );
+
+      timers.push(timer);
+    });
+
+    // Only animate when section is in viewport (saves CPU/battery)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(strip);
+
+    // Cleanup on Astro page swap
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        timers.forEach((t) => clearInterval(t));
+        observer.disconnect();
+      },
+      { once: true },
+    );
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTeamShutterAnimation);
+  } else {
+    initTeamShutterAnimation();
+  }
+  document.addEventListener('astro:page-load', initTeamShutterAnimation);
+</script>

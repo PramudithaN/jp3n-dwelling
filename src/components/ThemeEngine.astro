@@ -1,0 +1,220 @@
+---
+/**
+ * ============================================================================
+ * THEME ENGINE COMPONENT (Teqniqks ATELIER)
+ * ============================================================================
+ * Central theme provider component.
+ * Modifying `activeTheme` in `src/config/theme.ts` immediately updates
+ * the typography, colors, borders, and visual atmosphere across the entire site.
+ */
+import { activeTheme, themes } from '../config/theme';
+const { colors } = activeTheme;
+const serializedThemes = JSON.stringify(themes);
+const defaultThemeId = activeTheme.id;
+---
+
+<style
+  is:global
+  set:html={`
+  :root {
+    --theme-accent: ${colors.accent};
+    --theme-accent-soft: ${colors.accentSoft};
+    --theme-accent-glow: ${colors.accentGlow};
+    --theme-accent-muted: ${colors.accentMuted};
+    --theme-bg-canvas: ${colors.bgCanvas};
+    --theme-bg-surface: ${colors.bgSurface};
+    --theme-bg-elevated: ${colors.bgElevated};
+    --theme-bg-scrim: ${colors.bgScrim};
+    --theme-text-primary: ${colors.textPrimary};
+    --theme-text-secondary: ${colors.textSecondary};
+    --theme-text-muted: ${colors.textMuted};
+    --theme-border-hairline: ${colors.borderHairline};
+    --theme-border-bright: ${colors.borderBright};
+    --theme-border-focus: ${colors.borderFocus};
+
+    /* Primary backward-compatible & dynamic tokens */
+    --color-raw-amber-vivid: ${colors.accent};
+    --color-raw-amber-sand: ${colors.accentSoft};
+    --color-accent-glow: ${colors.accentGlow};
+    --color-accent-muted: ${colors.accentMuted};
+
+    --bg-canvas: ${colors.bgCanvas};
+    --bg-surface: ${colors.bgSurface};
+    --bg-elevated: ${colors.bgElevated};
+
+    --text-primary: ${colors.textPrimary};
+    --text-secondary: ${colors.textSecondary};
+    --text-muted: ${colors.textMuted};
+    --text-accent: ${colors.accent};
+    --text-accent-soft: ${colors.accentSoft};
+
+    --border-hairline: ${colors.borderHairline};
+    --border-hairline-bright: ${colors.borderBright};
+    --border-focus: ${colors.borderFocus};
+  }
+
+  /* Universal component theme hooks */
+  html, body {
+    background-color: var(--bg-canvas) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .site-header:not(.is-hero-light) {
+    background-color: color-mix(in srgb, var(--bg-canvas) 88%, transparent) !important;
+    border-bottom: 1px solid var(--border-hairline) !important;
+  }
+
+  .btn-action-primary {
+    background: var(--color-accent-muted) !important;
+    border: 1px solid var(--theme-accent) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 0 20px var(--color-accent-glow) !important;
+  }
+
+  .btn-action-primary:hover {
+    background: var(--theme-accent) !important;
+    border-color: var(--theme-accent) !important;
+    color: var(--bg-canvas) !important;
+    box-shadow: 0 0 30px var(--color-accent-glow) !important;
+  }
+
+  .btn-action-secondary {
+    background: rgba(250, 249, 246, 0.03) !important;
+    border: 1px solid var(--border-hairline) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .btn-action-secondary:hover {
+    border-color: var(--border-hairline-bright) !important;
+    background: rgba(250, 249, 246, 0.08) !important;
+  }
+
+  .atelier-console,
+  .system-card,
+  .workshop-card,
+  .contributor-card,
+  .intake-card {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-hairline) !important;
+  }
+
+  .atelier-console:hover,
+  .system-card:hover,
+  .workshop-card:hover,
+  .contributor-card:hover {
+    border-color: var(--border-hairline-bright) !important;
+  }
+
+  .live-dot,
+  .status-pulse-dot {
+    background-color: var(--theme-accent) !important;
+    box-shadow: 0 0 8px var(--theme-accent) !important;
+  }
+
+  .meter-bar-fill {
+    background-color: var(--theme-accent) !important;
+  }
+
+  /* Kicker / Subheadings / Titles */
+  .section-kicker,
+  .atelier-tag,
+  .system-category,
+  .workshop-tag {
+    color: var(--theme-accent) !important;
+  }
+
+  .section-heading,
+  .manifesto-title,
+  .hero-title,
+  .system-name,
+  .workshop-title,
+  .contributor-name {
+    color: var(--text-primary) !important;
+  }
+
+  .hero-lead,
+  .manifesto-text,
+  .system-desc,
+  .workshop-desc,
+  .contributor-role {
+    color: var(--text-secondary) !important;
+  }
+`}
+/>
+
+<script is:inline define:vars={{ serializedThemes, defaultThemeId }}>
+  (function () {
+    const allThemes = JSON.parse(serializedThemes);
+    window.__TEQNIQKS_THEMES__ = allThemes;
+
+    window.__applyTeqniqksTheme__ = function (themeId) {
+      const def = allThemes[themeId] || allThemes[defaultThemeId];
+      if (!def) return;
+      const c = def.colors;
+      const root = document.documentElement.style;
+      const map = {
+        '--theme-accent': c.accent,
+        '--theme-accent-soft': c.accentSoft,
+        '--theme-accent-glow': c.accentGlow,
+        '--theme-accent-muted': c.accentMuted,
+        '--theme-bg-canvas': c.bgCanvas,
+        '--theme-bg-surface': c.bgSurface,
+        '--theme-bg-elevated': c.bgElevated,
+        '--theme-bg-scrim': c.bgScrim,
+        '--theme-text-primary': c.textPrimary,
+        '--theme-text-secondary': c.textSecondary,
+        '--theme-text-muted': c.textMuted,
+        '--theme-border-hairline': c.borderHairline,
+        '--theme-border-bright': c.borderBright,
+        '--theme-border-focus': c.borderFocus,
+        '--color-forest-dark': c.bgCanvas,
+        '--color-forest-obsidian': c.bgSurface,
+        '--color-forest-elevated': c.bgElevated,
+        '--color-forest-accent': c.accent,
+        '--color-forest-olive': c.accentSoft,
+        '--color-forest-ivory': c.textPrimary,
+        '--color-forest-stone': c.textSecondary,
+        '--color-forest-ash': c.textMuted,
+        '--color-raw-amber-vivid': c.accent,
+        '--color-raw-amber-sand': c.accentSoft,
+        '--color-raw-parchment': c.textPrimary,
+        '--color-raw-stone': c.textSecondary,
+        '--color-raw-ash': c.textMuted,
+        '--color-accent-glow': c.accentGlow,
+        '--color-accent-muted': c.accentMuted,
+        '--bg-canvas': c.bgCanvas,
+        '--bg-surface': c.bgSurface,
+        '--bg-elevated': c.bgElevated,
+        '--text-primary': c.textPrimary,
+        '--text-secondary': c.textSecondary,
+        '--text-muted': c.textMuted,
+        '--text-accent': c.accent,
+        '--text-accent-soft': c.accentSoft,
+        '--border-hairline': c.borderHairline,
+        '--border-hairline-bright': c.borderBright,
+        '--border-focus': c.borderFocus,
+      };
+      for (const [k, v] of Object.entries(map)) {
+        root.setProperty(k, v);
+      }
+      document.documentElement.setAttribute('data-theme', def.id);
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', c.bgCanvas);
+      try {
+        localStorage.setItem('teqniqks-theme', def.id);
+      } catch {}
+      window.dispatchEvent(
+        new CustomEvent('teqniqks:theme-change', { detail: { id: def.id, colors: c } }),
+      );
+    };
+
+    try {
+      const saved = localStorage.getItem('teqniqks-theme');
+      if (saved && allThemes[saved]) {
+        window.__applyTeqniqksTheme__(saved);
+      } else {
+        document.documentElement.setAttribute('data-theme', defaultThemeId);
+      }
+    } catch {}
+  })();
+</script>

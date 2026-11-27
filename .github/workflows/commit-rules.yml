@@ -16,10 +16,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: '22'
+          bun-version: '1.4.5'
 
       - name: Validate commit messages
         shell: bash
@@ -45,5 +45,5 @@ jobs:
           for SHA in $COMMITS; do
             echo "Checking commit $SHA"
             git log -1 --format=%B "$SHA" > "$TMP_MSG"
-            node .githooks/commit-msg "$TMP_MSG"
+            bun scripts/commitlint.ts "$TMP_MSG"
           done

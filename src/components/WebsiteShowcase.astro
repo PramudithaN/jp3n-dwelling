@@ -1,0 +1,846 @@
+---
+import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
+
+const { email } = siteConfig.contact;
+---
+
+<div class="web-lab-editorial">
+  <!-- =========================================================
+       BEAT 1: IN A WORLD FULL OF STATIC -> CLARITY (TV-Head Figure)
+       ========================================================= -->
+  <section class="poster-beat beat-clarity" aria-label="Custom Website Development">
+    <div class="clarity-header">
+      <h1 class="clarity-title">
+        IN A WORLD
+        <br />
+        FULL OF BLOATED SITES
+      </h1>
+      <p class="clarity-sub">
+        We Build Websites <strong>Exactly How You Want</strong>
+      </p>
+      <div class="clarity-highlight-box">
+        <span>YOUR VISION</span>
+      </div>
+    </div>
+
+    <!-- Recreated Retro TV-Head Suit Figure (Pure CSS + SVG, zero raster) -->
+    <div class="tv-figure" aria-hidden="true">
+      <div class="tv-head">
+        <div class="tv-screen">
+          <div class="tv-static-noise"></div>
+          <div class="tv-scanline"></div>
+          <span class="tv-screen-code">CUSTOM // 100%</span>
+        </div>
+        <div class="tv-controls-row">
+          <span class="tv-knob"></span>
+          <span class="tv-knob"></span>
+          <span class="tv-grille"></span>
+          <span class="tv-knob"></span>
+          <span class="tv-knob"></span>
+        </div>
+      </div>
+
+      <div class="tv-collar">
+        <div class="suit-shoulders">
+          <div class="shirt-v">
+            <div class="tie-knot"></div>
+            <div class="tie-blade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 2: YOUR IDEA / CUSTOM-BUILT. (Selection Anchor Quote)
+       ========================================================= -->
+  <section class="poster-beat beat-quote" aria-label="Custom-built to your exact specification">
+    <span class="corner-tag tl">WEB LAB / 01</span>
+    <span class="corner-tag br">Teqniqks / 02</span>
+
+    <div class="quote-lockup">
+      <div class="quote-top-row">
+        <span class="chat-bubble" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span class="quote-lead">Your website,</span>
+      </div>
+
+      <div class="quote-selected-bar">
+        <span class="pin-stem left" aria-hidden="true">
+          <span class="pin-dot"></span>
+        </span>
+        <span class="quote-big">custom-built.</span>
+        <span class="pin-stem right" aria-hidden="true">
+          <span class="pin-dot"></span>
+        </span>
+        <span class="sparkle-star" aria-hidden="true">
+          ✦
+        </span>
+      </div>
+
+      <p class="quote-foot">Tailored to how you want it.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 3: WHY BUILD WITH US (Bento Metrics)
+       ========================================================= -->
+  <section class="poster-beat beat-why" aria-label="Why build your website with Teqniqks">
+    <div class="why-top-note">
+      LET’S
+      <br />
+      CREATE THE
+      <br />
+      EXTRAORDINARY
+    </div>
+
+    <div class="why-grid-wrap">
+      <h2 class="why-headline">
+        <span>WHY</span>
+        <span>BUILD</span>
+        <span class="why-us-row">
+          <span class="why-arrow-circle" aria-hidden="true">
+            →
+          </span>
+          <span class="why-outline">US</span>
+        </span>
+      </h2>
+
+      <div class="why-bento">
+        <div class="bento-card is-wide is-light">
+          <strong class="bento-num">&lt; 0.8s</strong>
+          <span class="bento-lbl">sub-second static paint on 4G</span>
+        </div>
+
+        <div class="bento-card is-light">
+          <strong class="bento-num">0 KB</strong>
+          <span class="bento-lbl">framework bloat &amp; trackers</span>
+        </div>
+
+        <div class="bento-card is-light">
+          <strong class="bento-num">5</strong>
+          <span class="bento-lbl">senior builders in-house</span>
+        </div>
+
+        <div class="bento-card is-tall is-accent">
+          <strong class="bento-num">100%</strong>
+          <span class="bento-lbl">tailored to your exact design &amp; spec</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BEAT 4: BUILD YOURS! (Editorial CTA + Ruler Footer)
+       ========================================================= -->
+  <section class="poster-beat beat-cta" aria-label="Start your custom website">
+    <div class="cta-top-meta">
+      <span>
+        engineered by
+        <br />
+        <strong>Teqniqks</strong>
+      </span>
+      <span>
+        for projects
+        <br />
+        <a href={`mailto:${email}`}>{email}</a>
+      </span>
+      <span class="meta-right">
+        work
+        <br />
+        <a href={withBase('/#work')}>teqniqks.dev/work</a>
+      </span>
+    </div>
+
+    <div class="cta-center-block">
+      <p class="cta-question">
+        Ready to craft a website
+        <br />
+        <span class="cta-highlight">built around your vision?</span>
+      </p>
+      <span class="cta-hashtag">#CustomWebDevelopment</span>
+
+      <div class="cta-giant">
+        <span class="giant-top">Build</span>
+        <span class="giant-bottom">
+          <span class="giant-arrow" aria-hidden="true">
+            ↘
+          </span>
+          <span>Yours!</span>
+        </span>
+      </div>
+
+      <p class="cta-sub">
+        Have a layout, brand, or idea in mind?
+        <br />
+        Tell us what you want, and{' '}
+        <a href={`mailto:${email}?subject=Custom%20Website%20Inquiry`} class="cta-inline-badge">
+          we’ll build it!
+        </a>
+      </p>
+    </div>
+
+    <div class="cta-bottom-bar">
+      <a href={`mailto:${email}?subject=Custom%20Website%20Inquiry`} class="cta-author">
+        <span class="author-dot"></span>
+        <span>
+          <strong>{email}</strong>
+          <br />
+          <small>Direct Senior Engineering</small>
+        </span>
+      </a>
+      <a href={withBase('/#contact')} class="cta-swipe">
+        start inquiry →
+      </a>
+    </div>
+
+    <!-- Bottom Ruler Scale -->
+    <div class="ruler-scale" aria-hidden="true">
+      <span>50</span>
+      <span>100</span>
+      <span>150</span>
+      <span>200</span>
+      <span>250</span>
+      <span>300</span>
+      <span>350</span>
+      <span>400</span>
+      <span>450</span>
+    </div>
+  </section>
+</div>
+
+<style>
+  .web-lab-editorial {
+    width: 100%;
+    padding-top: var(--nav-height, 76px);
+    background-color: var(--bg-canvas);
+  }
+
+  .poster-beat {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid var(--border-hairline);
+    overflow: hidden;
+  }
+
+  /* =========================================================
+     BEAT 1: CLARITY + TV-HEAD FIGURE
+     ========================================================= */
+  .beat-clarity {
+    background: radial-gradient(
+      circle at 50% 25%,
+      color-mix(in srgb, var(--text-accent) 22%, var(--bg-surface) 78%) 0%,
+      var(--bg-canvas) 100%
+    );
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .clarity-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 5.2vw, 4rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  .clarity-sub {
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-m);
+  }
+
+  .clarity-sub strong {
+    color: var(--text-primary);
+  }
+
+  .clarity-highlight-box {
+    display: inline-block;
+    padding: 6px 26px;
+    background-color: var(--text-primary);
+    color: var(--bg-canvas);
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 4.2vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    transform: rotate(-2deg);
+    margin-bottom: -14px;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+  }
+
+  /* TV-Head Suit Figure */
+  .tv-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 340px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tv-head {
+    width: 240px;
+    background: linear-gradient(165deg, var(--bg-elevated) 0%, #0a100c 100%);
+    border: 2px solid var(--border-hairline-bright);
+    border-radius: 10px;
+    padding: 14px 14px 10px;
+    transform: rotate(-2deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
+    position: relative;
+    z-index: 3;
+  }
+
+  .tv-screen {
+    position: relative;
+    height: 132px;
+    border-radius: 18px;
+    background: #060907;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.95);
+    margin-bottom: 10px;
+  }
+
+  .tv-static-noise {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-radial-gradient(
+        circle at 20% 30%,
+        rgba(255, 255, 255, 0.16) 0,
+        rgba(0, 0, 0, 0.2) 2px
+      ),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px);
+    opacity: 0.45;
+  }
+
+  .tv-scanline {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      rgba(0, 0, 0, 0.35) 3px 4px
+    );
+  }
+
+  .tv-screen-code {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-accent);
+    background: rgba(5, 9, 6, 0.78);
+    padding: 4px 10px;
+    border: 1px solid var(--text-accent);
+  }
+
+  .tv-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .tv-knob {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: 1px solid #000;
+  }
+
+  .tv-grille {
+    flex: 1;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, var(--border-hairline) 0 2px, transparent 2px 4px);
+  }
+
+  .tv-collar {
+    width: 280px;
+    height: 120px;
+    margin-top: -10px;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .suit-shoulders {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #161d18 0%, #070b08 100%);
+    border-radius: 48% 48% 0 0 / 55% 55% 0 0;
+    border-top: 1px solid var(--border-hairline-bright);
+    display: flex;
+    justify-content: center;
+  }
+
+  .shirt-v {
+    width: 78px;
+    height: 100%;
+    background: var(--text-primary);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tie-knot {
+    width: 18px;
+    height: 14px;
+    background: #141a15;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+  }
+
+  .tie-blade {
+    width: 20px;
+    height: 88px;
+    background: linear-gradient(180deg, #1e2720 0%, #080c09 100%);
+    clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%);
+  }
+
+  /* =========================================================
+     BEAT 2: SELECTION ANCHOR QUOTE
+     ========================================================= */
+  .beat-quote {
+    background-color: var(--bg-surface);
+    padding: clamp(4.5rem, 9vw, 7.5rem) var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .corner-tag {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .corner-tag.tl {
+    top: 20px;
+    left: 24px;
+  }
+  .corner-tag.br {
+    bottom: 20px;
+    right: 24px;
+  }
+
+  .quote-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .quote-top-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .chat-bubble {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-hairline-bright);
+  }
+
+  .chat-bubble span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+  }
+
+  .quote-lead {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+    padding-bottom: 2px;
+  }
+
+  .quote-selected-bar {
+    position: relative;
+    padding: 4px 18px;
+    background: var(--theme-accent-muted);
+    margin: 4px 0 8px;
+  }
+
+  .quote-big {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    line-height: 1.05;
+  }
+
+  .pin-stem {
+    position: absolute;
+    width: 2px;
+    height: 118%;
+    background: var(--text-accent);
+  }
+
+  .pin-stem.left {
+    left: 0;
+    bottom: 0;
+  }
+  .pin-stem.right {
+    right: 0;
+    top: 0;
+  }
+
+  .pin-dot {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--text-accent);
+    left: -3.5px;
+  }
+
+  .pin-stem.left .pin-dot {
+    top: -5px;
+  }
+  .pin-stem.right .pin-dot {
+    bottom: -5px;
+  }
+
+  .sparkle-star {
+    position: absolute;
+    right: -18px;
+    bottom: -10px;
+    font-size: 1.4rem;
+    color: var(--text-accent-soft);
+  }
+
+  .quote-foot {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* =========================================================
+     BEAT 3: WHY BUILD WITH US (Bento Metrics)
+     ========================================================= */
+  .beat-why {
+    background-color: var(--bg-canvas);
+    padding: clamp(3.5rem, 7vw, 6rem) var(--gutter);
+  }
+
+  .why-top-note {
+    max-width: 960px;
+    margin: 0 auto var(--space-l);
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    line-height: 1.45;
+  }
+
+  .why-grid-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .why-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 7vw, 5.25rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .why-us-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .why-arrow-circle {
+    width: clamp(44px, 6vw, 68px);
+    height: clamp(44px, 6vw, 68px);
+    border-radius: 50%;
+    background: var(--text-accent);
+    color: var(--bg-canvas);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55em;
+  }
+
+  .why-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--text-primary);
+  }
+
+  .why-bento {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    gap: 14px;
+  }
+
+  .bento-card {
+    border-radius: 14px;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .bento-card.is-light {
+    background-color: color-mix(in srgb, var(--text-primary) 92%, var(--text-accent-soft) 8%);
+    color: var(--bg-canvas);
+  }
+
+  .bento-card.is-accent {
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+  }
+
+  .bento-card.is-wide {
+    grid-column: span 2;
+  }
+
+  .bento-card.is-tall {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .bento-num {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .bento-lbl {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    opacity: 0.85;
+  }
+
+  /* =========================================================
+     BEAT 4: BUILD YOURS! CTA + RULER
+     ========================================================= */
+  .beat-cta {
+    background-color: var(--bg-surface);
+    padding: clamp(2rem, 4vw, 3rem) var(--gutter) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-top-meta {
+    width: 100%;
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .cta-top-meta strong,
+  .cta-top-meta a {
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .meta-right {
+    text-align: right;
+  }
+
+  .cta-center-block {
+    max-width: 720px;
+    text-align: left;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .cta-question {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.8vw, 2rem);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .cta-highlight {
+    display: inline-block;
+    padding: 2px 10px;
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+    font-weight: 600;
+  }
+
+  .cta-hashtag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-m);
+  }
+
+  .cta-giant {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 11vw, 7.5rem);
+    font-weight: 700;
+    line-height: 0.86;
+    letter-spacing: -0.05em;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--space-l);
+  }
+
+  .giant-bottom {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .giant-arrow {
+    color: var(--text-accent);
+    font-size: 0.85em;
+  }
+
+  .cta-sub {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.8vw, 1.35rem);
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .cta-inline-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    background-color: var(--text-accent);
+    color: var(--bg-canvas);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .cta-bottom-bar {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: var(--space-l);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .cta-author {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .author-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--theme-accent-muted);
+    border: 1.5px solid var(--text-accent);
+  }
+
+  .cta-author small {
+    color: var(--text-muted);
+  }
+
+  .cta-swipe {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .cta-swipe:hover {
+    color: var(--text-accent);
+  }
+
+  .ruler-scale {
+    width: 100%;
+    border-top: 1px solid var(--border-hairline);
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-around;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-muted);
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--border-hairline) 0 1px,
+      transparent 1px 12px
+    );
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+  }
+
+  @media (max-width: 720px) {
+    .why-bento {
+      grid-template-columns: 1fr;
+    }
+
+    .bento-card.is-wide,
+    .bento-card.is-tall {
+      grid-column: span 1;
+      grid-row: auto;
+    }
+
+    .cta-top-meta {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+
+    .meta-right {
+      text-align: left;
+    }
+  }
+</style>
