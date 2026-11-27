@@ -525,6 +525,8 @@ const serializedColors = "{\"judebevan\":\"#e07a5f\",\"peenaka\":\"#f2cc8f\",\"p
       if (wasPlaying) {
         playActiveTrack();
       } else {
+        audio.removeAttribute('src');
+        audio.load();
         setPlayingState(false);
       }
     }
@@ -622,7 +624,7 @@ const serializedColors = "{\"judebevan\":\"#e07a5f\",\"peenaka\":\"#f2cc8f\",\"p
     });
 
     audio.addEventListener('error', async () => {
-      if (retriedFreshUrl) {
+      if (!audio.getAttribute('src') || retriedFreshUrl) {
         setPlayingState(false);
         return;
       }

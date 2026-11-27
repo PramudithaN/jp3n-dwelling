@@ -175,6 +175,21 @@ test.describe('Home page core flows', () => {
       await slider.press('Home');
       await expect(slider).toHaveAttribute('aria-valuenow', '0');
 
+      await nextBtn.click();
+      const clearedAudioState = await page.evaluate(() => {
+        const audio = document.getElementById('rotationAudio');
+        return audio instanceof HTMLAudioElement
+          ? { hasSrc: audio.hasAttribute('src'), isNaNDuration: Number.isNaN(audio.duration) }
+          : null;
+      });
+      expect(clearedAudioState).toEqual({ hasSrc: false, isNaNDuration: true });
+
+      await slider.focus();
+      await slider.press('ArrowRight');
+      await expect(slider).toHaveAttribute('aria-valuenow', '0');
+      await slider.press('End');
+      await expect(slider).toHaveAttribute('aria-valuenow', '0');
+
       const finalScrollY = await page.evaluate(() => window.scrollY);
       expect(Math.abs(finalScrollY - scrollBefore)).toBeLessThan(5);
     } finally {

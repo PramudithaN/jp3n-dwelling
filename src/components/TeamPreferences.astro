@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import { snapshotYear } from '../data/teamCalendar';
 import { withBase } from '../utils/url';
 
 interface Props {
@@ -255,8 +256,8 @@ const serializedTeam = JSON.stringify(
 
       <!-- Bottom Attribution -->
       <p class="stage-footer-note" id="cfFooterNote">
-        © {new Date().getFullYear()} · Teqniqks Collective / {team[2].name.split(' ')[0]}'s Rotation
-        ({team[2].music.genre})
+        © {snapshotYear} · Teqniqks Collective / {team[2].name.split(' ')[0]}'s Rotation (
+        {team[2].music.genre})
       </p>
     </div>
   </div>
@@ -389,6 +390,8 @@ const serializedTeam = JSON.stringify(
       if (wasPlaying) {
         playActiveTrack();
       } else {
+        audio.removeAttribute('src');
+        audio.load();
         setPlayingState(false);
       }
     }
@@ -486,7 +489,7 @@ const serializedTeam = JSON.stringify(
     });
 
     audio.addEventListener('error', async () => {
-      if (retriedFreshUrl) {
+      if (!audio.getAttribute('src') || retriedFreshUrl) {
         setPlayingState(false);
         return;
       }
