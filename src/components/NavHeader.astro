@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { currentPath = '/' } = Astro.props;
+const currentYear = new Date().getFullYear();
 
 const navLinks = [
   { href: withBase('/#about'), label: 'ABOUT', section: 'about' },
@@ -70,7 +71,7 @@ const navLinks = [
       </ul>
       <div class="drawer-meta">
         <span class="drawer-location">Colombo, Sri Lanka</span>
-        <span class="drawer-edition">Atelier Edition 2026</span>
+        <span class="drawer-edition">Atelier Edition {currentYear}</span>
       </div>
     </div>
   </div>

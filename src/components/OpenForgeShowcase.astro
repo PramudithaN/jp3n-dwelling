@@ -120,6 +120,7 @@ const processSteps = [
 ];
 
 const serializedRepos = JSON.stringify(openRepos);
+const currentYear = new Date().getFullYear();
 ---
 
 <div class="open-forge-page">
@@ -129,7 +130,7 @@ const serializedRepos = JSON.stringify(openRepos);
   <section class="forge-hero" aria-label="Open Source Contributions">
     <div class="forge-hero-top">
       <div class="hero-left-meta">
-        <span>2026</span>
+        <span>{currentYear}</span>
         <span>OPEN SOURCE</span>
         <span>CONTRIBUTIONS</span>
       </div>

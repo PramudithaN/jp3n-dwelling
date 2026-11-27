@@ -7,6 +7,7 @@ import ThemeSwitcher from '../components/ThemeSwitcher.astro';
 import MaintenanceScreen from '../components/MaintenanceScreen.astro';
 import { activeTheme } from '../config/theme';
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const isMaintenance =
   siteConfig.maintenance.enabled || import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
@@ -25,7 +26,6 @@ const {
 
 const siteUrl = 'https://teqniqks.com';
 const fullCanonicalUrl = new URL(canonicalPath, siteUrl).toString();
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -39,26 +39,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <link rel="canonical" href={fullCanonicalUrl} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg?v=2`} />
+    <link rel="icon" type="image/svg+xml" href={`${withBase('/favicon.svg')}?v=2`} />
 
     <!-- Critical Font Preloading -->
     <link
       rel="preload"
-      href={`${base}/fonts/SpaceGrotesk-Variable.woff`}
+      href={withBase('/fonts/SpaceGrotesk-Variable.woff')}
       as="font"
       type="font/woff"
       crossorigin
     />
     <link
       rel="preload"
-      href={`${base}/fonts/Sora-Regular.woff`}
+      href={withBase('/fonts/Sora-Regular.woff')}
       as="font"
       type="font/woff"
       crossorigin
     />
     <link
       rel="preload"
-      href={`${base}/fonts/JetBrainsMono.woff`}
+      href={withBase('/fonts/JetBrainsMono.woff')}
       as="font"
       type="font/woff"
       crossorigin
@@ -74,23 +74,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <ThemeEngine />
   </head>
   <body>
-    <!-- Theme-Matched Screen Content Loader -->
-    <div class="teqniqks-screen-loader" id="teqniqksScreenLoader" aria-hidden="true">
-      <div class="loader-core">
-        <div class="loader-ring"></div>
-        <span class="loader-brand">Teqniqks</span>
-      </div>
-      <span class="loader-status">LOADING CONTENT</span>
-    </div>
-
-    <!-- Minimal Theme-Matched Route & Load Progress Bar -->
-    <div class="teqniqks-route-loader" id="teqniqksRouteLoader" aria-hidden="true"></div>
     {isMaintenance ? (
       <main id="main-content">
         <MaintenanceScreen />
       </main>
     ) : (
       <>
+        <!-- Theme-Matched Screen Content Loader -->
+        <div class="teqniqks-screen-loader" id="teqniqksScreenLoader" aria-hidden="true">
+          <div class="loader-core">
+            <div class="loader-ring"></div>
+            <span class="loader-brand">Teqniqks</span>
+          </div>
+          <span class="loader-status">LOADING CONTENT</span>
+        </div>
+
+        <!-- Minimal Theme-Matched Route & Load Progress Bar -->
+        <div class="teqniqks-route-loader" id="teqniqksRouteLoader" aria-hidden="true"></div>
+
         <!-- Keyboard Accessibility Skip Link -->
         <a href="#main-content" class="skip-link">
           Skip to main content

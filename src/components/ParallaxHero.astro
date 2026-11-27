@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/url';
+
 interface Props {
   title?: string;
   subtitle?: string;
@@ -12,7 +14,7 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     <!-- Layer 0: Clean Frosted Background & Dynamic Backlight -->
     <div class="parallax-layer layer-bg" id="layerBg" aria-hidden="true">
       <img
-        src="/images/hero/hero-bg-2x.jpg"
+        src={withBase('/images/hero/hero-bg-2x.jpg')}
         alt=""
         class="bg-image"
         draggable="false"
@@ -25,7 +27,7 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     <!-- Layer 1: Subtle Top Contour Lines -->
     <div class="parallax-layer layer-waves" id="layerWaves" aria-hidden="true">
       <img
-        src="/images/hero/hero-waves-2x.png"
+        src={withBase('/images/hero/hero-waves-2x.png')}
         alt=""
         class="waves-image"
         draggable="false"
@@ -36,7 +38,7 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     <!-- Layer 2: Character Silhouette - Left Hand Pressed Against Screen -->
     <div class="parallax-layer layer-hand-left" id="layerHandLeft" aria-hidden="true">
       <img
-        src="/images/hero/hero-hand-left-2x.png"
+        src={withBase('/images/hero/hero-hand-left-2x.png')}
         alt=""
         class="hand-left-img"
         draggable="false"
@@ -47,7 +49,7 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     <!-- Layer 3: Character Silhouette - Right Arm & Stylus -->
     <div class="parallax-layer layer-hand-right" id="layerHandRight" aria-hidden="true">
       <img
-        src="/images/hero/hero-hand-right-2x.png"
+        src={withBase('/images/hero/hero-hand-right-2x.png')}
         alt=""
         class="hand-right-img"
         draggable="false"

@@ -147,7 +147,7 @@ const defaultThemeId = activeTheme.id;
     const allThemes = JSON.parse(serializedThemes);
     window.__TEQNIQKS_THEMES__ = allThemes;
 
-    window.__applyTeqniqksTheme__ = function (themeId) {
+    window.__applyTeqniqksTheme__ = function (themeId, persist = true) {
       const def = allThemes[themeId] || allThemes[defaultThemeId];
       if (!def) return;
       const c = def.colors;
@@ -200,9 +200,11 @@ const defaultThemeId = activeTheme.id;
       document.documentElement.setAttribute('data-theme', def.id);
       const meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', c.bgCanvas);
-      try {
-        localStorage.setItem('teqniqks-theme', def.id);
-      } catch {}
+      if (persist) {
+        try {
+          localStorage.setItem('teqniqks-theme', def.id);
+        } catch {}
+      }
       window.dispatchEvent(
         new CustomEvent('teqniqks:theme-change', { detail: { id: def.id, colors: c } }),
       );
@@ -211,7 +213,7 @@ const defaultThemeId = activeTheme.id;
     try {
       const saved = localStorage.getItem('teqniqks-theme');
       if (saved && allThemes[saved]) {
-        window.__applyTeqniqksTheme__(saved);
+        window.__applyTeqniqksTheme__(saved, false);
       } else {
         document.documentElement.setAttribute('data-theme', defaultThemeId);
       }

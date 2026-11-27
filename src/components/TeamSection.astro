@@ -1,8 +1,8 @@
 ---
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 const team = siteConfig.team;
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="team-gallery-section" id="team" aria-labelledby="team-heading">
@@ -35,7 +35,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             >
               {[1, 2, 3, 4].map((frameIdx) => (
                 <img
-                  src={`${base}${portraitBase}-f${frameIdx}.jpg`}
+                  src={withBase(`${portraitBase}-f${frameIdx}.jpg`)}
                   alt={frameIdx === 1 ? `${member.name} monochrome silhouette portrait` : ''}
                   aria-hidden={frameIdx !== 1 ? 'true' : undefined}
                   class={`portrait-img ${frameIdx === 1 ? 'is-active' : ''}`}

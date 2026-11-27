@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import { withBase } from '../utils/url';
 
 interface Props {
   title: string;
@@ -35,7 +36,7 @@ const {
 const teamMatch = siteConfig.team.find(
   (m) => m.githubHandle.toLowerCase() === ownerHandle.toLowerCase(),
 );
-const ownerPortrait = teamMatch?.portrait || '/images/team/member-1-f1.jpg';
+const ownerPortrait = withBase(teamMatch?.portrait || '/images/team/member-1-f1.jpg');
 const ownerRole = teamMatch?.role || 'Collective Engineer';
 const firstName = owner.split(' ')[0].toUpperCase();
 
