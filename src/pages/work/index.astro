@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectsFolderStack from '../../components/ProjectsFolderStack.astro';
+---
+
+<BaseLayout
+  title="Work & Production Systems"
+  description="Case studies and production systems built by Teqniqks."
+  canonicalPath="/work"
+>
+  <section class="work-page-section">
+    <div class="site-container">
+      <div class="page-header">
+        <h1 class="page-title">Work & Production Systems</h1>
+        <p class="page-lead">
+          Verified software in production and open repositories. Zero synthetic metrics, zero
+          fabricated testimonials.
+        </p>
+      </div>
+
+      <ProjectsFolderStack />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .site-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .work-page-section {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .page-title {
+    font-size: var(--step-5);
+    color: var(--color-raw-parchment);
+    margin-bottom: var(--space-xs);
+    letter-spacing: -0.035em;
+  }
+
+  .page-lead {
+    font-size: var(--step-1);
+    color: var(--text-secondary);
+    max-width: 52ch;
+    line-height: var(--lh-body);
+  }
+
+  .work-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .work-card {
+    background-color: var(--surface-elevated);
+    border: 2px solid var(--border-timber);
+    box-shadow: var(--shadow-flat);
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .work-card:hover {
+    border-color: var(--color-raw-amber-sand);
+    transform: translateY(-2px);
+  }
+
+  .card-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: #0e0805;
+    border-bottom: 1px solid var(--border-timber);
+  }
+
+  .category-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--color-raw-amber-sand);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .status-indicator {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-raw-ash);
+  }
+
+  .card-body {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .work-title {
+    font-size: var(--step-2);
+    margin-bottom: var(--space-xs);
+  }
+
+  .work-title a {
+    color: var(--color-raw-parchment);
+    text-decoration: none;
+  }
+
+  .work-title a:hover {
+    color: var(--color-raw-amber-vivid);
+  }
+
+  .work-tagline {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: var(--lh-body);
+    margin-bottom: var(--space-m);
+  }
+
+  .metrics-block {
+    background-color: #090503;
+    border: 1px solid var(--border-timber);
+    padding: var(--space-m);
+    margin-bottom: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .metric-key {
+    color: var(--color-raw-ash);
+  }
+
+  .metric-val {
+    color: var(--color-raw-amber-sand);
+    font-weight: 600;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--space-l);
+  }
+
+  .stack-pill {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    padding: 2px 7px;
+    background-color: #0e0704;
+    border: 1px solid var(--border-timber);
+    color: var(--color-raw-ash);
+  }
+
+  .card-links {
+    display: flex;
+    gap: var(--space-s);
+    margin-top: auto;
+    flex-wrap: wrap;
+  }
+
+  .btn-inspect {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: var(--color-raw-amber-vivid);
+    color: #0c0704;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 150ms ease;
+  }
+
+  .btn-inspect:hover {
+    background-color: var(--color-raw-amber-sand);
+    color: #0c0704;
+  }
+
+  .btn-live,
+  .btn-repo {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 1px solid var(--border-timber);
+    color: var(--color-raw-amber-sand);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .btn-live:hover,
+  .btn-repo:hover {
+    border-color: var(--color-raw-amber-vivid);
+    color: var(--color-raw-amber-vivid);
+  }
+
+  @media (max-width: 900px) {
+    .work-cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,647 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  tagline: string;
+  category: string;
+  status: string;
+  owner: string;
+  ownerHandle: string;
+  languages: string[];
+  stars?: number;
+  forks?: number;
+  techStack: string[];
+  metrics?: Record<string, string>;
+  liveUrl?: string;
+  repoUrl?: string;
+  body?: string;
+}
+
+const {
+  id,
+  title,
+  tagline,
+  category,
+  status,
+  owner,
+  ownerHandle,
+  languages = [],
+  stars = 0,
+  forks = 0,
+  techStack,
+  liveUrl,
+  repoUrl,
+  body = '',
+} = Astro.props;
+
+const cleanLines = body
+  .split(/\r?\n/)
+  .map((l) => l.trim())
+  .filter((l) => l.length > 0 && !l.startsWith('#') && !l.startsWith('-'));
+
+const contextText =
+  cleanLines[0] || `${title} is an open-source repository maintained by ${owner}.`;
+const ideaText =
+  cleanLines[1] || `Built with ${languages.join(', ')} for fast, maintainable execution.`;
+
+const bulletSpecs = body
+  .split(/\r?\n/)
+  .map((l) => l.trim())
+  .filter((l) => l.startsWith('- '))
+  .map((l) => l.slice(2).trim());
+
+const docCode = `TEQNIQKS-${id.toUpperCase().slice(0, 8)}-01`;
+const ownerProfileUrl = `https://github.com/${ownerHandle}`;
+---
+
+<section class="dossier-board" aria-label={`${title} Case Study Dossier`}>
+  <div class="dossier-bg-texture" aria-hidden="true"></div>
+
+  <!-- Top Editorial Masthead (Zero Strikethrough) -->
+  <header class="dossier-masthead">
+    <div class="masthead-stamp">
+      <span class="stamp-brand">TEQNIQKS</span>
+      <span class="stamp-crest" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+          <path
+            d="M12 6V18M8 10L12 6L16 10"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <span class="stamp-cat">{category.toUpperCase()}</span>
+    </div>
+
+    <div class="masthead-title-wrap">
+      <h1 class="masthead-title">{title}</h1>
+    </div>
+
+    <p class="masthead-subtitle">{tagline}</p>
+
+    <div class="masthead-owner-bar">
+      <span class="owner-label">REPOSITORY OWNER:</span>
+      <a href={ownerProfileUrl} target="_blank" rel="noopener noreferrer" class="owner-link">
+        {owner} (@{ownerHandle}) ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- 3-Column Dossier Grid -->
+  <div class="dossier-grid">
+    <!-- LEFT COLUMN: CONTEXT + IDEA + LINKS -->
+    <div class="dossier-col col-left">
+      <div class="dossier-block">
+        <h2 class="dossier-heading">C O N T E X T :</h2>
+        <p class="dossier-prose">{contextText}</p>
+      </div>
+
+      <div class="dossier-block">
+        <h2 class="dossier-heading">I D E A :</h2>
+        <p class="dossier-prose">{ideaText}</p>
+      </div>
+
+      <div class="dossier-action-box">
+        {liveUrl && (
+          <a
+            href={liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="action-trigger is-live"
+          >
+            <span class="action-play-box" aria-hidden="true">
+              ▶
+            </span>
+            <span class="action-label">
+              LAUNCH LIVE
+              <br />
+              DEPLOYMENT ↗
+            </span>
+          </a>
+        )}
+        {repoUrl && (
+          <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="action-trigger">
+            <span class="action-play-box" aria-hidden="true">
+              &lt;/&gt;
+            </span>
+            <span class="action-label">
+              VIEW SOURCE CODE
+              <br />
+              ON GITHUB ↗
+            </span>
+          </a>
+        )}
+      </div>
+    </div>
+
+    <!-- CENTER COLUMN: TACTILE ARCHIVAL SPEC SHEET -->
+    <div class="dossier-col col-center">
+      <div class="archival-sheet">
+        <div class="sheet-holes" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="sheet-header-row">
+          <span class="sheet-ref">REF // {docCode}</span>
+          <div class="sheet-stamp-box">
+            <span>TEQNIQKS-SPEC/{status.toUpperCase()}</span>
+            <span>OWNER: @{ownerHandle}</span>
+          </div>
+        </div>
+
+        <div class="sheet-meta-lines">
+          <div>
+            PROJECT: <strong>{title.toUpperCase()}</strong>
+          </div>
+          <div>
+            OWNER: {owner} (@{ownerHandle})
+          </div>
+          <div>LANGUAGES: {languages.join(', ')}</div>
+          <div>STATUS: {status.toUpperCase()}</div>
+        </div>
+
+        <div class="sheet-divider"></div>
+
+        <div class="sheet-body-mono">
+          <p class="sheet-lead">SPECIFICATION &amp; ENGINEERING INTENT:</p>
+          <p class="sheet-para">{contextText}</p>
+          <p class="sheet-para">{ideaText}</p>
+
+          {bulletSpecs.length > 0 && (
+            <ul class="sheet-bullets">
+              {bulletSpecs.map((b) => (
+                <li>× {b}</li>
+              ))}
+            </ul>
+          )}
+
+          <p class="sheet-lead">STACK &amp; TOOLING:</p>
+          <p class="sheet-para">{techStack.join(' · ')}</p>
+        </div>
+
+        <div class="sheet-seal">
+          <span class="seal-box">{status.toUpperCase()}</span>
+          <span class="seal-sig">{owner}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: LANGUAGES + GITHUB STARS & FORKS -->
+    <div class="dossier-col col-right">
+      <div class="dossier-block">
+        <h2 class="dossier-heading">L A N G U A G E S :</h2>
+        <p class="dossier-prose">Verified languages detected in the repository source tree.</p>
+
+        <div class="specimen-strip">
+          {languages.map((lang, idx) => (
+            <div class={`specimen-tile tile-${(idx % 3) + 1}`}>
+              <span class="tile-idx">0{idx + 1}</span>
+              <span class="tile-name">{lang}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {stars > 0 || forks > 0 ? (
+        <div class="dossier-block">
+          <h2 class="dossier-heading">G I T H U B S T A T S :</h2>
+
+          <div class="results-stack">
+            {stars > 0 && (
+              <div class="result-item">
+                <span class="result-val">★ {stars}</span>
+                <span class="result-label">GITHUB STARS</span>
+              </div>
+            )}
+            {forks > 0 && (
+              <div class="result-item">
+                <span class="result-val">⑂ {forks}</span>
+                <span class="result-label">REPOSITORY FORKS</span>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div class="dossier-block">
+          <h2 class="dossier-heading">R E P O S I T O R Y :</h2>
+          <div class="results-stack">
+            <div class="result-item">
+              <span class="result-val">PUBLIC</span>
+              <span class="result-label">OPEN SOURCE ON GITHUB</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dossier-board {
+    position: relative;
+    background: radial-gradient(
+      circle at 50% 45%,
+      color-mix(in srgb, var(--bg-elevated) 75%, var(--bg-canvas) 25%) 0%,
+      var(--bg-canvas) 100%
+    );
+    border: 1px solid var(--border-hairline);
+    padding: clamp(1.75rem, 4vw, 3.25rem);
+    margin-bottom: var(--space-3xl);
+    overflow: hidden;
+  }
+
+  .dossier-bg-texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--border-hairline) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-hairline) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.14;
+    pointer-events: none;
+  }
+
+  /* Masthead */
+  .dossier-masthead {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .masthead-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  .stamp-crest {
+    color: var(--text-accent);
+    display: inline-flex;
+  }
+
+  .stamp-cat {
+    color: var(--text-accent-soft);
+  }
+
+  .masthead-title-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-s);
+  }
+
+  .masthead-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 4.5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1.08;
+  }
+
+  .masthead-subtitle {
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 58ch;
+    margin: 0 auto var(--space-m);
+  }
+
+  .masthead-owner-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-hairline-bright);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .owner-label {
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .owner-link {
+    color: var(--text-accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .owner-link:hover {
+    text-decoration: underline;
+  }
+
+  /* 3-Column Grid */
+  .dossier-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (min-width: 980px) {
+    .dossier-grid {
+      grid-template-columns: 0.88fr 1.18fr 0.88fr;
+      gap: var(--space-xl);
+      align-items: stretch;
+    }
+  }
+
+  .dossier-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .dossier-heading {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--text-accent-soft);
+    margin-bottom: var(--space-s);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-hairline-bright);
+    display: inline-block;
+  }
+
+  .dossier-prose {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  /* Left Bottom Action Box */
+  .dossier-action-box {
+    margin-top: auto;
+    padding-top: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .action-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: transform 150ms ease;
+  }
+
+  .action-trigger:hover {
+    transform: translateX(3px);
+  }
+
+  .action-play-box {
+    width: 48px;
+    height: 36px;
+    border: 1.5px solid var(--border-hairline-bright);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-accent);
+    flex-shrink: 0;
+    background: var(--bg-surface);
+  }
+
+  .action-trigger.is-live .action-play-box {
+    border-color: var(--text-accent);
+    background: var(--theme-accent-muted);
+  }
+
+  .action-trigger:hover .action-play-box {
+    border-color: var(--text-accent);
+    background-color: var(--theme-accent-muted);
+  }
+
+  .action-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+  }
+
+  .action-trigger:hover .action-label {
+    color: var(--text-primary);
+  }
+
+  /* Center Archival Spec Sheet */
+  .archival-sheet {
+    position: relative;
+    background-color: color-mix(in srgb, var(--text-primary) 90%, var(--text-accent-soft) 10%);
+    color: #111612;
+    padding: 26px 26px 28px 38px;
+    box-shadow: 0 22px 44px -10px rgba(0, 0, 0, 0.85);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sheet-holes {
+    position: absolute;
+    left: 11px;
+    top: 28px;
+    bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .sheet-holes span {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: var(--bg-canvas);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+
+  .sheet-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.625rem;
+  }
+
+  .sheet-ref {
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .sheet-stamp-box {
+    border: 1.5px solid #111612;
+    padding: 3px 6px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    font-size: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .sheet-meta-lines {
+    font-size: 0.65rem;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+
+  .sheet-divider {
+    height: 1px;
+    background: rgba(17, 22, 18, 0.25);
+  }
+
+  .sheet-body-mono {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sheet-lead {
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    color: #111612;
+    margin: 0;
+  }
+
+  .sheet-para {
+    font-size: 0.6875rem;
+    color: #202822;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .sheet-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 2px 0 4px;
+    padding: 0;
+  }
+
+  .sheet-bullets li {
+    font-size: 0.65rem;
+    color: #111612;
+  }
+
+  .sheet-seal {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .seal-box {
+    border: 2px solid #111612;
+    padding: 2px 10px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    transform: rotate(-3deg);
+  }
+
+  .seal-sig {
+    font-style: italic;
+    font-family: Georgia, serif;
+    font-size: 0.85rem;
+    color: #2a332c;
+  }
+
+  /* Right Column: Languages Specimen Strip + GitHub Stats */
+  .specimen-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+    gap: 6px;
+    margin-top: var(--space-m);
+  }
+
+  .specimen-tile {
+    padding: 12px 10px;
+    border: 1px solid var(--border-hairline-bright);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 76px;
+  }
+
+  .specimen-tile.tile-1 {
+    background-color: var(--bg-elevated);
+  }
+
+  .specimen-tile.tile-2 {
+    background-color: var(--theme-accent-muted);
+    border-color: var(--text-accent);
+  }
+
+  .specimen-tile.tile-3 {
+    background-color: var(--bg-surface);
+  }
+
+  .tile-idx {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-accent);
+    font-weight: 700;
+  }
+
+  .tile-name {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-primary);
+    line-height: 1.25;
+    word-break: break-word;
+  }
+
+  .results-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .result-val {
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 2.5vw, 2.25rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+
+  .result-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text-accent-soft);
+  }
+</style>

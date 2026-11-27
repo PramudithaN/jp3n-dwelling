@@ -1,0 +1,31 @@
+{
+  "name": "teqniqks",
+  "type": "module",
+  "version": "0.0.2",
+  "packageManager": "bun@1.4.5",
+  "engines": {
+    "bun": ">=1.4.5"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && bun scripts/prepare-gh-pages.mjs",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "bun fmt",
+    "format:check": "bun fmt --check",
+    "contexaforge": "bunx github:Peenaka/ContexaForge",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "dependencies": {
+    "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/bun": "^1.4.5",
+    "prettier": "^3.10.1",
+    "prettier-plugin-astro": "^1.1.2"
+  }
+}

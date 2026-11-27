@@ -1,0 +1,351 @@
+---
+import { withBase } from '../utils/url';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navLinks = [
+  { href: withBase('/#about'), label: 'ABOUT', section: 'about' },
+  { href: withBase('/#workshops'), label: 'WORKSHOPS', section: 'workshops' },
+  { href: withBase('/#work'), label: 'WORK', section: 'work' },
+  { href: withBase('/#process'), label: 'PROCESS', section: 'process' },
+  { href: withBase('/#team'), label: 'TEAM', section: 'team' },
+  { href: withBase('/#contact'), label: 'CONTACT', section: 'contact' },
+];
+---
+
+<header class={`site-header ${currentPath === '/' ? 'is-hero-light' : ''}`} id="siteHeader">
+  <div class="header-inner">
+    <a href={withBase('/')} class="brand-link" aria-label="Teqniqks">
+      <span class="brand-title">Teqniqks</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary Navigation">
+      <ul class="nav-list">
+        {navLinks.map((link) => (
+          <li class="nav-item">
+            <a href={link.href} class="nav-link" data-section={link.section}>
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header-meta desktop-only">
+      <span class="location-indicator">
+        <span class="location-dot" aria-hidden="true"></span>
+        <span class="location-text">COLOMBO, SRI LANKA</span>
+      </span>
+    </div>
+
+    <!-- Mobile Menu Trigger -->
+    <button
+      type="button"
+      class="mobile-toggle"
+      id="mobileToggle"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobileDrawer"
+    >
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" hidden>
+    <div class="drawer-inner">
+      <ul class="drawer-nav">
+        {navLinks.map((link) => (
+          <li>
+            <a href={link.href} class="drawer-link">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="drawer-meta">
+        <span class="drawer-location">Colombo, Sri Lanka</span>
+        <span class="drawer-edition">Atelier Edition 2026</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobileToggle');
+  const drawer = document.getElementById('mobileDrawer');
+  const header = document.getElementById('siteHeader');
+
+  if (toggle && drawer) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      drawer.hidden = isOpen;
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+
+    // Close on link click
+    drawer.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        drawer.hidden = true;
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // Adaptive navbar: match light frosted hero when at top of homepage
+  function updateHeaderTheme() {
+    if (!header) return;
+    const hero = document.getElementById('teqniqksHero');
+    if (!hero) {
+      header.classList.remove('is-hero-light');
+      return;
+    }
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom > 72) {
+      header.classList.add('is-hero-light');
+    } else {
+      header.classList.remove('is-hero-light');
+    }
+  }
+
+  window.addEventListener('scroll', updateHeaderTheme, { passive: true });
+  document.addEventListener('astro:page-load', updateHeaderTheme);
+  updateHeaderTheme();
+
+  // Scroll-spy for one-page homepage sections
+  const desktopNavLinks = document.querySelectorAll('.desktop-nav .nav-link[data-section]');
+  const sectionIds = Array.from(desktopNavLinks)
+    .map((el) => el.getAttribute('data-section'))
+    .filter(Boolean) as string[];
+  const observedSections = sectionIds
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null);
+
+  if (observedSections.length > 0 && 'IntersectionObserver' in window) {
+    const setActiveLink = (activeId: string) => {
+      desktopNavLinks.forEach((link) => {
+        link.classList.toggle('is-active', link.getAttribute('data-section') === activeId);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length > 0 && visible[0].target.id) {
+          setActiveLink(visible[0].target.id);
+        }
+      },
+      { rootMargin: '-25% 0px -55% 0px', threshold: [0.05, 0.25, 0.5] },
+    );
+
+    observedSections.forEach((sec) => observer.observe(sec));
+  }
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    padding: var(--space-m) var(--gutter);
+    background-color: rgba(8, 5, 3, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-hairline);
+    transition:
+      background-color 250ms ease,
+      border-color 250ms ease,
+      color 250ms ease;
+  }
+
+  .site-header.is-hero-light {
+    background-color: rgba(218, 214, 206, 0.38);
+    border-bottom-color: rgba(23, 21, 19, 0.08);
+  }
+
+  .site-header.is-hero-light .brand-title,
+  .site-header.is-hero-light .nav-link:hover {
+    color: #171513;
+  }
+
+  .site-header.is-hero-light .brand-sub,
+  .site-header.is-hero-light .nav-link,
+  .site-header.is-hero-light .location-indicator {
+    color: #46413b;
+  }
+
+  .site-header.is-hero-light .location-dot {
+    background-color: #2d4a2b;
+  }
+
+  .site-header.is-hero-light .mobile-toggle .bar {
+    background-color: #171513;
+  }
+
+  .header-inner {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .brand-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-raw-amber-sand);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .desktop-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    list-style: none;
+  }
+
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 150ms ease;
+    padding: 4px 0;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-link.is-active {
+    color: var(--text-accent);
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+  }
+
+  .location-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-raw-amber-sand);
+    letter-spacing: 0.05em;
+  }
+
+  .location-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-raw-amber-vivid);
+  }
+
+  .mobile-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .mobile-toggle .bar {
+    width: 22px;
+    height: 1.5px;
+    background-color: var(--text-primary);
+    transition: transform 150ms ease;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(100vh - 56px);
+    background-color: var(--bg-canvas);
+    z-index: 899;
+    padding: var(--space-2xl) var(--gutter);
+  }
+
+  .drawer-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .drawer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .drawer-link {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 300;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .drawer-meta {
+    border-top: 1px solid var(--border-hairline);
+    padding-top: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .drawer-capacity {
+    color: var(--color-raw-amber-sand);
+  }
+
+  @media (max-width: 860px) {
+    .desktop-nav,
+    .desktop-only {
+      display: none;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>

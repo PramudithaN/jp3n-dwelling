@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TheFourDoors from '../components/TheFourDoors.astro';
+import { siteConfig } from '../config/site';
+
+const { email, github, linkedin } = siteConfig.contact;
+---
+
+<BaseLayout
+  title="Contact & Direct Engagement"
+  description="Direct communication channels with Teqniqks. Zero tracking forms, zero automated sales funnels."
+  canonicalPath="/contact"
+>
+  <section class="contact-page-section">
+    <div class="site-container">
+      <div class="contact-header-row">
+        <h1 class="page-title">Direct Engagement</h1>
+        <span class="channel-status">ACTIVE INTAKE</span>
+      </div>
+      <p class="page-lead">
+        No automated marketing funnels, no sales intermediaries. Direct access to our senior
+        engineers.
+      </p>
+
+      <div class="direct-channels-card">
+        <div class="channel-col">
+          <span class="channel-label">Project Inquiries</span>
+          <a href={`mailto:${email}`} class="channel-link">
+            {email}
+          </a>
+          <span class="channel-desc">Direct line to senior engineers. 24-hour reply window.</span>
+        </div>
+        <div class="channel-col">
+          <span class="channel-label">GitHub Organization</span>
+          <a href={github} target="_blank" rel="noopener noreferrer" class="channel-link">
+            github.com/PramudithaN
+          </a>
+          <span class="channel-desc">
+            Public repositories, issues, and open source discussions.
+          </span>
+        </div>
+        <div class="channel-col">
+          <span class="channel-label">Professional Network</span>
+          <a href={linkedin} target="_blank" rel="noopener noreferrer" class="channel-link">
+            LinkedIn Verification
+          </a>
+          <span class="channel-desc">Direct connection with collective leadership.</span>
+        </div>
+      </div>
+
+      <!-- The Four Doors Component -->
+      <TheFourDoors />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .site-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .contact-page-section {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .contact-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xs);
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+
+  .page-title {
+    font-size: var(--step-5);
+    color: var(--color-raw-parchment);
+    letter-spacing: -0.035em;
+  }
+
+  .page-lead {
+    font-size: var(--step-1);
+    color: var(--text-secondary);
+    max-width: 52ch;
+    margin-bottom: var(--space-3xl);
+    line-height: var(--lh-body);
+  }
+
+  .direct-channels-card {
+    background-color: var(--surface-elevated);
+    border: 2px solid var(--border-timber);
+    box-shadow: var(--shadow-flat);
+    padding: var(--space-xl);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .channel-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .channel-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-raw-amber-vivid);
+    font-weight: 700;
+  }
+
+  .channel-link {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--color-raw-parchment);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .channel-link:hover {
+    color: var(--color-raw-amber-sand);
+    text-decoration: underline;
+  }
+
+  .channel-desc {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: var(--lh-body);
+  }
+
+  @media (max-width: 768px) {
+    .direct-channels-card {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+  }
+</style>

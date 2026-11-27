@@ -174,7 +174,7 @@ const defaultThemeId = "forest-canopy";
         '--text-accent-soft': c.accentSoft,
         '--border-hairline': c.borderHairline,
         '--border-hairline-bright': c.borderBright,
-        '--border-focus': c.borderFocus
+        '--border-focus': c.borderFocus,
       };
       for (const [k, v] of Object.entries(map)) {
         root.setProperty(k, v);
@@ -185,7 +185,9 @@ const defaultThemeId = "forest-canopy";
       try {
         localStorage.setItem('teqniqks-theme', def.id);
       } catch {}
-      window.dispatchEvent(new CustomEvent('teqniqks:theme-change', { detail: { id: def.id, colors: c } }));
+      window.dispatchEvent(
+        new CustomEvent('teqniqks:theme-change', { detail: { id: def.id, colors: c } }),
+      );
     };
 
     try {
@@ -207,66 +209,69 @@ const defaultThemeId = "forest-canopy";
        ========================================================= --><section class="poster-beat beat-why" aria-label="Why build your website with Teqniqks" data-astro-cid-xdvjna2x><div class="why-top-note" data-astro-cid-xdvjna2x>LET’S<br data-astro-cid-xdvjna2x>CREATE THE<br data-astro-cid-xdvjna2x>EXTRAORDINARY</div><div class="why-grid-wrap" data-astro-cid-xdvjna2x><h2 class="why-headline" data-astro-cid-xdvjna2x><span data-astro-cid-xdvjna2x>WHY</span><span data-astro-cid-xdvjna2x>BUILD</span><span class="why-us-row" data-astro-cid-xdvjna2x><span class="why-arrow-circle" aria-hidden="true" data-astro-cid-xdvjna2x>→</span><span class="why-outline" data-astro-cid-xdvjna2x>US</span></span></h2><div class="why-bento" data-astro-cid-xdvjna2x><div class="bento-card is-wide is-light" data-astro-cid-xdvjna2x><strong class="bento-num" data-astro-cid-xdvjna2x>&lt; 0.8s</strong><span class="bento-lbl" data-astro-cid-xdvjna2x>sub-second static paint on 4G</span></div><div class="bento-card is-light" data-astro-cid-xdvjna2x><strong class="bento-num" data-astro-cid-xdvjna2x>0 KB</strong><span class="bento-lbl" data-astro-cid-xdvjna2x>framework bloat &amp; trackers</span></div><div class="bento-card is-light" data-astro-cid-xdvjna2x><strong class="bento-num" data-astro-cid-xdvjna2x>5</strong><span class="bento-lbl" data-astro-cid-xdvjna2x>senior builders in-house</span></div><div class="bento-card is-tall is-accent" data-astro-cid-xdvjna2x><strong class="bento-num" data-astro-cid-xdvjna2x>100%</strong><span class="bento-lbl" data-astro-cid-xdvjna2x>tailored to your exact design &amp; spec</span></div></div></div></section><!-- =========================================================
        BEAT 4: BUILD YOURS! (Editorial CTA + Ruler Footer)
        ========================================================= --><section class="poster-beat beat-cta" aria-label="Start your custom website" data-astro-cid-xdvjna2x><div class="cta-top-meta" data-astro-cid-xdvjna2x><span data-astro-cid-xdvjna2x>engineered by<br data-astro-cid-xdvjna2x><strong data-astro-cid-xdvjna2x>Teqniqks</strong></span><span data-astro-cid-xdvjna2x>for projects<br data-astro-cid-xdvjna2x><a href="mailto:teqniqks@gmail.com" data-astro-cid-xdvjna2x>teqniqks@gmail.com</a></span><span class="meta-right" data-astro-cid-xdvjna2x>work<br data-astro-cid-xdvjna2x><a href="/#work" data-astro-cid-xdvjna2x>teqniqks.dev/work</a></span></div><div class="cta-center-block" data-astro-cid-xdvjna2x><p class="cta-question" data-astro-cid-xdvjna2x>Ready to craft a website<br data-astro-cid-xdvjna2x><span class="cta-highlight" data-astro-cid-xdvjna2x>built around your vision?</span></p><span class="cta-hashtag" data-astro-cid-xdvjna2x>#CustomWebDevelopment</span><div class="cta-giant" data-astro-cid-xdvjna2x><span class="giant-top" data-astro-cid-xdvjna2x>Build</span><span class="giant-bottom" data-astro-cid-xdvjna2x><span class="giant-arrow" aria-hidden="true" data-astro-cid-xdvjna2x>↘</span><span data-astro-cid-xdvjna2x>Yours!</span></span></div><p class="cta-sub" data-astro-cid-xdvjna2x>Have a layout, brand, or idea in mind?<br data-astro-cid-xdvjna2x>Tell us what you want, and <a href="mailto:teqniqks@gmail.com?subject=Custom%20Website%20Inquiry" class="cta-inline-badge" data-astro-cid-xdvjna2x>we’ll build it!</a></p></div><div class="cta-bottom-bar" data-astro-cid-xdvjna2x><a href="mailto:teqniqks@gmail.com?subject=Custom%20Website%20Inquiry" class="cta-author" data-astro-cid-xdvjna2x><span class="author-dot" data-astro-cid-xdvjna2x></span><span data-astro-cid-xdvjna2x><strong data-astro-cid-xdvjna2x>teqniqks@gmail.com</strong><br data-astro-cid-xdvjna2x><small data-astro-cid-xdvjna2x>Direct Senior Engineering</small></span></a><a href="/#contact" class="cta-swipe" data-astro-cid-xdvjna2x>start inquiry →</a></div><!-- Bottom Ruler Scale --><div class="ruler-scale" aria-hidden="true" data-astro-cid-xdvjna2x><span data-astro-cid-xdvjna2x>50</span><span data-astro-cid-xdvjna2x>100</span><span data-astro-cid-xdvjna2x>150</span><span data-astro-cid-xdvjna2x>200</span><span data-astro-cid-xdvjna2x>250</span><span data-astro-cid-xdvjna2x>300</span><span data-astro-cid-xdvjna2x>350</span><span data-astro-cid-xdvjna2x>400</span><span data-astro-cid-xdvjna2x>450</span></div></section></div></section></main><footer class="site-footer" data-astro-cid-jo6i4kqk><!-- Full-Width Split-Typography & Monochrome Strip Centerpiece --><div class="footer-hero-banner" data-astro-cid-jo6i4kqk><span class="banner-eyebrow" data-astro-cid-jo6i4kqk>TEQNIQKS COLLECTIVE · VOL. 26</span><div class="split-lockup" data-astro-cid-jo6i4kqk><div class="split-word-top" aria-hidden="true" data-astro-cid-jo6i4kqk>TEQNIQKS 2026</div><!-- Full-Width 5-Panel Horizontal Monochrome Strip (Team Portraits) --><div class="monochrome-strip" aria-hidden="true" data-astro-cid-jo6i4kqk><div class="strip-panel" data-astro-cid-jo6i4kqk><img src="/images/team/member-3-f1.jpg" alt="" class="strip-img" loading="lazy" decoding="async" data-astro-cid-jo6i4kqk></div><div class="strip-panel" data-astro-cid-jo6i4kqk><img src="/images/team/member-4-f1.jpg" alt="" class="strip-img" loading="lazy" decoding="async" data-astro-cid-jo6i4kqk></div><div class="strip-panel" data-astro-cid-jo6i4kqk><img src="/images/team/member-2-f1.jpg" alt="" class="strip-img" loading="lazy" decoding="async" data-astro-cid-jo6i4kqk></div><div class="strip-panel" data-astro-cid-jo6i4kqk><img src="/images/team/member-1-f1.jpg" alt="" class="strip-img" loading="lazy" decoding="async" data-astro-cid-jo6i4kqk></div><div class="strip-panel" data-astro-cid-jo6i4kqk><img src="/images/team/member-5-f1.jpg" alt="" class="strip-img" loading="lazy" decoding="async" data-astro-cid-jo6i4kqk></div><div class="strip-panel" data-astro-cid-jo6i4kqk><img src="/images/team/member-6-f1.jpg" alt="" class="strip-img" loading="lazy" decoding="async" data-astro-cid-jo6i4kqk></div></div><h2 class="split-word-bottom" data-astro-cid-jo6i4kqk>SELECTED</h2></div><p class="banner-caption" data-astro-cid-jo6i4kqk>THIS CASE CONTAINS ALL THE PROJECTS, CONCEPTS, AND EXPERIMENTS FOR THE 2022 — 2026 ERA.</p></div><!-- Full-Width Integrated Footer Details & Links --><div class="footer-container" data-astro-cid-jo6i4kqk><div class="footer-main-grid" data-astro-cid-jo6i4kqk><div class="footer-col-brand" data-astro-cid-jo6i4kqk><span class="footer-title" data-astro-cid-jo6i4kqk>Teqniqks</span><p class="footer-statement" data-astro-cid-jo6i4kqk>Independent software and design atelier based in Sri Lanka, engineering high-speed platforms and open tools for the global web.</p><div class="footer-contact-row" data-astro-cid-jo6i4kqk><span class="contact-label" data-astro-cid-jo6i4kqk>DIRECT INQUIRY:</span><a href="mailto:teqniqks@gmail.com" class="contact-email" data-astro-cid-jo6i4kqk>teqniqks@gmail.com</a></div></div><div class="footer-col-nav" data-astro-cid-jo6i4kqk><span class="col-heading" data-astro-cid-jo6i4kqk>NAVIGATION</span><ul class="col-links" data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a href="/#about" data-astro-cid-jo6i4kqk>About</a></li><li data-astro-cid-jo6i4kqk><a href="/#workshops" data-astro-cid-jo6i4kqk>Workshops</a></li><li data-astro-cid-jo6i4kqk><a href="/#work" data-astro-cid-jo6i4kqk>Selected Work</a></li><li data-astro-cid-jo6i4kqk><a href="/#process" data-astro-cid-jo6i4kqk>Process</a></li><li data-astro-cid-jo6i4kqk><a href="/#team" data-astro-cid-jo6i4kqk>Team</a></li><li data-astro-cid-jo6i4kqk><a href="/#calendar" data-astro-cid-jo6i4kqk>Build Calendar</a></li><li data-astro-cid-jo6i4kqk><a href="/#preferences" data-astro-cid-jo6i4kqk>On Rotation</a></li><li data-astro-cid-jo6i4kqk><a href="/#afk" data-astro-cid-jo6i4kqk>AFK</a></li><li data-astro-cid-jo6i4kqk><a href="/journal" data-astro-cid-jo6i4kqk>Journal</a></li></ul></div><div class="footer-col-channels" data-astro-cid-jo6i4kqk><span class="col-heading" data-astro-cid-jo6i4kqk>WORKSHOPS &amp; CONNECT</span><ul class="col-links" data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a href="/process" data-astro-cid-jo6i4kqk>Web Laboratory (Websites)</a></li><li data-astro-cid-jo6i4kqk><a href="/themes" data-astro-cid-jo6i4kqk>Graphics Studio (Design)</a></li><li data-astro-cid-jo6i4kqk><a href="/motion" data-astro-cid-jo6i4kqk>Motion Bay (Video &amp; Motion)</a></li><li data-astro-cid-jo6i4kqk><a href="/contributors" data-astro-cid-jo6i4kqk>Open Forge (Contribute)</a></li><li data-astro-cid-jo6i4kqk><a href="https://github.com/PramudithaN" target="_blank" rel="noopener noreferrer" data-astro-cid-jo6i4kqk>GitHub</a></li><li data-astro-cid-jo6i4kqk><a href="https://linkedin.com/in/pramuditha-nadun-612b1b204" target="_blank" rel="noopener noreferrer" data-astro-cid-jo6i4kqk>LinkedIn</a></li><li data-astro-cid-jo6i4kqk><a href="/privacy" data-astro-cid-jo6i4kqk>Privacy &amp; Zero-Cookie Policy</a></li></ul></div></div><div class="footer-bottom-bar" data-astro-cid-jo6i4kqk><span class="legal-note" data-astro-cid-jo6i4kqk>© 2026 TEQNIQKS. ZERO TRACKING COOKIES. SRI LANKA PDPA &amp; GDPR COMPLIANT.</span><a href="#main-content" class="back-to-top" aria-label="Back to top of page" data-astro-cid-jo6i4kqk>BACK TO TOP ↑</a></div></div></footer><div class="theme-dock" id="themeDock" data-astro-cid-ijxc6blt><!-- Popover Theme Picker --><div class="theme-popover" id="themePopover" hidden role="dialog" aria-label="Select website theme" data-astro-cid-ijxc6blt><div class="popover-header" data-astro-cid-ijxc6blt><span class="popover-title" data-astro-cid-ijxc6blt>SYSTEM THEME</span><span class="popover-sub" data-astro-cid-ijxc6blt>Applies site-wide</span></div><div class="theme-options" role="radiogroup" aria-label="Website themes" data-astro-cid-ijxc6blt><button type="button" class="theme-option is-selected" data-theme-id="forest-canopy" role="radio" aria-checked="true" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #09100b; border-color: #52a468;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #52a468;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #a4ac86;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Forest Canopy</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button><button type="button" class="theme-option " data-theme-id="golden-hour" role="radio" aria-checked="false" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #080503; border-color: #FF9D00;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #FF9D00;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #FFCF71;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Golden Hour</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button><button type="button" class="theme-option " data-theme-id="tech-innovation" role="radio" aria-checked="false" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #0c1017; border-color: #0066ff;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #0066ff;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #00ffff;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Tech Innovation</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button><button type="button" class="theme-option " data-theme-id="modern-minimalist" role="radio" aria-checked="false" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #141618; border-color: #ffffff;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #ffffff;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #708090;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Modern Minimalist</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button><button type="button" class="theme-option " data-theme-id="midnight-galaxy" role="radio" aria-checked="false" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #0c0814; border-color: #a855f7;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #a855f7;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #d8b4fe;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Midnight Galaxy</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button><button type="button" class="theme-option " data-theme-id="crimson-noir" role="radio" aria-checked="false" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #110809; border-color: #ef4444;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #ef4444;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #fca5a5;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Crimson Noir</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button><button type="button" class="theme-option " data-theme-id="oceanic-teal" role="radio" aria-checked="false" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #061111; border-color: #14b8a6;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #14b8a6;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #5eead4;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Oceanic Teal</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button><button type="button" class="theme-option " data-theme-id="nordic-cobalt" role="radio" aria-checked="false" data-astro-cid-ijxc6blt><span class="theme-swatch" style="background: #080c16; border-color: #3b82f6;" aria-hidden="true" data-astro-cid-ijxc6blt><span class="swatch-half is-primary" style="background: #3b82f6;" data-astro-cid-ijxc6blt></span><span class="swatch-half is-secondary" style="background: #93c5fd;" data-astro-cid-ijxc6blt></span></span><span class="theme-meta" data-astro-cid-ijxc6blt><span class="theme-name" data-astro-cid-ijxc6blt>Nordic Cobalt</span></span><span class="theme-check" aria-hidden="true" data-astro-cid-ijxc6blt>✓</span></button></div></div><!-- Hovering Floating Theme Icon Button --><button type="button" class="theme-fab" id="themeFabBtn" aria-label="Change website theme" aria-expanded="false" aria-controls="themePopover" title="Change website theme" data-astro-cid-ijxc6blt><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-ijxc6blt><circle cx="13.5" cy="6.5" r="1.2" fill="currentColor" data-astro-cid-ijxc6blt></circle><circle cx="17.5" cy="10.5" r="1.2" fill="currentColor" data-astro-cid-ijxc6blt></circle><circle cx="8.5" cy="7.5" r="1.2" fill="currentColor" data-astro-cid-ijxc6blt></circle><circle cx="6.5" cy="12.5" r="1.2" fill="currentColor" data-astro-cid-ijxc6blt></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2Z" data-astro-cid-ijxc6blt></path></svg></button></div><script type="module">var e=document.getElementById(`themeFabBtn`),t=document.getElementById(`themePopover`),n=document.getElementById(`themeDock`),r=document.querySelectorAll(`.theme-option[data-theme-id]`);function i(e){r.forEach(t=>{let n=t.getAttribute(`data-theme-id`)===e;t.classList.toggle(`is-selected`,n),t.setAttribute(`aria-checked`,n?`true`:`false`)})}function a(n){t&&e&&(t.hidden=!n,e.setAttribute(`aria-expanded`,String(n)),e.classList.toggle(`is-open`,n))}e?.addEventListener(`click`,e=>{e.stopPropagation(),a(t?.hidden??!0)}),r.forEach(e=>{e.addEventListener(`click`,()=>{let t=e.getAttribute(`data-theme-id`);t&&(typeof window.__applyTeqniqksTheme__==`function`&&window.__applyTeqniqksTheme__(t),i(t))})}),document.addEventListener(`click`,e=>{n&&e.target instanceof Node&&!n.contains(e.target)&&a(!1)}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&a(!1)});var o=document.documentElement.getAttribute(`data-theme`);o&&i(o);</script><script>
-        (function () {
-          var bar = document.getElementById('teqniqksRouteLoader');
-          var screen = document.getElementById('teqniqksScreenLoader');
-          if (!bar && !screen) return;
+          (function () {
+            var bar = document.getElementById('teqniqksRouteLoader');
+            var screen = document.getElementById('teqniqksScreenLoader');
+            if (!bar && !screen) return;
 
-          function hideLoaders() {
-            if (bar) {
-              bar.classList.remove('is-loading');
-              bar.classList.add('is-done');
-              setTimeout(function () {
-                bar.classList.remove('is-done');
-              }, 320);
-            }
-            if (screen) {
-              screen.classList.add('is-hidden');
-            }
-          }
-
-          function showLoaders() {
-            if (bar) {
-              bar.classList.remove('is-done');
-              bar.classList.add('is-loading');
-            }
-            if (screen) {
-              screen.classList.remove('is-hidden');
-            }
-          }
-
-          window.addEventListener('pageshow', hideLoaders);
-          if (document.readyState === 'complete') {
-            hideLoaders();
-          } else {
-            showLoaders();
-            window.addEventListener('load', hideLoaders, { once: true });
-            // Safety cap so slow third-party resources never block the screen
-            setTimeout(hideLoaders, 1800);
-          }
-
-          document.addEventListener('click', function (e) {
-            var target = e.target instanceof Element ? e.target.closest('a[href]') : null;
-            if (!target) return;
-            var href = target.getAttribute('href') || '';
-            if (
-              !href ||
-              href.startsWith('#') ||
-              href.startsWith('mailto:') ||
-              target.getAttribute('target') === '_blank' ||
-              e.metaKey ||
-              e.ctrlKey ||
-              e.shiftKey ||
-              e.altKey
-            ) {
-              return;
-            }
-            try {
-              var dest = new URL(target.href, window.location.href);
-              if (dest.origin === window.location.origin && dest.pathname !== window.location.pathname) {
-                showLoaders();
+            function hideLoaders() {
+              if (bar) {
+                bar.classList.remove('is-loading');
+                bar.classList.add('is-done');
+                setTimeout(function () {
+                  bar.classList.remove('is-done');
+                }, 320);
               }
-            } catch {}
-          });
-        })();
-      </script></body></html>
+              if (screen) {
+                screen.classList.add('is-hidden');
+              }
+            }
+
+            function showLoaders() {
+              if (bar) {
+                bar.classList.remove('is-done');
+                bar.classList.add('is-loading');
+              }
+              if (screen) {
+                screen.classList.remove('is-hidden');
+              }
+            }
+
+            window.addEventListener('pageshow', hideLoaders);
+            if (document.readyState === 'complete') {
+              hideLoaders();
+            } else {
+              showLoaders();
+              window.addEventListener('load', hideLoaders, { once: true });
+              // Safety cap so slow third-party resources never block the screen
+              setTimeout(hideLoaders, 1800);
+            }
+
+            document.addEventListener('click', function (e) {
+              var target = e.target instanceof Element ? e.target.closest('a[href]') : null;
+              if (!target) return;
+              var href = target.getAttribute('href') || '';
+              if (
+                !href ||
+                href.startsWith('#') ||
+                href.startsWith('mailto:') ||
+                target.getAttribute('target') === '_blank' ||
+                e.metaKey ||
+                e.ctrlKey ||
+                e.shiftKey ||
+                e.altKey
+              ) {
+                return;
+              }
+              try {
+                var dest = new URL(target.href, window.location.href);
+                if (
+                  dest.origin === window.location.origin &&
+                  dest.pathname !== window.location.pathname
+                ) {
+                  showLoaders();
+                }
+              } catch {}
+            });
+          })();
+        </script></body></html>

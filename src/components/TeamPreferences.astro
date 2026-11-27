@@ -1,0 +1,988 @@
+---
+import { siteConfig } from '../config/site';
+
+interface Props {
+  id?: string;
+}
+
+const { id = 'preferences' } = Astro.props;
+const team = siteConfig.team;
+const serializedTeam = JSON.stringify(
+  team.map((m) => ({
+    firstName: m.name.split(' ')[0],
+    fullName: m.name,
+    track: m.music.track,
+    artist: m.music.artist,
+    genre: m.music.genre,
+    progress: m.music.progress,
+    cover: m.music.cover,
+    previewUrl: m.music.previewUrl,
+    spotifyUrl: `https://open.spotify.com/search/${encodeURIComponent(`${m.music.track} ${m.music.artist}`)}`,
+  })),
+);
+---
+
+<section class="preferences-section" id={id} aria-labelledby="preferences-heading">
+  <div class="site-container">
+    <div class="section-title-wrap">
+      <span class="section-kicker">TEAM MEMBER PREFERENCES</span>
+      <h2 id="preferences-heading" class="section-heading">
+        On Rotation While Building
+      </h2>
+      <p class="section-sub">
+        Select any developer to bring their favorite track to center stage, and press play to
+        listen.
+      </p>
+    </div>
+
+    <!-- Developer Selector Pills -->
+    <div class="dev-selector-bar" role="tablist" aria-label="Select developer music preference">
+      {team.map((member, idx) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={idx === 2 ? 'true' : 'false'}
+          class={`dev-pill ${idx === 2 ? 'is-active' : ''}`}
+          data-dev-idx={idx}
+        >
+          <span class="dev-dot" aria-hidden="true"></span>
+          {member.name.split(' ')[0]}
+        </button>
+      ))}
+    </div>
+
+    <!-- Ambient Coverflow Stage -->
+    <div class="coverflow-stage" id="coverflowStage" data-playing="false">
+      <audio id="rotationAudio" preload="none"></audio>
+      <div class="stage-ambient-glow" aria-hidden="true"></div>
+
+      <!-- Top Spotify Brand Header -->
+      <div class="stage-brand-row">
+        <svg
+          class="spotify-mark"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.786-.963-.335.077-.67-.133-.746-.47-.077-.334.132-.67.47-.745 3.808-.87 7.076-.496 9.712 1.115.293.18.386.563.207.856zm1.224-2.724c-.226.367-.706.482-1.072.257-2.687-1.652-6.785-2.131-9.965-1.166-.413.127-.848-.106-.973-.517-.125-.413.108-.848.52-.973 3.632-1.102 8.147-.568 11.234 1.328.366.226.48.707.256 1.071zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71c-.493.15-1.016-.128-1.166-.62-.149-.493.13-1.016.62-1.166 3.532-1.073 9.404-.865 13.115 1.338.445.264.59.838.327 1.282-.264.444-.838.59-1.282.327z" />
+        </svg>
+        <span class="spotify-label">Spotify</span>
+      </div>
+
+      <!-- 5-Card 3D Coverflow Carousel with Real Album Covers -->
+      <div class="coverflow-track" id="coverflowTrack">
+        {team.map((member, idx) => {
+          const firstName = member.name.split(' ')[0];
+          const offset = idx - 2;
+          return (
+            <button
+              type="button"
+              class={`cf-card ${offset === 0 ? 'is-center' : ''}`}
+              data-card-idx={idx}
+              style={`--offset: ${offset}; --abs: ${Math.abs(offset)};`}
+              aria-label={`Select ${firstName}'s track: ${member.music.track} by ${member.music.artist}`}
+            >
+              <img
+                src={member.music.cover}
+                alt={`${member.music.track} by ${member.music.artist} album art`}
+                class="cf-cover-img"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="cf-card-scrim" aria-hidden="true"></div>
+              <div class="cf-card-caption">
+                <span class="cf-artist">{member.music.artist}</span>
+                <span class="cf-track">{member.music.track}</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <!-- Frosted Glass Pill Player Bar -->
+      <div class="glass-player-pill">
+        <div class="pill-left-controls">
+          <button
+            type="button"
+            class="pill-icon-btn"
+            id="cfPrevBtn"
+            aria-label="Previous developer"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M3.5 3.5V12.5H5V3.5H3.5ZM12.5 3.5L6.5 8L12.5 12.5V3.5Z" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            class="pill-icon-btn is-play"
+            id="cfPlayBtn"
+            aria-label="Play or pause"
+          >
+            <span class="audio-spinner" aria-hidden="true"></span>
+            <svg class="svg-pause" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <rect x="3.5" y="3" width="3" height="10" rx="0.8" />
+              <rect x="9.5" y="3" width="3" height="10" rx="0.8" />
+            </svg>
+            <svg class="svg-play" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M4.5 3L13 8L4.5 13V3Z" />
+            </svg>
+          </button>
+
+          <button type="button" class="pill-icon-btn" id="cfNextBtn" aria-label="Next developer">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M12.5 3.5V12.5H11V3.5H12.5ZM3.5 3.5L9.5 8L3.5 12.5V3.5Z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Embedded Dark Now-Playing Capsule with Real Cover Thumbnail -->
+        <div class="pill-now-playing">
+          <img
+            src={team[2].music.cover}
+            alt={`${team[2].music.track} cover`}
+            class="np-thumb-img"
+            id="npThumbImg"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="np-info">
+            <span class="np-artist" id="npArtist">
+              {team[2].music.artist}
+            </span>
+            <span class="np-track" id="npTrack">
+              {team[2].music.track}
+            </span>
+            <div
+              class="np-progress-track"
+              id="npProgressTrack"
+              role="slider"
+              aria-label="Track playback progress"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              tabindex="0"
+            >
+              <div class="np-progress-fill" id="npProgress" style="width: 0%;"></div>
+            </div>
+          </div>
+          <div class="np-eq" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="pill-right-controls">
+          <!-- AirPlay / Cast & Mute toggle -->
+          <span class="pill-static-icon" aria-hidden="true">
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1" />
+              <polygon points="12 15 17 21 7 21 12 15" fill="currentColor" />
+            </svg>
+          </span>
+          <button
+            type="button"
+            class="pill-mute-btn"
+            id="cfMuteBtn"
+            aria-label="Mute or unmute audio"
+            aria-pressed="false"
+            title="Mute / Unmute"
+          >
+            <svg
+              class="svg-vol-on"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+            </svg>
+            <svg
+              class="svg-vol-muted"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+              <line x1="22" y1="9" x2="16" y2="15" />
+              <line x1="16" y1="9" x2="22" y2="15" />
+            </svg>
+          </button>
+          <a
+            href={`https://open.spotify.com/search/${encodeURIComponent(`${team[2].music.track} ${team[2].music.artist}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="pill-open-link"
+            id="npSpotifyLink"
+            aria-label="Open track on Spotify"
+            title="Open on Spotify"
+          >
+            ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Attribution -->
+      <p class="stage-footer-note" id="cfFooterNote">
+        © {new Date().getFullYear()} · Teqniqks Collective / {team[2].name.split(' ')[0]}'s Rotation
+        ({team[2].music.genre})
+      </p>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ serializedTeam }}>
+  const tracks = JSON.parse(serializedTeam);
+  let activeIdx = 2;
+  let loadedTrackIdx = -1;
+  let retriedFreshUrl = false;
+
+  const stage = document.getElementById('coverflowStage');
+  const audio = document.getElementById('rotationAudio');
+  const devPills = document.querySelectorAll('.dev-pill');
+  const cards = document.querySelectorAll('.cf-card');
+  const prevBtn = document.getElementById('cfPrevBtn');
+  const nextBtn = document.getElementById('cfNextBtn');
+  const playBtn = document.getElementById('cfPlayBtn');
+  const muteBtn = document.getElementById('cfMuteBtn');
+
+  const npThumbImg = document.getElementById('npThumbImg');
+  const npArtist = document.getElementById('npArtist');
+  const npTrack = document.getElementById('npTrack');
+  const npProgress = document.getElementById('npProgress');
+  const npProgressTrack = document.getElementById('npProgressTrack');
+  const npSpotifyLink = document.getElementById('npSpotifyLink');
+  const cfFooterNote = document.getElementById('cfFooterNote');
+
+  function setPlayingState(isPlaying) {
+    if (stage) stage.setAttribute('data-playing', isPlaying ? 'true' : 'false');
+    if (playBtn) {
+      playBtn.setAttribute('aria-label', isPlaying ? 'Pause track' : 'Play track');
+    }
+  }
+
+  function setProgressPct(pct) {
+    const clamped = Math.max(0, Math.min(100, pct));
+    if (npProgress) npProgress.style.width = `${clamped}%`;
+    if (npProgressTrack) npProgressTrack.setAttribute('aria-valuenow', String(Math.round(clamped)));
+  }
+
+  async function fetchFreshPreviewUrl(track, artist) {
+    try {
+      const q = encodeURIComponent(`${track} ${artist}`);
+      const res = await fetch(`https://itunes.apple.com/search?term=${q}&entity=song&limit=1`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data?.results?.[0]?.previewUrl || null;
+    } catch {
+      return null;
+    }
+  }
+
+  async function playActiveTrack() {
+    if (!(audio instanceof HTMLAudioElement)) return;
+    const item = tracks[activeIdx];
+    if (!item) return;
+
+    if (stage) stage.setAttribute('data-loading', 'true');
+    if (loadedTrackIdx !== activeIdx) {
+      retriedFreshUrl = false;
+      loadedTrackIdx = activeIdx;
+      audio.src = item.previewUrl;
+      audio.load();
+    }
+
+    try {
+      await audio.play();
+      setPlayingState(true);
+    } catch {
+      setPlayingState(false);
+    } finally {
+      if (stage) stage.setAttribute('data-loading', 'false');
+    }
+  }
+
+  function pauseActiveTrack() {
+    if (audio instanceof HTMLAudioElement && !audio.paused) {
+      audio.pause();
+    }
+    setPlayingState(false);
+  }
+
+  function updateCoverflow(newIdx) {
+    const wasPlaying = audio instanceof HTMLAudioElement && !audio.paused;
+    activeIdx = (newIdx + tracks.length) % tracks.length;
+    const item = tracks[activeIdx];
+
+    devPills.forEach((pill, i) => {
+      const isAct = i === activeIdx;
+      pill.classList.toggle('is-active', isAct);
+      pill.setAttribute('aria-selected', isAct ? 'true' : 'false');
+    });
+
+    cards.forEach((card, i) => {
+      let offset = i - activeIdx;
+      if (offset > 2) offset -= tracks.length;
+      if (offset < -2) offset += tracks.length;
+
+      card.style.setProperty('--offset', String(offset));
+      card.style.setProperty('--abs', String(Math.abs(offset)));
+      card.classList.toggle('is-center', offset === 0);
+    });
+
+    if (npThumbImg) {
+      npThumbImg.setAttribute('src', item.cover);
+      npThumbImg.setAttribute('alt', `${item.track} cover`);
+    }
+    if (npArtist) npArtist.textContent = item.artist;
+    if (npTrack) npTrack.textContent = item.track;
+    if (npSpotifyLink) npSpotifyLink.setAttribute('href', item.spotifyUrl);
+    if (cfFooterNote) {
+      cfFooterNote.textContent = `© ${new Date().getFullYear()} · Teqniqks Collective / ${item.firstName}'s Rotation (${item.genre})`;
+    }
+
+    setProgressPct(0);
+    if (audio instanceof HTMLAudioElement) {
+      audio.pause();
+      loadedTrackIdx = -1;
+      if (wasPlaying) {
+        playActiveTrack();
+      } else {
+        setPlayingState(false);
+      }
+    }
+  }
+
+  devPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const idx = Number(pill.getAttribute('data-dev-idx'));
+      if (!Number.isNaN(idx)) updateCoverflow(idx);
+    });
+  });
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const idx = Number(card.getAttribute('data-card-idx'));
+      if (!Number.isNaN(idx)) updateCoverflow(idx);
+    });
+  });
+
+  prevBtn?.addEventListener('click', () => updateCoverflow(activeIdx - 1));
+  nextBtn?.addEventListener('click', () => updateCoverflow(activeIdx + 1));
+
+  playBtn?.addEventListener('click', () => {
+    if (!(audio instanceof HTMLAudioElement)) return;
+    if (audio.paused) {
+      playActiveTrack();
+    } else {
+      pauseActiveTrack();
+    }
+  });
+
+  muteBtn?.addEventListener('click', () => {
+    if (!(audio instanceof HTMLAudioElement)) return;
+    audio.muted = !audio.muted;
+    muteBtn.classList.toggle('is-muted', audio.muted);
+    muteBtn.setAttribute('aria-pressed', audio.muted ? 'true' : 'false');
+  });
+
+  npProgressTrack?.addEventListener('click', (e) => {
+    if (!(audio instanceof HTMLAudioElement) || !audio.duration) return;
+    const rect = npProgressTrack.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = ratio * audio.duration;
+    setProgressPct(ratio * 100);
+  });
+
+  if (audio instanceof HTMLAudioElement) {
+    audio.addEventListener('waiting', () => {
+      if (stage) stage.setAttribute('data-loading', 'true');
+    });
+
+    audio.addEventListener('playing', () => {
+      if (stage) stage.setAttribute('data-loading', 'false');
+    });
+
+    audio.addEventListener('canplay', () => {
+      if (stage) stage.setAttribute('data-loading', 'false');
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration > 0) {
+        setProgressPct((audio.currentTime / audio.duration) * 100);
+      }
+    });
+
+    audio.addEventListener('ended', () => {
+      setPlayingState(false);
+      setProgressPct(0);
+    });
+
+    audio.addEventListener('error', async () => {
+      if (retriedFreshUrl) {
+        setPlayingState(false);
+        return;
+      }
+      retriedFreshUrl = true;
+      const item = tracks[activeIdx];
+      const freshUrl = await fetchFreshPreviewUrl(item.track, item.artist);
+      if (freshUrl) {
+        item.previewUrl = freshUrl;
+        audio.src = freshUrl;
+        audio.load();
+        try {
+          await audio.play();
+          setPlayingState(true);
+        } catch {
+          setPlayingState(false);
+        }
+      } else {
+        setPlayingState(false);
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .preferences-section {
+    padding: var(--space-3xl) 0;
+    border-bottom: 1px solid var(--border-hairline);
+    background-color: var(--bg-canvas);
+  }
+
+  .section-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: var(--space-xs);
+  }
+
+  .section-title-wrap {
+    margin-bottom: var(--space-l);
+  }
+
+  .section-heading {
+    font-size: var(--step-4);
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    letter-spacing: -0.035em;
+  }
+
+  .section-sub {
+    font-size: var(--step-0);
+    color: var(--text-secondary);
+  }
+
+  /* Developer Selector Bar */
+  .dev-selector-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .dev-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 15px;
+    border-radius: 999px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-hairline);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 160ms ease;
+  }
+
+  .dev-pill:hover {
+    border-color: var(--border-hairline-bright);
+    color: var(--text-primary);
+  }
+
+  .dev-pill.is-active {
+    background: var(--theme-accent-muted);
+    border-color: var(--text-accent);
+    color: var(--text-primary);
+  }
+
+  .dev-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  .dev-pill.is-active .dev-dot {
+    background: var(--text-accent);
+    box-shadow: 0 0 8px var(--text-accent);
+  }
+
+  /* Coverflow Stage */
+  .coverflow-stage {
+    position: relative;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-hairline-bright);
+    border-radius: 20px;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.25rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .stage-ambient-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 46% 42%, var(--theme-accent-glow) 0%, transparent 48%),
+      radial-gradient(
+        circle at 60% 38%,
+        color-mix(in srgb, var(--text-accent-soft) 24%, transparent) 0%,
+        transparent 42%
+      );
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stage-brand-row {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-accent);
+    margin-bottom: var(--space-l);
+  }
+
+  .spotify-label {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* 3D Coverflow Carousel */
+  .coverflow-track {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 276px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .cf-card {
+    position: absolute;
+    width: 214px;
+    height: 248px;
+    padding: 0;
+    border-radius: 16px;
+    background: var(--bg-elevated);
+    border: 1.5px solid var(--border-hairline-bright);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    cursor: pointer;
+    text-align: center;
+    color: var(--text-primary);
+    box-shadow: 0 22px 44px -12px rgba(0, 0, 0, 0.85);
+    transform: translateX(calc(var(--offset) * 118px)) scale(calc(1 - var(--abs) * 0.14))
+      rotateY(calc(var(--offset) * -10deg));
+    z-index: calc(10 - var(--abs));
+    opacity: calc(1 - var(--abs) * 0.2);
+    filter: brightness(calc(1 - var(--abs) * 0.18));
+    transition:
+      transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 320ms ease,
+      filter 320ms ease,
+      border-color 200ms ease;
+  }
+
+  .cf-card.is-center {
+    border-color: var(--text-accent);
+    box-shadow:
+      0 26px 56px -12px rgba(0, 0, 0, 0.92),
+      0 0 28px -8px var(--theme-accent-glow);
+  }
+
+  .cf-cover-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cf-card-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 44%,
+      rgba(6, 10, 8, 0.72) 74%,
+      rgba(6, 10, 8, 0.94) 100%
+    );
+    pointer-events: none;
+  }
+
+  .cf-card-caption {
+    position: relative;
+    z-index: 2;
+    padding: 12px 12px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    backdrop-filter: blur(4px);
+  }
+
+  .cf-artist {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cf-track {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.78);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Frosted Glass Pill Player Bar */
+  .glass-player-pill {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 680px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg-elevated) 75%, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--border-hairline-bright);
+    backdrop-filter: blur(18px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    box-shadow: 0 18px 36px -10px rgba(0, 0, 0, 0.75);
+    margin-bottom: var(--space-l);
+  }
+
+  .pill-left-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .pill-icon-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      color 150ms ease,
+      background 150ms ease;
+  }
+
+  .pill-icon-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .pill-icon-btn.is-play {
+    color: var(--text-primary);
+  }
+
+  .svg-play {
+    display: none;
+  }
+  .coverflow-stage[data-playing='false'] .svg-pause {
+    display: none;
+  }
+  .coverflow-stage[data-playing='false'] .svg-play {
+    display: block;
+  }
+
+  /* Embedded Now Playing Capsule */
+  .pill-now-playing {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-hairline);
+    border-radius: 999px;
+    padding: 6px 14px 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .np-thumb-img {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--border-hairline-bright);
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .np-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .np-artist {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .np-track {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .np-progress-track {
+    width: 100%;
+    height: 4px;
+    background: var(--border-hairline);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .np-progress-fill {
+    height: 100%;
+    background: var(--text-accent);
+    transition: width 120ms linear;
+  }
+
+  .np-eq {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  .np-eq span {
+    width: 2px;
+    height: 100%;
+    background: var(--text-accent);
+    border-radius: 1px;
+    transform-origin: bottom;
+    animation: eqBar 0.75s ease-in-out infinite;
+  }
+
+  .np-eq span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .np-eq span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .np-eq span:nth-child(4) {
+    animation-delay: 0.45s;
+  }
+
+  .coverflow-stage[data-playing='false'] .np-eq span {
+    animation-play-state: paused;
+    transform: scaleY(0.3);
+  }
+
+  .audio-spinner {
+    display: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--bg-canvas) 25%, transparent);
+    border-top-color: var(--bg-canvas);
+    animation: audioSpin 0.7s linear infinite;
+  }
+
+  .coverflow-stage[data-loading='true'] .pill-icon-btn.is-play .audio-spinner {
+    display: inline-block;
+  }
+
+  .coverflow-stage[data-loading='true'] .pill-icon-btn.is-play .svg-play,
+  .coverflow-stage[data-loading='true'] .pill-icon-btn.is-play .svg-pause {
+    display: none;
+  }
+
+  @keyframes audioSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes eqBar {
+    0%,
+    100% {
+      transform: scaleY(0.3);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+
+  .pill-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .pill-static-icon {
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .pill-mute-btn {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition:
+      color 150ms ease,
+      background-color 150ms ease;
+  }
+
+  .pill-mute-btn:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .pill-mute-btn .svg-vol-muted {
+    display: none;
+  }
+
+  .pill-mute-btn.is-muted .svg-vol-on {
+    display: none;
+  }
+
+  .pill-mute-btn.is-muted .svg-vol-muted {
+    display: inline;
+    color: var(--text-accent);
+  }
+
+  .pill-open-link {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-hairline-bright);
+    color: var(--text-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    transition: all 150ms ease;
+  }
+
+  .pill-open-link:hover {
+    border-color: var(--text-accent);
+    color: var(--text-accent);
+  }
+
+  .stage-footer-note {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  @media (max-width: 720px) {
+    .cf-card {
+      width: 170px;
+      height: 204px;
+      transform: translateX(calc(var(--offset) * 76px)) scale(calc(1 - var(--abs) * 0.16))
+        rotateY(calc(var(--offset) * -10deg));
+    }
+
+    .glass-player-pill {
+      border-radius: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pill-now-playing {
+      order: -1;
+      flex-basis: 100%;
+    }
+  }
+</style>
