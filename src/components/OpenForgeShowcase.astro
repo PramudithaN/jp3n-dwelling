@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import { snapshotYear } from '../data/teamCalendar';
 
 interface OpenRepo {
   id: string;
@@ -120,7 +121,7 @@ const processSteps = [
 ];
 
 const serializedRepos = JSON.stringify(openRepos);
-const currentYear = new Date().getFullYear();
+const currentYear = snapshotYear;
 ---
 
 <div class="open-forge-page">

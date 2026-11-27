@@ -1,6 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
-import { teamContributions, memberColors } from '../data/teamCalendar';
+import { latestSnapshotDate, memberColors, teamContributions } from '../data/teamCalendar';
 
 interface Props {
   id?: string;
@@ -18,7 +18,6 @@ const teamMembers = siteConfig.team.map((m) => ({
 const serializedData = JSON.stringify(teamContributions);
 const serializedColors = JSON.stringify(memberColors);
 
-const buildNow = new Date();
 const monthNamesSSR = [
   'JANUARY',
   'FEBRUARY',
@@ -33,16 +32,12 @@ const monthNamesSSR = [
   'NOVEMBER',
   'DECEMBER',
 ];
-const initialMonthName = monthNamesSSR[buildNow.getMonth()];
-const initialYear = buildNow.getFullYear();
-const initialMonthAttr = `${initialYear}-${String(buildNow.getMonth() + 1).padStart(2, '0')}`;
-const initialTodayStr = `${initialMonthAttr}-${String(buildNow.getDate()).padStart(2, '0')}`;
-const monthKeys = Object.keys(teamContributions)
-  .filter((d) => d.startsWith(`${initialMonthAttr}-`))
-  .sort();
-const initialInspectorDate = teamContributions[initialTodayStr]
-  ? initialTodayStr
-  : monthKeys[monthKeys.length - 1] || `${initialMonthAttr}-01`;
+const [initialYearStr, initialMonthStr] = latestSnapshotDate.split('-');
+const initialYear = Number(initialYearStr);
+const initialMonthIdx = Number(initialMonthStr) - 1;
+const initialMonthName = monthNamesSSR[initialMonthIdx] ?? 'JANUARY';
+const initialMonthAttr = `${initialYearStr}-${initialMonthStr}`;
+const initialInspectorDate = latestSnapshotDate;
 ---
 
 <section class="calendar-section" id={id} aria-labelledby="calendar-heading">

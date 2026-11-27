@@ -142,7 +142,7 @@ bun run sync:calendar   # Optional: refresh 2-month GitHub contribution snapshot
 bun run build
 ```
 
-`build` runs `astro build` into `./docs` and executes `scripts/prepare-gh-pages.mjs` to generate `docs/.nojekyll` (with `public/CNAME` copied for `teqniqks.com`). A scheduled workflow (`.github/workflows/sync-calendar.yml`) runs daily at 00:00 Sri Lanka Time to refresh `src/data/teamCalendar.generated.json` and `docs/` via Pull Request.
+`build` runs `astro build` into `./docs` and executes `scripts/prepare-gh-pages.mjs` to generate `docs/.nojekyll` (with `public/CNAME` copied for `teqniqks.com`). A scheduled workflow (`.github/workflows/sync-calendar.yml`) runs daily at 00:00 Sri Lanka Time to refresh `src/data/teamCalendar.generated.json` and `docs/` via Pull Request. Configure repository secret `CALENDAR_SYNC_TOKEN` (a fine-grained PAT or GitHub App token with `Contents: Read and write` and `Pull requests: Read and write`) so automated refresh PRs trigger required branch-protection workflows (`Build & Verify Site` and `Validate Conventional Commits`).
 
 ### GitHub Pages Setup
 

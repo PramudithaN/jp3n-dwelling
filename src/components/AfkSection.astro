@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import { snapshotYear } from '../data/teamCalendar';
 
 interface Props {
   id?: string;
@@ -7,7 +8,7 @@ interface Props {
 
 const { id = 'afk' } = Astro.props;
 const team = siteConfig.team;
-const currentYear = new Date().getFullYear();
+const currentYear = snapshotYear;
 ---
 
 <section class="afk-section" id={id} aria-labelledby="afk-heading">

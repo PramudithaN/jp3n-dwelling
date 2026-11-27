@@ -29,7 +29,7 @@ function formatRepoShort(fullRepo: string, handle: string): string {
   return fullRepo.toLowerCase().startsWith(prefix) ? fullRepo.slice(prefix.length) : fullRepo;
 }
 
-async function fetchMemberEvents(
+export async function fetchMemberEvents(
   handle: string,
   cutoffIso: string,
   headers: Record<string, string>,
@@ -41,11 +41,11 @@ async function fetchMemberEvents(
     try {
       const res = await fetch(url, { headers });
       if (!res.ok) {
-        return { ok: page > 1, events: collected };
+        return { ok: false, events: [] };
       }
       const batch = (await res.json()) as unknown;
       if (!Array.isArray(batch)) {
-        return { ok: page > 1, events: collected };
+        return { ok: false, events: [] };
       }
       for (const item of batch) {
         const ev = item as GitHubPublicEvent;
@@ -58,7 +58,7 @@ async function fetchMemberEvents(
         return { ok: true, events: collected };
       }
     } catch {
-      return { ok: page > 1, events: collected };
+      return { ok: false, events: [] };
     }
   }
 
@@ -180,4 +180,6 @@ async function syncTeamCalendar(): Promise<void> {
   );
 }
 
-await syncTeamCalendar();
+if (import.meta.main) {
+  await syncTeamCalendar();
+}

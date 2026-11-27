@@ -1,9 +1,10 @@
 ---
 import { siteConfig } from '../config/site';
+import { snapshotYear } from '../data/teamCalendar';
 import { withBase } from '../utils/url';
 
 const { email, github, linkedin } = siteConfig.contact;
-const currentYear = new Date().getFullYear();
+const currentYear = snapshotYear;
 const teamPortraits = siteConfig.team.map((m) => ({
   name: m.name,
   portrait: withBase(m.portrait),
