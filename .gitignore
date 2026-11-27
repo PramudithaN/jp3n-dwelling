@@ -26,7 +26,6 @@ pnpm-debug.log*
 *.zip
 
 # AI Agent rule & template files (per-repo local generated)
-AGENTS.md
 GEMINI.md
 QA_AUTOMATION.md
 templates/
