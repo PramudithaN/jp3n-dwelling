@@ -18,7 +18,7 @@ const workshops: WorkshopCol[] = [
     pill: 'WEB LABORATORY',
     lines: ['Custom websites & web apps', 'Fast on every screen', 'Built how you want it'],
     href: withBase('/process'),
-    image: withBase('/images/workshops/web-lab.jpg'),
+    image: withBase('/images/workshops/web-lab.avif'),
     alt: 'Web Laboratory — minimalist engineering monitor and dark workspace',
   },
   {
@@ -27,7 +27,7 @@ const workshops: WorkshopCol[] = [
     pill: 'GRAPHICS STUDIO',
     lines: ['Logos & brand identity', 'Posters & visual kits', 'Clean colors & typography'],
     href: withBase('/themes'),
-    image: withBase('/images/workshops/graphics-studio.jpg'),
+    image: withBase('/images/workshops/graphics-studio.avif'),
     alt: 'Graphics Studio — monochrome brutalist architectural geometry',
   },
   {
@@ -36,7 +36,7 @@ const workshops: WorkshopCol[] = [
     pill: 'MOTION BAY',
     lines: ['Product & promo videos', 'Social reels & video editing', 'Smooth motion graphics'],
     href: withBase('/motion'),
-    image: withBase('/images/workshops/motion-bay.jpg'),
+    image: withBase('/images/workshops/motion-bay.avif'),
     alt: 'Motion Bay — dark studio cinema camera and lighting rig',
   },
   {
@@ -45,7 +45,7 @@ const workshops: WorkshopCol[] = [
     pill: 'OPEN FORGE',
     lines: ['Open-source repositories', 'Easy starter issues', 'Build & learn with us'],
     href: withBase('/contributors'),
-    image: withBase('/images/workshops/open-forge.jpg'),
+    image: withBase('/images/workshops/open-forge.avif'),
     alt: 'Open Forge — precision engineering tools and hardware craft',
   },
 ];
@@ -81,9 +81,9 @@ const workshops: WorkshopCol[] = [
   <div class="swiss-columns">
     {workshops.map((w) => (
       <a href={w.href} class="swiss-col">
-        <!-- High-res WebP photo revealed instantaneously on hover/focus -->
+        <!-- High-res AVIF photo revealed instantaneously on hover/focus -->
         <div class="col-backdrop" aria-hidden="true">
-          <img src={w.image} alt="" class="col-bg-img" loading="eager" decoding="async" />
+          <img src={w.image} alt="" class="col-bg-img" loading="lazy" decoding="async" />
           <div class="col-bg-scrim"></div>
         </div>
 

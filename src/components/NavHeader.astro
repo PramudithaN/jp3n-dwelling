@@ -101,24 +101,18 @@ const navLinks = [
   }
 
   // Adaptive navbar: match light frosted hero when at top of homepage
-  function updateHeaderTheme() {
-    if (!header) return;
-    const hero = document.getElementById('teqniqksHero');
-    if (!hero) {
-      header.classList.remove('is-hero-light');
-      return;
-    }
-    const heroBottom = hero.getBoundingClientRect().bottom;
-    if (heroBottom > 72) {
-      header.classList.add('is-hero-light');
-    } else {
-      header.classList.remove('is-hero-light');
-    }
+  const hero = document.getElementById('teqniqksHero');
+  if (header && hero && 'IntersectionObserver' in window) {
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        header.classList.toggle('is-hero-light', entries[0]?.isIntersecting ?? false);
+      },
+      { rootMargin: '-72px 0px 0px 0px', threshold: 0 },
+    );
+    heroObserver.observe(hero);
+  } else if (header && !hero) {
+    header.classList.remove('is-hero-light');
   }
-
-  window.addEventListener('scroll', updateHeaderTheme, { passive: true });
-  document.addEventListener('astro:page-load', updateHeaderTheme);
-  updateHeaderTheme();
 
   // Scroll-spy for one-page homepage sections
   const desktopNavLinks = document.querySelectorAll('.desktop-nav .nav-link[data-section]');

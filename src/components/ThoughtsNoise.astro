@@ -633,6 +633,25 @@ const { id = 'thoughts' } = Astro.props;
       return (seed - 1) / 2147483646;
     }
 
+    function readAccentRgb(): [number, number, number] {
+      const ah = (
+        getComputedStyle(document.documentElement).getPropertyValue('--text-accent') || '#52a468'
+      ).trim();
+      const hc = ah.startsWith('#') ? ah.slice(1) : '52a468';
+      const fh =
+        hc.length === 3
+          ? hc
+              .split('')
+              .map((c) => c + c)
+              .join('')
+          : hc;
+      return [
+        parseInt(fh.slice(0, 2), 16) || 82,
+        parseInt(fh.slice(2, 4), 16) || 164,
+        parseInt(fh.slice(4, 6), 16) || 104,
+      ];
+    }
+
     function drawSculpture() {
       if (!canvas || !container || !ctx) return;
       const rect = container.getBoundingClientRect();
@@ -646,6 +665,7 @@ const { id = 'thoughts' } = Astro.props;
       ctx.clearRect(0, 0, W, H);
 
       seed = 4207;
+      const [accentR, accentG, accentB] = readAccentRgb();
       const scaleX = W / 420;
       const scaleY = H / 440;
 
@@ -679,22 +699,7 @@ const { id = 'thoughts' } = Astro.props;
             fill = `rgba(250, 249, 246, ${(0.22 + rand() * 0.55) * dissolveAlpha})`;
           } else if (toneRoll < 0.45) {
             // Dynamic theme accent tint
-            const ah = (
-              getComputedStyle(document.documentElement).getPropertyValue('--text-accent') ||
-              '#52a468'
-            ).trim();
-            const hc = ah.startsWith('#') ? ah.slice(1) : '52a468';
-            const fh =
-              hc.length === 3
-                ? hc
-                    .split('')
-                    .map((c) => c + c)
-                    .join('')
-                : hc;
-            const r = parseInt(fh.slice(0, 2), 16) || 82;
-            const g = parseInt(fh.slice(2, 4), 16) || 164;
-            const b = parseInt(fh.slice(4, 6), 16) || 104;
-            fill = `rgba(${r}, ${g}, ${b}, ${(0.18 + rand() * 0.35) * dissolveAlpha})`;
+            fill = `rgba(${accentR}, ${accentG}, ${accentB}, ${(0.18 + rand() * 0.35) * dissolveAlpha})`;
           } else if (toneRoll < 0.72) {
             // Soft sage/stone mid-tone pill bar
             fill = `rgba(163, 173, 157, ${(0.12 + rand() * 0.28) * dissolveAlpha})`;
@@ -720,25 +725,10 @@ const { id = 'thoughts' } = Astro.props;
         if (rand() > 0.25) {
           const edgeW = 6 + rand() * 24;
           const edgeH = 2 + rand() * 3.5;
-          const ahEdge = (
-            getComputedStyle(document.documentElement).getPropertyValue('--text-accent') ||
-            '#52a468'
-          ).trim();
-          const hcEdge = ahEdge.startsWith('#') ? ahEdge.slice(1) : '52a468';
-          const fhEdge =
-            hcEdge.length === 3
-              ? hcEdge
-                  .split('')
-                  .map((c) => c + c)
-                  .join('')
-              : hcEdge;
-          const er = parseInt(fhEdge.slice(0, 2), 16) || 82;
-          const eg = parseInt(fhEdge.slice(2, 4), 16) || 164;
-          const eb = parseInt(fhEdge.slice(4, 6), 16) || 104;
           ctx.fillStyle =
             rand() > 0.4
               ? `rgba(250, 249, 246, ${0.35 + rand() * 0.5})`
-              : `rgba(${er}, ${eg}, ${eb}, ${0.35 + rand() * 0.4})`;
+              : `rgba(${accentR}, ${accentG}, ${accentB}, ${0.35 + rand() * 0.4})`;
           ctx.beginPath();
           ctx.roundRect((rightX - edgeW) * scaleX, y * scaleY, edgeW * scaleX, edgeH * scaleY, 1.5);
           ctx.fill();
@@ -757,7 +747,15 @@ const { id = 'thoughts' } = Astro.props;
     }
 
     drawSculpture();
-    window.addEventListener('resize', drawSculpture, { passive: true });
+    let resizeTimer: number | undefined;
+    window.addEventListener(
+      'resize',
+      () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(drawSculpture, 150);
+      },
+      { passive: true },
+    );
     document.addEventListener('astro:page-load', drawSculpture);
     window.addEventListener('teqniqks:theme-change', drawSculpture);
   }

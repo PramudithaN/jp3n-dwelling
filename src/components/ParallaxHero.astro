@@ -117,7 +117,6 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     width: 100%;
     height: 100%;
     pointer-events: none;
-    will-change: transform;
     transform: translate3d(0, 0, 0);
   }
 
@@ -150,9 +149,9 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
       transparent 70%
     );
     pointer-events: none;
-    transform: translate(-50%, -50%);
-    left: var(--spot-x, 50%);
-    top: var(--spot-y, 45%);
+    transform: translate3d(-50%, -50%, 0);
+    left: 50%;
+    top: 45%;
     mix-blend-mode: soft-light;
   }
 
@@ -339,8 +338,14 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
-    let isMouseInside = false;
     let animationFrameId: number | null = null;
+    let stageRect = stage.getBoundingClientRect();
+
+    const updateStageRect = () => {
+      if (stage) stageRect = stage.getBoundingClientRect();
+    };
+    window.addEventListener('resize', updateStageRect, { passive: true });
+    window.addEventListener('scroll', updateStageRect, { passive: true });
 
     const LERP_FACTOR = 0.075;
 
@@ -383,12 +388,13 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
       }
 
       if (spotlight) {
-        spotlight.style.left = `${(50 + currentX * 16).toFixed(1)}%`;
-        spotlight.style.top = `${(45 + currentY * 16).toFixed(1)}%`;
+        const sx = (currentX * 0.16 * stageRect.width).toFixed(1);
+        const sy = (currentY * 0.16 * stageRect.height).toFixed(1);
+        spotlight.style.transform = `translate3d(-50%, -50%, 0) translate3d(${sx}px, ${sy}px, 0)`;
       }
 
       const diff = Math.abs(targetX - currentX) + Math.abs(targetY - currentY);
-      if (diff > 0.001 || isMouseInside) {
+      if (diff > 0.001) {
         animationFrameId = requestAnimationFrame(updateParallaxMotion);
       } else {
         animationFrameId = null;
@@ -396,17 +402,16 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     }
 
     function onPointerMove(e: PointerEvent) {
-      isMouseInside = true;
-      const rect = stage!.getBoundingClientRect();
-      targetX = Math.max(-1, Math.min(1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
-      targetY = Math.max(-1, Math.min(1, ((e.clientY - rect.top) / rect.height) * 2 - 1));
+      const width = stageRect.width || 1;
+      const height = stageRect.height || 1;
+      targetX = Math.max(-1, Math.min(1, ((e.clientX - stageRect.left) / width) * 2 - 1));
+      targetY = Math.max(-1, Math.min(1, ((e.clientY - stageRect.top) / height) * 2 - 1));
       if (!animationFrameId) {
         animationFrameId = requestAnimationFrame(updateParallaxMotion);
       }
     }
 
     function onPointerLeave() {
-      isMouseInside = false;
       targetX = 0;
       targetY = 0;
       if (!animationFrameId) {
@@ -414,10 +419,9 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
       }
     }
 
+    heroSection.addEventListener('pointerenter', updateStageRect, { passive: true });
     heroSection.addEventListener('pointermove', onPointerMove, { passive: true });
     heroSection.addEventListener('pointerleave', onPointerLeave, { passive: true });
-
-    animationFrameId = requestAnimationFrame(updateParallaxMotion);
   }
 
   if (document.readyState === 'loading') {
