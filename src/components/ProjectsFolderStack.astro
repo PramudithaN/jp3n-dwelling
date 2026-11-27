@@ -1,12 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
-import { snapshotYear } from '../data/teamCalendar';
 import { withBase } from '../utils/url';
 
 const workItems = await getCollection('work');
 workItems.sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
-const currentYear = snapshotYear;
+const currentYear = new Date().getFullYear();
 
 // Tab horizontal offsets staggered like the reference folder stack
 const tabPositions = ['pos-right', 'pos-mid-left', 'pos-far-left', 'pos-mid-right'];

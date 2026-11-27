@@ -1,5 +1,4 @@
 ---
-import { snapshotYear } from '../data/teamCalendar';
 import { withBase } from '../utils/url';
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
 }
 
 const { currentPath = '/' } = Astro.props;
-const currentYear = snapshotYear;
+const currentYear = new Date().getFullYear();
 
 const navLinks = [
   { href: withBase('/#about'), label: 'ABOUT', section: 'about' },

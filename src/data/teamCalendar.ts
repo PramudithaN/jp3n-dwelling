@@ -36,11 +36,6 @@ export const teamContributions: Record<string, CalendarDayData> = Object.fromEnt
   ]),
 );
 
-const sortedSnapshotDates = Object.keys(teamContributions).sort();
-export const latestSnapshotDate =
-  sortedSnapshotDates[sortedSnapshotDates.length - 1] ?? '2026-01-01';
-export const snapshotYear = Number(latestSnapshotDate.slice(0, 4));
-
 export const memberColors: Record<string, string> = {
   judebevan: '#e07a5f',
   peenaka: '#f2cc8f',

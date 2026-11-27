@@ -1,6 +1,5 @@
 ---
 import { siteConfig } from '../config/site';
-import { snapshotYear } from '../data/teamCalendar';
 import { withBase } from '../utils/url';
 
 interface Props {
@@ -256,8 +255,8 @@ const serializedTeam = JSON.stringify(
 
       <!-- Bottom Attribution -->
       <p class="stage-footer-note" id="cfFooterNote">
-        © {snapshotYear} · Teqniqks Collective / {team[2].name.split(' ')[0]}'s Rotation (
-        {team[2].music.genre})
+        © {new Date().getFullYear()} · Teqniqks Collective / {team[2].name.split(' ')[0]}'s Rotation
+        ({team[2].music.genre})
       </p>
     </div>
   </div>
