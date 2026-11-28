@@ -14,7 +14,7 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     <!-- Layer 0: Clean Frosted Background & Dynamic Backlight -->
     <div class="parallax-layer layer-bg" id="layerBg" aria-hidden="true">
       <img
-        src={withBase('/images/hero/hero-bg-2x.jpg')}
+        src={withBase('/images/hero/hero-bg-2x.avif')}
         alt=""
         class="bg-image"
         draggable="false"
@@ -422,6 +422,64 @@ const { title = 'TEQNIQKS', subtitle = 'SOFTWARE & DESIGN ATELIER' } = Astro.pro
     heroSection.addEventListener('pointerenter', updateStageRect, { passive: true });
     heroSection.addEventListener('pointermove', onPointerMove, { passive: true });
     heroSection.addEventListener('pointerleave', onPointerLeave, { passive: true });
+
+    // Mobile gyroscope parallax (relative to initial holding angle)
+    const isTouchDevice =
+      window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+    let baseGamma: number | null = null;
+    let baseBeta: number | null = null;
+
+    function onDeviceOrientation(e: DeviceOrientationEvent) {
+      if (e.gamma === null || e.beta === null) return;
+      if (baseGamma === null || baseBeta === null) {
+        baseGamma = e.gamma;
+        baseBeta = e.beta;
+      }
+
+      const TILT_RANGE = 25;
+      const dx = Math.max(-1, Math.min(1, (e.gamma - baseGamma) / TILT_RANGE));
+      const dy = Math.max(-1, Math.min(1, (e.beta - baseBeta) / TILT_RANGE));
+
+      targetX = dx;
+      targetY = dy;
+      if (!animationFrameId) {
+        animationFrameId = requestAnimationFrame(updateParallaxMotion);
+      }
+    }
+
+    if (isTouchDevice && 'DeviceOrientationEvent' in window) {
+      const DeviceOrient = DeviceOrientationEvent as typeof DeviceOrientationEvent & {
+        requestPermission?: () => Promise<'granted' | 'denied'>;
+      };
+
+      if (typeof DeviceOrient.requestPermission === 'function') {
+        const requestGyro = () => {
+          DeviceOrient.requestPermission?.()
+            .then((state) => {
+              if (state === 'granted') {
+                window.addEventListener('deviceorientation', onDeviceOrientation, {
+                  passive: true,
+                });
+              }
+            })
+            .catch(() => {});
+        };
+        document.addEventListener('touchstart', requestGyro, { once: true, passive: true });
+      } else {
+        window.addEventListener('deviceorientation', onDeviceOrientation, { passive: true });
+      }
+    }
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        window.removeEventListener('deviceorientation', onDeviceOrientation);
+        window.removeEventListener('resize', updateStageRect);
+        window.removeEventListener('scroll', updateStageRect);
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      },
+      { once: true },
+    );
   }
 
   if (document.readyState === 'loading') {

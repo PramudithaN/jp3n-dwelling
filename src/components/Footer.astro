@@ -13,7 +13,7 @@ const teamPortraits = siteConfig.team.map((m) => ({
 <footer class="site-footer">
   <!-- Full-Width Split-Typography & Monochrome Strip Centerpiece -->
   <div class="footer-hero-banner">
-    <span class="banner-eyebrow">TEQNIQKS COLLECTIVE · VOL. 26</span>
+    <span class="banner-eyebrow">TEQNIQKS COLLECTIVE · VOL. {String(currentYear).slice(-2)}</span>
 
     <div class="split-lockup">
       <div class="split-word-top" aria-hidden="true">
@@ -33,7 +33,7 @@ const teamPortraits = siteConfig.team.map((m) => ({
     </div>
 
     <p class="banner-caption">
-      THIS CASE CONTAINS ALL THE PROJECTS, CONCEPTS, AND EXPERIMENTS FOR THE 2022 — {currentYear}{' '}
+      THIS CASE CONTAINS ALL THE PROJECTS, CONCEPTS, AND EXPERIMENTS FOR THE 2022 - {currentYear}{' '}
       ERA.
     </p>
   </div>

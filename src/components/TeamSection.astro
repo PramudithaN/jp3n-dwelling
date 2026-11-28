@@ -23,7 +23,7 @@ const team = siteConfig.team;
     <div class="team-portrait-strip" id="teamPortraitStrip">
       {team.map((member, index) => {
         const memberNum = index + 1;
-        const portraitBase = member.portrait.replace(/-f\d+\.jpg$/, '');
+        const portraitBase = member.portrait.replace(/-f\d+\.avif$/, '');
         return (
           <article class="team-card" data-member-num={memberNum}>
             <a
@@ -31,11 +31,11 @@ const team = siteConfig.team;
               target="_blank"
               rel="noopener noreferrer"
               class="portrait-frame"
-              aria-label={`${member.name} — ${member.role} on GitHub`}
+              aria-label={`${member.name} - ${member.role} on GitHub`}
             >
               {[1, 2, 3, 4].map((frameIdx) => (
                 <img
-                  src={withBase(`${portraitBase}-f${frameIdx}.jpg`)}
+                  src={withBase(`${portraitBase}-f${frameIdx}.avif`)}
                   alt={frameIdx === 1 ? `${member.name} monochrome silhouette portrait` : ''}
                   aria-hidden={frameIdx !== 1 ? 'true' : undefined}
                   class={`portrait-img ${frameIdx === 1 ? 'is-active' : ''}`}
