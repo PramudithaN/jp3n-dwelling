@@ -1,11 +1,23 @@
+<div align="center">
+
 # Teqniqks
 
-> **An independent software, design dwelling based in Colombo, Sri Lanka.**  
-> Built with static-first Astro architecture, strict TypeScript, zero tracking cookies, self-hosted typography, and an 8-palette global theme engine.
+**Small crew, loud craft. Software, graphics, motion, and open-source tools built in-house.**
 
-- **Live Site:** https://teqniqks.com/
-- **Repository:** https://github.com/Teqniqks/teqniqks
-- **Contact:** teqniqks@gmail.com
+[![Build & Verify Site](https://github.com/Teqniqks/teqniqks/actions/workflows/ci-build.yml/badge.svg)](https://github.com/Teqniqks/teqniqks/actions/workflows/ci-build.yml)
+[![Deploy Pages](https://github.com/Teqniqks/teqniqks/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/Teqniqks/teqniqks/actions/workflows/deploy-pages.yml)
+[![Live Site](https://img.shields.io/badge/Live-teqniqks.com-09100b?style=flat-square)](https://teqniqks.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-52a468?style=flat-square)](LICENSE)
+
+[![Bun](https://img.shields.io/badge/Bun-%3E%3D1.4.5-FBF0DF?style=flat-square&logo=bun&logoColor=14151A)](https://bun.sh/)
+[![Astro](https://img.shields.io/badge/Astro-7.4-BC52EE?style=flat-square&logo=astro&logoColor=white)](https://astro.build/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
+[teqniqks.com](https://teqniqks.com/) · [GitHub](https://github.com/Teqniqks/teqniqks) · [teqniqks@gmail.com](mailto:teqniqks@gmail.com) · [Contributing](CONTRIBUTING.md) · [Agent Guide](AGENTS.md)
+
+</div>
+
+> Built with static-first Astro architecture, strict TypeScript, zero tracking cookies, self-hosted typography, and an 8-palette global theme engine.
 
 ---
 

@@ -170,7 +170,7 @@ const { id = 'process' } = Astro.props;
         raw.push({ x, y: cy + bump });
       }
 
-      // Segment 2: Obstacle 1 — Full upward loop-de-loop
+      // Segment 2: Obstacle 1 - Full upward loop-de-loop
       const loop1Steps = 75;
       const circle1Cy = cy - loop1R;
       for (let i = 1; i <= loop1Steps; i++) {
@@ -181,7 +181,7 @@ const { id = 'process' } = Astro.props;
         raw.push({ x, y });
       }
 
-      // Segment 3: Obstacle 2 — Sharp drop into a deep trough + hurdle bumps (loop1Cx -> loop2Cx)
+      // Segment 3: Obstacle 2 - Sharp drop into a deep trough + hurdle bumps (loop1Cx -> loop2Cx)
       const seg3Steps = 80;
       for (let i = 1; i <= seg3Steps; i++) {
         const u = i / seg3Steps;
@@ -192,7 +192,7 @@ const { id = 'process' } = Astro.props;
         raw.push({ x, y: cy + dip + hurdles });
       }
 
-      // Segment 4: Obstacle 3 — Second tighter loop-de-loop
+      // Segment 4: Obstacle 3 - Second tighter loop-de-loop
       const loop2Steps = 65;
       const circle2Cy = cy - loop2R;
       for (let i = 1; i <= loop2Steps; i++) {
@@ -203,7 +203,7 @@ const { id = 'process' } = Astro.props;
         raw.push({ x, y });
       }
 
-      // Segment 5: Obstacle 4 — Winding uphill/downhill hurdles before reaching destination
+      // Segment 5: Obstacle 4 - Winding uphill/downhill hurdles before reaching destination
       const exitEndX = padX + spanW;
       const seg5Steps = 75;
       for (let i = 1; i <= seg5Steps; i++) {

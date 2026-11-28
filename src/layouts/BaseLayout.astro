@@ -80,7 +80,7 @@ const fullCanonicalUrl = new URL(canonicalPath, siteUrl).toString();
       </main>
     ) : (
       <>
-        <!-- Theme-Matched Screen Content Loader (kept hidden on initial static paint) -->
+        <!-- Theme-Matched Screen Content Loader (shown only if load exceeds 300ms) -->
         <div class="teqniqks-screen-loader is-hidden" id="teqniqksScreenLoader" aria-hidden="true">
           <div class="loader-core">
             <div class="loader-ring"></div>
@@ -109,22 +109,60 @@ const fullCanonicalUrl = new URL(canonicalPath, siteUrl).toString();
         <script is:inline>
           (function () {
             var bar = document.getElementById('teqniqksRouteLoader');
-            if (!bar) return;
+            var screen = document.getElementById('teqniqksScreenLoader');
+            if (!bar && !screen) return;
 
-            function hideRouteLoader() {
-              bar.classList.remove('is-loading');
-              bar.classList.add('is-done');
-              setTimeout(function () {
+            var delayTimer = null;
+            var safetyTimer = null;
+
+            function clearTimers() {
+              if (delayTimer) {
+                clearTimeout(delayTimer);
+                delayTimer = null;
+              }
+              if (safetyTimer) {
+                clearTimeout(safetyTimer);
+                safetyTimer = null;
+              }
+            }
+
+            function hideLoaders() {
+              clearTimers();
+              if (bar) {
+                bar.classList.remove('is-loading');
+                bar.classList.add('is-done');
+                setTimeout(function () {
+                  bar.classList.remove('is-done');
+                }, 320);
+              }
+              if (screen) {
+                screen.classList.add('is-hidden');
+              }
+            }
+
+            function showLoaders() {
+              clearTimers();
+              if (bar) {
                 bar.classList.remove('is-done');
-              }, 320);
+                bar.classList.add('is-loading');
+              }
+              if (screen) {
+                // Only show full-screen spinner if loading takes longer than 300ms
+                delayTimer = setTimeout(function () {
+                  screen.classList.remove('is-hidden');
+                }, 300);
+              }
+              // Safety cap so slow third-party resources never block the screen
+              safetyTimer = setTimeout(hideLoaders, 1800);
             }
 
-            function showRouteLoader() {
-              bar.classList.remove('is-done');
-              bar.classList.add('is-loading');
+            window.addEventListener('pageshow', hideLoaders);
+            if (document.readyState === 'complete') {
+              hideLoaders();
+            } else {
+              showLoaders();
+              window.addEventListener('load', hideLoaders, { once: true });
             }
-
-            window.addEventListener('pageshow', hideRouteLoader);
 
             document.addEventListener('click', function (e) {
               var target = e.target instanceof Element ? e.target.closest('a[href]') : null;
@@ -148,7 +186,7 @@ const fullCanonicalUrl = new URL(canonicalPath, siteUrl).toString();
                   dest.origin === window.location.origin &&
                   dest.pathname !== window.location.pathname
                 ) {
-                  showRouteLoader();
+                  showLoaders();
                 }
               } catch {}
             });
