@@ -4,14 +4,15 @@
 
 **Small crew, loud craft. Software, graphics, motion, and open-source tools built in-house.**
 
-[![Build & Verify Site](https://github.com/Teqniqks/teqniqks/actions/workflows/ci-build.yml/badge.svg)](https://github.com/Teqniqks/teqniqks/actions/workflows/ci-build.yml)
-[![Deploy Pages](https://github.com/Teqniqks/teqniqks/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/Teqniqks/teqniqks/actions/workflows/deploy-pages.yml)
-[![Live Site](https://img.shields.io/badge/Live-teqniqks.com-09100b?style=flat-square)](https://teqniqks.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-52a468?style=flat-square)](LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/Teqniqks/teqniqks/ci-build.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/Teqniqks/teqniqks/actions/workflows/ci-build.yml)
+[![Pages](https://img.shields.io/github/actions/workflow/status/Teqniqks/teqniqks/deploy-pages.yml?branch=main&style=for-the-badge&label=PAGES)](https://github.com/Teqniqks/teqniqks/actions/workflows/deploy-pages.yml)
+[![Live Site](https://img.shields.io/badge/LIVE-TEQNIQKS.COM-52a468?style=for-the-badge)](https://teqniqks.com/)
+[![GitHub Actions](https://img.shields.io/badge/GITHUB%20ACTIONS-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/Teqniqks/teqniqks/actions)
 
-[![Bun](https://img.shields.io/badge/Bun-%3E%3D1.4.5-FBF0DF?style=flat-square&logo=bun&logoColor=14151A)](https://bun.sh/)
-[![Astro](https://img.shields.io/badge/Astro-7.4-BC52EE?style=flat-square&logo=astro&logoColor=white)](https://astro.build/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Bun](https://img.shields.io/badge/BUN-%3E%3D1.4.5-000000?style=for-the-badge&logo=bun&logoColor=FBF0DF)](https://bun.sh/)
+[![Astro](https://img.shields.io/badge/ASTRO-7.4-BC52EE?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
+[![TypeScript](https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/LICENSE-MIT-4c1?style=for-the-badge)](LICENSE)
 
 [teqniqks.com](https://teqniqks.com/) · [GitHub](https://github.com/Teqniqks/teqniqks) · [teqniqks@gmail.com](mailto:teqniqks@gmail.com) · [Contributing](CONTRIBUTING.md) · [Agent Guide](AGENTS.md)
 
