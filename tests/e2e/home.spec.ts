@@ -37,12 +37,34 @@ test.describe('Home page core flows', () => {
     await expect(home.calendarGrid).toBeVisible();
     const initialMonth = (await home.calendarMonthHeading.textContent())?.trim() ?? '';
     expect(initialMonth.length).toBeGreaterThan(0);
+    await expect(home.calendarNextBtn).toBeDisabled();
 
     const prevMonth = await home.navigateCalendarPreviousMonth();
     expect(prevMonth).not.toBe(initialMonth);
+    await expect(home.calendarNextBtn).toBeEnabled();
 
     const nextMonth = await home.navigateCalendarNextMonth();
     expect(nextMonth).toBe(initialMonth);
+    await expect(home.calendarNextBtn).toBeDisabled();
+
+    // Verify historical boundary stops navigation at the start of the 4-month window
+    for (let i = 0; i < 6; i++) {
+      if (await home.calendarPrevBtn.isDisabled()) break;
+      await home.calendarPrevBtn.click();
+    }
+    await expect(home.calendarPrevBtn).toBeDisabled();
+
+    // Return to current month before filtering checks
+    while (await home.calendarNextBtn.isEnabled()) {
+      await home.calendarNextBtn.click();
+    }
+    await expect(home.calendarMonthHeading).toHaveText(initialMonth);
+
+    const futureCells = home.calendarGrid.locator('.cal-cell.is-future');
+    const futureCount = await futureCells.count();
+    if (futureCount > 0) {
+      await expect(futureCells.first()).toBeDisabled();
+    }
 
     await home.filterCalendarByMember('peenaka');
     await home.filterCalendarByMember('all');

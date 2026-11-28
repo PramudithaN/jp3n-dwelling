@@ -14,6 +14,13 @@ export interface CalendarDayData {
   note?: string;
 }
 
+export interface TeamCalendarSnapshot {
+  windowStart: string; // YYYY-MM-DD (inclusive)
+  windowEnd: string; // YYYY-MM-DD (inclusive)
+  months: number;
+  days: Record<string, CalendarDayData>;
+}
+
 const dayNotes: Record<string, string> = {
   '2026-10-07': 'K8s Operator & CLI',
   '2026-11-08': 'Heavy Sprint Day',
@@ -23,14 +30,60 @@ const dayNotes: Record<string, string> = {
   '2026-11-23': 'Active Sprint',
 };
 
-const rawContributions = generatedContributions as Record<string, CalendarDayData>;
+const MONTHS_COUNT = 4;
+
+function fallbackWindowBounds(): { start: string; end: string; months: number } {
+  const now = new Date();
+  const startDate = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - (MONTHS_COUNT - 1), 1),
+  );
+  return {
+    start: startDate.toISOString().slice(0, 10),
+    end: now.toISOString().slice(0, 10),
+    months: MONTHS_COUNT,
+  };
+}
+
+function parseGeneratedSnapshot(raw: unknown): {
+  window: { start: string; end: string; months: number };
+  days: Record<string, CalendarDayData>;
+} {
+  const fallback = fallbackWindowBounds();
+  if (!raw || typeof raw !== 'object') {
+    return { window: fallback, days: {} };
+  }
+
+  const candidate = raw as Partial<TeamCalendarSnapshot>;
+  if (candidate.days && typeof candidate.days === 'object') {
+    return {
+      window: {
+        start: typeof candidate.windowStart === 'string' ? candidate.windowStart : fallback.start,
+        end: typeof candidate.windowEnd === 'string' ? candidate.windowEnd : fallback.end,
+        months:
+          typeof candidate.months === 'number' && candidate.months > 0
+            ? candidate.months
+            : MONTHS_COUNT,
+      },
+      days: candidate.days,
+    };
+  }
+
+  return {
+    window: fallback,
+    days: raw as Record<string, CalendarDayData>,
+  };
+}
+
+const parsedSnapshot = parseGeneratedSnapshot(generatedContributions);
+
+export const calendarWindow = parsedSnapshot.window;
 
 /**
  * Verified public GitHub activity for the 6 Teqniqks collective members
- * (last 2 months, synced at build time via `bun run sync:calendar`).
+ * (last 4 months via GitHub GraphQL, synced at build time via `bun run sync:calendar`).
  */
 export const teamContributions: Record<string, CalendarDayData> = Object.fromEntries(
-  Object.entries(rawContributions).map(([date, day]) => [
+  Object.entries(parsedSnapshot.days).map(([date, day]) => [
     date,
     dayNotes[date] ? { ...day, note: dayNotes[date] } : day,
   ]),
