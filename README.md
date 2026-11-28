@@ -1,6 +1,6 @@
 # Teqniqks
 
-> **An independent software, design, motion, and open-source collective based in Colombo, Sri Lanka.**  
+> **An independent software, design dwelling based in Colombo, Sri Lanka.**  
 > Built with static-first Astro architecture, strict TypeScript, zero tracking cookies, self-hosted typography, and an 8-palette global theme engine.
 
 - **Live Site:** https://teqniqks.com/
