@@ -30,7 +30,9 @@ jobs:
 
       - name: Build production site
         env:
+          CALENDAR_READ_TOKEN: ${{ secrets.CALENDAR_READ_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALLOW_OFFLINE_CALENDAR: ${{ github.event.pull_request.head.repo.fork == true }}
         run: bun run build
 
       - name: Verify build artifacts
