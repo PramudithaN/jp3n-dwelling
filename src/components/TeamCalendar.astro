@@ -1,6 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
-import { teamContributions, memberColors } from '../data/teamCalendar';
+import { calendarWindow, memberColors, teamContributions } from '../data/teamCalendar';
 
 interface Props {
   id?: string;
@@ -17,6 +17,7 @@ const teamMembers = siteConfig.team.map((m) => ({
 
 const serializedData = JSON.stringify(teamContributions);
 const serializedColors = JSON.stringify(memberColors);
+const serializedWindow = JSON.stringify(calendarWindow);
 
 const buildNow = new Date();
 const monthNamesSSR = [
@@ -74,7 +75,7 @@ const initialInspectorDate = teamContributions[initialTodayStr]
             {initialMonthName}
           </h2>
           <span class="cal-year-sub" id="calYearSub">
-            {initialYear} · DAILY GITHUB CONTRIBUTIONS
+            {initialYear} · LAST {calendarWindow.months} MONTHS OF PUBLIC GITHUB ACTIVITY
           </span>
         </div>
 
@@ -144,9 +145,10 @@ const initialInspectorDate = teamContributions[initialTodayStr]
   </div>
 </section>
 
-<script define:vars={{ serializedData, serializedColors }}>
+<script define:vars={{ serializedData, serializedColors, serializedWindow }}>
   const contributionsByDate = JSON.parse(serializedData);
   const colorsMap = JSON.parse(serializedColors);
+  const windowData = JSON.parse(serializedWindow);
 
   const monthNames = [
     'JANUARY',
@@ -163,21 +165,43 @@ const initialInspectorDate = teamContributions[initialTodayStr]
     'DECEMBER',
   ];
 
-  const now = new Date();
-  let currentYear = now.getFullYear();
-  let currentMonth = now.getMonth(); // Automatically matches current real-world month
-  let activeMember = 'all';
-
   function pad(n) {
     return n < 10 ? `0${n}` : `${n}`;
   }
 
+  function parseYearMonth(dateStr) {
+    const parts = String(dateStr).split('-');
+    return { year: Number(parts[0]), month: Number(parts[1]) - 1 };
+  }
+
+  const now = new Date();
+  const todayStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const effectiveToday = todayStr > windowData.end ? todayStr : windowData.end;
+  const minBounds = parseYearMonth(windowData.start);
+  const maxBounds = parseYearMonth(effectiveToday);
+
+  function compareMonth(y, m, target) {
+    return (y - target.year) * 12 + (m - target.month);
+  }
+
+  let currentYear = now.getFullYear();
+  let currentMonth = now.getMonth();
+  if (compareMonth(currentYear, currentMonth, minBounds) < 0) {
+    currentYear = minBounds.year;
+    currentMonth = minBounds.month;
+  } else if (compareMonth(currentYear, currentMonth, maxBounds) > 0) {
+    currentYear = maxBounds.year;
+    currentMonth = maxBounds.month;
+  }
+
+  let activeMember = 'all';
+
   const VALID_REPO_RE = /^[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+$/;
 
-  const todayStr = `${currentYear}-${pad(currentMonth + 1)}-${pad(now.getDate())}`;
-  let selectedDate = contributionsByDate[todayStr]
-    ? todayStr
-    : pickDefaultDateForMonth(currentYear, currentMonth);
+  let selectedDate =
+    contributionsByDate[todayStr] && todayStr >= windowData.start && todayStr <= effectiveToday
+      ? todayStr
+      : pickDefaultDateForMonth(currentYear, currentMonth);
 
   const monthTitleEl = document.getElementById('calendar-heading');
   const yearSubEl = document.getElementById('calYearSub');
@@ -191,19 +215,72 @@ const initialInspectorDate = teamContributions[initialTodayStr]
   function pickDefaultDateForMonth(year, month) {
     const prefix = `${year}-${pad(month + 1)}-`;
     const matchingDates = Object.keys(contributionsByDate)
-      .filter((d) => d.startsWith(prefix))
+      .filter((d) => d.startsWith(prefix) && d >= windowData.start && d <= effectiveToday)
       .sort();
-    return matchingDates.length > 0 ? matchingDates[matchingDates.length - 1] : `${prefix}01`;
+    if (matchingDates.length > 0) {
+      return matchingDates[matchingDates.length - 1];
+    }
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    for (let day = daysInMonth; day >= 1; day--) {
+      const candidate = `${prefix}${pad(day)}`;
+      if (candidate >= windowData.start && candidate <= effectiveToday) {
+        return candidate;
+      }
+    }
+    return `${prefix}01`;
+  }
+
+  function isAtMinMonth() {
+    return compareMonth(currentYear, currentMonth, minBounds) <= 0;
+  }
+
+  function isAtMaxMonth() {
+    return compareMonth(currentYear, currentMonth, maxBounds) >= 0;
+  }
+
+  function updateNavButtons() {
+    const atMin = isAtMinMonth();
+    const atMax = isAtMaxMonth();
+    if (prevBtn instanceof HTMLButtonElement) {
+      prevBtn.disabled = atMin;
+      prevBtn.setAttribute('aria-disabled', String(atMin));
+      prevBtn.title = atMin
+        ? `Earliest synced month (${windowData.start.slice(0, 7)})`
+        : 'Previous month';
+    }
+    if (nextBtn instanceof HTMLButtonElement) {
+      nextBtn.disabled = atMax;
+      nextBtn.setAttribute('aria-disabled', String(atMax));
+      nextBtn.title = atMax ? 'Current month reached' : 'Next month';
+    }
   }
 
   function renderInspector(dateStr) {
     if (!inspectorDateEl || !inspectorEntriesEl) return;
     inspectorDateEl.textContent = dateStr;
+
+    if (dateStr < windowData.start) {
+      const msgEl = document.createElement('p');
+      msgEl.className = 'inspector-empty';
+      msgEl.textContent = `Outside synced ${windowData.months}-month window (history starts ${windowData.start}).`;
+      inspectorEntriesEl.replaceChildren(msgEl);
+      return;
+    }
+
+    if (dateStr > effectiveToday) {
+      const msgEl = document.createElement('p');
+      msgEl.className = 'inspector-empty';
+      msgEl.textContent = 'Upcoming date — no activity recorded yet.';
+      inspectorEntriesEl.replaceChildren(msgEl);
+      return;
+    }
+
     const dayData = contributionsByDate[dateStr];
     if (!dayData) {
       const emptyEl = document.createElement('p');
       emptyEl.className = 'inspector-empty';
-      emptyEl.textContent = 'No public repository pushes recorded on this date.';
+      emptyEl.textContent = 'No public repository activity recorded on this date.';
       inspectorEntriesEl.replaceChildren(emptyEl);
       return;
     }
@@ -256,7 +333,7 @@ const initialInspectorDate = teamContributions[initialTodayStr]
 
       const countSpan = document.createElement('span');
       countSpan.className = 'insp-count';
-      countSpan.textContent = `${c.eventsCount} ${c.eventsCount === 1 ? 'push' : 'events'}`;
+      countSpan.textContent = `${c.eventsCount} ${c.eventsCount === 1 ? 'contribution' : 'contributions'}`;
 
       row.append(memberSpan, reposWrap, countSpan);
       frag.appendChild(row);
@@ -271,8 +348,9 @@ const initialInspectorDate = teamContributions[initialTodayStr]
     monthTitleEl.textContent = monthNames[currentMonth];
     monthTitleEl.setAttribute('data-month', `${currentYear}-${pad(currentMonth + 1)}`);
     if (yearSubEl) {
-      yearSubEl.textContent = `${currentYear} · DAILY GITHUB CONTRIBUTIONS`;
+      yearSubEl.textContent = `${currentYear} · LAST ${windowData.months} MONTHS OF PUBLIC GITHUB ACTIVITY`;
     }
+    updateNavButtons();
 
     const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay(); // 0=Sun
     const totalCells = Math.ceil((firstDayOfWeek + daysInMonth) / 7) * 7;
@@ -289,7 +367,11 @@ const initialInspectorDate = teamContributions[initialTodayStr]
       }
 
       const dateStr = `${currentYear}-${pad(currentMonth + 1)}-${pad(dayNum)}`;
-      const dayData = contributionsByDate[dateStr];
+      const isOutsideWindow = dateStr < windowData.start;
+      const isFuture = dateStr > effectiveToday;
+      const isUnavailable = isOutsideWindow || isFuture;
+
+      const dayData = isUnavailable ? undefined : contributionsByDate[dateStr];
       const filtered = dayData
         ? activeMember === 'all'
           ? dayData.contributions
@@ -297,13 +379,20 @@ const initialInspectorDate = teamContributions[initialTodayStr]
         : [];
 
       const hasActivity = filtered.length > 0;
-      const isSelected = dateStr === selectedDate;
+      const isSelected = !isUnavailable && dateStr === selectedDate;
       const hasNote = Boolean(dayData?.note && hasActivity);
 
       const cellBtn = document.createElement('button');
       cellBtn.type = 'button';
-      cellBtn.className = `cal-cell${hasActivity ? ' has-activity' : ''}${isSelected ? ' is-selected' : ''}${hasNote ? ' has-note' : ''}`;
+      cellBtn.className = `cal-cell${hasActivity ? ' has-activity' : ''}${isSelected ? ' is-selected' : ''}${hasNote ? ' has-note' : ''}${isOutsideWindow ? ' is-outside-window' : ''}${isFuture ? ' is-future' : ''}`;
       cellBtn.setAttribute('data-date', dateStr);
+      if (isUnavailable) {
+        cellBtn.disabled = true;
+        cellBtn.setAttribute('aria-disabled', 'true');
+        cellBtn.title = isOutsideWindow
+          ? `Outside synced ${windowData.months}-month window`
+          : 'Upcoming date';
+      }
 
       const dayNumSpan = document.createElement('span');
       dayNumSpan.className = `cal-day-num${hasNote ? ' is-ringed' : ''}`;
@@ -358,7 +447,7 @@ const initialInspectorDate = teamContributions[initialTodayStr]
     const target = e.target;
     if (!(target instanceof Element)) return;
     const cell = target.closest('button.cal-cell[data-date]');
-    if (!(cell instanceof HTMLElement)) return;
+    if (!(cell instanceof HTMLButtonElement) || cell.disabled) return;
     const nextDate = cell.getAttribute('data-date');
     if (!nextDate) return;
 
@@ -372,6 +461,7 @@ const initialInspectorDate = teamContributions[initialTodayStr]
   });
 
   prevBtn?.addEventListener('click', () => {
+    if (isAtMinMonth()) return;
     currentMonth -= 1;
     if (currentMonth < 0) {
       currentMonth = 11;
@@ -383,6 +473,7 @@ const initialInspectorDate = teamContributions[initialTodayStr]
   });
 
   nextBtn?.addEventListener('click', () => {
+    if (isAtMaxMonth()) return;
     currentMonth += 1;
     if (currentMonth > 11) {
       currentMonth = 0;
@@ -455,9 +546,14 @@ const initialInspectorDate = teamContributions[initialTodayStr]
       color 150ms ease;
   }
 
-  .cal-nav-btn:hover {
+  .cal-nav-btn:hover:not(:disabled) {
     border-color: var(--text-accent);
     color: var(--text-accent);
+  }
+
+  .cal-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 
   .cal-title-block {
@@ -596,8 +692,15 @@ const initialInspectorDate = teamContributions[initialTodayStr]
     background: color-mix(in srgb, var(--bg-canvas) 35%, transparent);
   }
 
-  :global(.cal-cell:not(.is-empty):hover) {
+  :global(.cal-cell:not(.is-empty):not(:disabled):hover) {
     background: var(--bg-elevated);
+  }
+
+  :global(.cal-cell.is-outside-window),
+  :global(.cal-cell.is-future) {
+    cursor: default;
+    opacity: 0.35;
+    background: color-mix(in srgb, var(--bg-canvas) 45%, transparent);
   }
 
   :global(.cal-cell.is-selected) {

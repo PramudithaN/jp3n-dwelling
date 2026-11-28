@@ -82,7 +82,7 @@ Selecting a palette updates CSS custom properties, canvas elements, and `<meta n
 │   ├── commitlint.ts              # Commit message validator (feat, fix, housekeep + mandatory scope)
 │   ├── commitlint.test.ts         # Unit tests for commitlint
 │   ├── pre-commit.ts              # Blocks main/master commits and formats staged files
-│   ├── sync-team-calendar.ts      # Fetches last 2 months of GitHub events at build time
+│   ├── sync-team-calendar.ts      # Fetches last 4 months of GitHub GraphQL contributions at build time
 │   └── sync-team-calendar.test.ts # Unit tests for calendar event pagination fallback
 ├── src/
 │   ├── components/                # Modular Astro UI & interactive canvas components
@@ -137,11 +137,13 @@ bun run test:e2e
 ### Build & Deploy via GitHub Actions
 
 ```bash
-bun run sync:calendar   # Optional: manually refresh 2-month GitHub contribution snapshot
-bun run build           # Syncs calendar + builds static output into gitignored ./dist
+CALENDAR_READ_TOKEN=$(gh auth token) bun run sync:calendar -- --strict # Optional: sync 4-month GraphQL snapshot locally
+bun run build                                                        # Syncs calendar + builds static output into gitignored ./dist
 ```
 
-Deployment runs via `.github/workflows/deploy-pages.yml` on every push to `main`, on a daily **00:00 Sri Lanka Standard Time** (`18:30 UTC`) schedule, and via manual `workflow_dispatch`. It builds `./dist` (including `CNAME` for `teqniqks.com`) with a fresh GitHub contribution snapshot and deploys directly with `actions/deploy-pages`.
+Deployment runs via `.github/workflows/deploy-pages.yml` on every push to `main`, on a daily **00:00 Sri Lanka Standard Time** (`18:30 UTC`) schedule, and via manual `workflow_dispatch`. It builds `./dist` (including `CNAME` for `teqniqks.com`) with a fresh 4-month GitHub GraphQL contribution snapshot across all 6 members and deploys directly with `actions/deploy-pages`.
+
+Configure repository secret `CALENDAR_READ_TOKEN` (a PAT with `read:user` scope) in **Settings -> Secrets and variables -> Actions** so CI and Pages builds can query GitHub GraphQL `contributionsCollection` cleanly and fail fast if any member fetch fails.
 
 ### GitHub Pages Setup
 
